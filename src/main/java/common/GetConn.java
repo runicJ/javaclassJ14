@@ -8,7 +8,7 @@ public class GetConn {  // Singleton(DB를 연결하는 용도로만 쓰는 것 
 	private static Connection conn = null;  // java.sql  // 여기는 거의 static
 	
 	private String driver = "com.mysql.jdbc.Driver";  // Driver class명이니까 대문자
-	private String url = "jdbc:mysql://localhost:3306/javaclass";  // 밑에서 사용할 것 따로 빼놓은 것
+	private String url = "jdbc:mysql://localhost:3306/javaclass14";  // 밑에서 사용할 것 따로 빼놓은 것
 	private String user = "root";
 	private String password = "1234";  // 밑에 넣어줌
 	

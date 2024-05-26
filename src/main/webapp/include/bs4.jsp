@@ -4,7 +4,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- font Awesome 사용하려면 여기에 넣으면 됨 -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/font-awesome.min.css"> -->
 <script src="https://kit.fontawesome.com/df66332deb.js" crossorigin="anonymous"></script>
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Stay balance</title>
+<link rel="icon" href="img/favicon.png">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="setting/css/bootstrap.min.css">
+<!-- animate CSS -->
+<link rel="stylesheet" href="setting/css/animate.css">
+<!-- owl carousel CSS -->
+<link rel="stylesheet" href="setting/css/owl.carousel.min.css">
+<!-- themify CSS -->
+<link rel="stylesheet" href="setting/css/themify-icons.css">
+<!-- flaticon CSS -->
+<link rel="stylesheet" href="setting/css/flaticon.css">
+<!-- fontawesome CSS -->
+<link rel="stylesheet" href="setting/fontawesome/css/all.min.css">
+<!-- magnific CSS -->
+<link rel="stylesheet" href="setting/css/magnific-popup.css">
+<link rel="stylesheet" href="setting/css/gijgo.min.css">
+<!-- niceselect CSS -->
+<link rel="stylesheet" href="setting/css/nice-select.css">
+<!-- slick CSS -->
+<link rel="stylesheet" href="setting/css/slick.css">
+<!-- style CSS -->
+<link rel="stylesheet" href="setting/css/style.css">
+
+<!-- <link rel="stylesheet" href="css/banner.css"> -->
