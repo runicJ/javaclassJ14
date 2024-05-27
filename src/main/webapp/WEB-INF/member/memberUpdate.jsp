@@ -59,9 +59,7 @@
         return false;
       }
   		// 이메일 주소형식체크
-  		
-  		// 홈페이지 주소형식체크
-  		
+  		  		
   		// 전화번호 형식 체크
     	
     	if(nickCheckSw == 0) {
@@ -135,12 +133,12 @@
       <input type="text" class="form-control" id="mid" name="mid" value="${vo.mid}" readonly />
     </div>
     <div class="form-group">
-      <label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" id="nickNameBtn" value="닉네임 중복체크" class="btn btn-secondary btn-sm" onclick="nickCheck()"/></label>
-      <input type="text" class="form-control" id="nickName" value="${vo.nickName}" name="nickName" required />
-    </div>
-    <div class="form-group">
       <label for="name">성명 :</label>
       <input type="text" class="form-control" id="name" value="${vo.name}" name="name" required />
+    </div>
+    <div class="form-group">
+      <label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" id="nickNameBtn" value="닉네임 중복체크" class="btn btn-secondary btn-sm" onclick="nickCheck()"/></label>
+      <input type="text" class="form-control" id="nickName" value="${vo.nickName}" name="nickName" required />
     </div>
     <div class="form-group">
       <label for="email1">Email address:</label>  <!-- jsp에서 분리하려면 jstl 사용 // html 태그이기 때문에 지저분해지기 때문에 서블릿에서 자르는 것이 좋음 간단한 것은 ㄱㅊ -->
@@ -175,73 +173,16 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="birthday">생일</label> <%-- ${vo.birthday}/1998-05-09 00:00:00.0 --%>
-      <input type="date" name="birthday" value="${fn:substring(vo.birthday,0,10)}" class="form-control"/>
-    </div>
-    <div class="form-group">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">전화번호 :</span> &nbsp;&nbsp;  <!-- 서버단에서 나눌 것 -->
             <select name="tel1" class="custom-select">
               <option value="010" ${tel1 == '010' ? 'selected' : ''}>010</option>
-              <option value="02" ${tel1 == '02' ? 'selected' : ''}>서울</option>
-              <option value="031" ${tel1 == '031' ? 'selected' : ''}>경기</option>
-              <option value="032" ${tel1 == '032' ? 'selected' : ''}>인천</option>
-              <option value="041" ${tel1 == '041' ? 'selected' : ''}>충남</option>
-              <option value="042" ${tel1 == '042' ? 'selected' : ''}>대전</option>
-              <option value="043" ${tel1 == '043' ? 'selected' : ''}>충북</option>
-              <option value="051" ${tel1 == '051' ? 'selected' : ''}>부산</option>
-              <option value="052" ${tel1 == '052' ? 'selected' : ''}>울산</option>
-              <option value="061" ${tel1 == '061' ? 'selected' : ''}>전북</option>
-              <option value="062" ${tel1 == '062' ? 'selected' : ''}>광주</option>
             </select> - 
         </div>
         <input type="text" name="tel2" value="${tel2}" size=4 maxlength=4 class="form-control"/> - 
         <input type="text" name="tel3" value="${tel3}" size=4 maxlength=4 class="form-control"/>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="address">주소</label>
-      <div class="input-group mb-1">
-        <input type="text" name="postcode" id="sample6_postcode" value="${postcode}" class="form-control">  <!-- postcode : 내가쓰는것 // sample6_postcode : 다음api -->
-        <div class="input-group-append">
-          <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-secondary">  <!-- 다음api에서 찾는 함수 -->
-        </div>
-      </div>
-      <input type="text" name="roadAddress" id="sample6_address" size="50" value="${roadAddress}" class="form-control mb-1">
-      <div class="input-group mb-1">
-        <input type="text" name="detailAddress" id="sample6_detailAddress" value="${detailAddress}" class="form-control"> &nbsp;&nbsp;
-        <div class="input-group-append">
-          <input type="text" name="extraAddress" id="sample6_extraAddress" value="${extraAddress}" class="form-control">
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="homepage">Homepage address:</label>
-      <input type="text" class="form-control" name="homePage" value="${vo.homePage}" id="homePage"/>
-    </div>
-    <div class="form-group">
-      <label for="name">직업</label>
-      <select class="form-control" id="job" name="job">  <!-- 콤보상자는 값이 하나만 들어감 -->
-        <!-- <option value="">직업선택</option> -->
-        <option ${vo.job == '학생' ? 'selected' : ''}>학생</option>
-        <option ${vo.job == '회사원' ? 'selected' : ''}>회사원</option>
-        <option ${vo.job == '공무원' ? 'selected' : ''}>공무원</option>
-        <option ${vo.job == '군인' ? 'selected' : ''}>군인</option>
-        <option ${vo.job == '의사' ? 'selected' : ''}>의사</option>
-        <option ${vo.job == '법조인' ? 'selected' : ''}>법조인</option>
-        <option ${vo.job == '세무인' ? 'selected' : ''}>세무인</option>
-        <option ${vo.job == '자영업' ? 'selected' : ''}>자영업</option>
-        <option ${vo.job == '기타' ? 'selected' : ''}>기타</option>
-      </select>
-    </div>
-    <div class="form-group">
-			취미 : 
-			<c:set var="varHobbys" value="${fn:split('등산,낚시,수영,독서,영화감상,바둑,축구,기타',',')}" />  <!-- 자르는 기준은 관계없음 /해도됨 -->
-			<c:forEach var="tempHobby" items="${varHobbys}" varStatus="st">
-				<%-- <input type="checkbox" name="hobby" value="${tempHobby}" <c:if test="${fn:contains(vo.hobby,varHobbys[st.index])}">checked</c:if> />${tempHobby} &nbsp;&nbsp; --%>
-				<input type="checkbox" name="hobby" value="${tempHobby}" <c:if test="${fn:contains(vo.hobby,tempHobby)}">checked</c:if> />${tempHobby} &nbsp;&nbsp;  <!-- vo.hobby에 tempHobby가 포함되어 있는지 // include는 java -->
-			</c:forEach>        
     </div>
     <div class="form-group">
       <label for="content">자기소개</label>
@@ -270,8 +211,6 @@
     
     <input type="hidden" name="email" />
     <input type="hidden" name="tel" />
-    <input type="hidden" name="address" />
-    <%-- <input type="hidden" name="mid" value="${sMid}" /> --%>  <!-- 세션에 있는걸 넘김 -->
     <input type="hidden" name="photo" value="${vo.photo}" />
   </form>
 </div>

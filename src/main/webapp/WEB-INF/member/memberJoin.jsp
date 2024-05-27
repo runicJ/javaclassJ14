@@ -8,6 +8,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Join Page</title>
   <jsp:include page="/include/bs4.jsp" />
+  <style>
+		body {font-family: Arial, Helvetica, sans-serif;}
+		* {box-sizing: border-box}
+		
+		/* Full-width input fields */
+		input[type=text], input[type=password] {
+		  width: 100%;
+		  padding: 15px;
+		  margin: 5px 0 22px 0;
+		  display: inline-block;
+		  border: none;
+		  background: #f1f1f1;
+		}
+		
+		input[type=text]:focus, input[type=password]:focus {
+		  background-color: #ddd;
+		  outline: none;
+		}
+		
+		hr {
+		  border: 1px solid #f1f1f1;
+		  margin-bottom: 25px;
+		}
+		
+		/* Set a style for all buttons */
+		button {
+		  background-color: #04AA6D;
+		  color: white;
+		  padding: 14px 20px;
+		  margin: 8px 0;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  opacity: 0.9;
+		}
+		
+		button:hover {
+		  opacity:1;
+		}
+		
+		/* Extra styles for the cancel button */
+		.cancelbtn {
+		  padding: 14px 20px;
+		  background-color: #f44336;
+		}
+		
+		/* Float cancel and signup buttons and add an equal width */
+		.cancelbtn, .signupbtn {
+		  float: left;
+		  width: 50%;
+		}
+		
+		/* Add padding to container elements */
+		.container {
+		  padding: 16px;
+		}
+		
+		/* Clear floats */
+		.clearfix::after {
+		  content: "";
+		  clear: both;
+		  display: table;
+		}
+		
+		/* Change styles for cancel button and signup button on extra small screens */
+		@media screen and (max-width: 300px) {
+		  .cancelbtn, .signupbtn {
+		     width: 100%;
+		  }
+		}
+	</style>
   <script>
     'use strict';
     
@@ -272,8 +343,7 @@
     	let email2 = myform.email2.value;  // 콤보상자 선택 trim()안해도 됨
     	let email = email1 + "@" + email2;  // 결합 , 구분자 넣기
     	
-    	let postcode = myform.postcode.value + " ";  // 공백 한칸으로 내용이 있는 것 처럼  // / 넣을 것 // db에 null 허용 설정 값이 없으면 ////로 들어가도록
-    	let roadAddress = myform.roadAddress.value + " ";
+    	let residence = myform.postcode.value;
     	
     	if(!regMid.test(mid)) {
     		alert("아이디는 4~20자리의 영문 소/대문자와 숫자, 언더바(_)만 사용가능합니다.");
@@ -464,6 +534,19 @@
       <input type="text" class="form-control" id="nickName" placeholder="별명을 입력하세요." name="nickName" required />
     </div>
     <div class="form-group">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">전화번호 :</span> &nbsp;&nbsp;
+            <select name="tel1" class="custom-select">
+              <option value="010" selected>010</option>
+            </select>-
+        </div>
+        <input type="text" name="tel2" size=4 maxlength=4 class="form-control"/>-
+        <input type="text" name="tel3" size=4 maxlength=4 class="form-control"/>
+      </div>
+      <input type="button" value="연락처 중복체크" id="telBtn" class="btn btn-secondary btn-sm" onclick="telCheck()"/>
+    </div>
+    <div class="form-group">
       <label for="email1">Email address:</label>
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="Email을 입력하세요." id="email1" name="email1" required />
@@ -480,16 +563,14 @@
         </div>
     </div>
     <div class="form-group">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">전화번호 :</span> &nbsp;&nbsp;
-            <select name="tel1" class="custom-select">
-              <option value="010" selected>010</option>
-            </select>-
+      <label for="residence">거주지('특별시/광역시/도'만 표시됩니다.)</label>
+      <div class="input-group mb-1">
+        <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" class="form-control">  <!-- postcode : 내가쓰는것 // sample6_postcode : 다음api -->
+        <div class="input-group-append">
+          <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-secondary">  <!-- 다음api에서 찾는 함수 -->
         </div>
-        <input type="text" name="tel2" size=4 maxlength=4 class="form-control"/>-
-        <input type="text" name="tel3" size=4 maxlength=4 class="form-control"/>
       </div>
+      <input type="text" name="residence" id="sample6_sido" size="50" class="form-control">
     </div>
     <div class="form-group">
       <label for="content">자기소개</label>

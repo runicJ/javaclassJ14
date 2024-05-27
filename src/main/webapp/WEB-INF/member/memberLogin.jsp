@@ -22,6 +22,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>memberLogin.jsp</title>
   <%@ include file = "/include/bs4.jsp" %>
+  <style>
+	* {box-sizing: border-box;}
+	
+	/* Style the input container */
+	.input-container {
+	  display: flex;
+	  width: 100%;
+	  margin-bottom: 15px;
+	}
+	
+	/* Style the form icons */
+	.icon {
+	  padding: 10px;
+	  background: dodgerblue;
+	  color: white;
+	  min-width: 50px;
+	  text-align: center;
+	}
+	
+	/* Style the input fields */
+	.input-field {
+	  width: 100%;
+	  padding: 10px;
+	  outline: none;
+	}
+	
+	.input-field:focus {
+	  border: 2px solid dodgerblue;
+	}
+	
+	/* Set a style for the submit button */
+	.btn {
+	  background-color: dodgerblue;
+	  color: white;
+	  padding: 15px 20px;
+	  border: none;
+	  cursor: pointer;
+	  width: 100%;
+	  opacity: 0.9;
+	}
+	
+	.btn:hover {
+	  opacity: 1;
+	}
+  </style>
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />
@@ -31,15 +76,13 @@
   <form name="myform" method="post" action="${ctp}/MemberLoginOk.mem">  <!-- 확장자 .mem(controller) -->
     <table class="table table-bordered text-center">
       <tr>
-        <td colspan="2"><font size="5">로 그 인</font></td>
+        <td colspan="2"><font size="5">LOGIN</font></td>
       </tr>
-      <tr>
-        <th>아이디</th>
-        <td><input type="text" name="mid" value="${mid}" autofocus required class="form-control"/></td>
+      <tr class="input-container">
+        <td><i class="fa fa-key icon"></i><input type="text" name="mid" value="admin" placeholder="아이디를 입력하세요" autofocus required class="input-field form-control"/></td>
       </tr>
-      <tr>
-        <th>비밀번호</th>
-        <td><input type="password" name="pwd" value="1234" required class="form-control"/></td>
+      <tr class="input-container">
+        <td><i class="fa fa-key icon"></i><input type="password" name="pwd" value="1234" placeholder="비밀번호를 입력하세요" required class="input-field form-control"/></td>
       </tr>
       <tr>
         <td colspan="2">
