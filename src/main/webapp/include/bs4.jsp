@@ -32,5 +32,3 @@
 <link rel="stylesheet" href="setting/css/slick.css">
 <!-- style CSS -->
 <link rel="stylesheet" href="setting/css/style.css">
-
-<!-- <link rel="stylesheet" href="css/banner.css"> -->

@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Join Page</title>
   <jsp:include page="/include/bs4.jsp" />
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="${ctp}/js/woo.js"></script>
   <style>
 		body {font-family: Arial, Helvetica, sans-serif;}
 		* {box-sizing: border-box}
@@ -565,12 +567,11 @@
     <div class="form-group">
       <label for="residence">거주지('특별시/광역시/도'만 표시됩니다.)</label>
       <div class="input-group mb-1">
-        <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" class="form-control">  <!-- postcode : 내가쓰는것 // sample6_postcode : 다음api -->
+      	<input type="text" name="residence" id="sample6_sido" size="50" class="form-control">
         <div class="input-group-append">
-          <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-secondary">  <!-- 다음api에서 찾는 함수 -->
+          <input type="button" onclick="sample6_execDaumPostcode()" value="지역 찾기" class="btn btn-secondary">  <!-- 다음api에서 찾는 함수 -->
         </div>
       </div>
-      <input type="text" name="residence" id="sample6_sido" size="50" class="form-control">
     </div>
     <div class="form-group">
       <label for="content">자기소개</label>
@@ -594,9 +595,11 @@
       <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border"/>  <!-- 사진이 바뀔때마다 미리보기 // this로 넣고 e로 체크 -->
       <div><img id="photoDemo" width="100px"/></div>
     </div>
-    <button type="button" class="btn btn-secondary" onclick="fCheck()">회원가입</button> &nbsp;
-    <button type="reset" class="btn btn-secondary">다시작성</button> &nbsp;
-    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/MemberLogin.mem';">돌아가기</button>
+    <div class="from-group">
+	    <button type="button" class="btn btn-secondary" onclick="fCheck()">회원가입</button> &nbsp;
+	    <button type="reset" class="btn btn-secondary">다시작성</button> &nbsp;
+	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/MemberLogin.mem';">돌아가기</button>
+    </div>
     
     <input type="hidden" name="email" />  <!-- email도 한덩어리로 -->
     <input type="hidden" name="tel" />  <!-- tel1,2,3 한덩어리로 묶어서 보내도록 -->
