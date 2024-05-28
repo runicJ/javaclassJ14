@@ -23,29 +23,6 @@
 
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="single-footer-widget">
-                    <h4>Subscribe Newsletter</h4>
-                    <div class="form-wrap" id="mc_embed_signup">
-                        <form target="_blank"
-                            action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                            method="get" class="form-inline">
-                            <input class="form-control" name="EMAIL" placeholder="Your Email Address"
-                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '"
-                                required="" type="email">
-                            <button class="click-btn btn btn-default text-uppercase"> <i class="far fa-paper-plane"></i>
-                            </button>
-                            <div style="position: absolute; left: -5000px;">
-                                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
-                                    type="text">
-                            </div>
-
-                            <div class="info"></div>
-                        </form>
-                    </div>
-                    <p>Subscribe our newsletter to get update news and offers</p>
-                </div>
-            </div>
             <div class="col-sm-6 col-md-3">
                 <div class="single-footer-widget footer_icon">
                     <h4>Contact Us</h4>
@@ -91,10 +68,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/gijgo.min.js"></script>
 <!-- contact js -->
-<script src="js/jquery.ajaxchimp.min.js"></script>
 <script src="js/jquery.form.js"></script>
 <script src="js/jquery.validate.min.js"></script>
-<script src="js/mail-script.js"></script>
-<script src="js/contact.js"></script>
 <!-- custom js -->
 <script src="js/custom.js"></script>

@@ -52,6 +52,13 @@ public class MemberJoinOkCommand implements MemberInterface {
 			return;
 		}
 		
+		vo = dao.getMemberTelCheck(tel);
+		if(vo.getTel() != null) {
+			request.setAttribute("message", "이미 사용중인 전화번호 입니다.");
+			request.setAttribute("url", "MemberJoin.mem");
+			return;
+		}
+		
 		// 비밀번호 암호화(sha256) 256bit 64자리(4로 나눔) - salt키를 만든 후 암호화 시켜준다.(uuid코드 중 앞자리 8자리와 같이 병형처리 후 암호화시킨다.)
 		// uuid를 통한 salt키 만들기(앞에서 8자리를 가져왔다.)
 		String salt = UUID.randomUUID().toString().substring(0,8);  // 문자화 해서 담음

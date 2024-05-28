@@ -8,7 +8,7 @@ create table member2 (
   nickName  varchar(20) not null,			/* 회원 별명(중복불허/수정가능) */
   tel		varchar(15) not null,					/* 전화번호 : 010-1234-5678 */
   email		varchar(60),		  	/* 이메일(아이디/비밀번호 분실시에 사용)-형식체크필수 */
-  residence varchar(10) default '선택안함',  /* 거주지 체크 */
+  residence varchar(10),  /* 거주지 체크 */
   photo		varchar(100) default 'noImage.jpg', /* 회원 사진 */
   content   text,							/* 회원 소개 */
   startDate datetime default now(),			/* 최초 가입일 */

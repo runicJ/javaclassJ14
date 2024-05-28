@@ -90,7 +90,7 @@
           </p>
           <p>  
 	          <input type="submit" value="로그인" class="btn btn-success btn-sm mb-2"/>
-	          <input type="button" value="회원가입" onclick="location.href='MemberCheckJoin.mem';" class="btn btn-primary btn-sm"/>
+	          <input type="button" value="회원가입" onclick="location.href='MemberJoin.mem';" class="btn btn-primary btn-sm"/>
           </p>
 	  </div>
   </form>

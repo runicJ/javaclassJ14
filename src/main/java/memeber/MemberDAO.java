@@ -228,5 +228,36 @@ public class MemberDAO {  // 3
 			pstmtClose();
 		}
 	}
+
+	public MemberVO getMemberTelCheck(String tel) {
+		MemberVO vo = new MemberVO();
+		try {
+			sql = "select * from member2 where tel = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tel);
+			rs = pstmt.executeQuery();  // 자료가 있으면 넘어옴
+			
+			if(rs.next()) {  // 자료가 있는지 없는지 모름
+				vo.setmIdx(rs.getInt("mIdx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setName(rs.getString("name"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setTel(rs.getString("tel"));
+				vo.setEmail(rs.getString("email"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setContent(rs.getString("content"));
+				vo.setUserInfo(rs.getString("userInfo"));
+				vo.setUserDel(rs.getString("userDel"));
+				vo.setStartDate(rs.getString("startDate"));
+				vo.setLastDate(rs.getString("lastDate"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
+	}
 	
 }

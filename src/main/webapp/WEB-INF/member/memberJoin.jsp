@@ -86,6 +86,7 @@
     
     let idCheckSw = 0;  // 버튼 활성화 => 1로 바꾸고 아이디 고쳐도 0으로
     let nickCheckSw = 0;  // 둘다 1이 되어 있어야 submit 되도록
+    let telCheckSw = 0;
     
     /* let mid = $("#mid").val().trim();
 		let pwd = $("#pwd").val().trim();
@@ -127,6 +128,8 @@
 		let regMid = /^[a-zA-Z0-9_]{4,20}$/;	// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
 		let regName = /^[가-힣a-zA-Z]+$/;				// 이름은 한글/영문 가능
 	    let regNickName = /^[가-힣]+$/;					// 닉네임은 한글만 가능
+	    let regEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	    let regTel = /^010-\d{3,4}-\d{4}$/;
       
 /*       let regMid = /^[a-zA-Z0-9_]{4,20}$/;
 		  let regPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W_]).{4,20}$/; 
@@ -338,8 +341,8 @@
     	// 변수에 저장(위에서 해도됨)
     	let mid = myform.mid.value.trim();
     	let pwd = myform.pwd.value.trim();
-    	let name = myform.name.value;
-    	let nickName = myform.nickName.value;
+    	let name = myform.name.value.trim();
+    	let nickName = myform.nickName.value.trim();
     	
     	let email1 = myform.email1.value.trim();
     	let email2 = myform.email2.value;  // 콤보상자 선택 trim()안해도 됨
@@ -347,29 +350,6 @@
     	
     	let residence = myform.residence.value;
     	
-    	if(!regMid.test(mid)) {
-    		alert("아이디는 4~20자리의 영문 소/대문자와 숫자, 언더바(_)만 사용가능합니다.");
-    		myform.mid.focus();
-    		return false;
-    	}
-    	else if(pwd.length < 4 && pwd.length > 20) {
-        alert("비밀번호는 4~20 자리로 작성해주세요.");
-        myform.pwd.focus();
-        return false;
-      }
-      else if(!regName.test(name)) {
-        alert("성명은 한글과 영문대소문자만 사용가능합니다.");
-        myform.name.focus();
-        return false;
-      }
-      else if(!regNickName.test(nickName)) {
-        alert("닉네임은 한글만 사용가능합니다.");
-        myform.nickName.focus();
-        return false;
-      }
-  		// 이메일 주소형식체크
-  		
-  		// 전화번호 형식 체크
   		let tel1 = myform.tel1.value;
     	let tel2 = myform.tel2.value.trim();
     	let tel3 = myform.tel3.value.trim();
@@ -383,6 +363,37 @@
   			tel3 = " ";
   			tel = tel1 + "-" + tel2 + "-" + tel3;
   		}
+    	
+    	if(!regMid.test(mid)) {
+    		alert("아이디는 4~20자리의 영문 소/대문자와 숫자, 언더바(_)만 사용가능합니다.");
+    		myform.mid.focus();
+    		return false;
+    	}
+    	if(pwd.length < 4 && pwd.length > 20) {
+        alert("비밀번호는 4~20 자리로 작성해주세요.");
+        myform.pwd.focus();
+        return false;
+      }
+      if(!regName.test(name)) {
+        alert("성명은 한글과 영문대소문자만 사용가능합니다.");
+        myform.name.focus();
+        return false;
+      }
+      if(!regNickName.test(nickName)) {
+        alert("닉네임은 한글만 사용가능합니다.");
+        myform.nickName.focus();
+        return false;
+      }
+		if (!regEmail.test(email)) {
+	        alert("올바른 이메일 주소를 입력하세요.");
+	        myform.email1.focus();
+	        return false;
+	      }
+	      if (!regTel.test(tel)) {
+	        alert("올바른 전화번호를 입력하세요.");
+	        myform.tel2.focus();
+	        return false;
+	      }
   		
   		// 전송 전에 파일에 관련된 사항들을 체크해준다.=> 프론트체크
   		let fName = document.getElementById("file").value;
@@ -408,22 +419,24 @@
     		alert("아이디 중복체크 버튼을 눌러주세요");
     		document.getElementById("midBtn").focus();
     	}
-    	else if(nickCheckSw == 0) {
+    	if(nickCheckSw == 0) {
     		alert("닉네임 중복체크 버튼을 눌러주세요");
     		document.getElementById("nickNameBtn").focus();
     	}
-    	else {
+        if (telCheckSw === 0) {
+            alert("전화번호 중복체크 버튼을 눌러주세요");
+            document.getElementById("telCheckBtn").focus();
+            return false;
+          }
     		myform.email.value = email;  // hidden에 묶어서 보내는거 담기
     		myform.tel.value = tel;
-    		myform.address.value = address;
     		
     		myform.submit();  // MemberJoinOk로 넘김
-    	}
     }
 		
     // 아이디 중복체크
     function idCheck() {
-    	let mid = myform.mid.value;
+    	let mid = myform.mid.value.trim();
     	
     	if(mid.trim() == "") {
     		alert("아이디를 입력하세요!");
@@ -443,6 +456,8 @@
 	    			}
 	    			else {
 	    				alert("사용 가능한 아이디입니다.");
+	    				idCheckSw = 1;
+	    				$("#mid").attr("disabled", true);
 	    				$("#midBtn").attr("disabled",true);
 	    				myform.pwd.focus();
 	    			}
@@ -456,15 +471,13 @@
     
     // 닉네임 중복체크
     function nickCheck() {
-    	let nickName = myform.nickName.value;
+    	let nickName = myform.nickName.value.trim();
     	
     	if(nickName.trim() == "") {
     		alert("닉네임을 입력하세요!");
     		myform.nickName.focus();
     	}
-    	else {
-    		nickCheckSw = 1;
-    		
+    	else {    		
 	    	$.ajax({
 	    		url : "${ctp}/MemberNickCheck.mem",
 	    		type : "get",
@@ -476,6 +489,8 @@
 	    			}
 	    			else {
 	    				alert("사용 가능한 닉네임입니다.");
+	    	    		nickCheckSw = 1;
+	    	            $("#nickName").attr("disabled", true);
 	    				$("#nickNameBtn").attr("disabled",true);
 	    				myform.name.focus();
 	    			}
@@ -487,15 +502,57 @@
     	}
     }
     
+ // 전화번호 중복 체크 함수
+    function telCheck() {
+      const tel1 = myform.tel1.value;
+      const tel2 = myform.tel2.value.trim();
+      const tel3 = myform.tel3.value.trim();
+      const tel = `${tel1}-${tel2}-${tel3}`;
+      if (tel2 === "" || tel3 === "") {
+        alert("전화번호를 입력하세요!");
+        myform.tel2.focus();
+      } else {
+        $.ajax({
+          url: `${ctp}/MemberTelCheck.mem`,
+          type: "get",
+          data: {tel: tel},
+          success: function(res) {
+            if (res !== '0') {
+              alert("이미 사용중인 전화번호입니다. 다시 입력하세요.");
+              myform.tel2.focus();
+            } else {
+              alert("사용 가능한 전화번호입니다.");
+              telCheckSw = 1;
+              $("#tel1").attr("disabled", true);
+              $("#tel2").attr("disabled", true);
+              $("#tel3").attr("disabled", true);
+              $("#telCheckBtn").attr("disabled", true);
+            }
+          },
+          error: function() {
+            alert("전송 오류!");
+          }
+        });
+      }
+    }
+    
     // 입력창 누르면 스위치 리셋...?
     window.onload = function(){
-    	mid.addEventListener('click',function(){
+    	document.getElementById('mid').addEventListener('click',function(){
     		idCheckSw = 0;
     		$("#midBtn").removeAttr("disabled");
     	});
-    	nickName.addEventListener('click',function(){
+    	document.getElementById('nickName').addEventListener('click',function(){
     		nickCheckSw = 0;
     		$("#nickNameBtn").removeAttr("disabled");
+    	});
+    	document.getElementById('tel2').addEventListener('click',function(){
+    		telCheckSw = 0;
+    		$("#telBtn").removeAttr("disabled");
+    	});
+    	document.getElementById('tel3').addEventListener('click',function(){
+    		telCheckSw = 0;
+    		$("#telBtn").removeAttr("disabled");
     	});
     }
     
@@ -546,7 +603,7 @@
         <input type="text" name="tel2" size=4 maxlength=4 class="form-control"/>-
         <input type="text" name="tel3" size=4 maxlength=4 class="form-control"/>
       </div>
-      <!-- <input type="button" value="연락처 중복체크" id="telBtn" class="btn btn-secondary btn-sm" onclick="telCheck()"/> -->
+      <input type="button" value="연락처 중복체크" id="telBtn" class="btn btn-secondary btn-sm" onclick="telCheck()"/>
     </div>
     <div class="form-group">
       <label for="email1">Email address:</label>

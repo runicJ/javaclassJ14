@@ -104,12 +104,4 @@
     }
   });
 
-
- //------- Mailchimp js --------//  
-function mailChimp() {
-  $('#mc_embed_signup').find('form').ajaxChimp();
-}
-mailChimp();
-
-
 }(jQuery));
