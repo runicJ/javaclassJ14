@@ -546,7 +546,7 @@
         <input type="text" name="tel2" size=4 maxlength=4 class="form-control"/>-
         <input type="text" name="tel3" size=4 maxlength=4 class="form-control"/>
       </div>
-      <input type="button" value="연락처 중복체크" id="telBtn" class="btn btn-secondary btn-sm" onclick="telCheck()"/>
+      <!-- <input type="button" value="연락처 중복체크" id="telBtn" class="btn btn-secondary btn-sm" onclick="telCheck()"/> -->
     </div>
     <div class="form-group">
       <label for="email1">Email address:</label>
