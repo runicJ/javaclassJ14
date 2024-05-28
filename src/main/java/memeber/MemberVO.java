@@ -8,6 +8,7 @@ public class MemberVO {  // 2
 	private String nickName;
 	private String tel;
 	private String email;
+	private String residence;
 	private String photo;
 	private String content;
 	private String startDate;
@@ -17,124 +18,132 @@ public class MemberVO {  // 2
 	
 	private int deleteDiff;
 
-	int getmIdx() {
+	public int getmIdx() {
 		return mIdx;
 	}
 
-	void setmIdx(int mIdx) {
+	public void setmIdx(int mIdx) {
 		this.mIdx = mIdx;
 	}
 
-	String getMid() {
+	public String getMid() {
 		return mid;
 	}
 
-	void setMid(String mid) {
+	public void setMid(String mid) {
 		this.mid = mid;
 	}
 
-	String getPwd() {
+	public String getPwd() {
 		return pwd;
 	}
 
-	void setPwd(String pwd) {
+	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
 
-	String getName() {
+	public String getName() {
 		return name;
 	}
 
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	String getNickName() {
+	public String getNickName() {
 		return nickName;
 	}
 
-	void setNickName(String nickName) {
+	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
 
-	String getTel() {
+	public String getTel() {
 		return tel;
 	}
 
-	void setTel(String tel) {
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
 
-	String getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	void setEmail(String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	String getPhoto() {
+	public String getResidence() {
+		return residence;
+	}
+
+	public void setResidence(String residence) {
+		this.residence = residence;
+	}
+
+	public String getPhoto() {
 		return photo;
 	}
 
-	void setPhoto(String photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 
-	String getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	void setContent(String content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 
-	String getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	void setStartDate(String startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	String getLastDate() {
+	public String getLastDate() {
 		return lastDate;
 	}
 
-	void setLastDate(String lastDate) {
+	public void setLastDate(String lastDate) {
 		this.lastDate = lastDate;
 	}
 
-	String getUserInfo() {
+	public String getUserInfo() {
 		return userInfo;
 	}
 
-	void setUserInfo(String userInfo) {
+	public void setUserInfo(String userInfo) {
 		this.userInfo = userInfo;
 	}
 
-	String getUserDel() {
+	public String getUserDel() {
 		return userDel;
 	}
 
-	void setUserDel(String userDel) {
+	public void setUserDel(String userDel) {
 		this.userDel = userDel;
 	}
 
-	int getDeleteDiff() {
+	public int getDeleteDiff() {
 		return deleteDiff;
 	}
 
-	void setDeleteDiff(int deleteDiff) {
+	public void setDeleteDiff(int deleteDiff) {
 		this.deleteDiff = deleteDiff;
 	}
 
 	@Override
 	public String toString() {
 		return "MemberVO [mIdx=" + mIdx + ", mid=" + mid + ", pwd=" + pwd + ", name=" + name + ", nickName=" + nickName
-				+ ", tel=" + tel + ", email=" + email + ", photo=" + photo + ", content=" + content + ", startDate="
-				+ startDate + ", lastDate=" + lastDate + ", userInfo=" + userInfo + ", userDel=" + userDel
-				+ ", deleteDiff=" + deleteDiff + "]";
+				+ ", tel=" + tel + ", email=" + email + ", residence=" + residence + ", photo=" + photo + ", content="
+				+ content + ", startDate=" + startDate + ", lastDate=" + lastDate + ", userInfo=" + userInfo
+				+ ", userDel=" + userDel + ", deleteDiff=" + deleteDiff + "]";
 	}
 	
 }

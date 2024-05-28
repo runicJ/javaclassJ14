@@ -17,33 +17,33 @@ public class MemberLoginOkCommand implements MemberInterface {
 
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
-//		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
-//		
-//		MemberDAO dao = new MemberDAO();
-//		
-//		MemberVO vo = dao.getMemberIdCheck(mid);
+		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
+		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
+		
+		MemberDAO dao = new MemberDAO();
+		
+		MemberVO vo = dao.getMemberIdCheck(mid);
 		
 		// 아래로 회원 인증 처리  (SHA-256 하기 전이라서 아래처럼 간단히 처리 // 회원가입시 비번 암호화 후에 처리)
-//		if(vo.getPwd() == null || vo.getUserDel().equals("OK")) {  // 탈퇴 신청한 회원 보여주면 안됨
-//			request.setAttribute("message", "입력하신 회원정보가 없습니다.\\n확인하고 다시 로그인 해주세요.");  // 아이디를 확인하세요.  // 메시지 전달
-//			request.setAttribute("url", "MemberLogin.mem");  // 어디로 보낼건지
-//			return;  // 끊어주려면
-//		}
+		if(vo.getPwd() == null || vo.getUserDel().equals("OK")) {  // 탈퇴 신청한 회원 보여주면 안됨
+			request.setAttribute("message", "입력하신 회원정보가 없습니다.\\n확인하고 다시 로그인 해주세요.");  // 아이디를 확인하세요.  // 메시지 전달
+			request.setAttribute("url", "MemberLogin.mem");  // 어디로 보낼건지
+			return;  // 끊어주려면
+		}
 		
 		// 저장된 비밀번호에서 salt키를 분리시켜서 다시 암호화 시킨 후 맞는지 비교처리한다.
 		// salt키 분리  // 먼저 salt키로 무작위 수를 만들고 회원가입시 입력한 비번과 합쳐서 sha256으로 암호처리, DB에 저장할때 암호처리된 비밀번호 앞에 만든 salt키를 붙여서 저장/ 로그인시 DB에 저장된 pw의 salt키(8자리) 분리하고 로그인할때 입력한 pw와 합쳐서 sha256 암호화 한다음 DB에 저장된 것과 비교
-//		String salt = vo.getPwd().substring(0,8);
-//		
-//		SecurityUtil security = new SecurityUtil();
-//		pwd = security.encryptSHA256(salt + pwd);
-//		
-//		if(!vo.getPwd().substring(8).equals(pwd)) {  // DB pwd 8자리부터
-//			request.setAttribute("message", "비밀번호를 확인하세요");  // 회원정보가 없습니다.  // 메시지 전달
-//			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
-//			return;
-//		}
+		String salt = vo.getPwd().substring(0,8);
 		
+		SecurityUtil security = new SecurityUtil();
+		pwd = security.encryptSHA256(salt + pwd);
+		
+		if(!vo.getPwd().substring(8).equals(pwd)) {  // DB pwd 8자리부터
+			request.setAttribute("message", "비밀번호를 확인하세요");  // 회원정보가 없습니다.  // 메시지 전달
+			request.setAttribute("url", "MemberLogin.mem");
+			return;
+		}
+	
 		// 로그인 체크 완료 후에 처리할 내용....(쿠키/세션/...)		
 		// 회원이 맞으면 vo.getMid값이 null이 아니다.
 		// 회원일때 처리할 부분
@@ -124,14 +124,14 @@ public class MemberLoginOkCommand implements MemberInterface {
 //		else if(vo.getLevel() == 3) strLevel = "우수회원";  // 비회원은 못들어오니까 저장필요x
 //		
 //		// 필요한 정보를 session에 저장처리한다.
-//		HttpSession session = request.getSession();
-//		session.setAttribute("sMid", mid);
-//		session.setAttribute("sNickName", vo.getNickName());  // vo에서 가져와서 sNickName에 저장
+		HttpSession session = request.getSession();
+		session.setAttribute("sMid", mid);
+		session.setAttribute("sNickName", vo.getNickName());  // vo에서 가져와서 sNickName에 저장
 //		session.setAttribute("sLevel", vo.getLevel());  // 숫자는 비교하기 위해서 대부분 문자로 저장  // 세션에 해당 등급 숫자가 무엇인지 저장
 //		session.setAttribute("strLevel", strLevel);
 //		
-//		request.setAttribute("message", mid+"님 로그인 되셨습니다.");
-//		request.setAttribute("url", request.getContextPath()+"/MemberMain.mem");
+		request.setAttribute("message", mid+"님 로그인 되셨습니다.");
+		request.setAttribute("url", "MemberMain.mem");
 	}
 
 }

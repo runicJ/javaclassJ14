@@ -25,7 +25,6 @@ public class MemberController extends HttpServlet {  // 4
 		HttpSession session = request.getSession();  // 세션을 열음
 		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
 		
-		
 		if(com.equals("/MemberLogin")) {  // 로그인창
 			viewPage += "/memberLogin.jsp";
 		}
@@ -38,6 +37,9 @@ public class MemberController extends HttpServlet {  // 4
 			command = new MemberLogoutCommand();
 			command.excute(request, response);
 			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/MemberCheckJoin")) {
+			viewPage += "/memberCheckJoin.jsp";
 		}
 		else if(com.equals("/MemberJoin")) {
 			viewPage += "/memberJoin.jsp";
@@ -112,11 +114,6 @@ public class MemberController extends HttpServlet {  // 4
 			command = new MemberDeleteCheckOkCommand();
 			command.excute(request, response);
 			viewPage = "/include/message.jsp";  // 메시지로 보내는게 맞겠죠
-		}
-		else if(com.equals("/MemberChatInput")) {
-			command = new MemberChatInputCommand();
-			command.excute(request, response);
-			return;
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

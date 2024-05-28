@@ -73,26 +73,26 @@
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
-  <form name="myform" method="post" action="${ctp}/MemberLoginOk.mem">  <!-- 확장자 .mem(controller) -->
-    <table class="table table-bordered text-center">
-      <tr>
-        <td colspan="2"><font size="5">LOGIN</font></td>
-      </tr>
-      <tr class="input-container">
-        <td><i class="fa fa-key icon"></i><input type="text" name="mid" value="admin" placeholder="아이디를 입력하세요" autofocus required class="input-field form-control"/></td>
-      </tr>
-      <tr class="input-container">
-        <td><i class="fa fa-key icon"></i><input type="password" name="pwd" value="1234" placeholder="비밀번호를 입력하세요" required class="input-field form-control"/></td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input type="submit" value="로그인" class="btn btn-success mr-2"/>
-          <input type="reset" value="다시입력" class="btn btn-warning mr-2"/>
-          <input type="button" value="회원가입" onclick="location.href='${ctp}/MemberJoin.mem';" class="btn btn-primary mr-4"/>
-	    		<input type="checkbox" name="idSave" checked /> 아이디 저장
-        </td>
-      </tr>
-    </table>
+  <form name="myform" method="post" class="needs-validation" action="MemberLoginOk.mem" novalidate>  <!-- 확장자 .mem(controller) -->
+	  <div class="box border border-info rounded p-5">
+	  <img src="${ctp}/img/member/loginLogo.png" alt="로그인" style="cursor:pointer;" class="mx-auto d-block" />
+		  <div class="input-container">
+		    <i class="fa fa-user icon"></i>
+		    <input type="text" name="mid" value="admin" placeholder="아이디를 입력하세요" autofocus required class="input-field form-control"/>
+		  </div>
+		  <div class="input-container">
+		    <i class="fa fa-key icon"></i>
+		    <input type="password" name="pwd" value="1234" placeholder="비밀번호를 입력하세요" required class="input-field form-control"/>
+		  </div>
+		  <p class="mb-3">
+          	<input type="checkbox" name="idSave" checked /> 아이디 저장
+          	<a href="#" style="float:right;">Id/Pw를 잊으셨나요?</a>
+          </p>
+          <p>  
+	          <input type="submit" value="로그인" class="btn btn-success btn-sm mb-2"/>
+	          <input type="button" value="회원가입" onclick="location.href='MemberCheckJoin.mem';" class="btn btn-primary btn-sm"/>
+          </p>
+	  </div>
   </form>
 </div>
 <p><br/></p>

@@ -124,9 +124,9 @@
     	// 아이디,닉네임,성명,이메일,홈페이지,전화번호,비밀번호 등등....
     	
     	// 정규식을 이용한 유효성검사처리.....
-    	let regMid = /^[a-zA-Z0-9_]{4,20}$/;	// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
-      let regNickName = /^[가-힣]+$/;					// 닉네임은 한글만 가능
-      let regName = /^[가-힣a-zA-Z]+$/;				// 이름은 한글/영문 가능
+		let regMid = /^[a-zA-Z0-9_]{4,20}$/;	// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
+		let regName = /^[가-힣a-zA-Z]+$/;				// 이름은 한글/영문 가능
+	    let regNickName = /^[가-힣]+$/;					// 닉네임은 한글만 가능
       
 /*       let regMid = /^[a-zA-Z0-9_]{4,20}$/;
 		  let regPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W_]).{4,20}$/; 
@@ -345,7 +345,7 @@
     	let email2 = myform.email2.value;  // 콤보상자 선택 trim()안해도 됨
     	let email = email1 + "@" + email2;  // 결합 , 구분자 넣기
     	
-    	let residence = myform.postcode.value;
+    	let residence = myform.residence.value;
     	
     	if(!regMid.test(mid)) {
     		alert("아이디는 4~20자리의 영문 소/대문자와 숫자, 언더바(_)만 사용가능합니다.");
@@ -516,8 +516,8 @@
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
-  <form name="myform" method="post" action="${ctp}/MemberJoinOk.mem" class="was-validated" enctype="multipart/form-data">  <!-- enctype="multipart/form-data" 잊지말기 -->
-    <h2>회 원 가 입</h2>
+  <form name="myform" method="post" action="MemberJoinOk.mem" class="was-validated" enctype="multipart/form-data">  <!-- enctype="multipart/form-data" 잊지말기 -->
+    <h2 class="text-center">회 원 가 입</h2>
     <br/>
     <div class="form-group">
       <label for="mid">아이디 : &nbsp; &nbsp;<input type="button" value="아이디 중복체크" id="midBtn" class="btn btn-secondary btn-sm" onclick="idCheck()"/></label>
@@ -565,7 +565,7 @@
         </div>
     </div>
     <div class="form-group">
-      <label for="residence">거주지('특별시/광역시/도'만 표시됩니다.)</label>
+      <label for="sample6_sido">거주지('특별시/광역시/도'만 표시됩니다.)</label>
       <div class="input-group mb-1">
       	<input type="text" name="residence" id="sample6_sido" size="50" class="form-control">
         <div class="input-group-append">
@@ -590,15 +590,15 @@
         </label>
       </div>
     </div>
-    <div  class="form-group">
+    <div class="form-group">
       회원 사진(파일용량:2MByte이내) :
       <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border"/>  <!-- 사진이 바뀔때마다 미리보기 // this로 넣고 e로 체크 -->
       <div><img id="photoDemo" width="100px"/></div>
     </div>
     <div class="from-group">
-	    <button type="button" class="btn btn-secondary" onclick="fCheck()">회원가입</button> &nbsp;
-	    <button type="reset" class="btn btn-secondary">다시작성</button> &nbsp;
-	    <button type="button" class="btn btn-secondary" onclick="location.href='${ctp}/MemberLogin.mem';">돌아가기</button>
+	    <button type="button" class="btn btn-success btn-sm mr-2" onclick="fCheck()">회원가입</button> &nbsp;
+	    <button type="reset" class="btn btn-warning btn-sm mr-2">다시작성</button> &nbsp;
+	    <button type="button" class="btn btn-danger btn-sm mr-2" onclick="location.href='MemberLogin.mem';">취소</button>
     </div>
     
     <input type="hidden" name="email" />  <!-- email도 한덩어리로 -->

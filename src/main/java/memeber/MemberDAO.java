@@ -10,22 +10,12 @@ import common.GetConn;
 
 public class MemberDAO {  // 3
 	
-	//GetConn getConn = GetConn.getInstance();  // 생성이 아니라 불러쓰는 개념 // 싱글톤이니까 클래스명으로 접근(앞에 타입하고 변수써야 올라옴) // getConn에서 불러서 사용
-	
 	private Connection conn = GetConn.getConn();  // 필드 먼저 줌 sql에서 가져옴  // getConn.getConn() 하지말고 바로 클래스명 Getconn. 사용해라
-	//private Connection conn2 = GetConn.getConn();
 	private PreparedStatement pstmt = null;  // sql에서
 	private ResultSet rs = null;  // 3개 먼저 선언
 	
 	private String sql = "";
 	MemberVO vo = null;  // 여기까지 기본
-	
-//	public MemberDAO() {
-//		//getConn.getInstance();  // 메소드로 instance를 부르고 생성자를 한번 부른 것 => getConn 불러옴
-//		//pstmt = conn.createStatement();
-//		if(conn == conn2) System.out.println("같은 객체입니다.");  // 값 비교가 아니라 주소 비교
-//		else System.out.println("다른 객체 입니다.");
-//	}
 	
 	public void pstmtClose() {  // ConnClose 여기서 하면 싱글톤은 종속적임, 모든 사용자 서버 전부 닫힘
 		if(pstmt != null) {
@@ -59,10 +49,11 @@ public class MemberDAO {  // 3
 				vo.setmIdx(rs.getInt("mIdx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setPwd(rs.getString("pwd"));
-				vo.setNickName(rs.getString("nickName"));
 				vo.setName(rs.getString("name"));
+				vo.setNickName(rs.getString("nickName"));
 				vo.setTel(rs.getString("tel"));
 				vo.setEmail(rs.getString("email"));
+				vo.setEmail(rs.getString("residence"));
 				vo.setPhoto(rs.getString("photo"));
 				vo.setContent(rs.getString("content"));
 				vo.setUserInfo(rs.getString("userInfo"));
@@ -82,17 +73,18 @@ public class MemberDAO {  // 3
 	public int setMemberJoinOk(MemberVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into member2 values (default,?,?,?,?,?,?,?,?,?,default,default,default,default,default,default,default)";
+			sql = "insert into member2 values (default,?,?,?,?,?,?,?,?,?,default,default,?,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getPwd());
-			pstmt.setString(3, vo.getNickName());
-			pstmt.setString(4, vo.getName());
+			pstmt.setString(3, vo.getName());
+			pstmt.setString(4, vo.getNickName());
 			pstmt.setString(5, vo.getTel());
 			pstmt.setString(6, vo.getEmail());
-			pstmt.setString(7, vo.getPhoto());
-			pstmt.setString(8, vo.getContent());
-			pstmt.setString(9, vo.getUserInfo());
+			pstmt.setString(7, vo.getResidence());
+			pstmt.setString(8, vo.getPhoto());
+			pstmt.setString(9, vo.getContent());
+			pstmt.setString(10, vo.getUserInfo());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -235,28 +227,6 @@ public class MemberDAO {  // 3
 		} finally {
 			pstmtClose();
 		}
-	}
-	
-	// 채팅내용 DB에서 읽어오기
-	public ArrayList<MemberChatVO> getMemberMessage() {
-		ArrayList<MemberChatVO> vos = new ArrayList<MemberChatVO>();
-		try {
-			sql = "select m.* from (select * from memberChat order by idx desc limit 50) m order by idx";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();  // 담아서 보내는 거니까 rs에 담아서
-			while(rs.next()) {  // 하나 이상이니까
-				MemberChatVO vo = new MemberChatVO();
-				vo.setIdx(rs.getInt("idx"));
-				vo.setMid(rs.getString("mid"));
-				vo.setChat(rs.getString("chat"));
-				vos.add(vo);
-			}
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			rsClose();
-		}
-		return vos;
 	}
 	
 }

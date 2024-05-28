@@ -21,7 +21,7 @@ create table member2 (
 
 desc member2;
 
-insert into member2 value (default,'admin','1234','관리맨','관리자','남자',default,'010-1234-4567','abc@atom.com',default,'관리자입니다.',default,default,default,default);
+insert into member2 value (default,'admin','1234','관리자','관리맨','010-1234-4567','admin@naver.com',default,default,'관리자입니다.',default,default,default,default);
 
 select * from member2;
 

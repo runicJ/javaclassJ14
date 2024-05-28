@@ -18,7 +18,7 @@ public class MemberLogoutCommand implements MemberInterface {
 		session.invalidate();  // 저장했던 session 날림
 		
 		request.setAttribute("message", nickName+"님 로그아웃 되셨습니다.");  // 메시지 보냄
-		request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");  // 로그인 창으로 보냄
+		request.setAttribute("url", "MemberLogin.mem");  // 로그인 창으로 보냄
 	}
 
 }

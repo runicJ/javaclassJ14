@@ -1,19 +1,16 @@
 package common;
 
-import java.util.List;
+import java.util.ArrayList;
 
-//import javax.servlet.http.HttpServletRequest;
-//
-//import board.BoardDAO;
-//import board.BoardVO;
-//import guest.GuestDAO;
-//import guest.GuestVO;
-//import pds.PdsDAO;
-//
-//public class Pagination {
+import javax.servlet.http.HttpServletRequest;
 
-//	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {  // 관리자는 adminOK 아니면 일반사용자(contentShow) // 항상 쓰는 것이니까 static 붙여줌  // part는 자료실에서 쓰일 것
-//		GuestDAO guestDao = new GuestDAO();
+import blog.BlogDAO;
+import blog.BlogVO;
+
+public class Pagination {
+
+	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {  // 관리자는 adminOK 아니면 일반사용자(contentShow) // 항상 쓰는 것이니까 static 붙여줌  // part는 자료실에서 쓰일 것
+		BlogDAO blogDao = new BlogDAO();
 //		BoardDAO boardDao = new BoardDAO();
 //		//PdsDAO pdsDao = new PdsDAO();
 //		
@@ -30,7 +27,7 @@ import java.util.List;
 //			}
 //		}
 //		
-//		int totRecCnt = 0;
+		int totRecCnt = 0;
 //		
 //		if(section.equals("guest")) {
 //			if(part == null || part.equals("")) {
@@ -48,20 +45,20 @@ import java.util.List;
 //				totRecCnt = boardDao.getTotRecCnt(contentsShow, search, searchString);// part가 내용이 있다면(값이 왔다면) contentsShow만 넘기지 않고 search랑 searchString 같이 넘김
 //			}
 //		}
-//		else if(section.equals("pds")) {
-//			//totRecCnt = pdsDao.getTotRecCnt();  // 자료실의 전체 레코드 수 구하기
-//		}
-//		
-//		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;
-//		if(pag > totPage) pag = 1;
-//		int startIndexNo = (pag - 1) * pageSize;
-//		int curScrStartNo = totRecCnt - startIndexNo;
-//		
-//		int blockSize = 3;
-//		int curBlock = (pag - 1) / blockSize;
-//		int lastBlock = (totPage - 1) / blockSize;
-//
-//		List<GuestVO> gVos = null;
+		if(section.equals("blog")) {
+			totRecCnt = blogDao.getTotRecCnt();  // 자료실의 전체 레코드 수 구하기
+		}
+		
+		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;
+		if(pag > totPage) pag = 1;
+		int startIndexNo = (pag - 1) * pageSize;
+		int curScrStartNo = totRecCnt - startIndexNo;
+		
+		int blockSize = 3;
+		int curBlock = (pag - 1) / blockSize;
+		int lastBlock = (totPage - 1) / blockSize;
+
+		ArrayList<BlogVO> bVos = null;
 //		List<BoardVO> bVos = null;
 //		//List<PdsVO> pVos = null;
 ////		if(section.equals("guest")) {
@@ -86,19 +83,19 @@ import java.util.List;
 //			}
 //			request.setAttribute("vos", bVos);
 //		}
-//		else if(section.equals("pds")) {
-//			//pVos = pdsDao.getPdsList(startIndexNo, pageSize, contentShow);	// 게시판의 전체 자료 가져오기
-//		}
-//		
-//		request.setAttribute("pag", pag);
-//		request.setAttribute("pageSize", pageSize);
-//		request.setAttribute("totRecCnt", totRecCnt);
-//		request.setAttribute("totPage", totPage);
-//		request.setAttribute("curScrStartNo", curScrStartNo);
-//		request.setAttribute("blockSize", blockSize);
-//		request.setAttribute("curBlock", curBlock);
-//		request.setAttribute("lastBlock", lastBlock);
-//		
+		if(section.equals("blog")) {
+			bVos = blogDao.getBlogList(startIndexNo, pageSize, contentsShow);	// 게시판의 전체 자료 가져오기
+		}
+		
+		request.setAttribute("pag", pag);
+		request.setAttribute("pageSize", pageSize);
+		request.setAttribute("totRecCnt", totRecCnt);
+		request.setAttribute("totPage", totPage);
+		request.setAttribute("curScrStartNo", curScrStartNo);
+		request.setAttribute("blockSize", blockSize);
+		request.setAttribute("curBlock", curBlock);
+		request.setAttribute("lastBlock", lastBlock);
+		
 //		if(part != null && !part.equals("")) {
 //			String searchTitle = "";
 //			if(search.equals("title")) searchTitle = "글제목";
@@ -110,6 +107,6 @@ import java.util.List;
 //			request.setAttribute("searchString", searchString);
 //			request.setAttribute("searchCount", totRecCnt);
 //		}
-//	}
+	}
 
-//}
+}

@@ -17,7 +17,7 @@ public class MemberJoinOkCommand implements MemberInterface {
 
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String realPath = request.getServletContext().getRealPath("/images/member");  // 경로 마지막 / 안붙여도 됨
+		String realPath = request.getServletContext().getRealPath("/img/member");  // 경로 마지막 / 안붙여도 됨
 		int maxSize = 1024 * 1024 * 5;
 		String encoding = "UTF-8";
 		
@@ -25,29 +25,14 @@ public class MemberJoinOkCommand implements MemberInterface {
 		
 		String mid = multipartRequest.getParameter("mid")==null ? "" : multipartRequest.getParameter("mid");  // request가 multipartRequest에 일임한 것  // request로 받으면 다 null 나옴
 		String pwd = multipartRequest.getParameter("pwd")==null ? "" : multipartRequest.getParameter("pwd");
-		String nickName = multipartRequest.getParameter("nickName")==null ? "" : multipartRequest.getParameter("nickName");
 		String name = multipartRequest.getParameter("name")==null ? "" : multipartRequest.getParameter("name");
-		String gender = multipartRequest.getParameter("gender")==null ? "" : multipartRequest.getParameter("gender");
-		String birthday = multipartRequest.getParameter("birthday")==null ? "" : multipartRequest.getParameter("birthday");
+		String nickName = multipartRequest.getParameter("nickName")==null ? "" : multipartRequest.getParameter("nickName");
 		String tel = multipartRequest.getParameter("tel")==null ? "" : multipartRequest.getParameter("tel");
-		String address = multipartRequest.getParameter("address")==null ? "" : multipartRequest.getParameter("address");
 		String email = multipartRequest.getParameter("email")==null ? "" : multipartRequest.getParameter("email");
-		String homePage = multipartRequest.getParameter("homePage")==null ? "" : multipartRequest.getParameter("homePage");
-		String job = multipartRequest.getParameter("job")==null ? "" : multipartRequest.getParameter("job");
-		//String hobby = request.getParameter("hobby")==null ? "" : request.getParameter("hobby");  // 같은 이름으로 온 건 배열로 넘어옴(값(같은 이름)이 여러개)
+		String residence = multipartRequest.getParameter("residence")==null ? "" : multipartRequest.getParameter("residence");
 		String photo = multipartRequest.getFilesystemName("fName")==null ? "noImage.jpg" : multipartRequest.getFilesystemName("fName");  // getParameter 앞에서 저장된 이름 -불러온 이름으로 db에 저장하면 의미x // 서버에 저장된 파일시스템 이름으로 저장해야함(똑같은 10.jpg가 있으면 101.jpg로 저장됨 => db에 10.jpg로 저장하면 의미없음, 실제로 저장된 101.jpg로 db에 저장해야함 
-		System.out.println("photo : " + photo);
 		String content = multipartRequest.getParameter("content")==null ? "" : multipartRequest.getParameter("content");
 		String userInfo = multipartRequest.getParameter("userInfor")==null ? "" : multipartRequest.getParameter("userInfor");
-		
-		String[] hobbys = multipartRequest.getParameterValues("hobby");  // 같은 이름이 여러개니까 값이 오던 안오던 배열로 처리
-		String hobby = "";  // 값을 누적할 것
-		if(hobbys.length != 0) {  // 배열의 길이가 0이 아니면 값이 하나라도 넘어온 것
-			for(String h : hobbys) {
-				hobby += h + "/";
-			}
-		}
-		hobby.substring(0, hobby.lastIndexOf("/"));  // 길이-1로 해도 됨
 		
 		// DB에 저장시킬 자료 중 not null 데이터는 Back End 체크시켜준다.(나중에 annotation 붙여서 할 것)
 		
@@ -62,7 +47,7 @@ public class MemberJoinOkCommand implements MemberInterface {
 		
 		vo = dao.getMemberNickCheck(nickName);
 		if(vo.getNickName() != null) {
-			request.setAttribute("msg", "이미 사용중인 닉네임 입니다.");
+			request.setAttribute("message", "이미 사용중인 닉네임 입니다.");
 			request.setAttribute("url", "MemberJoin.mem");
 			return;
 		}
@@ -80,10 +65,11 @@ public class MemberJoinOkCommand implements MemberInterface {
 		vo = new MemberVO();
 		vo.setMid(mid);
 		vo.setPwd(pwd);  // 암호화 된 것 vo.setPwd(salt + pwd);로 저장(나중에 비교할때 8자리 빼고 비교)
-		vo.setNickName(nickName);
 		vo.setName(name);
+		vo.setNickName(nickName);
 		vo.setTel(tel);
 		vo.setEmail(email);
+		vo.setEmail(residence);
 		vo.setPhoto(photo);
 		vo.setContent(content);
 		vo.setUserInfo(userInfo);
