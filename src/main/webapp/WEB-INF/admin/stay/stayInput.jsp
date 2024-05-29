@@ -121,19 +121,19 @@
         <hr>
         <div class="container">
         	<div class="form-group row">
-            	<label for="bedroom" class="col-md-3 text-right control-label col-form-label">최대인원</label>
+            	<label for="bedroom" class="col-md-3 text-right control-label col-form-label">침실</label>
                 <div class="col-sm-9">
                     <input type="number" name=bedroom id="bedroom" class="form-control">
                 </div>
           	</div>
         	<div class="form-group row">
-            	<label for="bed" class="col-md-3 text-right control-label col-form-label">최대인원</label>
+            	<label for="bed" class="col-md-3 text-right control-label col-form-label">침대</label>
                 <div class="col-sm-9">
                     <input type="number" name="bed" id="bed" class="form-control">
                 </div>
           	</div>
         	<div class="form-group row">
-            	<label for="toilet" class="col-md-3 text-right control-label col-form-label">최대인원</label>
+            	<label for="toilet" class="col-md-3 text-right control-label col-form-label">화장실</label>
                 <div class="col-sm-9">
                     <input type="number" name="toilet" id="toilet" class="form-control">
                 </div>
@@ -141,14 +141,14 @@
         	<div class="form-group row">
                 <label class="col-md-3">wifi</label>
                 <div class="col-md-9">
-                    <div class="custom-control custom-radio">
-                    	<label class="custom-control-label" for="customControlValidation1"> Y
-                        	<input type="radio" class="custom-control-input" id="customControlValidation1" name="radio-stacked">
-                       	</label>
-                       	<label class="custom-control-label" for="customControlValidation2"> N
-                        	<input type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" selected>
-                        </label>
-                    </div>
+				    <div class="custom-control custom-radio custom-control-inline">
+				      <input type="radio" class="custom-control-input" id="customRadio1" name="example1">
+				      <label class="custom-control-label" for="customRadio1">Y</label>
+				    </div>
+				    <div class="custom-control custom-radio custom-control-inline">
+				      <input type="radio" class="custom-control-input" id="customRadio2" name="example2">
+				      <label class="custom-control-label" for="customRadio2">N</label>
+				    </div>
                 </div>
             </div>
         </div>
