@@ -55,9 +55,6 @@ public class AdminController extends HttpServlet {  // 4
 		else if(com.equals("/AdminMain")) {
 			viewPage += "/adminMain.jsp";  // frameset을 부름
 		}
-		else if(com.equals("/AdminSide")) {
-			viewPage += "/adminSide.jsp";
-		}
 //		else if(com.equals("/AdminContent")) {
 //			command = new AdminContentCommand();
 //			command.execute(request, response);
