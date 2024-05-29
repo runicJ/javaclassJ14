@@ -142,10 +142,12 @@
                 <label class="col-md-3">wifi</label>
                 <div class="col-md-9">
                     <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="customControlValidation1" name="radio-stacked">
-                        <label class="custom-control-label" for="customControlValidation1">Y</label>
-                        <input type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" selected>
-                        <label class="custom-control-label" for="customControlValidation2">N</label>
+                    	<label class="custom-control-label" for="customControlValidation1"> Y
+                        	<input type="radio" class="custom-control-input" id="customControlValidation1" name="radio-stacked">
+                       	</label>
+                       	<label class="custom-control-label" for="customControlValidation2"> N
+                        	<input type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" selected>
+                        </label>
                     </div>
                 </div>
             </div>
