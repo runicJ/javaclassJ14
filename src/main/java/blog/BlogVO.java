@@ -6,7 +6,7 @@ public class BlogVO {
 	private String nickName;
 	private String tPhoto;
 	private String title;
-	private String sort;
+	private String residence;
 	private String tDate;
 	private int viewCnt;
 	private int likedCnt;
@@ -45,11 +45,11 @@ public class BlogVO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getSort() {
-		return sort;
+	public String getResidence() {
+		return residence;
 	}
-	public void setSort(String sort) {
-		this.sort = sort;
+	public void setResidence(String residence) {
+		this.residence = residence;
 	}
 	public String gettDate() {
 		return tDate;
@@ -97,9 +97,8 @@ public class BlogVO {
 	@Override
 	public String toString() {
 		return "BlogVO [tIdx=" + tIdx + ", mid=" + mid + ", nickName=" + nickName + ", tPhoto=" + tPhoto + ", title="
-				+ title + ", sort=" + sort + ", tDate=" + tDate + ", viewCnt=" + viewCnt + ", likedCnt=" + likedCnt
-				+ ", openSw=" + openSw + ", hostIp=" + hostIp + ", tContent=" + tContent + ", complaint=" + complaint
-				+ "]";
+				+ title + ", residence=" + residence + ", tDate=" + tDate + ", viewCnt=" + viewCnt + ", likedCnt="
+				+ likedCnt + ", openSw=" + openSw + ", hostIp=" + hostIp + ", tContent=" + tContent + ", complaint="
+				+ complaint + "]";
 	}
-	
 }

@@ -23,10 +23,13 @@ public class MemberController extends HttpServlet {  // 4
 		
 		// 인증....처리......
 		HttpSession session = request.getSession();  // 세션을 열음
-		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
+		String mid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
 		
 		if(com.equals("/MemberLogin")) {  // 로그인창
 			viewPage += "/memberLogin.jsp";
+		}
+		else if(com.equals("/MemberFindIdPw")) {  // 로그인창
+			viewPage += "/memberFindIdPw.jsp";
 		}
 		else if(com.equals("/MemberLoginOk")) {  // Ok이면 아이디랑 비번 가져옴 인터페이스 command 객체 필요
 			command = new MemberLoginOkCommand();
@@ -64,7 +67,7 @@ public class MemberController extends HttpServlet {  // 4
 			command.execute(request, response);
 			return;
 		}
-		else if(level > 4) {  // 순서를 잘 설정해야(login, join 뒤에) => Spring에서는 인터셉트에서 설정(지금은 controller에서)
+		else if(mid.equals("")) {  // 순서를 잘 설정해야(login, join 뒤에) => Spring에서는 인터셉트에서 설정(지금은 controller에서)
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
 			viewPage = "/include/message.jsp";

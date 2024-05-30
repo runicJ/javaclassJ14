@@ -58,11 +58,11 @@ public class BlogDAO {
 		pstmtClose();  // 정확히는 if 밖에 써야함
 	}
 
-	// travelog 목록
+	// 여행블로그 목록
 	public ArrayList<BlogVO> getBlogList(int startIndexNo, int pageSize, String contentsShow) {
 		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
 		try {
-			sql = "select * from blog order by idx desc limit ?,?";  // limit 시작인덱스, 개수
+			sql = "select * from travelog order by tIdx desc limit ?,?";  // limit 시작인덱스, 개수
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -75,7 +75,7 @@ public class BlogDAO {
 				vo.setNickName(rs.getString("nickName"));
 				vo.settPhoto(rs.getString("tPhoto"));
 				vo.setTitle(rs.getString("title"));
-				vo.setSort(rs.getString("sort"));
+				vo.setResidence(rs.getString("residence"));
 				vo.settDate(rs.getString("tDate"));
 				vo.setViewCnt(rs.getInt("viewCnt"));
 				vo.setLikedCnt(rs.getInt("likedCnt"));
@@ -83,7 +83,6 @@ public class BlogDAO {
 				vo.setHostIp(rs.getString("hostIp"));
 				vo.settContent(rs.getString("tContent"));
 				vo.setComplaint(rs.getString("complaint"));
-				
 				vos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -94,26 +93,7 @@ public class BlogDAO {
 		return vos;
 	}
 
-//	// 방명록에 글 올리기
-//	public int setGuestInput(BlogVO vo) {
-//		int res = 0;
-//		try {
-//			sql = "insert into guest values (default, ?, ?, ?, ?, default, ?)";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, vo.getName());
-//			pstmt.setString(2, vo.getContent());
-//			pstmt.setString(3, vo.getEmail());
-//			pstmt.setString(4, vo.getHomePage());
-//			pstmt.setString(5, vo.getHostIp());
-//			res = pstmt.executeUpdate();
-//		} catch (SQLException e) {
-//			System.out.println("SQL 오류 : " + e.getMessage());
-//		} finally {
-//			pstmtClose();
-//		}
-//		return res;
-//	}
-//
+
 //	// 방명록 글 삭제하기
 //	public int setGuestDelete(int idx) {
 //		int res = 0;
@@ -129,12 +109,12 @@ public class BlogDAO {
 //		}
 //		return res;
 //	}
-//
-	// 방명록글의 총 건수구하기
+	
+	// 여행블로그 글 총 갯수
 	public int getTotRecCnt() {
 		int totRecCnt = 0;
 		try {
-			sql = "select count(*) as cnt from blog";
+			sql = "select count(*) as cnt from travelog";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			rs.next();  // 값이 무조건 오기 때문에 if 안해도 됨(null이어도 값이 0으로 옴)
@@ -145,6 +125,34 @@ public class BlogDAO {
 			rsClose();
 		}
 		return totRecCnt;
+	}
+
+	public BlogVO getBlogDetail(int tIdx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// 여행블로그 글 등록
+	public int setBlogInputOk(BlogVO vo) {
+		int res = 0;
+		try {
+			sql = "insert into travelog values (default,?,?,?,?,?,default,default,default,?,?,?,default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getMid());
+			pstmt.setString(2, vo.getNickName());
+			pstmt.setString(3, vo.gettPhoto());
+			pstmt.setString(4, vo.getTitle());
+			pstmt.setString(5, vo.getResidence());
+			pstmt.setString(6, vo.getOpenSw());
+			pstmt.setString(7, vo.getHostIp());
+			pstmt.setString(8, vo.gettContent());
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
 	}
 
 //	// 로그인한 회원이 방명록에 올린글 리스트 가져오기

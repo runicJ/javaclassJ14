@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.stay.StayInputOkCommand;
 import admin.stay.StayListCommand;
 
 @SuppressWarnings("serial")  // 필터 통과하고 제일 먼저 들어옴
@@ -67,6 +68,11 @@ public class AdminController extends HttpServlet {  // 4
 //		}
 		else if(com.equals("/StayInput")) {
 			viewPage += "/stay/stayInput.jsp";
+		}
+		else if(com.equals("/StayInputOk")) {
+			command = new StayInputOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/StayList")) {
 			command = new StayListCommand();

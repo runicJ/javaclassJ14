@@ -23,28 +23,30 @@ public class BlogController extends HttpServlet {  // 4
 		
 		// 인증....처리......
 		HttpSession session = request.getSession();  // 세션을 열음
-		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
+		String mid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
 
 		if(com.equals("/BlogList")) {
 			command = new BlogListCommand();
 			command.excute(request, response);
 			viewPage += "/blogList.jsp";
 		}
-		else if(level > 4) {  // 순서를 잘 설정해야(login, join 뒤에) => Spring에서는 인터셉트에서 설정(지금은 controller에서)
+		else if(mid.equals("")) {
 			request.setAttribute("message", "로그인 후 사용하세요");
-			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
+			request.setAttribute("url", "MemberLogin.mem");
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/BlogInput")) {
+			viewPage += "/blogInput.jsp";
+		}
+		else if(com.equals("/BlogInputOk")) {
+			command = new BlogInputOkCommand();
+			command.excute(request, response);
 			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/BlogDetail")) {
 			command = new BlogDetailCommand();
 			command.excute(request, response);
 			viewPage += "/blogDetail.jsp";
-		}
-		else if(com.equals("/MemberCheckJoin")) {
-			viewPage += "/memberCheckJoin.jsp";
-		}
-		else if(com.equals("/MemberJoin")) {
-			viewPage += "/memberJoin.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

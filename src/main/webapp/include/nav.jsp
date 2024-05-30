@@ -25,9 +25,20 @@
                                 <a class="nav-link" href="index.jsp">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="about.jsp">About</a>
+                                <a class="nav-link" href="about.jsp">소개</a>
                             </li>
-
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="blog.jsp" id="navbarDropdown_1"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Stay
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                    <a class="dropdown-item" href="top_place.jsp">top Stay</a>
+                                    <a class="dropdown-item" href="tour_details.jsp">New Stay</a>
+                                    <a class="dropdown-item" href="elements.jsp">Event Stay</a>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="BlogList.bl" id="navbarDropdown"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -36,28 +47,27 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="BlogList.bl">Travelog</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="blog.jsp" id="navbarDropdown_1"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    pages
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                    <a class="dropdown-item" href="top_place.jsp">top place</a>
-                                    <a class="dropdown-item" href="tour_details.jsp">tour details</a>
-                                    <a class="dropdown-item" href="elements.jsp">Elements</a>
+                                    <a class="dropdown-item" href="BlogList.bl">Journal</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="contact.jsp">Contact</a>
+                                <a class="nav-link" href="contact.jsp">Message</a>
                             </li>
+                            <c:if test="${sMid != null}">
+                            <li class="nav-item"><a class="nav-link" href="MemberLogout.mem">Logout</a></li>
+                            </c:if>
                         </ul>
                     </div>
-                    <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="AdminMain.ad">관리자메뉴</a></c:if>
-                    <c:if test="${sMid != null && sMid != 'admin'}"><a class="btn_1 d-none d-lg-block" href="MemberMain.mem">마이페이지</a></c:if>
                     <c:if test="${sMid == null}"><a href="MemberLogin.mem" class="btn_1 d-none d-lg-block"><i class="fa-solid fa-door-open"></i> LOGIN</a></c:if>
+                    <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="AdminMain.ad">관리자메뉴</a></c:if>
+                    <c:if test="${sMid != null && sMid != 'admin'}">
+	                    <a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown"><i class="fa-solid fa-user"></i>마이페이지</a>
+	                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	                        <a class="dropdown-item" href="BlogList.bl">마이페이지</a>
+	                        <a class="dropdown-item" href="BlogList.bl">마이페이지</a>
+	                        <a class="dropdown-item" href="BlogList.bl">마이페이지</a>
+			      		</div>
+                   	</c:if>
                 </nav>
             </div>
         </div>

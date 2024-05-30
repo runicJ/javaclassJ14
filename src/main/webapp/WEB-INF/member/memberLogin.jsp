@@ -86,7 +86,7 @@
 		  </div>
 		  <p class="mb-3">
           	<input type="checkbox" name="idSave" checked /> 아이디 저장
-          	<a href="#" style="float:right;">Id/Pw를 잊으셨나요?</a>
+          	<a href="MemberFindIdPw.mem" style="float:right;">Id/Pw를 잊으셨나요?</a>
           </p>
           <p>  
 	          <input type="submit" value="로그인" class="btn btn-success btn-sm mb-2"/>

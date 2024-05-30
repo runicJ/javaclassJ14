@@ -10,8 +10,14 @@ public class BlogDetailCommand implements BlogInterface {
 
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
+		int tIdx = request.getParameter("tIdx")==null ? 0 : Integer.parseInt(request.getParameter("tIdx"));
+		
+		BlogDAO dao = new BlogDAO();
+		
+		BlogVO vo = dao.getBlogDetail(tIdx);
+		
+		request.setAttribute("vo", vo);
+		
 	}
 
 }

@@ -254,7 +254,7 @@
                         <div class="card card-hover">
                             <div class="box bg-warning text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-collage"></i></h1>
-                                <h6 class="text-white">Widgets</h6>
+                                <h6 class="text-white">Complaint</h6>
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@
                         <div class="card card-hover">
                             <div class="box bg-danger text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
-                                <h6 class="text-white">Tables</h6>
+                                <h6 class="text-white">Blog</h6>
                             </div>
                         </div>
                     </div>
