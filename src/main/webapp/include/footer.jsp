@@ -26,14 +26,13 @@
             <div class="col-sm-6 col-md-3">
                 <div class="single-footer-widget footer_icon">
                     <h4>Contact Us</h4>
-                    <p>4156, New garden, New York, USA
-                            +880 362 352 783</p>
-                    <span>contact@martine.com</span>
+                    <p>충청북도 청주시 서원구 사직대로 109 4층 401호</p>
+                    <span>https://cheongju.greenart.co.kr</span>
                     <div class="social-icons">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
-                        <a href="#"><i class="ti-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fa-solid fa-comment"></i></a>
+                        <a href="#" target="_blank"><i class="ti-instagram"></i></a>
+                        <a href="https://www.facebook.com" target="_blank"><i class="ti-facebook"></i></a>
+                        <a href="https://x.com" target="_blank"><i class="ti-twitter-alt"></i></a>
                     </div>
                 </div>
             </div>

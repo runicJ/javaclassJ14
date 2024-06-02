@@ -11,7 +11,7 @@
 /**************** common css start ****************/
 /* line 3, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_common.scss */
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Electrical Safety Regular", "Open Sans", sans-serif;
   padding: 0;
   margin: 0;
   font-size: 14px;
@@ -149,13 +149,13 @@ a:hover {
 /* line 74, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_common.scss */
 h1, h2, h3, h4, h5, h6 {
   color: #0c3e72;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Electrical Safety Regular', "Open Sans", sans-serif;
 }
 
 /* line 78, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_common.scss */
 p {
   color: #a2a2a2;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Electrical Safety Regular', "Open Sans", sans-serif;
   line-height: 28px;
   font-size: 16px;
   margin-bottom: 0px;
@@ -2246,9 +2246,9 @@ ul {
 /* line 33, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_menu.scss */
 .main_menu .main-menu-item ul li .nav-link {
   color: #0c3e72;
-  font-size: 16px;
+  font-size: 18px;
   padding: 38px 22px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Electrical Safety Regular', "Open Sans", sans-serif;
   text-transform: capitalize;
 }
 
@@ -2365,7 +2365,7 @@ ul {
   height: 880px;
   position: relative;
   overflow: hidden;
-  background-image: url(../../img/banner_bg.png);
+  background: linear-gradient(rgba(240,196,32,0.1), rgba(245,245,220,0.1)), url(../../img/forest.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -2728,7 +2728,7 @@ ul {
 
 /* line 47, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_about.scss */
 .our_service_part {
-  background-image: url(../img/service_bg_2.png);
+  background-image: url(../../img/service_bg_2.png);
   background-repeat: no-repeat;
   background-position: left;
   background-size: 29% 86%;
@@ -3474,7 +3474,7 @@ ul {
 /* line 26, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_team.scss */
 .single_team_member .blog_item_date h3 {
   font-size: 24px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Electrical Safety Bold', "Open Sans", sans-serif;
   color: #fff;
   font-weight: 700;
 }
@@ -3678,7 +3678,7 @@ ul {
 
 /* line 1, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_breadcrumb.scss */
 .breadcrumb_bg {
-  background-image: url("../img/breadcrumb.png");
+  background-image: url("../../img/breadcrumb.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -3719,7 +3719,7 @@ ul {
 /* line 30, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_breadcrumb.scss */
 .breadcrumb .breadcrumb_iner .breadcrumb_iner_item h2 {
   color: #fff;
-  font-size: 80px;
+  font-size: 60px;
   font-weight: 800;
   margin-bottom: 24px;
   text-transform: capitalize;
@@ -3735,7 +3735,7 @@ ul {
 
 /* line 44, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_breadcrumb.scss */
 .breadcrumb .breadcrumb_iner .breadcrumb_iner_item p {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #fff;
   text-transform: capitalize;

@@ -25,37 +25,52 @@ public class MemberController extends HttpServlet {  // 4
 		HttpSession session = request.getSession();  // 세션을 열음
 		String mid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
 		
-		if(com.equals("/MemberLogin")) {  // 로그인창
+		if(com.equals("/MemberLogin")) {
 			viewPage += "/memberLogin.jsp";
 		}
-		else if(com.equals("/MemberFindIdPw")) {  // 로그인창
+		else if(com.equals("/MemberLoginOk")) {
+			command = new MemberLoginOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/MemberFindIdPw")) {
 			viewPage += "/memberFindIdPw.jsp";
 		}
-		else if(com.equals("/MemberLoginOk")) {  // Ok이면 아이디랑 비번 가져옴 인터페이스 command 객체 필요
-			command = new MemberLoginOkCommand();
-			command.execute(request, response);  // 실행객체
-			viewPage = "/include/message.jsp";  // ~님 로그인되었습니다. 메시지 보냄
+		else if(com.equals("/MemberFindIdOk")) {
+			command = new MemberFindIdOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/MemberFindPwOk")) {
+			command = new MemberFindPwOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/MemberResetPw")) {
+			command = new MemberResetPwCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/MemberLogout")) {
 			command = new MemberLogoutCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
-//		else if(com.equals("/MemberCheckJoin")) {
-//			viewPage += "/memberCheckJoin.jsp";
-//		}
+		else if(com.equals("/MemberAgreeJoin")) {
+			viewPage += "/memberAgreeJoin.jsp";
+		}
 		else if(com.equals("/MemberJoin")) {
 			viewPage += "/memberJoin.jsp";
 		}
 		else if(com.equals("/MemberJoinOk")) {
-			command = new MemberJoinOkCommand();  // ajax 처리 한 것이 아니기 때문에 msg띄워서 보내주면 됨
+			command = new MemberJoinOkCommand();
 			command.execute(request, response);
-			viewPage = "/include/message.jsp";  // 가입이 완료됐다는 메시지를 띄우고 view창으로 보냄
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/MemberIdCheck")) {
 			command = new MemberIdCheckCommand();
 			command.execute(request, response);
-			return;  // ajax니까 return으로 해줌!!!!!
+			return;
 		}
 		else if(com.equals("/MemberNickCheck")) {
 			command = new MemberNickCheckCommand();
@@ -67,7 +82,7 @@ public class MemberController extends HttpServlet {  // 4
 			command.execute(request, response);
 			return;
 		}
-		else if(mid.equals("")) {  // 순서를 잘 설정해야(login, join 뒤에) => Spring에서는 인터셉트에서 설정(지금은 controller에서)
+		else if(mid.equals("")) {
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
 			viewPage = "/include/message.jsp";

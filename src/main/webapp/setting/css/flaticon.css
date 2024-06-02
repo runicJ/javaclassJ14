@@ -15,6 +15,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Electrical Safety Regular";
+  src: url("../fonts/Electrical Safety Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: "Flaticon";

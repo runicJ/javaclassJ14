@@ -8,53 +8,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Join Page</title>
+  <title>Travelog Page</title>
   <jsp:include page="/include/bs4.jsp" />
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
-<p><br/></p>
-<div class="container">
+    <!-- breadcrumb start-->
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <div class="breadcrumb_iner_item text-center">
+                            <h2>Travelog</h2>
+                            <p>여러분의 추억을 기록하세요</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb start-->
     <!--================Blog Area =================-->
     <section class="blog_area section_padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mb-5 mb-lg-0">
                     <div class="blog_left_sidebar">
-						<table class="table table-borderless m-0 p-0">
-						  	<tr>
-						  		<td>
-						  			<form name="partForm">
-						  				<select name="part" id="part" onchange="partCheck()">
-						  					<option ${part=="전체" ? "selected" : ""}>전체</option>
-						  					<option ${part=="학습" ? "selected" : ""}>학습</option>
-						  					<option ${part=="여행" ? "selected" : ""}>여행</option>
-						  					<option ${part=="음식" ? "selected" : ""}>음식</option>
-						  					<option ${part=="기타" ? "selected" : ""}>기타</option>
-						  				</select>
-						  			</form>
-						  		</td>
-						  		<td class="text-right">
-						  			<a href="BlogInput.bl" class="btn btn-success">글쓰기</a>
-						  		</td>
-						  	</tr>
-						</table>
+                    	<div class="mb-2" style="display:flex; justify-content:space-between; align-items:center;">
+				  			<form name="partForm">
+				  				<select name="part" id="part" onchange="partCheck()" style="height: 35px; font-size: 16px; padding: 4px 8px;">
+				  					<option ${part=="최신글" ? "selected" : ""}>최신글</option>
+				  					<option ${part=="조회수" ? "selected" : ""}>조회수</option>
+				  					<option ${part=="좋아요" ? "selected" : ""}>좋아요</option>
+				  					<option ${part=="댓글수" ? "selected" : ""}>댓글수</option>
+				  				</select>
+				  			</form>
+			  				<input type="button" onclick="BlogInput.bl" value="글쓰기" class="button primary-bg btn_1">
+			  			</div>
                     	<c:set var="curScrStartNo" value="${curScrStartNo}" />
         				<c:forEach var="vo" items="${vos}" varStatus="st">
                         <article class="blog_item">
                             <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="${ctp}/img/blog/${vo.tPhoto}" alt="">
+                                <img class="card-img rounded-0" src="${ctp}/img/blog/${vo.tPhoto}">
                                 <a href="#" class="blog_item_date">
                                     <h3>${curScrStartNo}</h3>
-                                    <p>${vo.tDate}</p>
+                                    <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,11,19) : fn:substring(vo.tDate,0,16)}</p>
                                 </a>
                             </div>
 
                             <div class="blog_details">
-                                <a class="d-inline-block" href="BlogContent.bl?idx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}&part=${part}">
-                                    <h2>${vo.title}</h2>
+                                <a class="d-inline-block" href="BlogContent.bl?idx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}">
+                                    <h2>${vo.title}</h2><c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/img/new.gif" /></c:if>
                                 </a>
                                 <p>${vo.tContent}</p>
                                 <ul class="blog-info-link">
@@ -62,6 +68,7 @@
                                     <li><a href="#"><i class="far fa-comments"></i>03 Comments</a></li>
                                 </ul>
                             </div>
+                            <c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
                         </article>
                         </c:forEach>
 
@@ -273,7 +280,6 @@
         </div>
     </section>
     <!--================Blog Area =================-->
-</div>
 <p><br/></p>
 <!-- 블록페이지 시작 -->  <!-- 0블록: 1/2/3 -->
 <div class="text-center">

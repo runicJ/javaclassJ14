@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Stay balance</title>
-<link rel="icon" href="img/favicon.png">
+<link rel="icon" href="img/bag_travel_icon.png">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="setting/css/bootstrap.min.css">
 <!-- animate CSS -->

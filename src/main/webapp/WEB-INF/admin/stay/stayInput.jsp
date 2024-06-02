@@ -5,15 +5,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
-    <title>StayInput</title>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>  <!-- CDN 쓰는 이유는 어차피 웹은 인터넷이 없으면 무의미 -->
+    <title>Stay Input</title>
+   	<%@ include file = "/include/bs4.jsp" %>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   	<script src="${ctp}/js/woo.js"></script>
     <!-- Custom CSS -->
     <link href="${ctp}/setting/css/admin/fullcalendar.min.css" rel="stylesheet" />
@@ -93,16 +88,6 @@
 	</script>
 </head>
 <body>
-	<!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
-    <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <div id="main-wrapper">
@@ -114,36 +99,9 @@
 		        <div class="navbar-header" data-logobg="skin5">
 		            <!-- This is for the sidebar toggle which is visible on mobile only -->
 		            <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-		            <!-- ============================================================== -->
-		            <!-- Logo -->
-		            <!-- ============================================================== -->
-		            <a class="navbar-brand" href="index.html">
-		                <!-- Logo icon -->
-		                <b class="logo-icon p-l-10">
-		                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-		                    <!-- Dark Logo icon -->
-		                    <img src="assets/images/logo-icon.png" alt="homepage" class="light-logo" />
-		                   
-		                </b>
-		                <!--End Logo icon -->
-		                 <!-- Logo text -->
-		                <span class="logo-text">
-		                     <!-- dark Logo text -->
-		                     <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" />
-		                    
-		                </span>
-		                <!-- Logo icon -->
-		                <!-- <b class="logo-icon"> -->
-		                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-		                    <!-- Dark Logo icon -->
-		                    <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-		                    
-		                <!-- </b> -->
-		                <!--End Logo icon -->
-		            </a>
-		            <!-- ============================================================== -->
-		            <!-- End Logo -->
-		            <!-- ============================================================== -->
+
+		            <a class="navbar-brand" href="/index.jsp">Senere Nest</a>
+
 		            <!-- ============================================================== -->
 		            <!-- Toggle which is visible on mobile only -->
 		            <!-- ============================================================== -->
@@ -159,21 +117,6 @@
 		            <ul class="navbar-nav float-left mr-auto">
 		                <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
 		                <!-- ============================================================== -->
-		                <!-- create new -->
-		                <!-- ============================================================== -->
-		                <li class="nav-item dropdown">
-		                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		                     <span class="d-none d-md-block">Create New <i class="fa fa-angle-down"></i></span>
-		                     <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>   
-		                    </a>
-		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" href="#">Action</a>
-		                        <a class="dropdown-item" href="#">Another action</a>
-		                        <div class="dropdown-divider"></div>
-		                        <a class="dropdown-item" href="#">Something else here</a>
-		                    </div>
-		                </li>
-		                <!-- ============================================================== -->
 		                <!-- Search -->
 		                <!-- ============================================================== -->
 		                <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
@@ -182,32 +125,88 @@
 		                    </form>
 		                </li>
 		            </ul>
-		            <!-- ============================================================== -->
-		            <!-- Right side toggle and nav items -->
-		            <!-- ============================================================== -->
-		            <ul class="navbar-nav float-right">
-		                <!-- ============================================================== -->
-		                <!-- Comment -->
-		                <!-- ============================================================== -->
-		                <li class="nav-item dropdown">
-		                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
-		                    </a>
-		                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" href="#">Action</a>
-		                        <a class="dropdown-item" href="#">Another action</a>
-		                        <div class="dropdown-divider"></div>
-		                        <a class="dropdown-item" href="#">Something else here</a>
-		                    </div>
-		                </li>
-		                <!-- ============================================================== -->
-		                <!-- End Comment -->
-		                <!-- ============================================================== -->
-		
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
+                            </a>
+                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-comment-processing"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="">
+                                             <!-- Message -->
+                                            <a href="javascript:void(0)" class="link border-top">
+                                                <div class="d-flex no-block align-items-center p-10">
+                                                    <span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>
+                                                    <div class="m-l-10">
+                                                        <h5 class="m-b-0">Event today</h5> 
+                                                        <span class="mail-desc">Just a reminder that event</span> 
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="link border-top">
+                                                <div class="d-flex no-block align-items-center p-10">
+                                                    <span class="btn btn-info btn-circle"><i class="ti-settings"></i></span>
+                                                    <div class="m-l-10">
+                                                        <h5 class="m-b-0">Settings</h5> 
+                                                        <span class="mail-desc">You can customize this template</span> 
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="link border-top">
+                                                <div class="d-flex no-block align-items-center p-10">
+                                                    <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
+                                                    <div class="m-l-10">
+                                                        <h5 class="m-b-0">Pavan kumar</h5> 
+                                                        <span class="mail-desc">Just see the my admin!</span> 
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="link border-top">
+                                                <div class="d-flex no-block align-items-center p-10">
+                                                    <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
+                                                    <div class="m-l-10">
+                                                        <h5 class="m-b-0">Luanch Admin</h5> 
+                                                        <span class="mail-desc">Just see the my new admin!</span> 
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
 		                <!-- ============================================================== -->
 		                <!-- User profile and search -->
 		                <!-- ============================================================== -->
 		                <li class="nav-item dropdown">
-		                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+		                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${ctp}/img/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
 		                    <div class="dropdown-menu dropdown-menu-right user-dd animated">
 		                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
 		                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
@@ -260,15 +259,15 @@
 		<!-- ============================================================== -->
 		<!-- End Left Sidebar - style you can find in sidebar.scss  -->
 		<!-- ============================================================== -->
-	<div class="container-fluid">
+	<div class="container">
     <div class="card">
         <div class="card-body">
 		<form name="stayInput" action="StayInputOk.ad" method="post" enctype="multipart/form-data">
 			<div class="card">
 		        <div class="card-body">
-		            <h5 class="card-title">숙소 등록하기</h5>
+		            <h5 class="card-title col-md-3 text-right control-label col-form-label">숙소 등록하기</h5>
 		            <div class="form-group row">
-		                <label class="col-md-3 m-t-15">숙소유형</label>
+		                <label for="cono1" class="col-md-3 text-right control-label col-form-label">숙소 유형</label>
 		                <div class="col-md-9">
 		                    <select class="select2 form-control m-t-15" multiple="multiple" style="width:100%; height:36px;">
 		                        <option>선택</option>
@@ -298,15 +297,17 @@
 		                </div>
 		            </div>
 				    <div class="form-group row">
-				      <label for="address">주소</label>
-				      <div class="input-group mb-1">
-				        <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" class="form-control">  <!-- postcode : 내가쓰는것 // sample6_postcode : 다음api -->
+				     <label for="address" class="col-md-3 text-right control-label col-form-label" rowspan="3">주소</label>
+				      <div class="input-group col-sm-9">
+				        <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" class="form-control">
 				        <div class="input-group-append">
-				          <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-secondary">  <!-- 다음api에서 찾는 함수 -->
+				          <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-secondary">
 				        </div>
 				      </div>
-				      <input type="text" name="roadAddress" id="sample6_address" size="50" placeholder="주소" class="form-control mb-1">
-				      <div class="input-group mb-1">
+				      <div class="input-group col-sm-9">
+				      	<input type="text" name="roadAddress" id="sample6_address" size="50" placeholder="주소" class="form-control">
+				      </div>
+				      <div class="input-group col-sm-9">
 				        <input type="text" name="detailAddress" id="sample6_detailAddress" placeholder="상세주소" class="form-control"> &nbsp;&nbsp;
 				        <div class="input-group-append">
 				          <input type="text" name="extraAddress" id="sample6_extraAddress" placeholder="참고항목" class="form-control">
@@ -314,7 +315,7 @@
 				      </div>
 				    </div>
 		            <div class="form-group row">
-		            	<label for="cono1" class="col-md-3 text-right control-label col-form-label">Message</label>
+		            	<label for="cono1" class="col-md-3 text-right control-label col-form-label">숙소 설명</label>
 		                <div class="col-sm-9">
 		                    <textarea class="form-control" placeholder="상세설명을 입력하세요"></textarea>
 		                </div>
@@ -332,7 +333,7 @@
 		                </div>
 		          	</div>
 		            <div class="form-group row">
-		                <label class="col-md-3">File Upload</label>
+		                <label class="col-md-3 text-right control-label col-form-label">File Upload</label>
 		                <div class="col-md-9">
 		                    <div class="custom-file">
 		                        <input type="file" class="custom-file-input" id="validatedCustomFile" required>
@@ -343,7 +344,6 @@
 		            </div>
 		        </div>
 		        <hr>
-		        <p class="text-center">옵션 선택</p>
 	        	<div class="form-group row">
 	            	<label for="bedroom" class="col-md-3 text-right control-label col-form-label">침실</label>
 	                <div class="col-sm-9">
@@ -402,7 +402,6 @@
 	                </div>
 	            </div>
 	        </div>
-	        <hr>
 	        <div class="border-top">
 	            <div class="card-body">
 	                <button type="button" class="btn btn-primary">등록하기</button>
@@ -421,9 +420,6 @@
 <script src="${ctp}/js/admin/jquery.min.js"></script>
 <script src="${ctp}/js/admin/jquery.ui.touch-punch-improved.js"></script>
 <script src="${ctp}/js/admin/jquery-ui.min.js"></script>
-<!-- Bootstrap tether Core JavaScript -->
-<script src="${ctp}/js/admin/popper.min.js"></script>
-<script src="${ctp}/js/admin/bootstrap.min.js"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
 <script src="${ctp}/js/admin/perfect-scrollbar.jquery.min.js"></script>
 <script src="${ctp}/js/admin/sparkline.js"></script>

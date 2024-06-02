@@ -59,17 +59,18 @@ public class BlogDAO {
 	}
 
 	// 여행블로그 목록
-	public ArrayList<BlogVO> getBlogList(int startIndexNo, int pageSize, String contentsShow) {
+	public ArrayList<BlogVO> getBlogList(int startIndexNo, int pageSize, String part) {
 		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
 		try {
-			sql = "select * from travelog order by tIdx desc limit ?,?";  // limit 시작인덱스, 개수
+			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff "
+					+ "from travelog order by tIdx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {  // 1개가 아닐 수 있으므로 여러개일 경우 while
-				vo = new BlogVO();  // 위에 선언해 두었으므로 생성만 함
+			while(rs.next()) {
+				vo = new BlogVO();
 				vo.settIdx(rs.getInt("tIdx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
@@ -83,6 +84,10 @@ public class BlogDAO {
 				vo.setHostIp(rs.getString("hostIp"));
 				vo.settContent(rs.getString("tContent"));
 				vo.setComplaint(rs.getString("complaint"));
+				
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				vo.setDate_diff(rs.getInt("date_diff"));
+				
 				vos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -117,8 +122,8 @@ public class BlogDAO {
 			sql = "select count(*) as cnt from travelog";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			rs.next();  // 값이 무조건 오기 때문에 if 안해도 됨(null이어도 값이 0으로 옴)
-			totRecCnt = rs.getInt("cnt");  // 숫자 0써도 되는데 변수명 쓰는 것이 좋음
+			rs.next();  // 값이 무조건 있음(null이어도 값이 0으로 옴)
+			totRecCnt = rs.getInt("cnt");
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
@@ -128,7 +133,6 @@ public class BlogDAO {
 	}
 
 	public BlogVO getBlogDetail(int tIdx) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

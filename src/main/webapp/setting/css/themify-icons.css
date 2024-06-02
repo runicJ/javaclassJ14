@@ -9,6 +9,13 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: 'Electrical Safety Bold';
+	src:url('../fonts/Electrical Safety Bold.ttf?-fvbane') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 [class^="ti-"], [class*=" ti-"] {
 	font-family: 'themify';
 	speak: none;

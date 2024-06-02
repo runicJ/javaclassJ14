@@ -8,10 +8,10 @@
 
 <div class="main_menu_iner">
     <div class="container">
-        <div class="row align-items-center ">
+        <div class="row align-items-center">
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-                    <a class="navbar-brand" href="http://192.168.50.57:9090/javaclassJ14/Main"> <img src="img/logo.png" alt="logo"> </a>
+                    <a class="navbar-brand" href="http://localhost:9090/javaclassJ14/Main"><img src="img/logoMain.png" alt="logo" style="width:160px;height:150px;object-fit:contain;object-position:center center;display:block;margin-top:-30px;margin-bottom:-30px;"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -22,21 +22,18 @@
                         id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.jsp">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="about.jsp">소개</a>
+                                <a class="nav-link" href="Introduce.st">Introduce</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="blog.jsp" id="navbarDropdown_1"
+                                <a class="nav-link dropdown-toggle" href="StayList.st" id="navbarDropdown_1"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     Stay
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                    <a class="dropdown-item" href="top_place.jsp">top Stay</a>
-                                    <a class="dropdown-item" href="tour_details.jsp">New Stay</a>
-                                    <a class="dropdown-item" href="elements.jsp">Event Stay</a>
+                                    <a class="dropdown-item" href="StayList.st">Stay List</a>
+                                    <a class="dropdown-item" href="StayPromotion.st">Stay Promotion</a>
+                                    <a class="dropdown-item" href="StayComment.st">Stay Comment</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -47,12 +44,15 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="BlogList.bl">Travelog</a>
-                                    <a class="dropdown-item" href="BlogList.bl">Journal</a>
+                                    <a class="dropdown-item" href="BlogJournalList.bl">Journal</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="contact.jsp">Message</a>
+                                <a class="nav-link" href="Service.ad">Service</a>
                             </li>
+                            <c:if test="${sMid == null}">
+                            <li class="nav-item"><a class="nav-link" href="MemberJoin.mem">Join</a></li>
+                            </c:if>
                             <c:if test="${sMid != null}">
                             <li class="nav-item"><a class="nav-link" href="MemberLogout.mem">Logout</a></li>
                             </c:if>

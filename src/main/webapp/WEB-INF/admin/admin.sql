@@ -2,13 +2,14 @@ show tables;
 
 /* 신고테이블(complaint) */
 create table complaint (
-	idx   int not null auto_increment,  /* 신고테이블 고유번호 */
+	cpIdx   int not null auto_increment primary key,  /* 신고테이블 고유번호 */
 	part  varchar(15) not null,  /* 신고 분류(게시판:board, 자료실:pds, 방명록:guest) */
 	partIdx  int not null,  /* 신고분류항목 글의 고유번호 */
-	cpMid  varchar(20) not null,  /* 신고자 아이디 */
+	mid  varchar(20) not null,  /* 신고자 아이디 */
 	cpContent  text not null,  /* 신고 사유 */
 	cpDate  datetime default now(),  /* 신고한 날짜 */
-	primary key(idx)
+	answer CHAR(2) DEFAULT 'NO',
+	FOREIGN KEY (mid) REFERENCES member(mId)
 );
 desc complaint;
 
@@ -20,15 +21,14 @@ select c.*, date_format(c.cpDate, '%Y-%m-%d %H:%i') as cpDate, b.title, b.nickNa
 
 /* 리뷰 테이블 */
 create table review(
-	idx  int not null auto_increment,  /* 리뷰 고유번호 */
+	rIdx  int not null auto_increment primary key,  /* 리뷰 고유번호 */
 	part  varchar(20) not null,        /* 분야(게시판:board, 자료실:pds....) */
 	partIdx  int not null,             /* 해당 분야의 고유번호 */
 	mid  varchar(20) not null,         /* 리뷰 작성자 아이디 */
-	nickName  varchar(30) not null,    /* 리뷰 작성자 닉네임 */
+	nickName  varchar(20) not null,    /* 리뷰 작성자 닉네임 */
 	star  int not null default 0,      /* 리뷰 별점 점수 */
-	content  text,                     /* 리뷰 내용 */
+	rContent  text,                     /* 리뷰 내용 */
 	rDate  datetime default now(),     /* 리뷰 작성일 */
-	primary key(idx),
 	foreign key(mid) references member2(mid)
 );
 desc review;
@@ -36,16 +36,16 @@ desc review;
 ALTER TABLE review AUTO_INCREMENT = 1;
 
 /* 리뷰에 댓글 달기(대댓글과 비슷하지만 약간 틀림) // vo를 review와 같이 쓰기 위해 변수명 따로 줌 */
-create table reviewReply(
-	replyIdx  int not null auto_increment,  /* 댓글의 고유번호 */
+create table reply(
+	reIdx  int not null auto_increment,  /* 댓글의 고유번호 */
 	reviewIdx  int not null,           /* 원본글(부모글:리뷰)의 고유번호(외래키로 설정) */
-	replyMid  varchar(20) not null,         /* 댓글 작성자 아이디 */
-	replyNickName  varchar(30) not null,    /* 댓글 작성자 닉네임 */
-	replyRDate  datetime default now(),     /* 댓글 작성일 */
-	replyContent  text,                     /* 댓글 내용 */
+	mid  varchar(20) not null,         /* 댓글 작성자 아이디 */
+	nickName  varchar(20) not null,    /* 댓글 작성자 닉네임 */
+	reDate  datetime default now(),     /* 댓글 작성일 */
+	reContent text,                     /* 댓글 내용 */
 	primary key(replyIdx),
-	foreign key(replyMid) references member2(mid),
-	foreign key(reviewIdx) references review(idx)
+	foreign key(mid) references member2(mid),
+	foreign key(reviewIdx) references review(rIdx)
 );
 desc reviewReply;
 select * from reviewReply;

@@ -11,7 +11,7 @@ public class Pagination {
 
 	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {  // 관리자는 adminOK 아니면 일반사용자(contentShow) // 항상 쓰는 것이니까 static 붙여줌  // part는 자료실에서 쓰일 것
 		BlogDAO blogDao = new BlogDAO();
-	
+		
 		int totRecCnt = 0;
 
 		if(section.equals("blog")) {
@@ -30,10 +30,10 @@ public class Pagination {
 		ArrayList<BlogVO> bVos = null;
 
 		if(section.equals("blog")) {
-			bVos = blogDao.getBlogList(startIndexNo, pageSize, contentsShow);	// 게시판의 전체 자료 가져오기
+			bVos = blogDao.getBlogList(startIndexNo, pageSize, part);
 			request.setAttribute("vos", bVos);
 		}
-		
+				
 		request.setAttribute("pag", pag);
 		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("totRecCnt", totRecCnt);
@@ -42,7 +42,10 @@ public class Pagination {
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
-		
+				
+		if(section.equals("blog")) {
+			request.setAttribute("part", part);
+		}
 	}
 
 }

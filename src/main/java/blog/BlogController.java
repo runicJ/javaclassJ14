@@ -27,7 +27,7 @@ public class BlogController extends HttpServlet {  // 4
 
 		if(com.equals("/BlogList")) {
 			command = new BlogListCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			viewPage += "/blogList.jsp";
 		}
 		else if(mid.equals("")) {
@@ -40,12 +40,12 @@ public class BlogController extends HttpServlet {  // 4
 		}
 		else if(com.equals("/BlogInputOk")) {
 			command = new BlogInputOkCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/BlogDetail")) {
 			command = new BlogDetailCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			viewPage += "/blogDetail.jsp";
 		}
 		

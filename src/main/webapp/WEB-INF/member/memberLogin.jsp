@@ -66,6 +66,29 @@
 	.btn:hover {
 	  opacity: 1;
 	}
+	
+	form {
+      max-width: 700px;
+      margin: auto;
+      padding: 16px;
+    }
+
+    .box {
+      width: 100%;
+      padding: 16px;
+    }
+
+    @media (max-width: 768px) {
+      form {
+        max-width: 90%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      form {
+        max-width: 95%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -76,6 +99,7 @@
   <form name="myform" method="post" class="needs-validation" action="MemberLoginOk.mem" novalidate>  <!-- 확장자 .mem(controller) -->
 	  <div class="box border border-info rounded p-5">
 	  <img src="${ctp}/img/member/loginLogo.png" alt="로그인" style="cursor:pointer;" class="mx-auto d-block" />
+	  <br><br><br>
 		  <div class="input-container">
 		    <i class="fa fa-user icon"></i>
 		    <input type="text" name="mid" value="admin" placeholder="아이디를 입력하세요" autofocus required class="input-field form-control"/>
@@ -84,14 +108,15 @@
 		    <i class="fa fa-key icon"></i>
 		    <input type="password" name="pwd" value="1234" placeholder="비밀번호를 입력하세요" required class="input-field form-control"/>
 		  </div>
-		  <p class="mb-3">
+		  <p class="mb-5">
           	<input type="checkbox" name="idSave" checked /> 아이디 저장
           	<a href="MemberFindIdPw.mem" style="float:right;">Id/Pw를 잊으셨나요?</a>
           </p>
-          <p>  
-	          <input type="submit" value="로그인" class="btn btn-success btn-sm mb-2"/>
-	          <input type="button" value="회원가입" onclick="location.href='MemberJoin.mem';" class="btn btn-primary btn-sm"/>
-          </p>
+          <br>
+          <div class="d-flex justify-content-between mb-3">  
+	          <input type="submit" value="로그인" class="btn btn-success btn-sm mr-3"/>
+	          <input type="button" value="회원가입" onclick="location.href='MemberAgreeJoin.mem';" class="btn btn-primary btn-sm"/>
+          </div>
 	  </div>
   </form>
 </div>

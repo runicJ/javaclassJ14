@@ -18,7 +18,7 @@ public class MemberJoinOkCommand implements MemberInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String realPath = request.getServletContext().getRealPath("/img/member");  // 경로 마지막 / 안붙여도 됨
-		int maxSize = 1024 * 1024 * 5;
+		int maxSize = 1024 * 1024 * 10;
 		String encoding = "UTF-8";
 		
 		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());  // 중복방지를 위함 DefaultFileRenamePolicy 생성

@@ -25,9 +25,19 @@ public class StayController extends HttpServlet {  // 4
 		HttpSession session = request.getSession();  // 세션을 열음
 		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
 
-		if(com.equals("/StayDetail")) {
+		if(com.equals("/Introduce")) {
 			command = new StayDetailCommand();
 			command.excute(request, response);
+			viewPage += "/introduce.jsp";
+		}
+		else if(com.equals("/StayList")) {
+//			command = new StayDetailCommand();
+//			command.excute(request, response);
+			viewPage += "/stayList.jsp";
+		}
+		else if(com.equals("/StayDetail")) {
+//			command = new StayDetailCommand();
+//			command.excute(request, response);
 			viewPage += "/stayDetail.jsp";
 		}
 		else if(com.equals("/MemberCheckJoin")) {

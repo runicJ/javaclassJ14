@@ -29,6 +29,13 @@ ALTER TABLE member2 AUTO_INCREMENT = 1;
 
 select lastDate, now(), timestampdiff(day, lastDate, now()) as deleteDiff from member2;  /* 날짜비교(시간단위로 비교해줌) 뒤에서 앞을 뺌(now()-lastDate) // dateadd */
 
+CREATE TABLE liked (
+    mId VARCHAR(20) NOT NULL,
+    part VARCHAR(20),
+    partIdx INT,
+    FOREIGN KEY (mId) REFERENCES member2(mId)
+);
+
 /* 실시간 DB채팅 테이블 설계 */
 create table memberChat(
 	idx  int not null auto_increment primary key,
@@ -59,3 +66,12 @@ insert into memberChat values(default,'admin','안녕18');
 
 select * from memberChat order by idx desc limit 15;  /* 화면에 50개만 나오도록 // 이대로 하면 최신문장이 위로 올라옴 */
 select m.* from (select * from memberChat order by idx desc limit 15) m order by idx;
+
+CREATE TABLE logHistory (
+    lIdx INT AUTO_INCREMENT PRIMARY KEY,
+    mId VARCHAR(20) NOT NULL,
+    loginTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    logoutTime DATETIME,
+    hostIp VARCHAR(30),
+    FOREIGN KEY (mId) REFERENCES member2(mId)
+);

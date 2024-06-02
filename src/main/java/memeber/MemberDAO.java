@@ -36,7 +36,7 @@ public class MemberDAO {  // 3
 		}
 	}
 
-	// 로그인 시 아이디 체크하기.
+	// 회원가입 시 아이디 중복체크하기.
 	public MemberVO getMemberIdCheck(String mid) {
 		MemberVO vo = new MemberVO();
 		try {
@@ -56,10 +56,10 @@ public class MemberDAO {  // 3
 				vo.setEmail(rs.getString("residence"));
 				vo.setPhoto(rs.getString("photo"));
 				vo.setContent(rs.getString("content"));
-				vo.setUserInfo(rs.getString("userInfo"));
-				vo.setUserDel(rs.getString("userDel"));
 				vo.setStartDate(rs.getString("startDate"));
 				vo.setLastDate(rs.getString("lastDate"));
+				vo.setUserInfo(rs.getString("userInfo"));
+				vo.setUserDel(rs.getString("userDel"));
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -111,12 +111,13 @@ public class MemberDAO {  // 3
 				vo.setNickName(rs.getString("nickName"));
 				vo.setTel(rs.getString("tel"));
 				vo.setEmail(rs.getString("email"));
+				vo.setEmail(rs.getString("residence"));
 				vo.setPhoto(rs.getString("photo"));
 				vo.setContent(rs.getString("content"));
-				vo.setUserInfo(rs.getString("userInfo"));
-				vo.setUserDel(rs.getString("userDel"));
 				vo.setStartDate(rs.getString("startDate"));
 				vo.setLastDate(rs.getString("lastDate"));
+				vo.setUserInfo(rs.getString("userInfo"));
+				vo.setUserDel(rs.getString("userDel"));
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -165,9 +166,9 @@ public class MemberDAO {  // 3
 		try {
 			sql = "update member2 set pwd=? where mid = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, pwd);  // vo가 어디있어 받아온 값을 넣어야지 pwd mid
+			pstmt.setString(1, pwd);
 			pstmt.setString(2, mid);
-			res = pstmt.executeUpdate();  // return값이 있으니까 res에 넣어서 보내야 함
+			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
@@ -229,6 +230,7 @@ public class MemberDAO {  // 3
 		}
 	}
 
+	// 연락처 중복체크
 	public MemberVO getMemberTelCheck(String tel) {
 		MemberVO vo = new MemberVO();
 		try {
@@ -245,12 +247,13 @@ public class MemberDAO {  // 3
 				vo.setNickName(rs.getString("nickName"));
 				vo.setTel(rs.getString("tel"));
 				vo.setEmail(rs.getString("email"));
+				vo.setEmail(rs.getString("residence"));
 				vo.setPhoto(rs.getString("photo"));
 				vo.setContent(rs.getString("content"));
-				vo.setUserInfo(rs.getString("userInfo"));
-				vo.setUserDel(rs.getString("userDel"));
 				vo.setStartDate(rs.getString("startDate"));
 				vo.setLastDate(rs.getString("lastDate"));
+				vo.setUserInfo(rs.getString("userInfo"));
+				vo.setUserDel(rs.getString("userDel"));
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -258,6 +261,58 @@ public class MemberDAO {  // 3
 			rsClose();
 		}
 		return vo;
+	}
+
+	// 아이디 찾기
+	public MemberVO getMemberFindId(String name, String tel) {
+		MemberVO vo = new MemberVO();
+		try {
+			sql = "select * from member2 where name= ? and tel = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, tel);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {  // 자료가 있는지 없는지 모름
+				vo.setmIdx(rs.getInt("mIdx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setName(rs.getString("name"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setTel(rs.getString("tel"));
+				vo.setEmail(rs.getString("email"));
+				vo.setEmail(rs.getString("residence"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setContent(rs.getString("content"));
+				vo.setStartDate(rs.getString("startDate"));
+				vo.setLastDate(rs.getString("lastDate"));
+				vo.setUserInfo(rs.getString("userInfo"));
+				vo.setUserDel(rs.getString("userDel"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
+	}
+
+	public int getMemberFindPw(String mid, String name, String tel) {
+		int res = 0;
+		try {
+			sql = "select * from member2 where mid = ? and name= ? and tel = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, name);
+			pstmt.setString(3, tel);
+	        rs = pstmt.executeQuery();
+			if(rs.next()) res = 1;
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return res;
 	}
 	
 }

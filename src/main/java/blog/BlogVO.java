@@ -15,6 +15,8 @@ public class BlogVO {
 	private String tContent;
 	private String complaint;
 	
+	private int hour_diff;
+	private int date_diff;
 	public int gettIdx() {
 		return tIdx;
 	}
@@ -93,12 +95,24 @@ public class BlogVO {
 	public void setComplaint(String complaint) {
 		this.complaint = complaint;
 	}
+	public int getHour_diff() {
+		return hour_diff;
+	}
+	public void setHour_diff(int hour_diff) {
+		this.hour_diff = hour_diff;
+	}
+	public int getDate_diff() {
+		return date_diff;
+	}
+	public void setDate_diff(int date_diff) {
+		this.date_diff = date_diff;
+	}
 	
 	@Override
 	public String toString() {
 		return "BlogVO [tIdx=" + tIdx + ", mid=" + mid + ", nickName=" + nickName + ", tPhoto=" + tPhoto + ", title="
 				+ title + ", residence=" + residence + ", tDate=" + tDate + ", viewCnt=" + viewCnt + ", likedCnt="
 				+ likedCnt + ", openSw=" + openSw + ", hostIp=" + hostIp + ", tContent=" + tContent + ", complaint="
-				+ complaint + "]";
+				+ complaint + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + "]";
 	}
 }
