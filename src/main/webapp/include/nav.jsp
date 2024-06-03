@@ -1,17 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
-<%
-	//int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");  /* EL로 직접써도 관계없음(세션이니까) */
-	//pageContext.setAttribute("level", level);
-%>
 
 <div class="main_menu_iner">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-                    <a class="navbar-brand" href="http://localhost:9090/javaclassJ14/Main"><img src="img/logoMain.png" alt="logo" style="width:160px;height:150px;object-fit:contain;object-position:center center;display:block;margin-top:-30px;margin-bottom:-30px;"></a>
+                    <a class="navbar-brand" href="http://localhost:9090/javaclassJ14/Main"><img src="images/logoMain.png" alt="logo" style="width:160px;height:150px;object-fit:contain;object-position:center center;display:block;margin-top:-30px;margin-bottom:-30px;"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -61,12 +57,14 @@
                     <c:if test="${sMid == null}"><a href="MemberLogin.mem" class="btn_1 d-none d-lg-block"><i class="fa-solid fa-door-open"></i> LOGIN</a></c:if>
                     <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="AdminMain.ad">관리자메뉴</a></c:if>
                     <c:if test="${sMid != null && sMid != 'admin'}">
-	                    <a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown"><i class="fa-solid fa-user"></i>마이페이지</a>
-	                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	                        <a class="dropdown-item" href="BlogList.bl">마이페이지</a>
-	                        <a class="dropdown-item" href="BlogList.bl">마이페이지</a>
-	                        <a class="dropdown-item" href="BlogList.bl">마이페이지</a>
-			      		</div>
+	                    <li class="nav-item dropdown">
+	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown">${sNickName} 님</a>
+		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		                        <a class="dropdown-item" href="MemberMain.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>
+		                        <a class="dropdown-item" href="MemberMessage.mem"><i class="fa-solid fa-message"></i> 메시지 보내기</a>
+		                        <a class="dropdown-item" href="MemberWishList.mem"><i class="fa-solid fa-heart"></i> 위시리스트</a>
+				      		</div>
+	                    </li>
                    	</c:if>
                 </nav>
             </div>

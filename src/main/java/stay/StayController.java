@@ -23,7 +23,7 @@ public class StayController extends HttpServlet {  // 4
 		
 		// 인증....처리......
 		HttpSession session = request.getSession();  // 세션을 열음
-		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
+		String sMid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
 
 		if(com.equals("/Introduce")) {
 			command = new StayDetailCommand();
@@ -35,21 +35,33 @@ public class StayController extends HttpServlet {  // 4
 //			command.excute(request, response);
 			viewPage += "/stayList.jsp";
 		}
+		else if(com.equals("/StayPromotion")) {
+//			command = new StayDetailCommand();
+//			command.excute(request, response);
+			viewPage += "/stayPromotion.jsp";
+		}
+		else if(com.equals("/StayComment")) {
+//			command = new StayDetailCommand();
+//			command.excute(request, response);
+			viewPage += "/stayComment.jsp";
+		}
 		else if(com.equals("/StayDetail")) {
 //			command = new StayDetailCommand();
 //			command.excute(request, response);
 			viewPage += "/stayDetail.jsp";
 		}
-		else if(com.equals("/MemberCheckJoin")) {
-			viewPage += "/memberCheckJoin.jsp";
-		}
-		else if(com.equals("/MemberJoin")) {
-			viewPage += "/memberJoin.jsp";
-		}
-		else if(level > 4) {  // 순서를 잘 설정해야(login, join 뒤에) => Spring에서는 인터셉트에서 설정(지금은 controller에서)
-			request.setAttribute("message", "로그인 후 사용하세요");
-			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
+		else if(!sMid.equals("admin")) {
+			request.setAttribute("message", "관리자 로그인 후에 가능하신 메뉴입니다.");
+			request.setAttribute("url", "MemberLogin.mem");
 			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/StayInput")) {
+			viewPage += "/stayInput.jsp";
+		}
+		else if(com.equals("/StayInputOk")) {
+			command = new StayInputOkCommand();
+			command.excute(request, response);
+			viewPage += "/stayDetail.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

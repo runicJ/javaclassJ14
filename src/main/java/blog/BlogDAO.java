@@ -133,7 +133,37 @@ public class BlogDAO {
 	}
 
 	public BlogVO getBlogDetail(int tIdx) {
-		return null;
+		try {
+			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff from travelog where tIdx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tIdx);
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+				vo = new BlogVO();
+				vo.settIdx(rs.getInt("tIdx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.settPhoto(rs.getString("tPhoto"));
+				vo.setTitle(rs.getString("title"));
+				vo.setResidence(rs.getString("residence"));
+				vo.settDate(rs.getString("tDate"));
+				vo.setViewCnt(rs.getInt("viewCnt"));
+				vo.setLikedCnt(rs.getInt("likedCnt"));
+				vo.setOpenSw(rs.getString("openSw"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.settContent(rs.getString("tContent"));
+				vo.setComplaint(rs.getString("complaint"));
+				
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				vo.setDate_diff(rs.getInt("date_diff"));				
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
 	}
 
 	// 여행블로그 글 등록
@@ -211,4 +241,49 @@ public class BlogDAO {
 //		}
 //		return guestCnt;
 //	}
+	
+	// 블로그 글 조회수 증가
+	public void setBlogViewCnt(int tIdx) {
+		try {
+			sql = "update travelog set viewCnt = viewCnt + 1 where tIdx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tIdx);
+			pstmt.executeUpdate();  // 넘기는거 없음
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+	}
+	
+	// 블로그 글 삭제하기
+	public int setBlogDelete(int tIdx) {
+		int res = 0;
+		try {
+			sql = "delete from travelog where tIdx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tIdx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+	
+	// 블로그 글 좋아요 수 증가/감소 처리
+	public void setBlogLikedCnt(int tIdx, int likedCnt) {
+		try {
+			sql = "update travelog set likedCnt = likedCnt + ? where tIdx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, likedCnt);
+			pstmt.setInt(2, tIdx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+	}
 }

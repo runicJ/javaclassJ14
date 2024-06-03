@@ -17,6 +17,7 @@ public class BlogVO {
 	
 	private int hour_diff;
 	private int date_diff;
+	
 	public int gettIdx() {
 		return tIdx;
 	}

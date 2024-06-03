@@ -30,6 +30,7 @@ ALTER TABLE member2 AUTO_INCREMENT = 1;
 select lastDate, now(), timestampdiff(day, lastDate, now()) as deleteDiff from member2;  /* 날짜비교(시간단위로 비교해줌) 뒤에서 앞을 뺌(now()-lastDate) // dateadd */
 
 CREATE TABLE liked (
+    lIdx int NOT NULL primary key,
     mId VARCHAR(20) NOT NULL,
     part VARCHAR(20),
     partIdx INT,

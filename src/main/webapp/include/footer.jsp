@@ -5,20 +5,16 @@
         <div class="row justify-content-between">
             <div class="col-sm-6 col-md-5">
                 <div class="single-footer-widget">
-                    <h4>Discover Destination</h4>
+                    <h4>Serene Nest 관련 기관(대한민국)</h4>
                     <ul>
-                        <li><a href="#">Miami, USA</a></li>
-                        <li><a href="#">California, USA</a></li>
-                        <li><a href="#">London, UK</a></li>
-                        <li><a href="#">Saintmartine, Bangladesh</a></li>
-                        <li><a href="#">Mount Everast, India</a></li>
-                        <li><a href="#">Sidney, Australia</a></li>
-                        <li><a href="#">Miami, USA</a></li>
-                        <li><a href="#">California, USA</a></li>
-                        <li><a href="#">London, UK</a></li>
-                        <li><a href="#">Saintmartine, Bangladesh</a></li>
-                        <li><a href="#">Mount Everast, India</a></li>
-                        <li><a href="#">Sidney, Australia</a></li>
+                        <li><a href="https://www.gg.go.kr/" target="_blank">경기도</a></li>
+                        <li><a href="#" target="_blank">강원도 홈페이지</a></li>
+                        <li><a href="#" target="_blank">충청북도 홈페이지</a></li>
+                        <li><a href="#" target="_blank">충청남도 홈페이지</a></li>
+                        <li><a href="#" target="_blank">경상북도 홈페이지</a></li>
+                        <li><a href="#" target="_blank">경상남도 홈페이지</a></li>
+                        <li><a href="#" target="_blank">전라북도 홈페이지</a></li>
+                        <li><a href="#" target="_blank">전라남도 홈페이지</a></li>
                     </ul>
 
                 </div>
@@ -29,10 +25,10 @@
                     <p>충청북도 청주시 서원구 사직대로 109 4층 401호</p>
                     <span>https://cheongju.greenart.co.kr</span>
                     <div class="social-icons">
-                        <a href="#" target="_blank"><i class="fa-solid fa-comment"></i></a>
-                        <a href="#" target="_blank"><i class="ti-instagram"></i></a>
+                        <a href="http://pf.kakao.com/_iExmG"><i class="fa-solid fa-comment"></i></a>
+                        <a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="ti-instagram"></i></a>
                         <a href="https://www.facebook.com" target="_blank"><i class="ti-facebook"></i></a>
-                        <a href="https://x.com" target="_blank"><i class="ti-twitter-alt"></i></a>
+                        <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
                     </div>
                 </div>
             </div>

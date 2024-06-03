@@ -23,7 +23,7 @@ public class MemberMainCommand implements MemberInterface {
 //		GuestDAO gDao = new GuestDAO();
 //		ArrayList<GuestVO> gVos = gDao.getMemberGuestSearch(mid, mVo.getName(), mVo.getNickName());
 		
-		request.setAttribute("mVo", mVo);
+		request.setAttribute("vo", mVo);
 		//request.setAttribute("guestCnt", gVos.size());
 		
 	}

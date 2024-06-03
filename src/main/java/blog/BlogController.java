@@ -30,6 +30,11 @@ public class BlogController extends HttpServlet {  // 4
 			command.execute(request, response);
 			viewPage += "/blogList.jsp";
 		}
+		else if(com.equals("/BlogJournalList")) {
+			//command = new BlogListCommand();
+			//command.execute(request, response);
+			viewPage += "/blogJournalList.jsp";
+		}
 		else if(mid.equals("")) {
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", "MemberLogin.mem");

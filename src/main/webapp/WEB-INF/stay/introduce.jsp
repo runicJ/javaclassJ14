@@ -36,7 +36,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about_img">
-                        <img src="${ctp}/img/about_img.png" alt="#">
+                        <img src="${ctp}/images/about_img.png" alt="#">
                     </div>
                 </div>
                 <div class="col-lg-6">

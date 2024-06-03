@@ -4,6 +4,3 @@
 <script>
 	location.href = "${ctp}/Main";
 </script>
-<!-- https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_hotel&stacked=h -->
-<!-- https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_apartment_rental&stacked=h -->
-<!-- https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_fashion_blog&stacked=h -->

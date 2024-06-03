@@ -23,7 +23,7 @@ public class MemberController extends HttpServlet {  // 4
 		
 		// 인증....처리......
 		HttpSession session = request.getSession();  // 세션을 열음
-		String mid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
+		String sMid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
 		
 		if(com.equals("/MemberLogin")) {
 			viewPage += "/memberLogin.jsp";
@@ -82,38 +82,28 @@ public class MemberController extends HttpServlet {  // 4
 			command.execute(request, response);
 			return;
 		}
-		else if(mid.equals("")) {
+		else if(sMid.equals("")) {
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
 			viewPage = "/include/message.jsp";
 		}
-		else if(com.equals("/MemberMain")) {  // 로그인하면 필요한걸 다 담아서 memberMain으로 보냄
-			command = new MemberMainCommand();  // 경로명, 클래스명 대문자
+		else if(com.equals("/MemberMain")) {
+			command = new MemberMainCommand();
 			command.execute(request, response);
-			viewPage += "/memberMain.jsp";  // jsp는 소문자
+			viewPage += "/memberMain.jsp";
 		}
-		else if(com.equals("/MemberList")) {
-			command = new MemberListCommand();
-			command.execute(request, response);
-			viewPage += "/memberList.jsp";
-		}
-		else if(com.equals("/MemberSearch")) {
-			command = new MemberSearchCommand();
-			command.execute(request, response);
-			viewPage += "/memberSearch.jsp";
-		}
-		else if(com.equals("/MemberPwdCheck")) {  // 화면만 띄우는 거니까 내용 가져올 필요없음 command
+		else if(com.equals("/MemberPwdCheck")) {
 			viewPage += "/memberPwdCheck.jsp";
 		}
 		else if(com.equals("/MemberPwdCheckAjax")) {
 			command = new MemberPwdCheckAjaxCommand();
 			command.execute(request, response);
-			return;  // ajax는 viewPage가 필요없으므로 return
+			return;
 		}
 		else if(com.equals("/MemberPwdChangeCheck")) {
 			command = new MemberPwdChangeCheckCommand();
 			command.execute(request, response);
-			viewPage = "/include/message.jsp";  // 비밀번호가 변경되었습니다. 메시지 보내야함
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/MemberPwdCheckOk")) {
 			command = new MemberPwdCheckOkCommand();

@@ -7,46 +7,126 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TravelogDetail Page</title>
+	<link href="${ctp}/setting/css/stay/swiper-bundle.min.css" rel="stylesheet">
   <jsp:include page="/include/bs4.jsp" />
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<style>
+	/*--------------------------------------------------------------
+		# Portfolio Details
+		--------------------------------------------------------------*/
+		.portfolio-details {
+		  padding-top: 0;
+		}
+		
+		.portfolio-details .portfolio-details-slider img {
+		  width: 100%;
+		}
+		
+		.portfolio-details .portfolio-details-slider .swiper-pagination {
+		  margin-top: 20px;
+		  position: relative;
+		}
+		
+		.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet {
+		  width: 12px;
+		  height: 12px;
+		  background-color: #fff;
+		  opacity: 1;
+		  border: 1px solid #3498db;
+		}
+		
+		.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
+		  background-color: #3498db;
+		}
+		
+		.portfolio-details .portfolio-info {
+		  padding: 30px;
+		  box-shadow: 0px 0 30px rgba(56, 64, 70, 0.08);
+		}
+		
+		.portfolio-details .portfolio-info h3 {
+		  font-size: 22px;
+		  font-weight: 700;
+		  margin-bottom: 20px;
+		  padding-bottom: 20px;
+		  border-bottom: 1px solid #eee;
+		}
+		
+		.portfolio-details .portfolio-info ul {
+		  list-style: none;
+		  padding: 0;
+		  font-size: 15px;
+		}
+		
+		.portfolio-details .portfolio-info ul li+li {
+		  margin-top: 10px;
+		}
+		
+		.portfolio-details .portfolio-description {
+		  padding-top: 30px;
+		}
+		
+		.portfolio-details .portfolio-description h2 {
+		  font-size: 26px;
+		  font-weight: 700;
+		  margin-bottom: 20px;
+		}
+		
+		.portfolio-details .portfolio-description p {
+		  padding: 0;
+		}
+	</style>
+	<script>
+    	'use strict';
+
+    	 new Swiper('.portfolio-details-slider', {
+    	    speed: 400,
+    	    loop: true,
+    	    autoplay: {
+    	      delay: 5000,
+    	      disableOnInteraction: false
+    	    },
+    	    pagination: {
+    	      el: '.swiper-pagination',
+    	      type: 'bullets',
+    	      clickable: true
+    	    }
+    	  });
+    </script>
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
-<p><br/></p>
 <div class="container">
-    <!-- breadcrumb start-->
-    <section class="breadcrumb breadcrumb_bg">
-      <div class="container">
-            <div class="row">
-                  <div class="col-lg-12">
-                        <div class="breadcrumb_iner">
-                              <div class="breadcrumb_iner_item text-center">
-                                    <h2>blog details</h2>
-                                    <p>home . blog details</p>
-                              </div>
-                        </div>
-                  </div>
-            </div>
-      </div>
-      </section>
-      <!-- breadcrumb start-->
-
     <!--================Blog Area =================-->
     <section class="blog_area single-post-area section_padding">
-        <div class="container">
             <div class="row">
                 <div class="col-lg-8 posts-list">
                     <div class="single-post">
                         <div class="blog_details">
-                            <h2>Second divided from form fish beast made every of seas all gathered us saying he our</h2>
+                            <h2>${vo.title}</h2><c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
                             <ul class="blog-info-link mt-3 mb-4">
-                                <li><a href="#"><i class="far fa-user"></i> Travel, Lifestyle</a></li>
-                                <li><a href="#"><i class="far fa-comments"></i> 03 Comments</a></li>
+                                <li><a href="#"><i class="far fa-user"></i>${vo.residence}</a></li>
+                                <li><a href="#"><i class="far fa-comments"></i>by ${vo.nickName}</a></li>
                             </ul>
-	                        <div class="feature-img">
-	                            <img class="img-fluid" src="img/blog/single_blog_1.png" alt="">
-	                        </div>
+	                        <div class="gy-4">
+            					<div class="portfolio-details-slider swiper">
+							      <div class="swiper-wrapper align-items-center">
+							
+							        <div class="swiper-slide">
+							          <img src="${ctp}/images/portfolio/portfolio-1.jpg" alt="">
+							        </div>
+							
+							        <div class="swiper-slide">
+							          <img src="${ctp}/images/portfolio/portfolio-2.jpg" alt="">
+							        </div>
+							
+							        <div class="swiper-slide">
+							          <img src="${ctp}/images/portfolio/portfolio-3.jpg" alt="">
+							        </div>
+							
+							      </div>
+							      <div class="swiper-pagination"></div>
+							  </div>
                             <p class="excert">
                                 MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower
                             </p>
@@ -55,7 +135,7 @@
                             </p>
                             <div class="quote-wrapper">
                                 <div class="quotes">
-                                    MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training.
+									${vo.tContent}
                                 </div>
                             </div>
                             <p>
@@ -399,15 +479,6 @@
                                 </li>
                             </ul>
                         </aside>
-                        <aside class="single_sidebar_widget newsletter_widget">
-                            <h4 class="widget_title">Newsletter</h4>
-                            <form action="#">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
-                                </div>
-                                <button class="button rounded-0 primary-bg text-white w-100 btn_1" type="submit">Subscribe</button>
-                            </form>
-                        </aside>
                     </div>
                 </div>
             </div>
@@ -417,5 +488,6 @@
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
+  <script src="${ctp}/js/stay/swiper-bundle.min.js"></script>
 </body>
 </html>

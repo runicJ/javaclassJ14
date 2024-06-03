@@ -36,7 +36,7 @@ public class MemberDAO {  // 3
 		}
 	}
 
-	// 회원가입 시 아이디 중복체크하기.
+	// 회원가입 시 아이디 중복체크하기 // 아이디로 회원 정보 조회
 	public MemberVO getMemberIdCheck(String mid) {
 		MemberVO vo = new MemberVO();
 		try {

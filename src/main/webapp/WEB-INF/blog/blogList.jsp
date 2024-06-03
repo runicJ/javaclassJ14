@@ -10,6 +10,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Travelog Page</title>
   <jsp:include page="/include/bs4.jsp" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+  	.pagination a {
+	  border-radius: 5px;
+	}
+	
+	.pagination a.active {
+	  border-radius: 5px;
+	}
+	
+	.pagination a:hover:not(.active) {background-color: #eee;}
+	
+  </style>
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />
@@ -51,49 +64,45 @@
         				<c:forEach var="vo" items="${vos}" varStatus="st">
                         <article class="blog_item">
                             <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="${ctp}/img/blog/${vo.tPhoto}">
+                                <img class="card-img rounded-0" src="${ctp}/images/blog/${vo.tPhoto}">
                                 <a href="#" class="blog_item_date">
-                                    <h3>${curScrStartNo}</h3>
+                                    <h3>${curScrStartNo} - (조회수 : ${vo.viewCnt})</h3>
                                     <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,11,19) : fn:substring(vo.tDate,0,16)}</p>
                                 </a>
                             </div>
 
                             <div class="blog_details">
-                                <a class="d-inline-block" href="BlogContent.bl?idx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}">
-                                    <h2>${vo.title}</h2><c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/img/new.gif" /></c:if>
+                                <a class="d-inline-block" href="BlogDetail.bl?tIdx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}">
+                                    <h2>${vo.title}</h2><c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
                                 </a>
                                 <p>${vo.tContent}</p>
                                 <ul class="blog-info-link">
                                     <li><a href="#"><i class="far fa-user"></i>${vo.residence}</a></li>
-                                    <li><a href="#"><i class="far fa-comments"></i>03 Comments</a></li>
+                                    <li><a href="#"><i class="far fa-comments"></i>by ${vo.nickName}</a></li>
                                 </ul>
+								<p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like ${vo.likedCnt}</b></button></p>
+								<p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo3')"><b>Replies  </b> <span class="w3-tag w3-white">3</span></button></p>
                             </div>
                             <c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
                         </article>
                         </c:forEach>
 
+						<!-- 페이징 처리 -->
                         <nav class="blog-pagination justify-content-center d-flex">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Previous">
-                                        <i class="ti-angle-left"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Next">
-                                        <i class="ti-angle-right"></i>
-                                    </a>
-                                </li>
+                            <ul class="pagination justify-content-center" style="margin:20px 0">
+							<c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
+							<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}"><i class="ti-angle-left"></i></a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
+							<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
+								<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+								<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+							</c:forEach>
+							<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="ti-angle-right"></a></li></c:if>
+							<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
                             </ul>
                         </nav>
                     </div>
                 </div>
+
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">
@@ -281,20 +290,6 @@
     </section>
     <!--================Blog Area =================-->
 <p><br/></p>
-<!-- 블록페이지 시작 -->  <!-- 0블록: 1/2/3 -->
-<div class="text-center">
-	<ul class="pagination justify-content-center" style="margin:20px 0">
-		<c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
-		<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}">이전블록</a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
-		<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">  <!-- 처음이니까 curBlock => 0블록 -->
-			<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-			<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-		</c:forEach>
-		<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}">다음블록</a></li></c:if>
-		<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
-	</ul>
-</div>
-<!-- 블록페이지 끝 -->
 <jsp:include page="/include/footer.jsp" />
 </body>
 </html>

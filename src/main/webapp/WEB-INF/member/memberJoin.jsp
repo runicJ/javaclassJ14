@@ -203,7 +203,7 @@
 			return false;
 		}
     	
-  		if(tel2 != "" || tel3 != "") {
+  		if(tel2 == "" || tel3 == "") {
 			alert("전화번호를 입력하세요");
 			myform.tel2.focus();
 			return false;
@@ -214,7 +214,7 @@
 			return false;
   		}
     	
-		if (!regEmail.test(email)) {
+		if (email1 != "" && !regEmail.test(email)) {
 	        alert("올바른 이메일 주소를 입력하세요.");
 	        myform.email1.focus();
 	        return false;
@@ -508,7 +508,7 @@
 	    <div>
 	        <label for="fName">프로필 사진(파일용량:10MByte이내) : </label>
 	        <!-- <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border"/> -->
-			<input type="file" id="file" onchange="previewImage();" class="form-control-file">
+			<input type="file" name="fName" id="file" onchange="previewImage();" class="form-control-file">
 	    </div>
 	</div>
     <div class="from-group d-flex text-center mb-2">

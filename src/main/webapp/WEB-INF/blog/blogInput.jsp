@@ -49,7 +49,7 @@
     		return false;
     	}
     	else {
-    		blogInput.submit();
+    		blogInputForm.submit();
     	}	
     }
     
@@ -77,7 +77,7 @@
 <p><br/></p>
 <div class="container">
     <div class="justify-content-center">
-        <form name="blogInput" method="post" action="BlogInputOk.bl" class="was-validated" enctype="multipart/form-data">
+        <form name="blogInputForm" method="post" action="BlogInputOk.bl" class="was-validated" enctype="multipart/form-data">
         <h2 class=" mb-5 heading text-center">Travelog 글쓰기</h2>
           <div class="row form-group">
             <div class="col-md-6 mb-3 mb-md-0">
@@ -86,7 +86,7 @@
             </div>
             <div class="col-md-6">
               <label class="" for="residence">지역</label>
-              <input type="text" name="residence" id="residence" class="form-control">
+              <input type="text" name="residence" id="residence" class="form-control" placeholder=" ex) 전라남도 해남군 ">
             </div>
           </div>
           <div class="row form-group">

@@ -14,7 +14,7 @@ public class BlogInputOkCommand implements BlogInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String realPath = request.getServletContext().getRealPath("/img/blog");
+		String realPath = request.getServletContext().getRealPath("/images/blog");
 		int maxSize = 1024 * 1024 * 30;
 		String encoding = "UTF-8";
 		

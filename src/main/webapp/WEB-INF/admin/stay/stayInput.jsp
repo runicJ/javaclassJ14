@@ -206,7 +206,7 @@
 		                <!-- User profile and search -->
 		                <!-- ============================================================== -->
 		                <li class="nav-item dropdown">
-		                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${ctp}/img/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+		                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${ctp}/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
 		                    <div class="dropdown-menu dropdown-menu-right user-dd animated">
 		                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
 		                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
@@ -297,7 +297,7 @@
 		                </div>
 		            </div>
 				    <div class="form-group row">
-				     <label for="address" class="col-md-3 text-right control-label col-form-label" rowspan="3">주소</label>
+				     <label for="address" class="col-md-3 text-right control-label col-form-label">주소</label>
 				      <div class="input-group col-sm-9">
 				        <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" class="form-control">
 				        <div class="input-group-append">
@@ -333,7 +333,7 @@
 		                </div>
 		          	</div>
 		            <div class="form-group row">
-		                <label class="col-md-3 text-right control-label col-form-label">File Upload</label>
+		                <label class="col-md-3 text-right control-label col-form-label">숙소 상세보기</label>
 		                <div class="col-md-9">
 		                    <div class="custom-file">
 		                        <input type="file" class="custom-file-input" id="validatedCustomFile" required>
@@ -344,12 +344,6 @@
 		            </div>
 		        </div>
 		        <hr>
-	        	<div class="form-group row">
-	            	<label for="bedroom" class="col-md-3 text-right control-label col-form-label">침실</label>
-	                <div class="col-sm-9">
-	                    <input type="number" name=bedroom id="bedroom" class="form-control">
-	                </div>
-	          	</div>
 	        	<div class="form-group row">
 	            	<label for="bed" class="col-md-3 text-right control-label col-form-label">침대</label>
 	                <div class="col-sm-9">
@@ -375,10 +369,13 @@
 	                    </div>
 	                </div>
 	            </div>
-	
 	            <div class="form-group row">
 	                <label class="col-md-3 text-right control-label col-form-label">기타 시설</label>
 	                <div class="col-md-9">
+	                    <div class="custom-control custom-checkbox mr-sm-2">
+	                        <input type="checkbox" name="wifi" class="custom-control-input" id="wifi">
+	                        <label class="custom-control-label" for="a/c">Wi-Fi</label>
+	                    </div>
 	                    <div class="custom-control custom-checkbox mr-sm-2">
 	                        <input type="checkbox" name="a/c" class="custom-control-input" id="a/c">
 	                        <label class="custom-control-label" for="a/c">에어컨</label>
