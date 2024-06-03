@@ -1,6 +1,6 @@
 package stay;
 
-public class filterVO {
+public class FilterVO {
     private int fIdx;
     private int bed;
     private int toilet;

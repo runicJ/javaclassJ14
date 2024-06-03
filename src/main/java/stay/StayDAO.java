@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import memeber.MemberVO;
@@ -60,12 +59,88 @@ public class StayDAO {
 		}
 		pstmtClose();  // 정확히는 if 밖에 써야함
 	}
+	
+	public void startTransaction() throws SQLException {
+	    if (conn != null) {
+	        conn.setAutoCommit(false); // 트랜잭션 시작
+	    }
+	}
+
+	public void commit() throws SQLException {
+	    if (conn != null) {
+	        conn.commit(); // 트랜잭션 커밋
+	    }
+	}
+
+	public void rollback() {
+	    if (conn != null) {
+	        try {
+	            conn.rollback(); // 트랜잭션 롤백
+	        } catch (SQLException e) {
+	            System.out.println("롤백 중 오류 발생: " + e.getMessage());
+	        }
+	    }
+	}
+
+
+	// 숙소 등록하기(일단 관리자만)
+	public int setStayInputOk(StayVO vo) {
+		int res = 0;
+		try {
+			//conn.setAutoCommit(false);
+			
+			sql="insert into stay values (default,?,?,?,default,?,?,?,?,?,default,default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getSort());
+			pstmt.setString(2, vo.getsName());
+			pstmt.setString(3, vo.getsPhoto());
+			pstmt.setString(4, vo.getAddress());
+			pstmt.setString(5, vo.getsContent());
+			pstmt.setInt(6, vo.getGuestMax());
+			pstmt.setInt(7, vo.getPrice());
+			pstmt.setString(8, vo.getResidence());
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+
+	// 해당 숙소의 옵션 등록하기
+	public void setStayFilter(FilterVO fVo) {
+		try {
+			sql="insert into filter values (default,?,?,?,?,?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, fVo.getBed());
+			pstmt.setInt(2, fVo.getToilet());
+			pstmt.setBoolean(3, fVo.isWifi());
+			pstmt.setBoolean(4, fVo.isAc());
+			pstmt.setBoolean(5, fVo.isParking());
+			pstmt.setBoolean(6, fVo.isPet());
+			pstmt.setBoolean(7, fVo.isKitchen());
+			pstmt.setBoolean(8, fVo.isWashing());
+			pstmt.setInt(9, fVo.getsIdx());
+			pstmt.executeUpdate();
+			
+			// 정상적으로 트랜잭션 작업단위가 종료된 후에 트랜잭션을 커밋시킨다.
+			//conn.commit();  // 트랜잭션 컨테이너에 있던 얘들이 단계적으로 차곡차곡 실행시킴  // commit 되면 롤백이 안됨
+		} catch (SQLException e) {  // 문제가 발생할 경우 예외 처리로 옴
+			System.out.println("SQL 오류 : " + e.getMessage());
+//			try {
+//				if(conn != null) conn.rollback();  // 예외오류 발생 시는 기존에 작업된 sql문은 모두 rollback 처리된다.
+//			} catch (Exception e2) {}
+		} finally {
+			pstmtClose();
+		}
+	}
 
 	public int getTotRecCnt(String contentsShow, String string, String string2) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	public List<StayVO> getStayList(int startIndexNo, int pageSize, String contentsShow, String string,
 			String string2) {
 		// TODO Auto-generated method stub

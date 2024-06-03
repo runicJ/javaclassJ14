@@ -61,7 +61,7 @@ public class StayController extends HttpServlet {  // 4
 		else if(com.equals("/StayInputOk")) {
 			command = new StayInputOkCommand();
 			command.excute(request, response);
-			viewPage += "/stayDetail.jsp";
+			viewPage = "/include/message.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

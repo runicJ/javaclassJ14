@@ -7,11 +7,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewpoint" content="width=divice-width, initial-scale=1.0">
 	<title>Main Page</title>
-  <%@ include file = "../../include/bs4.jsp"%>
+  <%@ include file = "/include/bs4.jsp"%>
 </head>
 <body>
-<%@ include file = "../../include/header.jsp"%>
-<%@ include file = "../../include/nav.jsp"%>
+<%@ include file = "/include/header.jsp"%>
+<%@ include file = "/include/nav.jsp"%>
 <div>
     <!-- banner part start-->
     <section class="banner_part">
@@ -173,7 +173,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
-                        <img src="img/single_place_1.png" alt="">
+                        <img src="images/single_place_1.png" alt="">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
                                 <a href="#" class="place_btn">travel</a>
@@ -196,7 +196,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
-                        <img src="img/single_place_2.png" alt="">
+                        <img src="images/single_place_2.png" alt="">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
                                 <a href="#" class="place_btn">travel</a>
@@ -219,7 +219,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
-                        <img src="img/single_place_3.png" alt="">
+                        <img src="images/single_place_3.png" alt="">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
                                 <a href="#" class="place_btn">travel</a>
@@ -242,7 +242,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
-                        <img src="img/single_place_4.png" alt="">
+                        <img src="images/single_place_4.png" alt="">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
                                 <a href="#" class="place_btn">travel</a>
@@ -374,7 +374,7 @@
             <div class="row">
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_ihotel_list">
-                        <img src="img/ind/industries_1.png" alt="">
+                        <img src="images/ind/industries_1.png" alt="">
                         <div class="hover_text">
                             <div class="hotel_social_icon">
                                 <ul>
@@ -404,7 +404,7 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_ihotel_list">
-                        <img src="img/ind/industries_2.png" alt="">
+                        <img src="images/ind/industries_2.png" alt="">
                         <div class="hover_text">
                             <div class="hotel_social_icon">
                                 <ul>
@@ -434,7 +434,7 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_ihotel_list">
-                        <img src="img/ind/industries_3.png" alt="">
+                        <img src="images/ind/industries_3.png" alt="">
                         <div class="hover_text">
                             <div class="hover_text">
                                 <div class="hotel_social_icon">
@@ -558,28 +558,28 @@
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_ihotel_list">
-                        <img src="img/services_1.png" alt="">
+                        <img src="images/services_1.png" alt="">
                         <h3> <a href="#"> Transportation</a></h3>
                         <p>All transportation cost we bear</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_ihotel_list">
-                        <img src="img/services_2.png" alt="">
+                        <img src="images/services_2.png" alt="">
                         <h3> <a href="#"> Guidence</a></h3>
                         <p>We offer the best guidence for you</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_ihotel_list">
-                        <img src="img/services_3.png" alt="">
+                        <img src="images/services_3.png" alt="">
                         <h3> <a href="#"> Accomodation</a></h3>
                         <p>Luxarious and comfortable</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_ihotel_list">
-                        <img src="img/services_4.png" alt="">
+                        <img src="images/services_4.png" alt="">
                         <h3> <a href="#"> Discover world</a></h3>
                         <p>Best tour plan for your next tour</p>
                     </div>
