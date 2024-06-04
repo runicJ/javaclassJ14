@@ -36,9 +36,9 @@
     			if(fName != "") {
     				fileSize += document.getElementById(imsiName).files[0].size;
 			    	let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
-			    	if(ext != 'jpg' && ext != 'gif' && ext != 'png' && ext != 'zip' && ext != 'hwp' && ext != 'ppt' && ext != 'pptx' && ext != 'doc' && ext != 'pdf' && ext != 'xlsx' && ext != 'txt') {
-			    		alert("업로드 가능한 파일은 'jpg/gif/png/zip/hwp/ppt/pptx/doc/pdf/xlsx/txt'만 가능합니다.");
-			    		return false;  // 확장자가 하나라도 안맞으면 탈주
+			    	if(ext != 'jpg' && ext != 'jpeg' && ext != 'gif' && ext != 'png' && ext != 'zip' && ext != 'hwp' && ext != 'ppt' && ext != 'pptx' && ext != 'doc' && ext != 'pdf' && ext != 'xlsx' && ext != 'txt') {
+			    		alert("업로드 가능한 파일은 'jpg/jpeg/gif/png/zip/hwp/ppt/pptx/doc/pdf/xlsx/txt'만 가능합니다.");
+			    		return false;
 			    	}
     			}
     		}
@@ -58,8 +58,8 @@
     	cnt++;
     	let fileBox = '';
     	fileBox += '<div id="fBox'+cnt+'">';
-    	fileBox += '<input type="file" name="fName'+cnt+'" id="fName'+cnt+'" class="form-control-file border mb-2" style="float:left; width:85%;" />';
-    	fileBox += '<input type="button" value="삭제" onclick="deleteBox('+cnt+')" class="btn btn-danger mb-2 ml-2" style="width:10%;" />';
+    	fileBox += '<input type="file" name="fName'+cnt+'" id="fName'+cnt+'" class="form-control-file border mb-2 mr-2" style="float:left; width:85%;" />';
+    	fileBox += '<input type="button" value="삭제" onclick="deleteBox('+cnt+')" class="btn btn-danger btn-sm mb-2 ml-2" style="width:10%;" />';
     	fileBox += '</div>';
     	$("#fileBox").append(fileBox);		// html(), text(), append()
     }
@@ -70,58 +70,78 @@
     	cnt--;
     }
   </script>
+  <style>
+  	label {
+  		font-size: 1.2em;
+  	}
+  </style>
 </head>
-<body>
+<body>안녕하세요. Serene Nest 관리자입니다.
+이곳에 오신 것을 환영합니다!
+여러분도 알다시피 이 사이트는 인구소멸지역을 대상으로,
+지역홍보를 목적으로 만들어졌습니다.
+추천이든 기록이든 좋습니다.
+여러분의 추억을 이곳에 남겨주세요:)
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
     <div class="justify-content-center">
         <form name="blogInputForm" method="post" action="BlogInputOk.bl" class="was-validated" enctype="multipart/form-data">
-        <h2 class=" mb-5 heading text-center">Travelog 글쓰기</h2>
+        <h2 class=" mb-5 heading text-center">Travelog 등록하기</h2>
           <div class="row form-group">
             <div class="col-md-6 mb-3 mb-md-0">
-              <label class="" for="fname">작성자 아이디</label>
+              <label>작성자 아이디<span style="font-size:0.8em;color:green;">(Travelog는 작성자의 닉네임으로 게시됩니다.)</span></label>
               <input type="text" name="mid" id="mid" value="${sMid}" class="form-control" readonly>
             </div>
             <div class="col-md-6">
-              <label class="" for="residence">지역</label>
+              <label for="residence">지역</label>
               <input type="text" name="residence" id="residence" class="form-control" placeholder=" ex) 전라남도 해남군 ">
             </div>
           </div>
           <div class="row form-group">
-            <div class="col-md-12">
-              <label class="" for="title">제목</label> 
+            <div class="col-md-2">
+              <label for="sort">분류</label> 
+	            <select name="sort" class="custom-select">
+	              <option value="여행기록" selected>여행기록</option>
+	              <option value="여행지추천">여행지추천</option>
+	              <option value="맛집소개">맛집소개</option>
+	              <option value="지역홍보">지역홍보</option>
+	              <c:if test="${sMid == 'admin'}"><option value="공지사항">공지사항</option></c:if>
+	            </select>
+            </div>
+            <div class="col-md-10">
+              <label for="title">제목</label> 
               <input type="text" name="title" id="title" class="form-control" required>
             </div>
           </div>
           <div class="row form-group">
             <div class="col-md-12">
               	<div>
-	              <label class="" for="file">사진추가</label>
-	              <input type="button" value="파일박스추가" onclick="fileBoxAppend()" class="btn btn-primary mb-2" style="float:right" />
+	              	<label for="file">자료 등록</label>
+	            	<input type="button" value="자료추가" onclick="fileBoxAppend()" class="btn btn-info btn-sm" style="float:right" />
 			    </div>
 	    		<input type="file" name="fName1" id="fName1" class="form-control-file border mb-2" />
-			    <div id="fileBox"></div>  <!-- 여기에 출력 -->
+			    <div id="fileBox"></div>
             </div>
           </div>
           <div class="row form-group">
             <div class="col-md-12">
-              <label class="" for="tContent">내용</label> 
+              <label for="tContent">내용</label> 
               <textarea name="tContent" id="tContent" cols="30" rows="7" class="form-control"></textarea>
             </div>
           </div>
 		    <div class="row form-group">
 		    	<div class="col-md-12">
-			    	<label class="" for="openSw">공개여부</label>
-			    	<input type="radio" name="openSw" value="공개" checked />공개 &nbsp;&nbsp;
-			    	<input type="radio" name="openSw" value="비공개" />비공개
+			    	<label class="mr-2" for="openSw">공개여부</label>
+			    	<input type="radio" name="openSw" value="공개" checked /> 공개 &nbsp;&nbsp;
+			    	<input type="radio" name="openSw" value="비공개" /> 비공개
 		    	</div>
 		    </div>
           <div class="row form-group text-center">
             <div class="col-md-12">
-              <input type="button" value="새글 등록" onclick="fCheck()" class="btn btn-primary btn-md mr-3">
-              <input type="button" value="취소" onclick="location.href='BlogList.bl';" class="btn btn-secondary btn-md">
+              <input type="button" value="새글 등록" onclick="fCheck()" class="btn btn-success mr-3">
+              <input type="button" value="취소" onclick="location.href='BlogList.bl';" class="btn btn-warning">
             </div>
           </div>
 	    <input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}" />

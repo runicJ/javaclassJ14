@@ -75,6 +75,7 @@ public class BlogDAO {
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.settPhoto(rs.getString("tPhoto"));
+				vo.setSort(rs.getString("sort"));
 				vo.setTitle(rs.getString("title"));
 				vo.setResidence(rs.getString("residence"));
 				vo.settDate(rs.getString("tDate"));
@@ -145,6 +146,7 @@ public class BlogDAO {
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.settPhoto(rs.getString("tPhoto"));
+				vo.setSort(rs.getString("sort"));
 				vo.setTitle(rs.getString("title"));
 				vo.setResidence(rs.getString("residence"));
 				vo.settDate(rs.getString("tDate"));
@@ -170,16 +172,17 @@ public class BlogDAO {
 	public int setBlogInputOk(BlogVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into travelog values (default,?,?,?,?,?,default,default,default,?,?,?,default)";
+			sql = "insert into travelog values (default,?,?,?,?,?,?,default,default,default,?,?,?,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getNickName());
 			pstmt.setString(3, vo.gettPhoto());
-			pstmt.setString(4, vo.getTitle());
-			pstmt.setString(5, vo.getResidence());
-			pstmt.setString(6, vo.getOpenSw());
-			pstmt.setString(7, vo.getHostIp());
-			pstmt.setString(8, vo.gettContent());
+			pstmt.setString(4, vo.getSort());
+			pstmt.setString(5, vo.getTitle());
+			pstmt.setString(6, vo.getResidence());
+			pstmt.setString(7, vo.getOpenSw());
+			pstmt.setString(8, vo.getHostIp());
+			pstmt.setString(9, vo.gettContent());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());

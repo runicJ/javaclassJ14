@@ -5,6 +5,7 @@ create table travelog(
 	mid  varchar(20) not null,
 	nickName  varchar(20) not null,
 	tPhoto  varchar(200) not null,
+	sort  varchar(10) not null,
 	title  varchar(100) not null,
 	residence  varchar(20),
 	tDate  datetime default now(),
@@ -19,8 +20,6 @@ create table travelog(
 
 desc travelog;
 drop table travelog;
-
-insert into travelog values(default,'admin','관리자','noImage.jpg','여행블로그 게시판 시작합니다','Stay Balance',default,default,default,default,'192.168.50.58','여러분의 소중한 여행 후기를 올려주세요',default);
 
 select * from travelog;
 

@@ -64,24 +64,24 @@
         				<c:forEach var="vo" items="${vos}" varStatus="st">
                         <article class="blog_item">
                             <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="${ctp}/images/blog/${vo.tPhoto}">
+                                <img class="card-img rounded-0" src="${ctp}/images/blog/${vo.tPhoto}" style="height:330px;">
                                 <a href="#" class="blog_item_date">
-                                    <h3>${curScrStartNo} - (조회수 : ${vo.viewCnt})</h3>
+                                    <h3>${curScrStartNo}. - (조회수 : ${vo.viewCnt})</h3>
                                     <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,11,19) : fn:substring(vo.tDate,0,16)}</p>
                                 </a>
                             </div>
 
                             <div class="blog_details">
                                 <a class="d-inline-block" href="BlogDetail.bl?tIdx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}">
-                                    <h2>${vo.title}</h2><c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+								<p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like ${vo.likedCnt}</b></button></p>
+								<p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo3')"><b>Replies  </b> <span class="w3-tag w3-white">3</span></button></p>
+                                    <h2>[${vo.sort}] ${vo.title} <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if></h2>
                                 </a>
                                 <p>${vo.tContent}</p>
                                 <ul class="blog-info-link">
                                     <li><a href="#"><i class="far fa-user"></i>${vo.residence}</a></li>
                                     <li><a href="#"><i class="far fa-comments"></i>by ${vo.nickName}</a></li>
                                 </ul>
-								<p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like ${vo.likedCnt}</b></button></p>
-								<p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo3')"><b>Replies  </b> <span class="w3-tag w3-white">3</span></button></p>
                             </div>
                             <c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
                         </article>
@@ -106,7 +106,7 @@
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">
-                            <form action="#">
+                            <form action="BlogSearch.bl">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder='Search Keyword'
@@ -127,45 +127,39 @@
                             <ul class="list cat-list">
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Resaurant food</p>
+                                        <p>여행기록</p>
                                         <p>(37)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Travel news</p>
+                                        <p>여행지추천</p>
                                         <p>(10)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Modern technology</p>
+                                        <p>지역홍보</p>
                                         <p>(03)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Product</p>
+                                        <p>지역음식소개</p>
                                         <p>(11)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Inspiration</p>
-                                        <p>21</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Health Care (21)</p>
-                                        <p>09</p>
+                                        <p>공지사항</p>
+                                        <p>(21)</p>
                                     </a>
                                 </li>
                             </ul>
                         </aside>
 
                         <aside class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">Recent Post</h3>
+                            <h3 class="widget_title">최근 공지사항</h3>
                             <div class="media post_item">
                                 <img src="images/post/post_1.png" alt="post">
                                 <div class="media-body">
@@ -204,7 +198,7 @@
                             </div>
                         </aside>
                         <aside class="single_sidebar_widget tag_cloud_widget">
-                            <h4 class="widget_title">Tag Clouds</h4>
+                            <h4 class="widget_title">#Keyword</h4>
                             <ul class="list">
                                 <li>
                                     <a href="#">project</a>
@@ -269,20 +263,7 @@
                                 </li>
                             </ul>
                         </aside>
-
-
-                        <aside class="single_sidebar_widget newsletter_widget">
-                            <h4 class="widget_title">Newsletter</h4>
-
-                            <form action="#">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
-                                </div>
-                                <button class="button rounded-0 primary-bg text-white w-100 btn_1"
-                                    type="submit">Subscribe</button>
-                            </form>
-                        </aside>
+                      
                     </div>
                 </div>
             </div>

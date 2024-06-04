@@ -53,7 +53,7 @@
                                 </div>
                             </li>
                             <c:if test="${sMid == null}">
-                            <li class="nav-item"><a class="nav-link" href="MemberJoin.mem">Join us</a></li>
+                            <li class="nav-item"><a class="nav-link" href="MemberAgreeJoin.mem">Join us</a></li>
                             </c:if>
                             <c:if test="${sMid != null}">
                             <li class="nav-item"><a class="nav-link" href="MemberLogout.mem">Logout</a></li>

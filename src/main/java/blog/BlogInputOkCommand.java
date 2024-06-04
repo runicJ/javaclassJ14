@@ -20,7 +20,7 @@ public class BlogInputOkCommand implements BlogInterface {
 		
 		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());  // 생성과 동시에 업로드 된다.(알아서 넘긴 데이터가 realPath 자리에 알아서 저장이 됨)
 		
-		Enumeration fileNames = multipartRequest.getFileNames();  // MultipartRequest 데이터 여러개 열거형으로  // 여러개 올릴 수 있지만 마지막 것만 기억(동적폼으로 해결) => jsp 누적(스프링에서 이렇게 안함)
+		Enumeration fileNames = multipartRequest.getFileNames();
 		
 		String file = "";
 		String oFileName = "";
@@ -40,6 +40,7 @@ public class BlogInputOkCommand implements BlogInterface {
 		// 업로드시킨 파일을 DB에 저장시키기 위해서 전송된 폼의 내용들을 모두 변수에 담아준다.
 		String mid = multipartRequest.getParameter("mid")==null ? "" : multipartRequest.getParameter("mid");
 		String nickName = multipartRequest.getParameter("nickName")==null ? "" : multipartRequest.getParameter("nickName");
+		String sort = multipartRequest.getParameter("sort")==null ? "" : multipartRequest.getParameter("sort");
 		String title = multipartRequest.getParameter("title")==null ? "" : multipartRequest.getParameter("title");
 		String residence = multipartRequest.getParameter("residence")==null ? "" : multipartRequest.getParameter("residence");
 		String openSw = multipartRequest.getParameter("openSw")==null ? "" : multipartRequest.getParameter("openSw");
@@ -52,6 +53,7 @@ public class BlogInputOkCommand implements BlogInterface {
 		vo.setMid(mid);
 		vo.setNickName(nickName);
 		vo.settPhoto(fSName);
+		vo.setSort(sort);
 		vo.setTitle(title);
 		vo.setResidence(residence);
 		vo.setOpenSw(openSw);

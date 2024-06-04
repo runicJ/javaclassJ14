@@ -5,6 +5,7 @@ public class BlogVO {
 	private String mid;
 	private String nickName;
 	private String tPhoto;
+	private String sort;
 	private String title;
 	private String residence;
 	private String tDate;
@@ -41,6 +42,12 @@ public class BlogVO {
 	}
 	public void settPhoto(String tPhoto) {
 		this.tPhoto = tPhoto;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 	public String getTitle() {
 		return title;
@@ -111,9 +118,10 @@ public class BlogVO {
 	
 	@Override
 	public String toString() {
-		return "BlogVO [tIdx=" + tIdx + ", mid=" + mid + ", nickName=" + nickName + ", tPhoto=" + tPhoto + ", title="
-				+ title + ", residence=" + residence + ", tDate=" + tDate + ", viewCnt=" + viewCnt + ", likedCnt="
-				+ likedCnt + ", openSw=" + openSw + ", hostIp=" + hostIp + ", tContent=" + tContent + ", complaint="
-				+ complaint + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + "]";
+		return "BlogVO [tIdx=" + tIdx + ", mid=" + mid + ", nickName=" + nickName + ", tPhoto=" + tPhoto + ", sort="
+				+ sort + ", title=" + title + ", residence=" + residence + ", tDate=" + tDate + ", viewCnt=" + viewCnt
+				+ ", likedCnt=" + likedCnt + ", openSw=" + openSw + ", hostIp=" + hostIp + ", tContent=" + tContent
+				+ ", complaint=" + complaint + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + "]";
 	}
+
 }
