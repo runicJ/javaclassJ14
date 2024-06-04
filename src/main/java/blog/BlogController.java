@@ -23,7 +23,7 @@ public class BlogController extends HttpServlet {  // 4
 		
 		// 인증....처리......
 		HttpSession session = request.getSession();  // 세션을 열음
-		String mid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
+		String sMid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
 
 		if(com.equals("/BlogList")) {
 			command = new BlogListCommand();
@@ -35,7 +35,7 @@ public class BlogController extends HttpServlet {  // 4
 			//command.execute(request, response);
 			viewPage += "/blogJournalList.jsp";
 		}
-		else if(mid.equals("")) {
+		else if(sMid.equals("")) {
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", "MemberLogin.mem");
 			viewPage = "/include/message.jsp";

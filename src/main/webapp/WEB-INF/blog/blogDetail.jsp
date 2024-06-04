@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% pageContext.setAttribute("newLine", "\n"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -135,7 +137,7 @@
                             </p>
                             <div class="quote-wrapper">
                                 <div class="quotes">
-									${vo.tContent}
+									${fn:replace(vo.content,newLine,'<br>')}
                                 </div>
                             </div>
                             <p>
@@ -164,7 +166,7 @@
                                 <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
                                     <div class="thumb">
                                         <a href="#">
-                                            <img class="img-fluid" src="img/post/preview.png" alt="">
+                                            <img class="img-fluid" src="images/post/preview.png" alt="">
                                         </a>
                                     </div>
                                     <div class="arrow">
@@ -193,7 +195,7 @@
                                     </div>
                                     <div class="thumb">
                                         <a href="#">
-                                            <img class="img-fluid" src="img/post/next.png" alt="">
+                                            <img class="img-fluid" src="images/post/next.png" alt="">
                                         </a>
                                     </div>
                                 </div>
@@ -202,7 +204,7 @@
                     </div>
                     <div class="blog-author">
                         <div class="media align-items-center">
-                            <img src="img/blog/author.png" alt="">
+                            <img src="images/blog/author.png" alt="">
                             <div class="media-body">
                                 <a href="#">
                                     <h4>Harvard milan</h4>
@@ -217,7 +219,7 @@
                             <div class="single-comment justify-content-between d-flex">
                                 <div class="user justify-content-between d-flex">
                                     <div class="thumb">
-                                        <img src="img/comment/comment_1.png" alt="">
+                                        <img src="images/comment/comment_1.png" alt="">
                                     </div>
                                     <div class="desc">
                                         <p class="comment">
@@ -242,7 +244,7 @@
                             <div class="single-comment justify-content-between d-flex">
                                 <div class="user justify-content-between d-flex">
                                     <div class="thumb">
-                                        <img src="img/comment/comment_2.png" alt="">
+                                        <img src="images/comment/comment_2.png" alt="">
                                     </div>
                                     <div class="desc">
                                         <p class="comment">
@@ -267,7 +269,7 @@
                             <div class="single-comment justify-content-between d-flex">
                                 <div class="user justify-content-between d-flex">
                                     <div class="thumb">
-                                        <img src="img/comment/comment_3.png" alt="">
+                                        <img src="images/comment/comment_3.png" alt="">
                                     </div>
                                     <div class="desc">
                                         <p class="comment">
@@ -379,7 +381,7 @@
                         <aside class="single_sidebar_widget popular_post_widget">
                             <h3 class="widget_title">Recent Post</h3>
                             <div class="media post_item">
-                                <img src="img/post/post_1.png" alt="post">
+                                <img src="images/post/post_1.png" alt="post">
                                 <div class="media-body">
                                     <a href="single-blog.html">
                                         <h3>From life was you fish...</h3>
@@ -388,7 +390,7 @@
                                 </div>
                             </div>
                             <div class="media post_item">
-                                <img src="img/post/post_2.png" alt="post">
+                                <img src="images/post/post_2.png" alt="post">
                                 <div class="media-body">
                                     <a href="single-blog.html">
                                         <h3>The Amazing Hubble</h3>
@@ -397,7 +399,7 @@
                                 </div>
                             </div>
                             <div class="media post_item">
-                                <img src="img/post/post_3.png" alt="post">
+                                <img src="images/post/post_3.png" alt="post">
                                 <div class="media-body">
                                     <a href="single-blog.html">
                                         <h3>Astronomy Or Astrology</h3>
@@ -406,7 +408,7 @@
                                 </div>
                             </div>
                             <div class="media post_item">
-                                <img src="img/post/post_4.png" alt="post">
+                                <img src="images/post/post_4.png" alt="post">
                                 <div class="media-body">
                                     <a href="single-blog.html">
                                         <h3>Asteroids telescope</h3>
@@ -449,32 +451,32 @@
                             <ul class="instagram_row flex-wrap">
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_5.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_5.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_6.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_6.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_7.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_7.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_8.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_8.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_9.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_9.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_10.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_10.png" alt="">
                                     </a>
                                 </li>
                             </ul>

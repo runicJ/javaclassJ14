@@ -58,7 +58,7 @@
 				  					<option ${part=="댓글수" ? "selected" : ""}>댓글수</option>
 				  				</select>
 				  			</form>
-			  				<input type="button" onclick="BlogInput.bl" value="글쓰기" class="button primary-bg btn_1">
+			  				<button onclick="location.href='BlogInput.bl';" class="button primary-bg btn_1">새글쓰기</button>
 			  			</div>
                     	<c:set var="curScrStartNo" value="${curScrStartNo}" />
         				<c:forEach var="vo" items="${vos}" varStatus="st">
@@ -167,7 +167,7 @@
                         <aside class="single_sidebar_widget popular_post_widget">
                             <h3 class="widget_title">Recent Post</h3>
                             <div class="media post_item">
-                                <img src="img/post/post_1.png" alt="post">
+                                <img src="images/post/post_1.png" alt="post">
                                 <div class="media-body">
                                     <a href="single-blog.html">
                                         <h3>From life was you fish...</h3>
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                             <div class="media post_item">
-                                <img src="img/post/post_2.png" alt="post">
+                                <img src="images/post/post_2.png" alt="post">
                                 <div class="media-body">
                                     <a href="single-blog.html">
                                         <h3>The Amazing Hubble</h3>
@@ -185,7 +185,7 @@
                                 </div>
                             </div>
                             <div class="media post_item">
-                                <img src="img/post/post_3.png" alt="post">
+                                <img src="images/post/post_3.png" alt="post">
                                 <div class="media-body">
                                     <a href="single-blog.html">
                                         <h3>Astronomy Or Astrology</h3>
@@ -194,7 +194,7 @@
                                 </div>
                             </div>
                             <div class="media post_item">
-                                <img src="img/post/post_4.png" alt="post">
+                                <img src="images/post/post_4.png" alt="post">
                                 <div class="media-body">
                                     <a href="single-blog.html">
                                         <h3>Asteroids telescope</h3>
@@ -239,32 +239,32 @@
                             <ul class="instagram_row flex-wrap">
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_5.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_5.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_6.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_6.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_7.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_7.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_8.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_8.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_9.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_9.png" alt="">
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <img class="img-fluid" src="img/post/post_10.png" alt="">
+                                        <img class="img-fluid" src="images/post/post_10.png" alt="">
                                     </a>
                                 </li>
                             </ul>

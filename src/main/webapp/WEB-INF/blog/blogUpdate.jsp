@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Travelog Input</title>
+	<title>Travelog 등록</title>
 	<%@ include file = "/include/bs4.jsp" %>
   <script>
     'use strict';

@@ -27,27 +27,27 @@ public class StayController extends HttpServlet {  // 4
 
 		if(com.equals("/Introduce")) {
 			command = new StayDetailCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			viewPage += "/introduce.jsp";
 		}
 		else if(com.equals("/StayList")) {
-//			command = new StayDetailCommand();
-//			command.excute(request, response);
+			//command = new StayListCommand();
+			//command.execute(request, response);
 			viewPage += "/stayList.jsp";
 		}
 		else if(com.equals("/StayPromotion")) {
 //			command = new StayDetailCommand();
-//			command.excute(request, response);
-			viewPage += "/stayPromotion.jsp";
+//			command.execute(request, response);
+			viewPage += "/error.jsp";
 		}
 		else if(com.equals("/StayComment")) {
 //			command = new StayDetailCommand();
-//			command.excute(request, response);
+//			command.execute(request, response);
 			viewPage += "/stayComment.jsp";
 		}
 		else if(com.equals("/StayDetail")) {
-//			command = new StayDetailCommand();
-//			command.excute(request, response);
+			command = new StayDetailCommand();
+			command.execute(request, response);
 			viewPage += "/stayDetail.jsp";
 		}
 		else if(!sMid.equals("admin")) {
@@ -60,7 +60,20 @@ public class StayController extends HttpServlet {  // 4
 		}
 		else if(com.equals("/StayInputOk")) {
 			command = new StayInputOkCommand();
-			command.excute(request, response);
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/StayUpdate")) {
+			viewPage += "/stayUpdate.jsp";
+		}
+		else if(com.equals("/StayUpdateOk")) {
+			command = new StayUpdateOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/StayDiscontinue")) {
+			command = new StayDiscontinueCommand();
+			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
 		

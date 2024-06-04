@@ -19,7 +19,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">
-                                    <img src="img/place/1.png" alt="">
+                                    <img src="images/place/1.png" alt="">
                                     <a href="#" class="prise">$500</a>
                                 </div>
                                 <div class="place_info">
@@ -45,7 +45,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">
-                                    <img src="img/place/2.png" alt="">
+                                    <img src="images/place/2.png" alt="">
                                     <a href="#" class="prise">$500</a>
                                 </div>
                                 <div class="place_info">
@@ -71,7 +71,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">
-                                    <img src="img/place/3.png" alt="">
+                                    <img src="images/place/3.png" alt="">
                                     <a href="#" class="prise">$500</a>
                                 </div>
                                 <div class="place_info">
@@ -97,7 +97,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">
-                                    <img src="img/place/4.png" alt="">
+                                    <img src="images/place/4.png" alt="">
                                     <a href="#" class="prise">$500</a>
                                 </div>
                                 <div class="place_info">
@@ -123,7 +123,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">
-                                    <img src="img/place/5.png" alt="">
+                                    <img src="images/place/5.png" alt="">
                                     <a href="#" class="prise">$500</a>
                                 </div>
                                 <div class="place_info">
@@ -149,7 +149,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">
-                                    <img src="img/place/6.png" alt="">
+                                    <img src="images/place/6.png" alt="">
                                     <a href="#" class="prise">$500</a>
                                 </div>
                                 <div class="place_info">

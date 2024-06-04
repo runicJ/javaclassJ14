@@ -173,7 +173,6 @@
 <body>
 <%@ include file = "../../include/header.jsp"%>
 <%@ include file = "../../include/nav.jsp"%>
-<div class="container">
     <!-- breadcrumb start-->
     <section class="breadcrumb breadcrumb_bg">
         <div class="container">
@@ -190,7 +189,7 @@
             </div>
         </div>
     </section>
-    <!-- breadcrumb start-->
+    <div class="container">
     <!-- booking part start-->
     <section class="booking_part">
         <div class="row">
@@ -390,9 +389,10 @@
           </div>
 
         </div>
-
+		  <a href="#" class="w3-button w3-black w3-padding-large w3-margin-bottom"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
       </div>
     </section><!-- End Portfolio Section -->
+</div>
 </div>
 <p><br/></p>
 <%@ include file = "../../include/footer.jsp"%>

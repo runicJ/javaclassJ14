@@ -21,33 +21,39 @@
                                 <a class="nav-link" href="Introduce.st">Introduce</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="StayList.st" id="navbarDropdown_1"
+                                <a class="nav-link dropdown-toggle" href="StayList.st" id="navbarDropdown1"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     Stay
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
                                     <a class="dropdown-item" href="StayList.st">Stay List</a>
                                     <a class="dropdown-item" href="StayPromotion.st">Stay Promotion</a>
                                     <a class="dropdown-item" href="StayComment.st">Stay Comment</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="BlogList.bl" id="navbarDropdown"
+                                <a class="nav-link dropdown-toggle" href="BlogList.bl" id="navbarDropdown2"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     Blog
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
                                     <a class="dropdown-item" href="BlogList.bl">Travelog</a>
                                     <a class="dropdown-item" href="BlogJournalList.bl">Journal</a>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="Service.ad">Service</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="Service.ad" id="navbarDropdown3"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Service</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                                    <a class="dropdown-item" href="#">공지사항</a>
+                                    <a class="dropdown-item" href="#">1:1문의</a>
+                                </div>
                             </li>
                             <c:if test="${sMid == null}">
-                            <li class="nav-item"><a class="nav-link" href="MemberJoin.mem">Join</a></li>
+                            <li class="nav-item"><a class="nav-link" href="MemberJoin.mem">Join us</a></li>
                             </c:if>
                             <c:if test="${sMid != null}">
                             <li class="nav-item"><a class="nav-link" href="MemberLogout.mem">Logout</a></li>

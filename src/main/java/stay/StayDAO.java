@@ -5,7 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import memeber.MemberVO;
 
@@ -15,7 +19,8 @@ public class StayDAO {
 	private ResultSet rs = null;
 	
 	String sql = "";
-	MemberVO vo = null;
+	StayVO vo = null;
+	FacilityVO fVo = null;
 	
 	public StayDAO() {
 		String url = "jdbc:mysql://localhost:3306/javaclass14";
@@ -60,37 +65,16 @@ public class StayDAO {
 		pstmtClose();  // 정확히는 if 밖에 써야함
 	}
 	
-	public void startTransaction() throws SQLException {
-	    if (conn != null) {
-	        conn.setAutoCommit(false); // 트랜잭션 시작
-	    }
-	}
-
-	public void commit() throws SQLException {
-	    if (conn != null) {
-	        conn.commit(); // 트랜잭션 커밋
-	    }
-	}
-
-	public void rollback() {
-	    if (conn != null) {
-	        try {
-	            conn.rollback(); // 트랜잭션 롤백
-	        } catch (SQLException e) {
-	            System.out.println("롤백 중 오류 발생: " + e.getMessage());
-	        }
-	    }
-	}
-
-
 	// 숙소 등록하기(일단 관리자만)
-	public int setStayInputOk(StayVO vo) {
-		int res = 0;
+	public Map<String, Object> setStayInputOk(StayVO vo) {
+		Map<String, Object> result = new HashMap<>();
+		int res = 0, sIdx = 0;
 		try {
-			//conn.setAutoCommit(false);
+			// 트랜잭션 설정 : false를 인자값으로 설정하여 수동커밋으로 지정한다. => DB에 직접 반영되지 않고 트랜잭션에만 저장
+			conn.setAutoCommit(false);  // true가 기본값
 			
 			sql="insert into stay values (default,?,?,?,default,?,?,?,?,?,default,default)";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, vo.getSort());
 			pstmt.setString(2, vo.getsName());
 			pstmt.setString(3, vo.getsPhoto());
@@ -100,18 +84,26 @@ public class StayDAO {
 			pstmt.setInt(7, vo.getPrice());
 			pstmt.setString(8, vo.getResidence());
 			res = pstmt.executeUpdate();
+			rs = pstmt.getGeneratedKeys();
+			
+			if(rs.next()) {
+				sIdx = rs.getInt(1);
+			}
+			
+			result.put("res", res);
+			result.put("sIdx", sIdx);
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			pstmtClose();
 		}
-		return res;
+		return result;
 	}
 
 	// 해당 숙소의 옵션 등록하기
-	public void setStayFilter(FilterVO fVo) {
+	public void setStayfacility(FacilityVO fVo) {
 		try {
-			sql="insert into filter values (default,?,?,?,?,?,?,?,?,?)";
+			sql="insert into facility values (default,?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, fVo.getBed());
 			pstmt.setInt(2, fVo.getToilet());
@@ -125,26 +117,121 @@ public class StayDAO {
 			pstmt.executeUpdate();
 			
 			// 정상적으로 트랜잭션 작업단위가 종료된 후에 트랜잭션을 커밋시킨다.
-			//conn.commit();  // 트랜잭션 컨테이너에 있던 얘들이 단계적으로 차곡차곡 실행시킴  // commit 되면 롤백이 안됨
+			conn.commit();  // 트랜잭션 컨테이너에 있던 얘들이 단계적으로 차곡차곡 실행시킴  // commit 되면 롤백이 안됨
 		} catch (SQLException e) {  // 문제가 발생할 경우 예외 처리로 옴
 			System.out.println("SQL 오류 : " + e.getMessage());
-//			try {
-//				if(conn != null) conn.rollback();  // 예외오류 발생 시는 기존에 작업된 sql문은 모두 rollback 처리된다.
-//			} catch (Exception e2) {}
+			try {
+				if(conn != null) conn.rollback();  // 예외오류 발생 시는 기존에 작업된 sql문은 모두 rollback 처리된다. // 트랜잭션이 비어있지 않은 상태에서 에러발생하면 롤백시켜라
+			} catch (Exception e2) {}
 		} finally {
 			pstmtClose();
 		}
 	}
 
-	public int getTotRecCnt(String contentsShow, String string, String string2) {
-		// TODO Auto-generated method stub
-		return 0;
+	public StayVO getStayIdxDetail(int sIdx) {
+		try {
+			sql="select * from stay where sIdx=? order by sIdx desc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sIdx);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo = new StayVO();
+				vo.setsIdx(rs.getInt("sIdx"));
+				vo.setSort(rs.getString("sort"));
+				vo.setsName(rs.getString("sName"));
+				vo.setsPhoto(rs.getString("sPhoto"));
+				vo.setStar(rs.getInt("star"));
+				vo.setAddress(rs.getString("address"));
+				vo.setsContent(rs.getString("sContent"));
+				vo.setGuestMax(rs.getInt("guestMax"));
+				vo.setPrice(rs.getInt("price"));
+				vo.setResidence(rs.getString("residence"));
+				vo.setsDate(rs.getString("sDate"));
+				vo.setsDel(rs.getString("sDel"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
 	}
 	
-	public List<StayVO> getStayList(int startIndexNo, int pageSize, String contentsShow, String string,
-			String string2) {
-		// TODO Auto-generated method stub
-		return null;
+	public FacilityVO getStayIdxFacility(int sIdx) {
+		try {
+			sql="select * from facility where sIdx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sIdx);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				fVo = new FacilityVO();
+				fVo.setfIdx(rs.getInt("fIdx"));
+				fVo.setBed(rs.getInt("bed"));
+				fVo.setToilet(rs.getInt("toilet"));
+				fVo.setWifi(rs.getBoolean("wifi"));
+				fVo.setAc(rs.getBoolean("ac"));
+				fVo.setParking(rs.getBoolean("parking"));
+				fVo.setPet(rs.getBoolean("pet"));
+				fVo.setKitchen(rs.getBoolean("kitchen"));
+				fVo.setWashing(rs.getBoolean("washing"));
+				fVo.setsIdx(rs.getInt("sIdx"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return fVo;
+	}
+	
+	public int setStayDiscontinue(int sIdx) {
+		int res = 0;
+		try {
+			sql = "update stay set sDel='OK' where sIdx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sIdx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+
+	public ArrayList<StayVO> getStayList(String contentsShow) {
+		ArrayList<StayVO> vos = new ArrayList<StayVO>();
+		try {
+			if(contentsShow.equals("adminOK")) {
+				sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff, "
+						+ "(select count(*) from boardReply where boardIdx = b.idx) as replyCnt "  // 끝에 무조건 하나 띄우기
+						+ "from stay b order by idx desc limit ?,?";  /* 새로운 변수가 만들어진 필드가 되었으므로 vo에 등록 */
+				pstmt = conn.prepareStatement(sql);
+			}
+			else {
+				sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff, "  // 줄 바꿀때 끝에  공간이 있어야 함
+						+ "(select count(*) from boardReply where boardIdx = b.idx) as replyCnt "
+						+ "from board b where openSW = 'OK' and complaint = 'NO' union select *, datediff(wDate, now()) as date_diff, "
+						+ "timestampdiff(hour, wDate, now()) as hour_diff, "
+						+ "(select count(*) from boardReply where boardIdx = b.idx) as replyCnt "
+						+ "from stay b where mid = ? order by idx desc limit ?,?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, contentsShow);
+			}
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				vo = new StayVO();
+				//vo.getsIdx(rs.getInt("sIdx"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
 	}
 	
 	// 회원 전체/부분 리스트

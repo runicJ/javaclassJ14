@@ -1,6 +1,6 @@
 package stay;
 
-public class FilterVO {
+public class FacilityVO {
     private int fIdx;
     private int bed;
     private int toilet;
@@ -75,7 +75,7 @@ public class FilterVO {
 	
 	@Override
 	public String toString() {
-		return "filterVO [fIdx=" + fIdx + ", bed=" + bed + ", toilet=" + toilet + ", wifi=" + wifi + ", ac=" + ac
+		return "FacilityVO [fIdx=" + fIdx + ", bed=" + bed + ", toilet=" + toilet + ", wifi=" + wifi + ", ac=" + ac
 				+ ", parking=" + parking + ", pet=" + pet + ", kitchen=" + kitchen + ", washing=" + washing + ", sIdx="
 				+ sIdx + "]";
 	}

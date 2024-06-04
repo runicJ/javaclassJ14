@@ -18,7 +18,9 @@ create table stay(
 
 drop table stay;
 
-create table filter(
+ALTER TABLE stay AUTO_INCREMENT = 1;
+
+create table facility(
     fIdx int not null auto_increment primary key,
     bed int not null,
     toilet int not null,
@@ -32,7 +34,7 @@ create table filter(
     foreign key(sIdx) references stay(sIdx) on delete cascade
 );
 
-drop table filter;
+drop table facility;
 
 CREATE TABLE booking (
     bIdx INT AUTO_INCREMENT PRIMARY KEY,
@@ -47,3 +49,5 @@ CREATE TABLE booking (
     FOREIGN KEY (sIdx) REFERENCES stay(sIdx),
     FOREIGN KEY (mId) REFERENCES member2(mId)
 );
+
+drop table booking;

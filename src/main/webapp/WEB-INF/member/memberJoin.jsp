@@ -9,7 +9,7 @@
 	<title>Join Page</title>
 	<jsp:include page="/include/bs4.jsp" />
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script src="${ctp}/js/woo.js"></script>
+	<script src="${ctp}/js/woo1.js"></script>
 	<style>
 		@font-face {
 		    font-family: 'Electrical Safety Bold';
@@ -447,14 +447,14 @@
         <label for="tel2">전화번호 : &nbsp; &nbsp;</label><input type="button" value="연락처 중복체크" id="telCheckBtn" class="btn btn-info btn-sm" onclick="telCheck()"/>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <select name="tel1" class="custom-select">
+            <select name="tel1" id="tel1" class="custom-select">
               <option value="010" selected>010</option>
             </select>
         </div>
         <span class="mt-3">&nbsp;&nbsp; - &nbsp;&nbsp;</span>
         <input type="text" name="tel2" id="tel2" size=4 maxlength=4 class="form-control" required />
         <span class="mt-3">&nbsp;&nbsp; - &nbsp;&nbsp;</span>
-        <input type="text" name="tel3" size=4 maxlength=4 class="form-control" required />
+        <input type="text" name="tel3" id="tel3" size=4 maxlength=4 class="form-control" required />
 	      <div class="invalid-feedback">유효한 핸드폰 번호를 입력해주세요.</div>
       </div>
     </div>
