@@ -291,6 +291,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
                         <img src="images/stay/${vestVos.sPhoto}" alt="thumbnail${st.count}">
+                        <img src="images/single_place_2.png" alt="">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
                                 <a href="#" class="place_btn">travel</a>
