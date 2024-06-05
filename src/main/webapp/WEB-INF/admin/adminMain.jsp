@@ -15,7 +15,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="images/bag_travel_icon.png">
 	<!-- Custom CSS -->
 	<link href="${ctp}/setting/css/admin/fullcalendar.min.css" rel="stylesheet" />
 	<link href="${ctp}/setting/css/admin/calendar.css" rel="stylesheet" />

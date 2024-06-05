@@ -70,8 +70,7 @@ public class StayDAO {
 		Map<String, Object> result = new HashMap<>();
 		int res = 0, sIdx = 0;
 		try {
-			// 트랜잭션 설정 : false를 인자값으로 설정하여 수동커밋으로 지정한다. => DB에 직접 반영되지 않고 트랜잭션에만 저장
-			conn.setAutoCommit(false);  // true가 기본값
+			conn.setAutoCommit(false);
 			
 			sql="insert into stay values (default,?,?,?,default,?,?,?,?,?,default,default)";
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -116,12 +115,11 @@ public class StayDAO {
 			pstmt.setInt(9, fVo.getsIdx());
 			pstmt.executeUpdate();
 			
-			// 정상적으로 트랜잭션 작업단위가 종료된 후에 트랜잭션을 커밋시킨다.
-			conn.commit();  // 트랜잭션 컨테이너에 있던 얘들이 단계적으로 차곡차곡 실행시킴  // commit 되면 롤백이 안됨
-		} catch (SQLException e) {  // 문제가 발생할 경우 예외 처리로 옴
+			conn.commit();
+		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 			try {
-				if(conn != null) conn.rollback();  // 예외오류 발생 시는 기존에 작업된 sql문은 모두 rollback 처리된다. // 트랜잭션이 비어있지 않은 상태에서 에러발생하면 롤백시켜라
+				if(conn != null) conn.rollback();
 			} catch (Exception e2) {}
 		} finally {
 			pstmtClose();

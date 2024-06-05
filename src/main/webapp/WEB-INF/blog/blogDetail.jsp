@@ -9,6 +9,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TravelogDetail Page</title>
+  	<link href="${ctp}/setting/css/stay/boxicons.min.css" rel="stylesheet">
 	<link href="${ctp}/setting/css/stay/swiper-bundle.min.css" rel="stylesheet">
   <jsp:include page="/include/bs4.jsp" />
 	<style>
@@ -140,12 +141,7 @@
 									${fn:replace(vo.content,newLine,'<br>')}
                                 </div>
                             </div>
-                            <p>
-                                MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower
-                            </p>
-                            <p>
-                                MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training. who has the willpower to actually
-                            </p>
+							<div>${fn:replace(vo.content,newLine,'<br>')}</div>
                         </div>
                     </div>
                     <div class="navigation-top">

@@ -307,7 +307,7 @@
 	  		text-shadow: 0 0 0 rgba(250, 200, 0, 0.98);
 	  	}
 	  	
-	  	#reviewReplyForm {
+	  	#replyForm {
 	      font-size: 11pt;
 	    }
 	    
@@ -474,8 +474,8 @@
 	  	
 	  	// 리뷰 댓글 달기
 	  	function reviewReplyCheck() {
-				let replyContent = reviewReplyForm.replyContent.value;  // 입력한 댓글 내용
-				let reviewIdx = reviewReplyForm.reviewIdx.value;
+				let replyContent = replyForm.replyContent.value;  // 입력한 댓글 내용
+				let reviewIdx = replyForm.reviewIdx.value;
 				
 				if(replyContent.trim() == "") {
 					alert("리뷰 댓글을 입력하세요");
@@ -538,11 +538,17 @@
       </div>
     </section><!-- End Breadcrumbs -->
 
-  <!-- Slideshow Header -->
+  <!-- Slideshow Header -->	
+  <c:forEach var="fName" items="${fNames}" varStatus="st">
+	<c:set var="len" value="${fn:length(fSName)}" />
+	<c:set var="ext" value="${fn:substring(fSName, len-3, len)}"/>
+	<c:set var="extLower" value="${fn:toLowerCase(ext)}"/>
     <div class="w3-display-container mySlides">
-    <img src="/w3images/livingroom.jpg" style="width:100%;margin-bottom:-6px">
+    <c:if test="${extLower == 'jpg' || extLower == 'gif' || extLower == 'png'}">
+    <img src="${ctp}/images/pds/${fSName}" style="width:100%;margin-bottom:-6px">
+    </c:if>
       <div class="w3-display-bottomleft w3-container w3-black">
-        <p>Living Room</p>
+        <p>${fNames[st.index]}</p>
       </div>
     </div>
     <div class="w3-display-container mySlides">
@@ -564,6 +570,7 @@
       </div>
     </div>
   </div>
+ </c:forEach>
   <div class="w3-row-padding w3-section">
     <div class="w3-col s3">
       <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/livingroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(1)" title="Living room">
@@ -582,19 +589,19 @@
   <div class="w3-container">
   	<div class="w3-row-padding">
   	<div class="w3-col m5 portfolio-info" style="max-width:400px;">
-	  <h3>Project information</h3>
-	    <div>
+	  <h3>Reservation</h3>
+	    <div class="form_colum">
         <label><i class="fa fa-calendar-o"></i> Check In</label>
-        <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required>
+        <input class="w3-input w3-border mb-2" id="datepicker_1" placeholder="Check in date" name="CheckIn" required>
       </div>
       
-	    <div>
+	    <div class="form_colum">
         <label><i class="fa fa-calendar-o"></i> Check Out</label>
-        <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required>
+        <input class="w3-input w3-border mb-2" id="datepicker_2" placeholder="Check out date" name="CheckOut" required>
       </div>
-	    <div>
-        <label><i class="fa fa-male"></i> Adults</label>
-        <input class="w3-input w3-border" type="number" value="1" name="Guest" min="1" max="6">
+	    <div class="form_colum">
+        <label><i class="fa fa-male"></i> Guest</label>
+        <input class="w3-input w3-border mb-2" type="number" value="1" name="Guest" min="1" max="${vo.GuestMax}">
       </div>
 	    <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button>
 	</div>
@@ -602,9 +609,9 @@
 	    <div class="w3-row">
     	<h4><strong>The space</strong></h4>
 	      <div class="w3-col m6">
-	        <p><i class="fa fa-fw fa-male"></i> Max people: 4</p>
-	        <p><i class="fa fa-fw fa-bath"></i> Bathrooms: 2</p>
-	        <p><i class="fa fa-fw fa-bed"></i> Bedrooms: 1</p>
+	        <p><i class="fa fa-fw fa-male"></i> Max people: ${vo.guestMax}</p>
+	        <p><i class="fa fa-fw fa-bath"></i> Bathrooms: ${fVo.toilet}</p>
+	        <p><i class="fa fa-fw fa-bed"></i> Bedrooms: ${fVo.bed}</p>
 	      </div>
 	      <div class="w3-col m5 ">
 	        <p><i class="fa fa-fw fa-clock-o"></i> Check In: After 3PM</p>
@@ -615,15 +622,15 @@
 	    <div class="w3-row">
     	<h4><strong>Amenities</strong></h4>
 	      <div class="w3-col m6">
-	        <p><i class="fa fa-fw fa-wifi"></i> WiFi</p>
-	        <p><i class="material-icons">ac_unit</i> A/C</p>
-	        <p><i class="material-icons">local_parking</i> Parking</p>
+	        <p><c:if test="${fVo.wifi == 'true'}"><i class="fa fa-fw fa-wifi"></i> WiFi</c:if></p>
+	        <p><c:if test="${fVo.ac == 'true'}"><i class="material-icons">ac_unit</i> A/C</c:if></p>
+	        <p><c:if test="${fVo.parking == 'true'}"><i class="material-icons">local_parking</i> Parking</c:if></p>
 	      </div>
 	      <div class="w3-col m5">
 	      	<span class="w3-margin-top"></span>
-	        <p><i class='fas fa-fw fa-dog'></i> Pet</p>
-	        <p><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
-	        <p><i class="material-icons">local_laundry_service</i> Washing machine</p>
+	        <p><c:if test="${fVo.pet == 'true'}"><i class='fas fa-fw fa-dog'></i> Pet</c:if></p>
+	        <p><c:if test="${fVo.kitchen == 'true'}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</c:if></p>
+	        <p><c:if test="${fVo.washing == 'true'}"><i class="material-icons">local_laundry_service</i> Washing machine</c:if></p>
 	      </div>
     </div>
     </div>
@@ -637,18 +644,17 @@
     <p>결제가능 수단: <i class="fa fa-credit-card w3-large"></i> <i class="fa fa-cc-mastercard w3-large"></i> <i class="fa fa-cc-amex w3-large"></i> <i class="fa fa-cc-cc-visa w3-large"></i><i class="fa fa-cc-paypal w3-large"></i></p>
     <hr>
     
-    <h4><strong>Rules</strong></h4>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <p>Subscribe to receive updates on available dates and special offers.</p>
+    <h4><strong>정책</strong></h4>
+    <p>${fn:replace(vo.policy, newLine, "<br/>")}</p>
+    <p>자세한 주소는 예약 후에 공개됩니다.</p>
   </div>
   <hr>
   
   <div class="w3-container" id="contact">
     <h2>Contact</h2>
-    <i class="fa fa-map-marker" style="width:30px"></i> Chicago, US<br>
-    <i class="fa fa-phone" style="width:30px"></i> Phone: +00 151515<br>
-    <i class="fa fa-envelope" style="width:30px"> </i> Email: mail@mail.com<br>
-    <p>Questions? Go ahead, ask them:</p>
+    <i class="fa fa-map-marker" style="width:30px"></i> ${vo.address}<br>
+    <i class="fa fa-envelope" style="width:30px"></i> ${vo.sort}<br>
+    <p>문의하실 내용을 입력해 주세요</p>
     <form action="/action_page.php" target="_blank">
       <p><input class="w3-input w3-border" type="text" placeholder="Name" required name="Name"></p>
       <p><input class="w3-input w3-border" type="text" placeholder="Email" required name="Email"></p>
@@ -739,7 +745,98 @@
 			<hr>
   	</c:forEach>
   </div>
-  
+  <div class="navigation-top">
+	    <div class="d-sm-flex justify-content-between text-center">
+	        <p class="like-info"><span class="align-middle"><i class="far fa-heart"></i></span> Lily and 4 people like this</p>
+	        <div class="col-sm-4 text-center my-2 my-sm-0">
+	            <!-- <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p> -->
+	        </div>
+	        <ul class="social-icons">
+	            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+	            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+	            <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+	            <li><a href="#"><i class="fab fa-behance"></i></a></li>
+	        </ul>
+	    </div>
+	    <div class="navigation-area">
+	        <div class="row">
+	            <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+	                <div class="thumb">
+	                    <a href="#">
+	                        <img class="img-fluid" src="img/post/preview.png" alt="">
+	                    </a>
+	                </div>
+	                <div class="arrow">
+	                    <a href="#">
+	                        <span class="lnr text-white ti-arrow-left"></span>
+	                    </a>
+	                </div>
+	                <div class="detials">
+	                    <p>Prev Post</p>
+	                    <a href="#">
+	                        <h4>Space The Final Frontier</h4>
+	                    </a>
+	                </div>
+	            </div>
+	            <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+	                <div class="detials">
+	                    <p>Next Post</p>
+	                    <a href="#">
+	                        <h4>Telescopes 101</h4>
+	                    </a>
+	                </div>
+	                <div class="arrow">
+	                    <a href="#">
+	                        <span class="lnr text-white ti-arrow-right"></span>
+	                    </a>
+	                </div>
+	                <div class="thumb">
+	                    <a href="#">
+	                        <img class="img-fluid" src="img/post/next.png" alt="">
+	                    </a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="blog-author">
+	    <div class="media align-items-center">
+	        <img src="img/blog/author.png" alt="">
+	        <div class="media-body">
+	            <a href="#">
+	                <h4>Harvard milan</h4>
+	            </a>
+	            <p>Second divided from form fish beast made. Every of seas all gathered use saying you're, he our dominion twon Second divided from</p>
+	        </div>
+	    </div>
+	</div>
+	<div class="comments-area">
+	    <h4>05 Comments</h4>
+	    <div class="comment-list">
+	        <div class="single-comment justify-content-between d-flex">
+	            <div class="user justify-content-between d-flex">
+	                <div class="thumb">
+	                    <img src="img/comment/comment_1.png" alt="">
+	                </div>
+	                <div class="desc">
+	                    <p class="comment">
+	                        Multiply sea night grass fourth day sea lesser rule open subdue female fill which them Blessed, give fill lesser bearing multiply sea night grass fourth day sea lesser
+	                    </p>
+	                    <div class="d-flex justify-content-between">
+	                        <div class="d-flex align-items-center">
+	                            <h5>
+	                   <a href="#">Emilly Blunt</a>
+	                </h5>
+	                            <p class="date">December 4, 2017 at 3:12 pm </p>
+	                        </div>
+	                        <div class="reply-btn">
+	                            <a href="#" class="btn-reply text-uppercase">reply</a>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
   <!-- 자료실에 등록된 자료가 사진이라면, 아래쪽에 모두 보여주기 -->
   <div class="text-center">
 		<c:forEach var="fSName" items="${fSNames}" varStatus="st">
@@ -771,22 +868,22 @@
         </div>
         <!-- Modal body -->
         <div class="modal-body">
-        	<form name="reviewReplyForm" class="was-validated">
-						<table class="table table-bordered">
-							<tr>
-								<th style="width:25%;">리뷰 작성자</th>
-								<td style="width:75%;"><span id="reviewReplyNickName"></span></td>
-							</tr>
-							<tr>
-								<th>리뷰내용</th>  <!-- 첫번째 행에 style 적용하면 아래 같이 적용 -->
-								<td><span id="reviewReplyContent"></span></td>
-							</tr>
-						</table>
-						<hr>
-						댓글 작성자 : ${sNickName}<br>
-						댓글 내용 : <textarea rows="3" name="replyContent" id="replyContent" class="form-control" required></textarea>
-						<input type="button" value="리뷰댓글등록" onclick="reviewReplyCheck()" class="btn btn-success form-control"/>
-						<input type="hidden" name="reviewIdx" id="reviewIdx" />
+        	<form name="replyForm" class="was-validated">
+				<table class="table table-bordered">
+					<tr>
+						<th style="width:25%;">리뷰 작성자</th>
+						<td style="width:75%;"><span id="reviewReplyNickName"></span></td>
+					</tr>
+					<tr>
+						<th>리뷰내용</th>  <!-- 첫번째 행에 style 적용하면 아래 같이 적용 -->
+						<td><span id="reviewReplyContent"></span></td>
+					</tr>
+				</table>
+				<hr>
+				댓글 작성자 : ${sNickName}<br>
+				댓글 내용 : <textarea rows="3" name="replyContent" id="replyContent" class="form-control" required></textarea>
+				<input type="button" value="리뷰댓글등록" onclick="reviewReplyCheck()" class="btn btn-success form-control"/>
+				<input type="hidden" name="reviewIdx" id="reviewIdx" />
         	</form>
         </div>        
         <!-- Modal footer -->

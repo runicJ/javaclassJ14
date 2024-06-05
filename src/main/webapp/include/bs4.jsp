@@ -4,6 +4,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/df66332deb.js" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -22,8 +23,6 @@
 <link rel="stylesheet" href="setting/css/themify-icons.css">
 <!-- flaticon CSS -->
 <link rel="stylesheet" href="setting/css/flaticon.css">
-<!-- fontawesome CSS -->
-<link rel="stylesheet" href="setting/fontawesome/css/all.min.css">
 <!-- magnific CSS -->
 <link rel="stylesheet" href="setting/css/magnific-popup.css">
 <link rel="stylesheet" href="setting/css/gijgo.min.css">

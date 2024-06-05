@@ -113,7 +113,7 @@ public class MemberController extends HttpServlet {  // 4
 		else if(com.equals("/MemberUpdate")) {
 			command = new MemberUpdateCommand();
 			command.execute(request, response);
-			viewPage += "/memberUpdate.jsp";  // view를 가져가야함(회원 수정창에 해당 회원의 모든 정보를 넣어서 보여줌)
+			viewPage += "/memberUpdate.jsp";
 		}
 		else if(com.equals("/MemberUpdateOk")) {
 			command = new MemberUpdateOkCommand();

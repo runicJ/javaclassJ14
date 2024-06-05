@@ -40,10 +40,10 @@ public class StayController extends HttpServlet {  // 4
 //			command.execute(request, response);
 			viewPage += "/error.jsp";
 		}
-		else if(com.equals("/StayComment")) {
+		else if(com.equals("/StayQuote")) {
 //			command = new StayDetailCommand();
 //			command.execute(request, response);
-			viewPage += "/stayComment.jsp";
+			viewPage += "/stayQuote.jsp";
 		}
 		else if(com.equals("/StayDetail")) {
 			command = new StayDetailCommand();

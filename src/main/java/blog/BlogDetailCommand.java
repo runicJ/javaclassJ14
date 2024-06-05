@@ -21,7 +21,7 @@ public class BlogDetailCommand implements BlogInterface {
 		BlogVO vo = dao.getBlogDetail(tIdx);
 		
 		HttpSession session = request.getSession();
-		ArrayList<String> contentViewCnt = (ArrayList<String>) session.getAttribute("tContentIdx");  // 타입을 맞춰줘야 해서 강제 타입 변환
+		ArrayList<String> contentViewCnt = (ArrayList<String>) session.getAttribute("tContentIdx");
 		if(contentViewCnt == null) contentViewCnt = new ArrayList<String>();
 		String imsiContentViewCnt = "blog" + tIdx;
 		if(!contentViewCnt.contains(imsiContentViewCnt)) {

@@ -9,12 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import admin.AdminDAO;
 import admin.AdminInterface;
 
-public class BlogComplaintInputCommand implements AdminInterface {
+public class BlogComplaintAnswerCommand implements AdminInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String part = request.getParameter("part")==null ? "" : request.getParameter("part");
-		//System.out.println("BoardComplaintInput : " + part);
 		int partIdx = request.getParameter("partIdx")==null ? 0 : Integer.parseInt(request.getParameter("partIdx"));
 		String cpMid = request.getParameter("cpMid")==null ? "" : request.getParameter("cpMid");
 		String cpContent = request.getParameter("cpContent")==null ? "" : request.getParameter("cpContent");

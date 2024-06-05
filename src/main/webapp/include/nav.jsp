@@ -7,37 +7,30 @@
         <div class="row align-items-center">
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-                    <a class="navbar-brand" href="http://localhost:9090/javaclassJ14/Main"><img src="images/logoMain.png" alt="logo" style="width:160px;height:150px;object-fit:contain;object-position:center center;display:block;margin-top:-30px;margin-bottom:-30px;"></a>
+                    <a class="navbar-brand" href="${ctp}/Main"><img src="images/logoMain.png" alt="logo" style="width:160px;height:150px;object-fit:contain;object-position:center center;display:block;margin-top:-30px;margin-bottom:-30px;"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse main-menu-item justify-content-center"
-                        id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse main-menu-item justify-content-center" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="Introduce.st">Introduce</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="StayList.st" id="navbarDropdown1"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Stay
-                                </a>
+                                <a class="nav-link dropdown-toggle" href="StayList.st" id="navbarDropdown1" 
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stay</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
                                     <a class="dropdown-item" href="StayList.st">Stay List</a>
                                     <a class="dropdown-item" href="StayPromotion.st">Stay Promotion</a>
-                                    <a class="dropdown-item" href="StayComment.st">Stay Comment</a>
+                                    <a class="dropdown-item" href="StayQuote.st">Stay Quote</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="BlogList.bl" id="navbarDropdown2"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Blog
-                                </a>
+                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
                                     <a class="dropdown-item" href="BlogList.bl">Travelog</a>
                                     <a class="dropdown-item" href="BlogJournalList.bl">Journal</a>
@@ -45,11 +38,10 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="Service.ad" id="navbarDropdown3"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">Service</a>
+                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Service</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                                    <a class="dropdown-item" href="#">공지사항</a>
-                                    <a class="dropdown-item" href="#">1:1문의</a>
+                                    <a class="dropdown-item" href="BoardList.bo">공지사항</a>
+                                    <a class="dropdown-item" href="BoardList.bo">1:1문의</a>
                                 </div>
                             </li>
                             <c:if test="${sMid == null}">
@@ -63,7 +55,7 @@
                     <c:if test="${sMid == null}"><a href="MemberLogin.mem" class="btn_1 d-none d-lg-block"><i class="fa-solid fa-door-open"></i> LOGIN</a></c:if>
                     <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="AdminMain.ad">관리자메뉴</a></c:if>
                     <c:if test="${sMid != null && sMid != 'admin'}">
-	                    <li class="nav-item dropdown">
+	                    <li class="nav-item dropdown" style="list-style-type:none;">
 	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown">${sNickName} 님</a>
 		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		                        <a class="dropdown-item" href="MemberMain.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>

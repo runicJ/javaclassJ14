@@ -9,7 +9,7 @@ create table complaint (
 	cpContent  text not null,  /* 신고 사유 */
 	cpDate  datetime default now(),  /* 신고한 날짜 */
 	answer CHAR(2) DEFAULT 'NO',
-	FOREIGN KEY (mid) REFERENCES member(mId)
+	FOREIGN KEY (mid) REFERENCES member2(mId)
 );
 desc complaint;
 
@@ -43,19 +43,19 @@ create table reply(
 	nickName  varchar(20) not null,    /* 댓글 작성자 닉네임 */
 	reDate  datetime default now(),     /* 댓글 작성일 */
 	reContent text,                     /* 댓글 내용 */
-	primary key(replyIdx),
+	primary key(reIdx),
 	foreign key(mid) references member2(mid),
 	foreign key(reviewIdx) references review(rIdx)
 );
-desc reviewReply;
-select * from reviewReply;
+desc reply;
+select * from reply;
 
 select * from review order by idx desc;
 select * from review where partIdx = 8;
 
-select * from reviewReply order by replyIdx desc;
+select * from reply order by replyIdx desc;
 
-select * from review v, reviewReply r where v.partIdx=8 and v.idx = r.reviewIdx;
-select * from review v, reviewReply r where v.partIdx=8 and v.idx = r.reviewIdx order by v.idx, r.replyIdx desc;  /* 내부 조인이라 댓글이 없으면 리뷰가 안나옴(교집합) */
-select * from review v left join reviewReply r on v.partIdx=8 and v.idx = r.reviewIdx order by v.idx, r.replyIdx desc;  /* left join // 리뷰 14번이 안걸러짐 */
-select * from (select * from review where partIdx = 8) as v left join reviewReply r on v.idx = r.reviewIdx order by v.idx, r.replyIdx desc;  /* left join // 서브쿼리 사용 */
+select * from review v, reply r where v.partIdx=8 and v.idx = r.reviewIdx;
+select * from review v, reply r where v.partIdx=8 and v.idx = r.reviewIdx order by v.idx, r.replyIdx desc;  /* 내부 조인이라 댓글이 없으면 리뷰가 안나옴(교집합) */
+select * from review v left join reply r on v.partIdx=8 and v.idx = r.reviewIdx order by v.idx, r.replyIdx desc;  /* left join // 리뷰 14번이 안걸러짐 */
+select * from (select * from review where partIdx = 8) as v left join reply r on v.idx = r.reviewIdx order by v.idx, r.replyIdx desc;  /* left join // 서브쿼리 사용 */

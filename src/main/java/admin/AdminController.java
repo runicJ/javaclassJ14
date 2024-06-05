@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.complaint.BlogComplaintAnswerCommand;
+import admin.member.MemberDeleteOkCommand;
+import admin.member.MemberListCommand;
 import admin.review.ReviewDeleteCommand;
 import admin.review.ReviewInputOkCommand;
 import admin.review.ReviewReplyInputOkCommand;
@@ -31,11 +34,11 @@ public class AdminController extends HttpServlet {  // 4
 		HttpSession session = request.getSession();  // 세션을 열음
 		String mid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
 		
-//		if(com.equals("/BoardComplaintInput")) {
-//			command = new BoardComplaintInputCommand();
-//			command.execute(request, response);
-//			return;
-//		}
+		if(com.equals("/BlogComplaintAnswer")) {
+			command = new BlogComplaintAnswerCommand();
+			command.execute(request, response);
+			return;
+		}
 		if(com.equals("/ReviewInputOk")) {
 			command = new ReviewInputOkCommand();
 			command.execute(request, response);
@@ -64,11 +67,6 @@ public class AdminController extends HttpServlet {  // 4
 //			command.execute(request, response);
 //			viewPage += "/adminContent.jsp";
 //		}
-//		else if(com.equals("/GuestList")) {
-//			command = new GuestListCommand();
-//			command.execute(request, response);
-//			viewPage += "guest/guestList.jsp";
-//		}
 		else if(com.equals("/StayInput")) {
 			viewPage += "/stay/stayInput.jsp";
 		}
@@ -80,23 +78,18 @@ public class AdminController extends HttpServlet {  // 4
 		else if(com.equals("/StayList")) {
 			command = new StayListCommand();
 			command.execute(request, response);
-			viewPage += "/stay/memberList.jsp";
+			viewPage += "/stay/stayList.jsp";
 		}
-//		else if(com.equals("/MemberLevelChange")) {
-//			command = new MemberLevelChangeCommand();
-//			command.execute(request, response);
-//			return;  // ajax니까 return
-//		}
-//		else if(com.equals("/MemberDeleteOk")) {
-//			command = new MemberDeleteOkCommand();
-//			command.execute(request, response);
-//			return;
-//		}
-//		else if(com.equals("/MemberLevelSelectCheck")) {
-//			command = new MemberLevelSelectCheckCommand();
-//			command.execute(request, response);
-//			return;
-//		}
+		else if(com.equals("/MemberList")) {
+			command = new MemberListCommand();
+			command.execute(request, response);
+			viewPage += "/member/memberList.jsp";
+		}
+		else if(com.equals("/MemberDeleteOk")) {
+			command = new MemberDeleteOkCommand();
+			command.execute(request, response);
+			return;
+		}
 //		else if(com.equals("/BoardList")) {
 //			command = new BoardListCommand();
 //			command.execute(request, response);

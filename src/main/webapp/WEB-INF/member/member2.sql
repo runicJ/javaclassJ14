@@ -69,10 +69,12 @@ select * from memberChat order by idx desc limit 15;  /* 화면에 50개만 나�
 select m.* from (select * from memberChat order by idx desc limit 15) m order by idx;
 
 CREATE TABLE logHistory (
-    lIdx INT AUTO_INCREMENT PRIMARY KEY,
+    logIdx INT AUTO_INCREMENT PRIMARY KEY,
     mId VARCHAR(20) NOT NULL,
     loginTime DATETIME DEFAULT CURRENT_TIMESTAMP,
     logoutTime DATETIME,
     hostIp VARCHAR(30),
     FOREIGN KEY (mId) REFERENCES member2(mId)
 );
+
+drop table logHistory;

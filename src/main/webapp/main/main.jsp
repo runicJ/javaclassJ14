@@ -8,6 +8,96 @@
 	<meta name="viewpoint" content="width=divice-width, initial-scale=1.0">
 	<title>Main Page</title>
   <%@ include file = "/include/bs4.jsp"%>
+  <style>
+  	.blink::after{
+	    content:"";
+	    height:40px;
+	    width:3px;
+	    background-color:#F5f5dc;
+	    display:inline-block;
+	    animation: cursor .8s ease-in-out infinite;
+	}
+	
+	@keyframes cursor{
+	    0%{
+	        opacity:0.9;
+	    }
+	    100%{
+	        opacity:0;
+	    }
+	}
+	
+    .smile {
+    background-color: transparent;
+    border: none;
+    color: #F5f5dc;
+    font-size: 2em;
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: upDown 1s ease-in-out infinite;
+    cursor: pointer;
+    }
+    
+    @keyframes upDown{
+        0%{
+            bottom: 1em;
+            transform: scaleY(0.9);
+        }
+        50%{
+            bottom: 1.5em;
+            transform: scaleY(1);
+            color: #f1d570;
+        }
+        100%{
+            bottom: 1em;
+            transform: scaleY(0.9);
+        }
+    }
+    
+/*    * {
+ 	  box-sizing: border-box;
+	}
+	
+	body {
+	  margin: 0;
+	  font-family: Arial;
+	  font-size: 17px;
+	}
+	
+	#myVideo {
+	  position: fixed;
+	  right: 0;
+	  bottom: 0;
+	  min-width: 100%; 
+	  min-height: 100%;
+	}
+	
+	.content {
+	  position: fixed;
+	  bottom: 0;
+	  background: rgba(0, 0, 0, 0.5);
+	  color: #f1f1f1;
+	  width: 100%;
+	  padding: 20px;
+	}
+	
+	#myBtn {
+	  width: 200px;
+	  font-size: 18px;
+	  padding: 10px;
+	  border: none;
+	  background: #000;
+	  color: #fff;
+	  cursor: pointer;
+	}
+	
+	#myBtn:hover {
+	  background: #ddd;
+	  color: black;
+	} */
+  </style>
 </head>
 <body>
 <%@ include file = "/include/header.jsp"%>
@@ -20,15 +110,41 @@
                 <div class="col-lg-10">
                     <div class="banner_text text-center">
                         <div class="banner_text_iner">
-                            <h1>Serene Nest</h1>
-                            <p>Let’s start your journey with us, your dream will come true</p>
-                            <a href="#" class="btn_1">Discover Now</a>
+                            <!-- <h1>Serene Nest</h2>
+                            <p>나 너 그리고 우리..<span class="blink">.</span></p>
+                            <a href="#" class="btn_1 smile"><i class="fa-regular fa-face-smile"></i></a> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    
+<!-- 	<video autoplay muted loop id="myVideo">
+	  <source src="rain.mp4" type="video/mp4">
+	  Your browser does not support HTML5 video.
+	</video>
+	
+	<div class="content">
+	  <h1>Heading</h1>
+	  <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei. Id qui nemore latine molestiae, ad mutat oblique delicatissimi pro.</p>
+	  <button id="myBtn" onclick="myFunction()">Pause</button>
+	</div>
+	
+	<script>
+	var video = document.getElementById("myVideo");
+	var btn = document.getElementById("myBtn");
+	
+	function myFunction() {
+	  if (video.paused) {
+	    video.play();
+	    btn.innerHTML = "Pause";
+	  } else {
+	    video.pause();
+	    btn.innerHTML = "Play";
+	  }
+	}
+	</script> -->
     
     <!-- booking part start-->
     <section class="booking_part">

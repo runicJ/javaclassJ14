@@ -43,9 +43,9 @@ public class MemberDAO {  // 3
 			sql = "select * from member2 where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
-			rs = pstmt.executeQuery();  // 자료가 있으면 넘어옴
+			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {  // 자료가 있는지 없는지 모름
+			if(rs.next()) {
 				vo.setmIdx(rs.getInt("mIdx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setPwd(rs.getString("pwd"));
@@ -203,7 +203,7 @@ public class MemberDAO {  // 3
 	public int setMemberDeleteUpdate(String mid) {
 		int res = 0;
 		try {
-			sql = "update member2 set userDel='OK', level=99 where mid = ?";
+			sql = "update member2 set userDel='OK' where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			res = pstmt.executeUpdate();  // 완전히 삭제하지 않고 업데이트 시킴
