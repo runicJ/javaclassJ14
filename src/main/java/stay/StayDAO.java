@@ -231,6 +231,36 @@ public class StayDAO {
 		}
 		return vos;
 	}
+
+	public ArrayList<StayVO> getVestFourStay() {
+		ArrayList<StayVO> vos = new ArrayList<StayVO>();
+		try {
+			sql = "select * from stay order by star desc limit 4";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo.setsIdx(rs.getInt("sIdx"));
+				vo.setSort(rs.getString("sort"));
+				vo.setsName(rs.getString("sName"));
+				vo.setsPhoto(rs.getString("sPhoto"));
+				vo.setStar(rs.getInt("star"));
+				vo.setAddress(rs.getString("address"));
+				vo.setsContent(rs.getString("sContent"));
+				vo.setGuestMax(rs.getInt("guestMax"));
+				vo.setPrice(rs.getInt("price"));
+				vo.setResidence(rs.getString("residence"));
+				vo.setsDate(rs.getString("sDate"));
+				vo.setsDel(rs.getString("sDel"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
 	
 	// 회원 전체/부분 리스트
 //	public ArrayList<MemberVO> getMemberList(int level) {

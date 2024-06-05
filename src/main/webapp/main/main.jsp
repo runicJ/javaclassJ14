@@ -287,9 +287,10 @@
                 </div>
             </div>
             <div class="row">
+    			<c:forEach var="vestVo" items="${vestVos}" varStatus="st">
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
-                        <img src="images/single_place_1.png" alt="">
+                        <img src="images/stay/${vestVos.sPhoto}" alt="thumbnail${st.count}">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
                                 <a href="#" class="place_btn">travel</a>
@@ -310,6 +311,7 @@
                         </div>
                     </div>
                 </div>
+                </c:forEach>
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
                         <img src="images/single_place_2.png" alt="">
@@ -342,7 +344,6 @@
                                 <h3>Saintmartine Iceland</h3>
                                 <p>Technaf, Bangladesh</p>
                                 <div class="place_review">
-                                    <a href="#"><i class="fas fa-star"></i></a>
                                     <a href="#"><i class="fas fa-star"></i></a>
                                     <a href="#"><i class="fas fa-star"></i></a>
                                     <a href="#"><i class="fas fa-star"></i></a>

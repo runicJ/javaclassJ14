@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import stay.StayDAO;
+import stay.StayVO;
+
 //import study.database.LoginDAO;
 //import study.database.LoginVO;
 
@@ -24,7 +27,13 @@ public class Main extends HttpServlet {
 		
 		//request.setAttribute("recentVos", recentVos);
 		
+		StayDAO dao = new StayDAO();
+		ArrayList<StayVO> vestVos = dao.getVestFourStay();
+		
+		request.setAttribute("vestVos", vestVos);
+		
 		String viewPage = "/main/main.jsp";
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
