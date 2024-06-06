@@ -265,9 +265,9 @@ public class AdminDAO {
 	public ArrayList<ReviewVO> getReviewSearch(int idx, String part) {
 		ArrayList<ReviewVO> rVos = new ArrayList<ReviewVO>();
 		try {
-			//sql = "select * from review where part = ? and partIdx = ? order by idx desc";
-			sql = "select * from (select * from review where part = ? and partIdx = ?) as v left join reviewReply r "  // partIdx는 원본글
-					+ "on v.idx = r.reviewIdx order by v.idx desc, r.replyIdx desc";
+			sql = "select * from review where part = ? and partIdx = ? order by rIdx desc";
+//			sql = "select * from (select * from review where part = ? and partIdx = ?) as v left join reply r "  // partIdx는 원본글
+//					+ "on v.idx = r.reviewIdx order by v.idx desc, r.replyIdx desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, part);
 			pstmt.setInt(2, idx);
@@ -275,7 +275,7 @@ public class AdminDAO {
 			
 			while(rs.next()) {
 				ReviewVO vo = new ReviewVO();
-				vo.setIdx(rs.getInt("idx"));
+				vo.setrIdx(rs.getInt("rIdx"));
 				vo.setPart(rs.getString("part"));
 				vo.setPartIdx(rs.getInt("partIdx"));
 				vo.setMid(rs.getString("mid"));
@@ -283,12 +283,7 @@ public class AdminDAO {
 				vo.setStar(rs.getInt("star"));
 				vo.setContent(rs.getString("content"));				
 				vo.setrDate(rs.getString("rDate"));
-				
-				vo.setReplyIdx(rs.getInt("replyIdx"));
-				vo.setReplyMid(rs.getString("replyMid"));
-				vo.setReplyNickName(rs.getString("replyNickName"));
-				vo.setReplyRDate(rs.getString("replyRDate"));
-				vo.setReplyContent(rs.getString("replyContent"));
+				vo.setPurpose(rs.getString("purpose"));
 				
 				rVos.add(vo);
 			}
@@ -301,12 +296,12 @@ public class AdminDAO {
 	}
 
 	//리뷰 삭제하기
-	public int setReviewDelete(int idx) {
+	public int setReviewDelete(int rIdx) {
 		int res = 0;
 		try {
-			sql = "delete from review where idx = ?";
+			sql = "delete from review where rIdx = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, idx);
+			pstmt.setInt(1, rIdx);
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -317,7 +312,7 @@ public class AdminDAO {
 	}
 
 	//리뷰 댓글 저장하기
-	public int setReviewReplyInputOk(ReviewVO vo) {
+/*	public int setReviewReplyInputOk(ReviewVO vo) {
 		int res = 0;
 		try {
 			sql = "insert into reply values (default,?,?,?,default,?)";
@@ -333,6 +328,6 @@ public class AdminDAO {
 			pstmtClose();
 		}
 		return res;
-	}
+	}*/
 
 }

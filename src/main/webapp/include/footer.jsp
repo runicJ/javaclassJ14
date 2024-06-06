@@ -25,7 +25,7 @@
                     <p>충청북도 청주시 서원구 사직대로 109 4층 401호</p>
                     <span>https://cheongju.greenart.co.kr</span>
                     <div class="social-icons">
-                        <a href="http://pf.kakao.com/_iExmG"><i class="fa-solid fa-comment"></i></a>
+                        <a href="https://pf.kakao.com/_iExmG"><i class="fa-solid fa-comment"></i></a>
                         <a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="ti-instagram"></i></a>
                         <a href="https://www.facebook.com" target="_blank"><i class="ti-facebook"></i></a>
                         <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>

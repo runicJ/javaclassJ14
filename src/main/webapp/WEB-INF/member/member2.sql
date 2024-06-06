@@ -71,9 +71,9 @@ select m.* from (select * from memberChat order by idx desc limit 15) m order by
 CREATE TABLE logHistory (
     logIdx INT AUTO_INCREMENT PRIMARY KEY,
     mId VARCHAR(20) NOT NULL,
-    loginTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    loginTime DATETIME DEFAULT now(),
     logoutTime DATETIME,
-    hostIp VARCHAR(30),
+    hostIp VARCHAR(30) NOT NULL,
     FOREIGN KEY (mId) REFERENCES member2(mId)
 );
 

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -11,7 +13,7 @@
   <style>
   	.blink::after{
 	    content:"";
-	    height:40px;
+	    height:45px;
 	    width:3px;
 	    background-color:#F5f5dc;
 	    display:inline-block;
@@ -28,16 +30,16 @@
 	}
 	
     .smile {
-    background-color: transparent;
-    border: none;
-    color: #F5f5dc;
-    font-size: 2em;
-    position: absolute;
-    bottom: 1em;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: upDown 1s ease-in-out infinite;
-    cursor: pointer;
+	    background-color: transparent;
+	    border: none;
+	    color: #F5f5dc;
+	    font-size: 1.5em;
+	    position: absolute;
+	    line-height: 8;
+	    left: 50%;
+	    transform: translateX(-50%);
+	    animation: upDown 1s ease-in-out infinite;
+	    cursor: pointer;
     }
     
     @keyframes upDown{
@@ -48,7 +50,6 @@
         50%{
             bottom: 1.5em;
             transform: scaleY(1);
-            color: #f1d570;
         }
         100%{
             bottom: 1em;
@@ -98,6 +99,13 @@
 	  color: black;
 	} */
   </style>
+  <script>
+  	$(function() {
+	    $("#datepicker_1, #datepicker_2").datepicker({
+	        dateFormat: 'yy-mm-dd'
+	    });
+	});
+  </script>
 </head>
 <body>
 <%@ include file = "/include/header.jsp"%>
@@ -110,9 +118,9 @@
                 <div class="col-lg-10">
                     <div class="banner_text text-center">
                         <div class="banner_text_iner">
-                            <!-- <h1>Serene Nest</h2>
-                            <p>나 너 그리고 우리..<span class="blink">.</span></p>
-                            <a href="#" class="btn_1 smile"><i class="fa-regular fa-face-smile"></i></a> -->
+                            <h1>Serene Nest</h1>
+                            <p>오직 Serene Nest에서만..<span class="blink">.</span></p>
+                            <p><a href="#" class="smile"><i class="fa-regular fa-face-smile"></i></a></p>
                         </div>
                     </div>
                 </div>
@@ -151,117 +159,26 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="booking_menu">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                            <a class="nav-link active" id="hotel-tab" data-toggle="tab" href="#hotel" role="tab" aria-controls="hotel" aria-selected="true">hotel</a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link" id="tricket-tab" data-toggle="tab" href="#tricket" role="tab" aria-controls="tricket" aria-selected="false">tricket</a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link" id="place-tab" data-toggle="tab" href="#place" role="tab" aria-controls="place" aria-selected="false">place</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-12">
                     <div class="booking_content">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
                                 <div class="booking_form">
-                                    <form action="#">
+                                    <form action="StayList.st">
                                         <div class="form-row">
                                             <div class="form_colum">
-                                                <select class="nc_select">
-                                                    <option selected>Choosace place </option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
+												<input class="select" type="text" name="place" placeholder="여행 지역"> 
                                             </div>
                                             <div class="form_colum">
-                                                <input id="datepicker_1" placeholder="Check in date">
+                                                <input id="datepicker_1" placeholder="Check in">
                                             </div>
                                             <div class="form_colum">
-                                                <input id="datepicker_2" placeholder="Check in date">
+                                                <input id="datepicker_2" placeholder="Check out">
                                             </div>
                                             <div class="form_colum">
-                                                <select class="nc_select">
-                                                    <option selected>Persone </option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
+                                                <input class="select" type="number" name="guest" min="1" placeholder="인원 수"> 
                                             </div>
                                             <div class="form_btn">
-                                                <a href="#" class="btn_1">search</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="tricket" role="tabpanel" aria-labelledby="tricket-tab">
-                                <div class="booking_form">
-                                    <form action="#">
-                                        <div class="form-row">
-                                            <div class="form_colum">
-                                                <select class="nc_select">
-                                                    <option selected>Choosace place </option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                            <div class="form_colum">
-                                                <input id="datepicker_3" placeholder="Check in date">
-                                            </div>
-                                            <div class="form_colum">
-                                                <input id="datepicker_4" placeholder="Check in date">
-                                            </div>
-                                            <div class="form_colum">
-                                                <select class="nc_select">
-                                                    <option selected>Persone </option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                            <div class="form_btn">
-                                                <a href="#" class="btn_1">search</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="place" role="tabpanel" aria-labelledby="place-tab">
-                                <div class="booking_form">
-                                    <form action="#">
-                                        <div class="form-row">
-                                            <div class="form_colum">
-                                                <select class="nc_select">
-                                                    <option selected>Choosace place </option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                            <div class="form_colum">
-                                                <input id="datepicker_5" placeholder="Check in date">
-                                            </div>
-                                            <div class="form_colum">
-                                                <input id="datepicker_6" placeholder="Check in date">
-                                            </div>
-                                            <div class="form_colum">
-                                                <select class="nc_select">
-                                                    <option selected>Persone </option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                            <div class="form_btn">
-                                                <a href="#" class="btn_1">search</a>
+                                                <input type="submit" class="btn_1" value="search">
                                             </div>
                                         </div>
                                     </form>
@@ -281,29 +198,28 @@
             <div class="row justify-content-center">
                 <div class="col-xl-6">
                     <div class="section_tittle text-center">
-                        <h2>Top Places to visit</h2>
-                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our. Air very one. Whales grass is fish whales winged.</p>
+                        <h2>Top Stay 4</h2>
+                        <p>가장 인기있는 숙소를 소개합니다.</p>
                     </div>
                 </div>
             </div>
             <div class="row">
     			<c:forEach var="vestVo" items="${vestVos}" varStatus="st">
+    			<c:set var="sPhotos" value="${fn:split(vestVo.sPhoto, '/')}"/>
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
-                        <img src="images/stay/${vestVos.sPhoto}" alt="thumbnail${st.count}">
-                        <img src="images/single_place_2.png" alt="">
+                        <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${vo.sName} thumbnail" style="object-fit:contain;">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
-                                <a href="#" class="place_btn">travel</a>
-                                <h3>Saintmartine Iceland</h3>
-                                <p>Technaf, Bangladesh</p>
+                                <a href="#" class="place_btn">${vestVo.sort}</a>
+                                <h3>${vestVo.sName}</h3>
+                                <p>${vestVo.residence}</p>
                                 <div class="place_review">
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <span>(210 review)</span>
+                                    <c:forEach begin="1" end="${stayReviews[stay]}" var="star">
+                                    	<a href="#"><i class="fas fa-star"></i></a>
+                                	</c:forEach>
+                                	<b>평점 : <fmt:formatNumber value="${stayReviews[reviewAvg]}" pattern="#,##0.0" /></b>
+                                <span>( review)</span>
                                 </div>
                             </div>
                             <div class="details_icon text-right">
@@ -313,166 +229,7 @@
                     </div>
                 </div>
                 </c:forEach>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_place">
-                        <img src="images/single_place_2.png" alt="">
-                        <div class="hover_Text d-flex align-items-end justify-content-between">
-                            <div class="hover_text_iner">
-                                <a href="#" class="place_btn">travel</a>
-                                <h3>Saintmartine Iceland</h3>
-                                <p>Technaf, Bangladesh</p>
-                                <div class="place_review">
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <span>(210 review)</span>
-                                </div>
-                            </div>
-                            <div class="details_icon text-right">
-                                <i class="ti-share"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_place">
-                        <img src="images/single_place_3.png" alt="">
-                        <div class="hover_Text d-flex align-items-end justify-content-between">
-                            <div class="hover_text_iner">
-                                <a href="#" class="place_btn">travel</a>
-                                <h3>Saintmartine Iceland</h3>
-                                <p>Technaf, Bangladesh</p>
-                                <div class="place_review">
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <span>(210 review)</span>
-                                </div>
-                            </div>
-                            <div class="details_icon text-right">
-                                <i class="ti-share"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_place">
-                        <img src="images/single_place_4.png" alt="">
-                        <div class="hover_Text d-flex align-items-end justify-content-between">
-                            <div class="hover_text_iner">
-                                <a href="#" class="place_btn">travel</a>
-                                <h3>Saintmartine Iceland</h3>
-                                <p>Technaf, Bangladesh</p>
-                                <div class="place_review">
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <span>(210 review)</span>
-                                </div>
-                            </div>
-                            <div class="details_icon text-right">
-                                <i class="ti-share"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#" class="btn_1 text-cnter">Discover more</a>
-            </div>
-        </div>
-    </section>
-    <!--top place end-->
-
-    <!--top place start-->
-    <section class="event_part section_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="event_slider owl-carousel" >
-                        <div class="single_event_slider">
-                            <div class="row justify-content-end">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="event_slider_content">
-                                        <h5>Upcoming Event</h5>
-                                        <h2>Maldeve - Asia</h2>
-                                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our. Air very one. Whales grass is fish whales winged.
-                                        </p>
-                                        <p>date: <span>12 Aug 2019</span> </p>
-                                        <p>Cost: <span>Start from $820</span> </p>
-                                        <p>Organizer: <span> Martine Agency</span> </p>
-                                        <div class="rating">
-                                            <span>Rating:</span>
-                                            <div class="place_review">
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="btn_1">Plan Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single_event_slider">
-                            <div class="row justify-content-end">
-                                <div class="ol-lg-6 col-md-6">
-                                    <div class="event_slider_content">
-                                        <h5>Upcoming Event</h5>
-                                        <h2>Maldeve - Asia</h2>
-                                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our. Air very one. Whales grass is fish whales winged.
-                                        </p>
-                                        <p>date: <span>12 Aug 2019</span> </p>
-                                        <p>Cost: <span>Start from $820</span> </p>
-                                        <p>Organizer: <span> Martine Agency</span> </p>
-                                        <div class="rating">
-                                            <span>Rating:</span>
-                                            <div class="place_review">
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="btn_1">Plan Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single_event_slider">
-                            <div class="row justify-content-end">
-                                <div class="ol-lg-6 col-md-6">
-                                    <div class="event_slider_content">
-                                        <h5>Upcoming Event</h5>
-                                        <h2>Maldeve - Asia</h2>
-                                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our. Air very one. Whales grass is fish whales winged.
-                                        </p>
-                                        <p>date: <span>12 Aug 2019</span> </p>
-                                        <p>Cost: <span>Start from $820</span> </p>
-                                        <p>Organizer: <span> Martine Agency</span> </p>
-                                        <div class="rating">
-                                            <span>Rating:</span>
-                                            <div class="place_review">
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                                <a href="#"><i class="fas fa-star"></i></a>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="btn_1">Plan Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <a href="StayList.st" class="btn_1 text-cnter">Stay more</a>
             </div>
         </div>
     </section>
@@ -484,8 +241,8 @@
             <div class="row justify-content-center">
                 <div class="col-xl-6">
                     <div class="section_tittle text-center">
-                        <h2>Top Hotel & Restaurants</h2>
-                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our. Air very one. Whales grass is fish whales winged.</p>
+                        <h2>Vest Travelog</h2>
+                        <p>현재 가장 관심이 뜨거운 여행블로그를 추천합니다.</p>
                     </div>
                 </div>
             </div>
@@ -593,7 +350,7 @@
             <div class="row ">
                 <div class="col-xl-6">
                     <div class="section_tittle">
-                        <h2>What they said</h2>
+                        <h2>가장 도움이 되는 후기 댓글</h2>
                     </div>
                 </div>
             </div>
@@ -661,50 +418,6 @@
         </div>
     </section>
     <!--top place end-->
-
-    <!--::industries start::-->
-    <section class="best_services section_padding">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-6">
-                    <div class="section_tittle text-center">
-                        <h2>We offered best services</h2>
-                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our. Air very one. Whales grass is fish whales winged.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single_ihotel_list">
-                        <img src="images/services_1.png" alt="">
-                        <h3> <a href="#"> Transportation</a></h3>
-                        <p>All transportation cost we bear</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single_ihotel_list">
-                        <img src="images/services_2.png" alt="">
-                        <h3> <a href="#"> Guidence</a></h3>
-                        <p>We offer the best guidence for you</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single_ihotel_list">
-                        <img src="images/services_3.png" alt="">
-                        <h3> <a href="#"> Accomodation</a></h3>
-                        <p>Luxarious and comfortable</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single_ihotel_list">
-                        <img src="images/services_4.png" alt="">
-                        <h3> <a href="#"> Discover world</a></h3>
-                        <p>Best tour plan for your next tour</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 </div>
 <p><br/></p>
 <%@ include file = "../../include/footer.jsp"%>

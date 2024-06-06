@@ -24,18 +24,15 @@ public class BlogInputOkCommand implements BlogInterface {
 		
 		String file = "";
 		String oFileName = "";
-		String fSName = "";
 		
 		while(fileNames.hasMoreElements()) {  // 하나씩 꺼내서 값이 있느냐
 			file = (String) fileNames.nextElement();
 			
 			if(multipartRequest.getFilesystemName(file) != null) {
 				oFileName += multipartRequest.getOriginalFileName(file) + "/";
-				fSName += multipartRequest.getFilesystemName(file) + "/";
 			}
 		}
 		oFileName = oFileName.substring(0, oFileName.lastIndexOf("/"));
-		fSName = fSName.substring(0, fSName.lastIndexOf("/"));
 		
 		// 업로드시킨 파일을 DB에 저장시키기 위해서 전송된 폼의 내용들을 모두 변수에 담아준다.
 		String mid = multipartRequest.getParameter("mid")==null ? "" : multipartRequest.getParameter("mid");
@@ -52,7 +49,7 @@ public class BlogInputOkCommand implements BlogInterface {
 		
 		vo.setMid(mid);
 		vo.setNickName(nickName);
-		vo.settPhoto(fSName);
+		vo.settPhoto(oFileName);
 		vo.setSort(sort);
 		vo.setTitle(title);
 		vo.setResidence(residence);
@@ -64,7 +61,7 @@ public class BlogInputOkCommand implements BlogInterface {
 		
 		if(res != 0) {
 			request.setAttribute("message", "새 글이 등록되었습니다.");
-			request.setAttribute("url", "BlogDetail.bl");
+			request.setAttribute("url", "BlogList.bl");
 		}
 		else {
 			request.setAttribute("message", "새 글 등록 실패!");

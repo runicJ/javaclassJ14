@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -9,6 +10,38 @@
 	<title>Insert</title>
   <%@ include file = "../../include/bs4.jsp"%>
   <style>
+  	/*--------------------------------------------------------------
+	# Back to top button
+	--------------------------------------------------------------*/
+	.back-to-top {
+	  position: fixed;
+	  visibility: hidden;
+	  opacity: 0;
+	  right: 15px;
+	  bottom: 15px;
+	  z-index: 996;
+	  background: #3498db;
+	  width: 40px;
+	  height: 40px;
+	  border-radius: 4px;
+	  transition: all 0.4s;
+	}
+	
+	.back-to-top i {
+	  font-size: 28px;
+	  color: #fff;
+	  line-height: 0;
+	}
+	
+	.back-to-top:hover {
+	  background: #57aae1;
+	  color: #fff;
+	}
+	
+	.back-to-top.active {
+	  visibility: visible;
+	  opacity: 1;
+	}
 	/*--------------------------------------------------------------
 	# Portfolio
 	--------------------------------------------------------------*/
@@ -78,7 +111,8 @@
 	}
 	
 	.portfolio .portfolio-item figure .link-preview,
-	.portfolio .portfolio-item figure .link-details {
+	.portfolio .portfolio-item figure .link-details,
+	.portfolio .portfolio-item figure .link-wish {
 	  position: absolute;
 	  display: flex;
 	  align-items: center;
@@ -96,39 +130,53 @@
 	}
 	
 	.portfolio .portfolio-item figure .link-preview i,
-	.portfolio .portfolio-item figure .link-details i {
+	.portfolio .portfolio-item figure .link-details i,
+	.portfolio .portfolio-item figure .link-wish i {
 	  color: #384046;
 	  line-height: 0;
 	}
 	
 	.portfolio .portfolio-item figure .link-preview:hover,
-	.portfolio .portfolio-item figure .link-details:hover {
+	.portfolio .portfolio-item figure .link-details:hover,
+	.portfolio .portfolio-item figure .link-wish:hover {
 	  background: #3498db;
 	}
 	
 	.portfolio .portfolio-item figure .link-preview:hover i,
-	.portfolio .portfolio-item figure .link-details:hover i {
+	.portfolio .portfolio-item figure .link-details:hover i,
+	.portfolio .portfolio-item figure .link-wish:hover i {
 	  color: #fff;
 	}
 	
 	.portfolio .portfolio-item figure .link-preview {
-	  left: calc(50% - 38px);
+	  left: calc(50% - 60px);
+	  top: calc(50% - 18px);
+	}
+
+	.portfolio .portfolio-item figure .link-wish {
+	  left: calc(50% - 17px);
 	  top: calc(50% - 18px);
 	}
 	
 	.portfolio .portfolio-item figure .link-details {
-	  right: calc(50% - 38px);
+	  right: calc(50% - 60px);
 	  top: calc(50% - 18px);
 	}
 	
+	
 	.portfolio .portfolio-item figure:hover .link-preview {
 	  opacity: 1;
-	  left: calc(50% - 44px);
+	  left: calc(50% - 70px);
+	}
+
+	.portfolio .portfolio-item figure:hover .link-wish {
+	  opacity: 1;
+	  left: calc(50% - 17px);
 	}
 	
 	.portfolio .portfolio-item figure:hover .link-details {
 	  opacity: 1;
-	  right: calc(50% - 44px);
+	  right: calc(50% - 70px);
 	}
 	
 	.portfolio .portfolio-item .portfolio-info {
@@ -163,7 +211,65 @@
 	  font-size: 14px;
 	  text-transform: uppercase;
 	}
+	
+	.portfolio-info i {
+	  font-size: 20px;
+	  vertical-align: middle;
+	}
   </style>
+  <script>
+  	'use strict';
+  	
+  	let lastScroll = 0;  // 마지막 위치
+  	let curPage = 1;
+  	
+  	$(document).scroll(function(){
+  		let currentScroll = $(this).scrollTop();  // 스크롤바 위쪽 시작 위치, 처음은 0이다. // currentScroll이라는 이름에 저장  // 현재 높이 0
+  		let documentHeight = $(document).height();  // 화면에 표시되는 전체 문서의 높이 // 본문의 크기
+  		let nowHeight = $(this).scrollTop() + $(window).height();  // 현재 화면상단 + 현재 화면높이 // 현재 높이 + 현재 화면의 높이
+  		
+  		// 스크롤이 아래로 내려갔을떄 이벤트 처리..
+  		if(currentScroll > lastScroll) {  // 화면 끝까지 갔는지 체크
+  			if(documentHeight < (nowHeight + (documentHeight*0.1))) {
+  				// 다음페이지 가져오기...
+  				console.log("다음페이지 가져오기");
+  				curPage++;
+  				getList(curPage);
+  			}
+  		}
+  		lastScroll = currentScroll;  // 이렇게 하고 다시 계산
+  	});
+  	
+  	// 리스트 불러오기 함수(ajax처리)
+  	function getList(curPage) {
+  		$.ajax({
+  			url : "ScrollPage.st",
+  			type : "post",
+  			data : {pag : curPage},
+  			success:function(res) {
+  				// $("#list-wrap").html(res);  // 이렇게 하면 덮어쓰는 개념
+  				$("#list-wrap").append(res);
+  			},
+  			error:function() {
+  				alert("전송 오류!");
+  			}
+  		});
+  	}
+	
+  	function wishToggle(sIdx) {
+        $.ajax({
+            url  : "StayWishToggle.st",
+            type : "post",
+            data : {sIdx : sIdx},
+            success:function() {                
+              location.reload();
+            },
+            error : function() {
+  				alert("전송오류!");
+            }
+        });    
+    }
+  </script>
   
   <!-- Vendor CSS Files -->
   <link href="${ctp}/setting/css/stay/boxicons.min.css" rel="stylesheet">
@@ -189,7 +295,7 @@
             </div>
         </div>
     </section>
-    <div class="container">
+<div class="container">
     <!-- booking part start-->
     <section class="booking_part">
         <div class="row">
@@ -234,9 +340,8 @@
             </div>
         </div>
     </section>
-    <!-- Header part end-->
-		<!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
+	<!-- ======= Portfolio Section ======= -->
+    <section id="portfolio list-wrap" class="portfolio">
       <div class="container">
 
         <div class="row">
@@ -251,149 +356,39 @@
           </div>
         </div>
 
-        <div class="row portfolio-container">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-Gang wow fadeInUp">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="StayDetail.st" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">App 1</a></h4>
-                <p>App</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-Jeol wow fadeInUp" data-wow-delay="0.1s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-2.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">Web 3</a></h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-Gang wow fadeInUp" data-wow-delay="0.2s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-3.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">App 2</a></h4>
-                <p>App</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-Chung wow fadeInUp">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-4.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">Card 2</a></h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-Jeol wow fadeInUp" data-wow-delay="0.1s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-5.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">Web 2</a></h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-6.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">App 3</a></h4>
-                <p>App</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-Chung wow fadeInUp">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-7.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">Card 1</a></h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp" data-wow-delay="0.1s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-8.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">Card 3</a></h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-Gyeong wow fadeInUp" data-wow-delay="0.2s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="${ctp}/images/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-                <a href="${ctp}/images/portfolio/portfolio-9.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="StayDetail.st">Web 1</a></h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
+		<div class="row portfolio-container">
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+		        <c:set var="sPhotos" value="${fn:split(vo.sPhoto, '/')}"/>
+		        <div class="col-lg-4 col-md-6 portfolio-item filter-${vo.residence} wow fadeInUp">
+		            <div class="portfolio-wrap">
+		                <figure>
+		                    <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${vo.sName}">
+		                    <c:forEach var="sPhoto" items="${sPhotos}" varStatus="st">
+		                        <a href="${ctp}/images/stay/${sPhoto}" data-gallery="${sPhotos}" class="link-preview portfolio-lightbox" title="사진 보기"><i class="fa-solid fa-plus"></i></a>
+		                    </c:forEach>
+		                    <a onclick="wishToggle(${vo.sIdx})" class="link-wish" title="위시리스트 저장"><i class="fa-solid fa-heart"></i></a>
+		                    <a href="StayDetail.st?sIdx=${vo.sIdx}" class="link-details" title="상세정보 보기"><i class="fa-solid fa-link"></i></a>
+		                </figure>
+						<div class="portfolio-info">
+		                	<h4><a href="StayDetail.st?sIdx=${vo.sIdx}">${vo.sName}</a></h4>
+			                <p>
+				                <c:if test="${vo.facility.wifi == 'OK'}"><i class="fa fa-fw fa-wifi"></i></c:if>
+						        <c:if test="${vo.facility.ac == 'OK'}"><i class="material-icons">ac_unit</i></c:if>
+						        <c:if test="${vo.facility.parking == 'OK'}"><i class="material-icons">local_parking</i></c:if>
+								<c:if test="${vo.facility.pet == 'OK'}"><i class='fas fa-fw fa-dog'></i></c:if>
+						        <c:if test="${vo.facility.kitchen == 'OK'}"><i class="fa fa-fw fa-cutlery"></i></c:if>
+						        <c:if test="${vo.facility.washing == 'OK'}"><i class="material-icons">local_laundry_service</i></c:if>
+					        </p>
+						</div>
+            		</div>
+            	</div>
+			</c:forEach>
+		</div>
 
         </div>
-		  <a href="#" class="w3-button w3-black w3-padding-large w3-margin-bottom"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
-      </div>
     </section><!-- End Portfolio Section -->
 </div>
-</div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fa-solid fa-arrow-up"></i></a>
 <p><br/></p>
 <%@ include file = "../../include/footer.jsp"%>
   <!-- Vendor JS Files -->

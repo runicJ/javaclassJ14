@@ -64,7 +64,8 @@
         				<c:forEach var="vo" items="${vos}" varStatus="st">
                         <article class="blog_item">
                             <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="${ctp}/images/blog/${vo.tPhoto}" style="height:330px;">
+                            	<c:set var="tPhotos" value="${fn:split(vo.tPhoto, '/')}"/>
+                                <img class="card-img rounded-0" src="${ctp}/images/blog/${tPhotos[0]}" style="height:330px;">
                                 <a href="#" class="blog_item_date">
                                     <h3>${curScrStartNo}. - (조회수 : ${vo.viewCnt})</h3>
                                     <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,11,19) : fn:substring(vo.tDate,0,16)}</p>
@@ -72,15 +73,20 @@
                             </div>
 
                             <div class="blog_details">
-                                <a class="d-inline-block" href="BlogDetail.bl?tIdx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}">
-								<p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like ${vo.likedCnt}</b></button></p>
-								<p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo3')"><b>Replies  </b> <span class="w3-tag w3-white">3</span></button></p>
-                                    <h2>[${vo.sort}] ${vo.title} <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if></h2>
-                                </a>
-                                <p>${vo.tContent}</p>
+                            	<div>
+	                                <a class="d-inline-block" href="BlogDetail.bl?tIdx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}">
+	                                    <h2>[${vo.sort}] ${vo.title} <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if></h2>
+	                                </a>
+									<p class="w3-right"><button class="w3-button w3-black" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like </b><span class="w3-tag w3-white">${vo.likedCnt}</span></button></p>
+								</div>
+                                <p>
+                                	<c:if test="${fn:length(vo.tContent) >= 45}">${fn:substring(vo.tContent,0,45)}...</c:if>
+                                	<c:if test="${fn:length(vo.tContent) < 45}">${vo.tContent}</c:if>
+                                </p>
                                 <ul class="blog-info-link">
-                                    <li><a href="#"><i class="far fa-user"></i>${vo.residence}</a></li>
-                                    <li><a href="#"><i class="far fa-comments"></i>by ${vo.nickName}</a></li>
+                                    <li><a href="#"><i class="fa-solid fa-suitcase-rolling"></i>${vo.residence == "" ? "미상" : vo.residence}</a></li>
+                                    <li><a href="#"><i class="far fa-comments"></i>${rVo.reviewCnt}</a></li>
+                                    <li><a href="#"><i class="far fa-user"></i>by ${vo.nickName}</a>
                                 </ul>
                             </div>
                             <c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
@@ -89,20 +95,19 @@
 
 						<!-- 페이징 처리 -->
                         <nav class="blog-pagination justify-content-center d-flex">
-                            <ul class="pagination justify-content-center" style="margin:20px 0">
-							<c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
-							<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}"><i class="ti-angle-left"></i></a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
+                            <ul class="pagination">
+							<c:if test="${pag > 1}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
+							<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}"><i class="ti-angle-left"></i></a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
 							<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
-								<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-								<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+								<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+								<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
 							</c:forEach>
-							<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="ti-angle-right"></a></li></c:if>
-							<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BlogList.bl?part=${part}&pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
+							<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="ti-angle-right"></i></a></li></c:if>
+							<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
                             </ul>
                         </nav>
                     </div>
                 </div>
-
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">

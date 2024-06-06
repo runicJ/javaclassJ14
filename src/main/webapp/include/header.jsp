@@ -6,19 +6,19 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12 col-md-6">
                 <div class="sub_menu_right_content">
-                    <span>Top destinations</span>
-                    <a href="#">관련법령</a>
-                    <a href="#">자료소개</a>
-                    <a href="#">데이터</a>
+                    <span>홈페이지 소개</span>
+                    <a href="https://www.law.go.kr/lsInfoP.do?lsiSeq=251633&efYd=20230710#0000" target="_blank">관련법령</a>
+                    <a href="https://www.mois.go.kr/frt/sub/a06/b06/populationDecline/screen.do" target="_blank">자료소개</a>
+                    <a href="https://www.kostat.go.kr/board.es?mid=a10301010000&bid=246&act=view&list_no=429114" target="_blank">데이터</a>
                 </div>
             </div>
             <div class="col-lg-6 col-sm-12 col-md-6">
-                <div class="sub_menu_social_icon">
-                    <a href="#"><i class="flaticon-facebook"></i></a>
-                    <a href="#"><i class="flaticon-twitter"></i></a>
-                    <a href="#"><i class="flaticon-skype"></i></a>
-                    <a href="#"><i class="flaticon-instagram"></i></a>
-                    <span>1324</span>
+                <div class="sub_menu_social_icon social-icons">
+                        <a href="http://pf.kakao.com/_iExmG" target="_blank"><i class="fa-solid fa-comment"></i></a>
+                        <a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="ti-instagram"></i></a>
+                        <a href="https://www.facebook.com" target="_blank"><i class="ti-facebook"></i></a>
+                        <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                    <span>+1324</span>
                 </div>
             </div>
         </div>

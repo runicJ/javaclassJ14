@@ -13,22 +13,22 @@ public class ReviewReplyInputOkCommand implements AdminInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int reviewIdx = request.getParameter("reviewIdx")==null ? 0 : Integer.parseInt(request.getParameter("reviewIdx"));
-		String replyMid = request.getParameter("replyMid")==null ? "" : request.getParameter("replyMid");
-		String replyNickName = request.getParameter("replyNickName")==null ? "" : request.getParameter("replyNickName");
-		String replyContent = request.getParameter("replyContent")==null ? "" : request.getParameter("replyContent");
+//		int reviewIdx = request.getParameter("reviewIdx")==null ? 0 : Integer.parseInt(request.getParameter("reviewIdx"));
+//		String replyMid = request.getParameter("replyMid")==null ? "" : request.getParameter("replyMid");
+//		String replyNickName = request.getParameter("replyNickName")==null ? "" : request.getParameter("replyNickName");
+//		String replyContent = request.getParameter("replyContent")==null ? "" : request.getParameter("replyContent");
+//		
+//		AdminDAO dao = new AdminDAO();
+//		ReviewVO vo = new ReviewVO();
 		
-		AdminDAO dao = new AdminDAO();
-		ReviewVO vo = new ReviewVO();
+//		vo.setIdx(reviewIdx);
+//		vo.setReplyMid(replyMid);
+//		vo.setReplyNickName(replyNickName);
+//		vo.setReplyContent(replyContent);
 		
-		vo.setIdx(reviewIdx);
-		vo.setReplyMid(replyMid);
-		vo.setReplyNickName(replyNickName);
-		vo.setReplyContent(replyContent);
-		
-		int res = dao.setReviewReplyInputOk(vo);
-		
-		response.getWriter().write(res);
+//		int res = dao.setReviewReplyInputOk(vo);
+//		
+//		response.getWriter().write(res);
 	}
 
 }

@@ -188,7 +188,7 @@
 		            </div>
 				    <div class="form-group row">
 				     <label for="address" class="col-md-3 text-right control-label col-form-label">주소</label>
-				      <div class="input-group col-sm-9">
+				      <div class="input-group col-sm-9 mb-1">
 				        <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" class="form-control">
 				        <div class="input-group-append">
 				          <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-info">

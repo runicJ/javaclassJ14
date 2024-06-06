@@ -11,9 +11,6 @@
 	<title>관리자 페이지</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<jsp:include page="/include/bs4.jsp" />
-	<!-- Tell the browser to be responsive to screen width -->
-	<meta name="description" content="">
-	<meta name="author" content="">
 	<!-- Favicon icon -->
 	<link rel="icon" type="image/png" sizes="16x16" href="images/bag_travel_icon.png">
 	<!-- Custom CSS -->

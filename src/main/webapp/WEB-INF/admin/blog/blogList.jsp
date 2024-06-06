@@ -45,26 +45,8 @@
   		<th>작성일</th>
   		<th>조회수(좋아요)</th>
   	</tr>
-<%--   	<c:forEach var="vo" items="${vos}" varStatus="st">
-	  	<tr>
-	  		<td>${vo.idx}</td>
-	  		<td>
-	  			<a href="BoardContent.bo?idx=${vo.idx}">${vo.title}</a>  <!-- 확장자 쓰면 좋은점 ctp 안써도 됨 -->
-	  			<c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>  <!-- 이미지 무조건 절대경로 // 시작은 webapp -->
-	  		</td>
-	  		<td>${vo.nickName}</td>
-	  		<td>
-	  			<!-- 1일(24시간) 이내는 시간만 표시, 이후는 날짜와 시간을 표시 : 2024-05-14 10:43 -->
-	  			<!-- 단, 24시간 안에 만족하는 자료에 대해서는, 날짜가 '오늘날짜'만 시간으로 표시하고, 어제 날짜는 '날짜시간'으로 표시하시오 -->  <!-- < c:if test="$ { vo.date_diff == 0}"> 쓰면 또 안에서 함수를 써야해서 삼항연산자로 -->
-	  			${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,16)}
-	  			${vo.wDate}
-	  		</td>
-	  		<td>${vo.readNum}</td>
-	  	</tr>
-  	</c:forEach> --%>
   	<c:set var="no" value="${curScrStartNo}" />
   	<c:forEach var="vo" items="${vos}" varStatus="st">
-  		<%-- <c:set var="no" value="${curScrStartNo}" /> --%>
   		<c:if test="${vo.openSw == 'OK' || sLevel == 0 || sNickName == vo.nickName}">
 		    <tr>
 		      <td>${no}</td>
@@ -74,8 +56,6 @@
 		      </td>
 		      <td>${vo.nickName}</td>
 		      <td>
-		        <!-- 1일(24시간) 이내는 시간만 표시(10:43), 이후는 날짜와 시간을 표시 : 2024-05-14 10:43 -->
-		        <!-- 단, 24시간안에 만족하는 자료에 대해서는, 날짜가 '오늘날짜'만 시간으로 표시하고, 어제날짜는 '날짜시간'으로 표시하시오 // 이거 아님 -->
 		        ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,16)}
 		      </td>
 		      <td>${vo.readNum}(${vo.good})</td>
@@ -86,17 +66,17 @@
   	<tr><td colspan="5" class="m-0 p-0"></td></tr>
   </table>
   <br>
-  <!-- 블록페이지 시작 -->  <!-- 0블록: 1/2/3 -->
+  <!-- 블록페이지 시작 -->
 	<div class="text-center">
-		<ul class="pagination justify-content-center" style="margin:20px 0">
-			<c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.ad?pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
-			<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.ad?pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}">이전블록</a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
+		<ul class="blog-pagination justify-content-center" style="margin:20px 0">
+			<c:if test="${pag > 1}"><li class="page-item"><a class="page-link" href="${ctp}/BoardList.ad?pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
+			<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link" href="${ctp}/BoardList.ad?pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}" aria-label="Previous"><i class="ti-angle-left"></i></a></li></c:if>
 			<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">  <!-- 처음이니까 curBlock => 0블록 -->
-				<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/BoardList.ad?pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-				<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.ad?pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+				<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link" href="${ctp}/BoardList.ad?pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+				<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link" href="${ctp}/BoardList.ad?pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
 			</c:forEach>
-			<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.ad?pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}">다음블록</a></li></c:if>
-			<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.ad?pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
+			<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link" href="${ctp}/BoardList.ad?pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}" aria-label="Next"><i class="ti-angle-right"></i></a></li></c:if>
+			<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link" href="${ctp}/BoardList.ad?pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
 		</ul>
 	</div>
 	<!-- 블록페이지 끝 -->

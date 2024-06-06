@@ -76,12 +76,7 @@
   	}
   </style>
 </head>
-<body>안녕하세요. Serene Nest 관리자입니다.
-이곳에 오신 것을 환영합니다!
-여러분도 알다시피 이 사이트는 인구소멸지역을 대상으로,
-지역홍보를 목적으로 만들어졌습니다.
-추천이든 기록이든 좋습니다.
-여러분의 추억을 이곳에 남겨주세요:)
+<body>
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>

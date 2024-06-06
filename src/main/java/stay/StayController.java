@@ -31,19 +31,9 @@ public class StayController extends HttpServlet {  // 4
 			viewPage += "/introduce.jsp";
 		}
 		else if(com.equals("/StayList")) {
-			//command = new StayListCommand();
-			//command.execute(request, response);
+			command = new StayListCommand();
+			command.execute(request, response);
 			viewPage += "/stayList.jsp";
-		}
-		else if(com.equals("/StayPromotion")) {
-//			command = new StayDetailCommand();
-//			command.execute(request, response);
-			viewPage += "/error.jsp";
-		}
-		else if(com.equals("/StayQuote")) {
-//			command = new StayDetailCommand();
-//			command.execute(request, response);
-			viewPage += "/stayQuote.jsp";
 		}
 		else if(com.equals("/StayDetail")) {
 			command = new StayDetailCommand();
@@ -75,6 +65,11 @@ public class StayController extends HttpServlet {  // 4
 			command = new StayDiscontinueCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/StayWishToggle")) {
+			command = new StayWishToggleCommand();
+			command.execute(request, response);
+			return;
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

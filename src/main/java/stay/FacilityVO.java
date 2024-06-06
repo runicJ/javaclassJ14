@@ -4,12 +4,12 @@ public class FacilityVO {
     private int fIdx;
     private int bed;
     private int toilet;
-    private boolean wifi;
-    private boolean ac;
-    private boolean parking;
-    private boolean pet;
-    private boolean kitchen;
-    private boolean washing;
+    private String wifi;
+    private String ac;
+    private String parking;
+    private String pet;
+    private String kitchen;
+    private String washing;
     private int sIdx;
     
 	public int getfIdx() {
@@ -30,40 +30,40 @@ public class FacilityVO {
 	public void setToilet(int toilet) {
 		this.toilet = toilet;
 	}
-	public boolean isWifi() {
+	public String getWifi() {
 		return wifi;
 	}
-	public void setWifi(boolean wifi) {
+	public void setWifi(String wifi) {
 		this.wifi = wifi;
 	}
-	public boolean isAc() {
+	public String getAc() {
 		return ac;
 	}
-	public void setAc(boolean ac) {
+	public void setAc(String ac) {
 		this.ac = ac;
 	}
-	public boolean isParking() {
+	public String getParking() {
 		return parking;
 	}
-	public void setParking(boolean parking) {
+	public void setParking(String parking) {
 		this.parking = parking;
 	}
-	public boolean isPet() {
+	public String getPet() {
 		return pet;
 	}
-	public void setPet(boolean pet) {
+	public void setPet(String pet) {
 		this.pet = pet;
 	}
-	public boolean isKitchen() {
+	public String getKitchen() {
 		return kitchen;
 	}
-	public void setKitchen(boolean kitchen) {
+	public void setKitchen(String kitchen) {
 		this.kitchen = kitchen;
 	}
-	public boolean isWashing() {
+	public String getWashing() {
 		return washing;
 	}
-	public void setWashing(boolean washing) {
+	public void setWashing(String washing) {
 		this.washing = washing;
 	}
 	public int getsIdx() {

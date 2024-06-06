@@ -26,12 +26,15 @@ create table review(
 	partIdx  int not null,             /* 해당 분야의 고유번호 */
 	mid  varchar(20) not null,         /* 리뷰 작성자 아이디 */
 	nickName  varchar(20) not null,    /* 리뷰 작성자 닉네임 */
-	star  int not null default 0,      /* 리뷰 별점 점수 */
+	star  int default 0,      /* 리뷰 별점 점수 */
 	rContent  text,                     /* 리뷰 내용 */
 	rDate  datetime default now(),     /* 리뷰 작성일 */
+	purpose varchar(30),
 	foreign key(mid) references member2(mid)
 );
 desc review;
+
+drop table review;
 
 ALTER TABLE review AUTO_INCREMENT = 1;
 
@@ -41,14 +44,16 @@ create table reply(
 	reviewIdx  int not null,           /* 원본글(부모글:리뷰)의 고유번호(외래키로 설정) */
 	mid  varchar(20) not null,         /* 댓글 작성자 아이디 */
 	nickName  varchar(20) not null,    /* 댓글 작성자 닉네임 */
-	reDate  datetime default now(),     /* 댓글 작성일 */
 	reContent text,                     /* 댓글 내용 */
+	reDate  datetime default now(),     /* 댓글 작성일 */
 	primary key(reIdx),
 	foreign key(mid) references member2(mid),
 	foreign key(reviewIdx) references review(rIdx)
 );
 desc reply;
 select * from reply;
+
+drop table reply;
 
 select * from review order by idx desc;
 select * from review where partIdx = 8;

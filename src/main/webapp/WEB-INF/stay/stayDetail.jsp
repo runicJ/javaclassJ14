@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% pageContext.setAttribute("newLine", "\n"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -13,7 +14,6 @@
     <%@ include file = "/include/bs4.jsp" %>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
-    	body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 		.mySlides {display: none}
 		
     	/*--------------------------------------------------------------
@@ -348,60 +348,29 @@
 		  grid-row-start: 1;
 		  grid-row-end: 2;
 		}
+		
+		.demo {
+		    width: 100%;
+		    height: 80px;
+		    object-fit: cover;
+		    cursor: pointer;
+		}
     </style>
     <script>
-		// Script to open and close sidebar when on tablets and phones
-		function w3_open() {
-		  document.getElementById("mySidebar").style.display = "block";
-		  document.getElementById("myOverlay").style.display = "block";
-		}
-		 
-		function w3_close() {
-		  document.getElementById("mySidebar").style.display = "none";
-		  document.getElementById("myOverlay").style.display = "none";
-		}
-		
-		// Slideshow Apartment Images
-		var slideIndex = 1;
-		showDivs(slideIndex);
-		
-		function plusDivs(n) {
-		  showDivs(slideIndex += n);
-		}
-		
-		function currentDiv(n) {
-		  showDivs(slideIndex = n);
-		}
-		
-		function showDivs(n) {
-		  var i;
-		  var x = document.getElementsByClassName("mySlides");
-		  var dots = document.getElementsByClassName("demo");
-		  if (n > x.length) {slideIndex = 1}
-		  if (n < 1) {slideIndex = x.length}
-		  for (i = 0; i < x.length; i++) {
-		    x[i].style.display = "none";
-		  }
-		  for (i = 0; i < dots.length; i++) {
-		    dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
-		  }
-		  x[slideIndex-1].style.display = "block";
-		  dots[slideIndex-1].className += " w3-opacity-off";
-		}
+    	'use strict';
 		
 	  	// 별점/리뷰평가 등록하기
-	  	function reviewCheck() {
+ 	  	function reviewCheck() {
 	  		let star = starForm.star.value;
-	  		let review = $("#review").val();  // 필수x
+	  		let review = $("#review").val();
 	  		if(star == "") {
 	  			alert("별점을 부여해 주세요");
 	  			location.reload();
 	  		}
 	  		
 	  		let query = {
-	  				part : 'pds',
-	  				//partIdx : ${vo.idx},  // pds 게시글의 번호
-	  				mid : '${sMid}',  // 문자는 ''안하면 에러
+	  				part : 'stay',
+	  				mid : '${sMid}',
 	  				nickName : '${sNickName}',
 	  				star : star,
 	  				review : review
@@ -422,7 +391,7 @@
 	  	}
 	  	
 	  	// 리뷰 삭제하기
-	  	function reviewDelete(idx) {
+ 	  	function reviewDelete(idx) {
 	  		let ans = confirm("리뷰를 삭제하시겠습니까?");
 	  		if(!ans) return false;
 	  		
@@ -444,28 +413,8 @@
 	  	}
 	  	
 	  	// 처음 접속 시 '리뷰보기' 버튼을 감추고, '리뷰닫기' 버튼과 '리뷰박스'를 보이게 한다.
-	  	//$(document).ready(function(){});  아래와 같음
-	  	$(function(){
-	  		$("#reviewShowBtn").hide();
-	  		$("#reviewHideBtn").show();  		
-	  		$("#reviewBox").show();  		
-	  	});
-	  	
-	  	// 리뷰 보이기
-	  	function reviewShow() {
-	  		$("#reviewShowBtn").hide();
-	  		$("#reviewHideBtn").show();  		
-	  		$("#reviewBox").show();  		  		
-	  	}
-
-	  	// 리뷰 감추기
-	  	function reviewHide() {
-	  		$("#reviewShowBtn").show();
-	  		$("#reviewHideBtn").hide();  		
-	  		$("#reviewBox").hide();  		
-	  	}
-	  	
-	  	// 리뷰 댓글 달기 폼 보여주기
+/*
+		// 리뷰 댓글 달기 폼 보여주기
 	  	function reviewReply(idx, nickName, content) {  		
 	  		$("#myModal #reviewIdx").val(idx);
 	  		$("#myModal #reviewReplyNickName").text(nickName);
@@ -495,7 +444,7 @@
 					data : query,
 					success:function(res) {
 						if(res != "0") {
-							alert("댓글이 등록되었습니다.");  // 부분리로드 해도 되지만 부분리로드는 내용이 많을때 처리하는 것이 좋음
+							alert("댓글이 등록되었습니다.");
 							location.reload();
 						}
 						else alert("댓글 등록 실패~~");
@@ -505,10 +454,10 @@
 					}
 				});
 	  	}
-	  	
+	  	 */
 	  	function stayDiscontinue() {
 	  		let ans = confirm("숙소 게시글을 비공개 처리하시겠습니까?");
-	  		if(ans) location.href = "StayDiscontinue.st?idx=${vo.idx}";
+	  		if(ans) location.href = "StayDiscontinue.st?sIdx=${vo.sIdx}";
 	  	}
 	</script>
     
@@ -516,7 +465,6 @@
   <link href="${ctp}/setting/css/stay/boxicons.min.css" rel="stylesheet">
   <link href="${ctp}/setting/css/stay/swiper-bundle.min.css" rel="stylesheet">
 </head>
-
 <body>
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
@@ -530,8 +478,8 @@
         <div class="d-flex justify-content-between align-items-center">
 		    <h2 class="w3-text-green">${vo.sName}</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li>Portfoio Details</li>
+            <li><a href="${ctp}/Main">Home</a></li>
+            <li>Stay Details</li>
           </ol>
         </div>
 
@@ -539,52 +487,29 @@
     </section><!-- End Breadcrumbs -->
 
   <!-- Slideshow Header -->	
-  <c:forEach var="fName" items="${fNames}" varStatus="st">
-	<c:set var="len" value="${fn:length(fSName)}" />
-	<c:set var="ext" value="${fn:substring(fSName, len-3, len)}"/>
-	<c:set var="extLower" value="${fn:toLowerCase(ext)}"/>
-    <div class="w3-display-container mySlides">
-    <c:if test="${extLower == 'jpg' || extLower == 'gif' || extLower == 'png'}">
-    <img src="${ctp}/images/pds/${fSName}" style="width:100%;margin-bottom:-6px">
-    </c:if>
-      <div class="w3-display-bottomleft w3-container w3-black">
-        <p>${fNames[st.index]}</p>
-      </div>
+<div class="w3-container">
+    <!-- 이미지 리스트 설정 -->
+    <c:set var="sPhotos" value="${fn:split(vo.sPhoto, '/')}"/>
+
+    <!-- 각 이미지를 슬라이드로 표시 -->
+    <c:forEach var="sPhoto" items="${sPhotos}" varStatus="st">
+        <div class="w3-display-container mySlides" style="display:none;">
+            <img src="${ctp}/images/stay/${sPhoto}" style="width:100%">
+            <div class="w3-display-bottomleft w3-container w3-black">
+                <p>Image ${st.index + 1} of ${fn:length(sPhotos)}</p>
+            </div>
+        </div>
+    </c:forEach>
+
+    <!-- 썸네일 표시 -->
+    <div class="w3-row-padding w3-section">
+        <c:forEach var="sPhoto" items="${sPhotos}" varStatus="st">
+            <div class="w3-col s3">
+                <img class="demo w3-opacity w3-hover-opacity-off" src="${ctp}/images/stay/${sPhoto}" style="width:100%;cursor:pointer" onclick="currentDiv(${st.index + 1})" title="Image ${st.index + 1}" id="myOverlay">
+            </div>
+        </c:forEach>
     </div>
-    <div class="w3-display-container mySlides">
-    <img src="/w3images/diningroom.jpg" style="width:100%;margin-bottom:-6px">
-      <div class="w3-display-bottomleft w3-container w3-black">
-        <p>Dining Room</p>
-      </div>
-    </div>
-    <div class="w3-display-container mySlides">
-    <img src="/w3images/bedroom.jpg" style="width:100%;margin-bottom:-6px">
-      <div class="w3-display-bottomleft w3-container w3-black">
-        <p>Bedroom</p>
-      </div>
-    </div>
-    <div class="w3-display-container mySlides">
-    <img src="/w3images/livingroom2.jpg" style="width:100%;margin-bottom:-6px">
-      <div class="w3-display-bottomleft w3-container w3-black">
-        <p>Living Room II</p>
-      </div>
-    </div>
-  </div>
- </c:forEach>
-  <div class="w3-row-padding w3-section">
-    <div class="w3-col s3">
-      <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/livingroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(1)" title="Living room">
-    </div>
-    <div class="w3-col s3">
-      <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/diningroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(2)" title="Dining room">
-    </div>
-    <div class="w3-col s3">
-      <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/bedroom.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(3)" title="Bedroom">
-    </div>
-    <div class="w3-col s3">
-      <img class="demo w3-opacity w3-hover-opacity-off" src="/w3images/livingroom2.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(4)" title="Second Living Room">
-    </div>
-  </div>
+</div>
 
   <div class="w3-container">
   	<div class="w3-row-padding">
@@ -601,7 +526,10 @@
       </div>
 	    <div class="form_colum">
         <label><i class="fa fa-male"></i> Guest</label>
-        <input class="w3-input w3-border mb-2" type="number" value="1" name="Guest" min="1" max="${vo.GuestMax}">
+        <input class="w3-input w3-border mb-2" type="number" value="1" name="Guest" min="1" max="${vo.guestMax}">
+      </div>
+	    <div class="form_colum">
+        <label><i class="fa fa-money"></i> Price : ${vo.price} / 1박</label>
       </div>
 	    <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button>
 	</div>
@@ -622,15 +550,15 @@
 	    <div class="w3-row">
     	<h4><strong>Amenities</strong></h4>
 	      <div class="w3-col m6">
-	        <p><c:if test="${fVo.wifi == 'true'}"><i class="fa fa-fw fa-wifi"></i> WiFi</c:if></p>
-	        <p><c:if test="${fVo.ac == 'true'}"><i class="material-icons">ac_unit</i> A/C</c:if></p>
-	        <p><c:if test="${fVo.parking == 'true'}"><i class="material-icons">local_parking</i> Parking</c:if></p>
+	        <p><c:if test="${fVo.wifi == 'OK'}"><i class="fa fa-fw fa-wifi"></i> WiFi</c:if></p>
+	        <p><c:if test="${fVo.ac == 'OK'}"><i class="material-icons">ac_unit</i> A/C</c:if></p>
+	        <p><c:if test="${fVo.parking == 'OK'}"><i class="material-icons">local_parking</i> Parking</c:if></p>
 	      </div>
 	      <div class="w3-col m5">
 	      	<span class="w3-margin-top"></span>
-	        <p><c:if test="${fVo.pet == 'true'}"><i class='fas fa-fw fa-dog'></i> Pet</c:if></p>
-	        <p><c:if test="${fVo.kitchen == 'true'}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</c:if></p>
-	        <p><c:if test="${fVo.washing == 'true'}"><i class="material-icons">local_laundry_service</i> Washing machine</c:if></p>
+	        <p><c:if test="${fVo.pet == 'OK'}"><i class='fas fa-fw fa-dog'></i> Pet</c:if></p>
+	        <p><c:if test="${fVo.kitchen == 'OK'}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</c:if></p>
+	        <p><c:if test="${fVo.washing == 'OK'}"><i class="material-icons">local_laundry_service</i> Washing machine</c:if></p>
 	      </div>
     </div>
     </div>
@@ -639,32 +567,16 @@
   </div>
     <hr>
      <div class="w3-container">
-    <h4><strong>Extra Info</strong></h4>
-    <p>${fn:replace(vo.content, newLine, "<br/>")}</p>
+    <h4><strong>숙소 설명</strong></h4><br>
+    <p>${fn:replace(vo.sContent, newLine, "<br/>")}</p><br>
     <p>결제가능 수단: <i class="fa fa-credit-card w3-large"></i> <i class="fa fa-cc-mastercard w3-large"></i> <i class="fa fa-cc-amex w3-large"></i> <i class="fa fa-cc-cc-visa w3-large"></i><i class="fa fa-cc-paypal w3-large"></i></p>
     <hr>
     
     <h4><strong>정책</strong></h4>
-    <p>${fn:replace(vo.policy, newLine, "<br/>")}</p>
+    <i class="fa fa-map-marker" style="width:30px"></i> ${vo.sort}<br>
     <p>자세한 주소는 예약 후에 공개됩니다.</p>
   </div>
   <hr>
-  
-  <div class="w3-container" id="contact">
-    <h2>Contact</h2>
-    <i class="fa fa-map-marker" style="width:30px"></i> ${vo.address}<br>
-    <i class="fa fa-envelope" style="width:30px"></i> ${vo.sort}<br>
-    <p>문의하실 내용을 입력해 주세요</p>
-    <form action="/action_page.php" target="_blank">
-      <p><input class="w3-input w3-border" type="text" placeholder="Name" required name="Name"></p>
-      <p><input class="w3-input w3-border" type="text" placeholder="Email" required name="Email"></p>
-      <p><input class="w3-input w3-border" type="text" placeholder="Message" required name="Message"></p>
-    <button type="submit" class="w3-button w3-green w3-third">Send a Message</button>
-    </form>
-	<!-- 위로가기 버튼 -->
-	<%-- <a href="#topMenu"><img src="${ctp}/images/arrow_top.gif" title="위로 이동" /></a> --%>
-	<h6 id="topBtn" class="text-right mr-3"><img src="${ctp}/images/arrowTop.gif" title="위로 이동" /></h6>  <!-- 글자로 써도됨 그래서 h6 사용 -->
-</div>
 <p><br/></p>
 
   <div>
@@ -690,26 +602,16 @@
   <hr>
 	<div class="col text-right">
 		<c:if test="${sMid == 'admin'}">
-	  		<input type="button" value="수정" onclick="location.href='StayUpdate.st?idx=${vo.idx}'" class="btn btn-primary" />
+	  		<input type="button" value="수정" onclick="location.href='StayUpdate.st?sIdx=${vo.sIdx}';" class="btn btn-primary" />
 	  		<input type="button" value="삭제" onclick="stayDiscontinue()" class="btn btn-danger" />
 		</c:if>
-		<c:if test="${sMid != 'admin'}">
-			<c:if test="${call_112 == 'OK'}"><font color='red'><b>신고처리 중입니다..</b></font></c:if>
-	  		<c:if test="${call_112 != 'OK'}"><input type="button" value="신고하기" data-toggle="modal" data-target="#myModal" class="btn btn-danger" /></c:if>
-		</c:if>
 	</div>
-  <!-- 리뷰/평점 출력 -->
-  <div class="row">
-  	<div class="col">
-  		<input type="button" value="리뷰보기" id="reviewShowBtn" onclick="reviewShow()" class="btn btn-success" />
-  		<input type="button" value="리뷰닫기" id="reviewHideBtn" onclick="reviewHide()" class="btn btn-warning" />
+	<div class="row">
+	  	<div class="col text-right">
+	  		<b>리뷰평점 : <fmt:formatNumber value="${reviewAvg}" pattern="#,##0.0" /></b>
+	  	</div>
   	</div>
-  	<div class="col text-right">
-  		<b>리뷰평점 : <fmt:formatNumber value="${reviewAvg}" pattern="#,##0.0" /></b>
-  	</div>
-  </div>
-  <hr>
-  <div id="reviewBox">
+ <%--  <div id="reviewBox">
 		<c:set var="imsiIdx" value="0" />  <!-- 임시로 변수하나 줌 // 0은 없으니까 값으로 먼저 줌 -->
   	<c:forEach var="vo" items="${rVos}" varStatus="st">
   		<c:if test="${imsiIdx != vo.idx}">  <!-- 리뷰가 새로운 것이 왔다 => 이때 뿌림 -->
@@ -744,79 +646,21 @@
 			</c:if>
 			<hr>
   	</c:forEach>
-  </div>
-  <div class="navigation-top">
+  </div> --%>
+<div class="navigation-top">
 	    <div class="d-sm-flex justify-content-between text-center">
 	        <p class="like-info"><span class="align-middle"><i class="far fa-heart"></i></span> Lily and 4 people like this</p>
 	        <div class="col-sm-4 text-center my-2 my-sm-0">
-	            <!-- <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p> -->
+	            <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p>
 	        </div>
-	        <ul class="social-icons">
-	            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-	            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-	            <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
-	            <li><a href="#"><i class="fab fa-behance"></i></a></li>
-	        </ul>
-	    </div>
-	    <div class="navigation-area">
-	        <div class="row">
-	            <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-	                <div class="thumb">
-	                    <a href="#">
-	                        <img class="img-fluid" src="img/post/preview.png" alt="">
-	                    </a>
-	                </div>
-	                <div class="arrow">
-	                    <a href="#">
-	                        <span class="lnr text-white ti-arrow-left"></span>
-	                    </a>
-	                </div>
-	                <div class="detials">
-	                    <p>Prev Post</p>
-	                    <a href="#">
-	                        <h4>Space The Final Frontier</h4>
-	                    </a>
-	                </div>
-	            </div>
-	            <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-	                <div class="detials">
-	                    <p>Next Post</p>
-	                    <a href="#">
-	                        <h4>Telescopes 101</h4>
-	                    </a>
-	                </div>
-	                <div class="arrow">
-	                    <a href="#">
-	                        <span class="lnr text-white ti-arrow-right"></span>
-	                    </a>
-	                </div>
-	                <div class="thumb">
-	                    <a href="#">
-	                        <img class="img-fluid" src="img/post/next.png" alt="">
-	                    </a>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	<div class="blog-author">
-	    <div class="media align-items-center">
-	        <img src="img/blog/author.png" alt="">
-	        <div class="media-body">
-	            <a href="#">
-	                <h4>Harvard milan</h4>
-	            </a>
-	            <p>Second divided from form fish beast made. Every of seas all gathered use saying you're, he our dominion twon Second divided from</p>
-	        </div>
-	    </div>
-	</div>
+	    </div>	    
 	<div class="comments-area">
 	    <h4>05 Comments</h4>
 	    <div class="comment-list">
 	        <div class="single-comment justify-content-between d-flex">
 	            <div class="user justify-content-between d-flex">
 	                <div class="thumb">
-	                    <img src="img/comment/comment_1.png" alt="">
+	                    <img src="${ctp}/images/comment/comment_1.png" alt="">
 	                </div>
 	                <div class="desc">
 	                    <p class="comment">
@@ -837,23 +681,43 @@
 	            </div>
 	        </div>
 	    </div>
-  <!-- 자료실에 등록된 자료가 사진이라면, 아래쪽에 모두 보여주기 -->
-  <div class="text-center">
-		<c:forEach var="fSName" items="${fSNames}" varStatus="st">
-			${fNames[st.index]}<br>  <!-- 파일명 -->
-			<c:set var="len" value="${fn:length(fSName)}" />
-			<c:set var="ext" value="${fn:substring(fSName, len-3, len)}"/>
-		  <c:set var="extLower" value="${fn:toLowerCase(ext)}"/>
-			<c:if test="${extLower == 'jpg' || extLower == 'gif' || extLower == 'png'}">  <!-- 소문자로 해야함 -->
-				<img src="${ctp}/images/pds/${fSName}" width="85%" />  <!-- px로 주면 안됨 %로 줘야함 -->
-			</c:if>
-			<hr>
-		</c:forEach>	
-  </div>
-	
-	<!-- 위로가기 버튼 -->
-	<%-- <a href="#topMenu"><img src="${ctp}/images/arrow_top.gif" title="위로 이동" /></a> --%>
-	<%-- <h6 id="topBtn" class="text-right mr-3"><img src="${ctp}/images/arrowTop.gif" title="위로 이동" /></h6> --%>  <!-- 글자로 써도됨 그래서 h6 사용 -->
+	    <c:if test="${sMid != null}">
+	    <div class="comment-form">
+            <h4>댓글 작성하기</h4>
+            <form class="form-contact comment_form" action="#" id="commentForm">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+						    <label>작성자 아이디</label>
+                            <input class="form-control" name="mid" type="text" value="${sMid}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+						<div class="form-group">
+						    <label for="reservationPurpose">숙소 예약 목적(지역 경제 지원 예산 편성을 위한 데이터로만 활용됩니다.)</label>
+						    <select class="form-control" id="reservationPurpose" name="reservationPurpose">
+						        <option value="">선택안함</option>
+						        <option value="parents">부모님 예약</option>
+						        <option value="leisure">레저</option>
+						        <option value="festival">지역축제</option>
+						        <option value="meeting">모임</option>
+						        <option value="soloTravel">홀로여행</option>
+						        <option value="travelWithFriends">지인과 여행</option>
+						    </select>
+						</div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="5" placeholder="숙소에 대한 평가를 남겨주세요"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="button button-contactForm btn_1">Send Message</button>
+                </div>
+            </form>
+        </div>
+        </c:if>
 </div>
 <p><br/></p>
 
@@ -893,10 +757,49 @@
       </div>
     </div>
   </div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
-</body>
+<script>
+	// Script to open and close sidebar when on tablets and phones
+	function w3_open() {
+	  document.getElementById("mySidebar").style.display = "block";
+	  document.getElementById("myOverlay").style.display = "block";
+	}
+	 
+	function w3_close() {
+	  document.getElementById("mySidebar").style.display = "none";
+	  document.getElementById("myOverlay").style.display = "none";
+	}
+	
+	window.onload = function() {
+	    var slideIndex = 1;
+	    showDivs(slideIndex);
 
+	    function plusDivs(n) {
+    	  showDivs(slideIndex += n);
+    	}
+
+    	function currentDiv(n) {
+    	  showDivs(slideIndex = n);
+    	}
+
+    	function showDivs(n) {
+    	  var i;
+    	  var x = document.getElementsByClassName("mySlides");
+    	  var dots = document.getElementsByClassName("demo");
+    	  if (n > x.length) {slideIndex = 1}
+    	  if (n < 1) {slideIndex = x.length}
+    	  for (i = 0; i < x.length; i++) {
+    	    x[i].style.display = "none";
+    	  }
+    	  for (i = 0; i < dots.length; i++) {
+    	    dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+    	  }
+    	  x[slideIndex-1].style.display = "block";
+    	  dots[slideIndex-1].className += " w3-opacity-off";
+    	}
+	};
+</script>
+</body>
 </html>

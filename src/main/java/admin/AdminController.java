@@ -49,11 +49,11 @@ public class AdminController extends HttpServlet {  // 4
 			command.execute(request, response);
 			return;
 		}
-		else if(com.equals("/ReviewReplyInputOk")) {
-			command = new ReviewReplyInputOkCommand();
-			command.execute(request, response);
-			return;
-		}
+//		else if(com.equals("/ReviewReplyInputOk")) {
+//			command = new ReviewReplyInputOkCommand();
+//			command.execute(request, response);
+//			return;
+//		}
 		else if(!mid.equals("admin")) {
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", "MemberLogin.mem");

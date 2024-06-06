@@ -105,9 +105,16 @@
       }
     }
     window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
+  	window.addEventListener('scroll', toggleBacktotop)
+    
+	  backtotop.addEventListener('click', (e) => {
+	    e.preventDefault();
+	    window.scrollTo({
+	      top: 0,          
+	      behavior: 'smooth'
+	    })
+	  })
   }
-
   /**
    * Mobile nav toggle
    */
@@ -198,7 +205,6 @@
         });
       }, true);
     }
-
   });
 
   /**

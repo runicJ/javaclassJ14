@@ -24,8 +24,7 @@
                                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stay</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
                                     <a class="dropdown-item" href="StayList.st">Stay List</a>
-                                    <a class="dropdown-item" href="StayPromotion.st">Stay Promotion</a>
-                                    <a class="dropdown-item" href="StayQuote.st">Stay Quote</a>
+                                    <a class="dropdown-item" href="StayList.st">Stay Promotion</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">

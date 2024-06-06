@@ -2,7 +2,7 @@ package admin.review;
 
 public class ReviewVO {
 	// review 테이블의 필드 정의
-	private int idx;
+	private int rIdx;
 	private String part;
 	private int partIdx;
 	private String mid;
@@ -10,20 +10,13 @@ public class ReviewVO {
 	private int star;
 	private String content;
 	private String rDate;
+	private String purpose;
 	
-	// reviewReply 테이블의 필드 정의
-	private int replyIdx;
-	//private int reviewIdx;
-	private String replyMid;
-	private String replyNickName;
-	private String replyRDate;	
-	private String replyContent;	
-	
-	public int getIdx() {
-		return idx;
+	public int getrIdx() {
+		return rIdx;
 	}
-	public void setIdx(int idx) {
-		this.idx = idx;
+	public void setrIdx(int rIdx) {
+		this.rIdx = rIdx;
 	}
 	public String getPart() {
 		return part;
@@ -67,42 +60,18 @@ public class ReviewVO {
 	public void setrDate(String rDate) {
 		this.rDate = rDate;
 	}
-	public int getReplyIdx() {
-		return replyIdx;
+	public String getPurpose() {
+		return purpose;
 	}
-	public void setReplyIdx(int replyIdx) {
-		this.replyIdx = replyIdx;
-	}
-	public String getReplyMid() {
-		return replyMid;
-	}
-	public void setReplyMid(String replyMid) {
-		this.replyMid = replyMid;
-	}
-	public String getReplyNickName() {
-		return replyNickName;
-	}
-	public void setReplyNickName(String replyNickName) {
-		this.replyNickName = replyNickName;
-	}
-	public String getReplyRDate() {
-		return replyRDate;
-	}
-	public void setReplyRDate(String replyRDate) {
-		this.replyRDate = replyRDate;
-	}
-	public String getReplyContent() {
-		return replyContent;
-	}
-	public void setReplyContent(String replyContent) {
-		this.replyContent = replyContent;
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
 	}
 	
 	@Override
 	public String toString() {
-		return "ReviewVO [idx=" + idx + ", part=" + part + ", partIdx=" + partIdx + ", mid=" + mid + ", nickName="
-				+ nickName + ", star=" + star + ", content=" + content + ", rDate=" + rDate + ", replyIdx=" + replyIdx
-				+ ", replyMid=" + replyMid + ", replyNickName=" + replyNickName + ", replyRDate=" + replyRDate
-				+ ", replyContent=" + replyContent + "]";
+		return "ReviewVO [rIdx=" + rIdx + ", part=" + part + ", partIdx=" + partIdx + ", mid=" + mid + ", nickName="
+				+ nickName + ", star=" + star + ", content=" + content + ", rDate=" + rDate + ", purpose=" + purpose
+				+ "]";
 	}
+
 }

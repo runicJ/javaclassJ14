@@ -66,69 +66,67 @@ public class StayDAO {
 	}
 	
 	// 숙소 등록하기(일단 관리자만)
-	public Map<String, Object> setStayInputOk(StayVO vo) {
-		Map<String, Object> result = new HashMap<>();
-		int res = 0, sIdx = 0;
-		try {
-			conn.setAutoCommit(false);
-			
-			sql="insert into stay values (default,?,?,?,default,?,?,?,?,?,default,default)";
-			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, vo.getSort());
-			pstmt.setString(2, vo.getsName());
-			pstmt.setString(3, vo.getsPhoto());
-			pstmt.setString(4, vo.getAddress());
-			pstmt.setString(5, vo.getsContent());
-			pstmt.setInt(6, vo.getGuestMax());
-			pstmt.setInt(7, vo.getPrice());
-			pstmt.setString(8, vo.getResidence());
-			res = pstmt.executeUpdate();
-			rs = pstmt.getGeneratedKeys();
-			
-			if(rs.next()) {
-				sIdx = rs.getInt(1);
-			}
-			
-			result.put("res", res);
-			result.put("sIdx", sIdx);
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			pstmtClose();
-		}
-		return result;
+	public Map<String, Object> setStayInputOk(StayVO vo, FacilityVO fVo) {
+	    Map<String, Object> result = new HashMap<>();
+	    int res = 0, sIdx = 0;
+	    try {
+	        conn.setAutoCommit(false);  // 트랜잭션 시작
+
+	        // 숙소 정보 등록
+	        sql = "INSERT INTO stay VALUES (default, ?, ?, ?, default, ?, ?, ?, ?, ?, default, default)";
+	        pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	        pstmt.setString(1, vo.getSort());
+	        pstmt.setString(2, vo.getsName());
+	        pstmt.setString(3, vo.getsPhoto());
+	        pstmt.setString(4, vo.getAddress());
+	        pstmt.setString(5, vo.getsContent());
+	        pstmt.setInt(6, vo.getGuestMax());
+	        pstmt.setInt(7, vo.getPrice());
+	        pstmt.setString(8, vo.getResidence());
+	        res = pstmt.executeUpdate();
+	        rs = pstmt.getGeneratedKeys();
+
+	        if (rs.next()) {
+	            sIdx = rs.getInt(1);
+	            fVo.setsIdx(sIdx);
+	        }
+
+	        // 시설 정보 등록
+	        if (sIdx > 0) {
+	            sql = "INSERT INTO facility VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, fVo.getBed());
+	            pstmt.setInt(2, fVo.getToilet());
+	            pstmt.setString(3, fVo.getWifi());
+	            pstmt.setString(4, fVo.getAc());
+	            pstmt.setString(5, fVo.getParking());
+	            pstmt.setString(6, fVo.getPet());
+	            pstmt.setString(7, fVo.getKitchen());
+	            pstmt.setString(8, fVo.getWashing());
+	            pstmt.setInt(9, sIdx);
+	            pstmt.executeUpdate();
+	        }
+
+	        conn.commit();  // 트랜잭션 커밋
+	        result.put("res", res);
+	        result.put("sIdx", sIdx);
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류 : " + e.getMessage());
+	        try {
+	            if (conn != null) conn.rollback();  // 오류 발생 시 롤백
+	        } catch (SQLException e2) {
+	            System.out.println("롤백 중 오류 발생: " + e2.getMessage());
+	        }
+	    } finally {
+	        rsClose();
+	    }
+	    return result;
 	}
 
-	// 해당 숙소의 옵션 등록하기
-	public void setStayfacility(FacilityVO fVo) {
-		try {
-			sql="insert into facility values (default,?,?,?,?,?,?,?,?,?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, fVo.getBed());
-			pstmt.setInt(2, fVo.getToilet());
-			pstmt.setBoolean(3, fVo.isWifi());
-			pstmt.setBoolean(4, fVo.isAc());
-			pstmt.setBoolean(5, fVo.isParking());
-			pstmt.setBoolean(6, fVo.isPet());
-			pstmt.setBoolean(7, fVo.isKitchen());
-			pstmt.setBoolean(8, fVo.isWashing());
-			pstmt.setInt(9, fVo.getsIdx());
-			pstmt.executeUpdate();
-			
-			conn.commit();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-			try {
-				if(conn != null) conn.rollback();
-			} catch (Exception e2) {}
-		} finally {
-			pstmtClose();
-		}
-	}
 
 	public StayVO getStayIdxDetail(int sIdx) {
 		try {
-			sql="select * from stay where sIdx=? order by sIdx desc";
+			sql="select * from stay where sIdx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sIdx);
 			rs = pstmt.executeQuery();
@@ -156,28 +154,39 @@ public class StayDAO {
 	}
 	
 	public FacilityVO getStayIdxFacility(int sIdx) {
+	    PreparedStatement pstmtFacility = null;
+	    ResultSet rsFacility = null;
 		try {
 			sql="select * from facility where sIdx=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sIdx);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				fVo = new FacilityVO();
-				fVo.setfIdx(rs.getInt("fIdx"));
-				fVo.setBed(rs.getInt("bed"));
-				fVo.setToilet(rs.getInt("toilet"));
-				fVo.setWifi(rs.getBoolean("wifi"));
-				fVo.setAc(rs.getBoolean("ac"));
-				fVo.setParking(rs.getBoolean("parking"));
-				fVo.setPet(rs.getBoolean("pet"));
-				fVo.setKitchen(rs.getBoolean("kitchen"));
-				fVo.setWashing(rs.getBoolean("washing"));
-				fVo.setsIdx(rs.getInt("sIdx"));
+			pstmtFacility = conn.prepareStatement(sql);
+			pstmtFacility.setInt(1, sIdx);
+			rsFacility  = pstmtFacility.executeQuery();
+			if(rsFacility .next()) {
+	            fVo = new FacilityVO();
+	            fVo.setfIdx(rsFacility.getInt("fIdx"));
+	            fVo.setBed(rsFacility.getInt("bed"));
+	            fVo.setToilet(rsFacility.getInt("toilet"));
+	            fVo.setWifi(rsFacility.getString("wifi"));
+	            fVo.setAc(rsFacility.getString("ac"));
+	            fVo.setParking(rsFacility.getString("parking"));
+	            fVo.setPet(rsFacility.getString("pet"));
+	            fVo.setKitchen(rsFacility.getString("kitchen"));
+	            fVo.setWashing(rsFacility.getString("washing"));
+	            fVo.setsIdx(rsFacility.getInt("sIdx"));
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
-			rsClose();
+			if(rsFacility != null) {
+				try {
+					rsFacility.close();
+				} catch (SQLException e) {}
+			}
+			if(pstmtFacility != null) {
+				try {
+					pstmtFacility.close();
+				} catch (SQLException e) {}
+			}
 		}
 		return fVo;
 	}
@@ -197,33 +206,62 @@ public class StayDAO {
 		return res;
 	}
 
-	public ArrayList<StayVO> getStayList(String contentsShow) {
+	public ArrayList<StayVO> getStayList(int startIndexNo, int pageSize, String contentsShow, String search, String searchString) {
 		ArrayList<StayVO> vos = new ArrayList<StayVO>();
 		try {
-			if(contentsShow.equals("adminOK")) {
-				sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff, "
-						+ "(select count(*) from boardReply where boardIdx = b.idx) as replyCnt "  // 끝에 무조건 하나 띄우기
-						+ "from stay b order by idx desc limit ?,?";  /* 새로운 변수가 만들어진 필드가 되었으므로 vo에 등록 */
-				pstmt = conn.prepareStatement(sql);
+			if(search == null || search.equals("")) {
+				if(contentsShow.equals("adminOK")) {
+					sql = "SELECT * FROM stay ORDER BY sIdx DESC limit ?,?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, startIndexNo);
+					pstmt.setInt(2, pageSize);
+				}
+				else {
+					sql = "SELECT * FROM stay WHERE sDel = 'NO' ORDER BY sIdx DESC limit ?,?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, startIndexNo);
+					pstmt.setInt(2, pageSize);
+				}
 			}
 			else {
-				sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff, "  // 줄 바꿀때 끝에  공간이 있어야 함
-						+ "(select count(*) from boardReply where boardIdx = b.idx) as replyCnt "
-						+ "from board b where openSW = 'OK' and complaint = 'NO' union select *, datediff(wDate, now()) as date_diff, "
-						+ "timestampdiff(hour, wDate, now()) as hour_diff, "
-						+ "(select count(*) from boardReply where boardIdx = b.idx) as replyCnt "
-						+ "from stay b where mid = ? order by idx desc limit ?,?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, contentsShow);
+				if(contentsShow.equals("adminOK")) {
+					sql = "SELECT * FROM stay where "+search+" like ? ORDER BY sIdx DESC limit ?,?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, "%"+searchString+"%");
+					pstmt.setInt(2, startIndexNo);
+					pstmt.setInt(3, pageSize);
+				}
+				else {
+					sql = "SELECT * FROM stay WHERE sDel = 'NO' and "+search+" like ? ORDER BY sIdx DESC limit ?,?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, "%"+searchString+"%");
+					pstmt.setInt(2, startIndexNo);
+					pstmt.setInt(3, pageSize);
+				}
 			}
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
-				vo = new StayVO();
-				//vo.getsIdx(rs.getInt("sIdx"));
-				
-				vos.add(vo);
-			}
+	            vo = new StayVO();
+	            vo.setsIdx(rs.getInt("sIdx"));
+	            vo.setSort(rs.getString("sort"));
+	            vo.setsName(rs.getString("sName"));
+	            vo.setsPhoto(rs.getString("sPhoto"));
+	            vo.setStar(rs.getInt("star"));
+	            vo.setAddress(rs.getString("address"));
+	            vo.setsContent(rs.getString("sContent"));
+	            vo.setGuestMax(rs.getInt("guestMax"));
+	            vo.setPrice(rs.getInt("price"));
+	            vo.setResidence(rs.getString("residence"));
+	            vo.setsDate(rs.getString("sDate"));
+	            vo.setsDel(rs.getString("sDel"));
+
+	            // 추가할 시설 정보 가져오기
+	            FacilityVO fVo = getStayIdxFacility(rs.getInt("sIdx"));
+	            vo.setFacility(fVo);
+
+	            vos.add(vo);
+	        }
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
@@ -235,11 +273,12 @@ public class StayDAO {
 	public ArrayList<StayVO> getVestFourStay() {
 		ArrayList<StayVO> vos = new ArrayList<StayVO>();
 		try {
-			sql = "select * from stay order by star desc limit 4";
+			sql = "select * from stay order by star desc, sIdx desc limit 4";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				vo = new StayVO();
 				vo.setsIdx(rs.getInt("sIdx"));
 				vo.setSort(rs.getString("sort"));
 				vo.setsName(rs.getString("sName"));
@@ -252,6 +291,7 @@ public class StayDAO {
 				vo.setResidence(rs.getString("residence"));
 				vo.setsDate(rs.getString("sDate"));
 				vo.setsDel(rs.getString("sDel"));
+				
 				vos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -260,6 +300,42 @@ public class StayDAO {
 			rsClose();
 		}
 		return vos;
+	}
+
+	public int getTotRecCnt(String contentsShow, String search, String searchString) {
+		int totRecCnt = 0;
+		try {
+			if(search == null || search.equals("")) {
+				if(contentsShow.equals("adminOK")) {
+				  sql = "select count(*) as cnt from stay";
+				  pstmt = conn.prepareStatement(sql);
+				}
+				else {
+					sql = "select sum(a.cnt) as cnt from (select count(*) as cnt from stay where sDel = 'NO') as a";
+					pstmt = conn.prepareStatement(sql);
+				}
+			}
+			else {
+				if(contentsShow.equals("adminOK")) {
+					sql = "select count(*) as cnt from stay where "+search+" like ?";
+				  pstmt = conn.prepareStatement(sql);
+				  pstmt.setString(1, "%"+searchString+"%");
+				}
+				else {
+					sql = "select sum(a.cnt) as cnt from (select count(*) as cnt from stay where sDel = 'NO' and "+search+" like ?) as a";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, "%"+searchString+"%");
+				}
+			}
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return totRecCnt;
 	}
 	
 	// 회원 전체/부분 리스트

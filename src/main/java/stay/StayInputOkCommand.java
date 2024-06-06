@@ -2,6 +2,7 @@ package stay;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -22,6 +23,20 @@ public class StayInputOkCommand implements StayInterface {
 		
 		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());
 		
+		Enumeration fileNames = multipartRequest.getFileNames();
+		
+		String file = "";
+		String oFileName = "";
+		
+		while(fileNames.hasMoreElements()) {  // 하나씩 꺼내서 값이 있느냐
+			file = (String) fileNames.nextElement();
+			
+			if(multipartRequest.getFilesystemName(file) != null) {
+				oFileName += multipartRequest.getOriginalFileName(file) + "/";
+			}
+		}
+		oFileName = oFileName.substring(0, oFileName.lastIndexOf("/"));
+		
 		String sort = multipartRequest.getParameter("sort")==null ? "" : multipartRequest.getParameter("sort");
 		String sName = multipartRequest.getParameter("sName")==null ? "" : multipartRequest.getParameter("sName");
 		String address = multipartRequest.getParameter("address")==null ? "" : multipartRequest.getParameter("address");
@@ -30,41 +45,35 @@ public class StayInputOkCommand implements StayInterface {
 		int guestMax = multipartRequest.getParameter("guestMax")==null ? 0 : Integer.parseInt(multipartRequest.getParameter("guestMax"));
 		int price = multipartRequest.getParameter("price")==null ? 0 : Integer.parseInt(multipartRequest.getParameter("price"));
 		int bed = multipartRequest.getParameter("bed")==null ? 0 : Integer.parseInt(multipartRequest.getParameter("bed"));
-		int toilet = multipartRequest.getParameter("toilet")==null ? 0 : Integer.parseInt(multipartRequest.getParameter("toilet"));
-		String sPhoto = multipartRequest.getFilesystemName("fName")==null ? "noImage.jpg" : multipartRequest.getFilesystemName("fName");  // getParameter 앞에서 저장된 이름 -불러온 이름으로 db에 저장하면 의미x // 서버에 저장된 파일시스템 이름으로 저장해야함(똑같은 10.jpg가 있으면 101.jpg로 저장됨 => db에 10.jpg로 저장하면 의미없음, 실제로 저장된 101.jpg로 db에 저장해야함 
-				
+		int toilet = multipartRequest.getParameter("toilet")==null ? 0 : Integer.parseInt(multipartRequest.getParameter("toilet"));				
 		
 		StayDAO dao = new StayDAO();
 	        
 		StayVO vo = new StayVO();
 		vo.setSort(sort);
 		vo.setsName(sName);
-		vo.setsPhoto(sPhoto);
+		vo.setsPhoto(oFileName);
 		vo.setAddress(address);
 		vo.setsContent(sContent);
 		vo.setResidence(residence);
 		vo.setGuestMax(guestMax);
 		vo.setPrice(price);
+        
+		String[] facilities = multipartRequest.getParameterValues("facility");
+		String wifi = "NO", ac = "NO", parking = "NO", pet = "NO", kitchen = "NO", washing = "NO";
 
-		Map<String, Object> result = dao.setStayInputOk(vo); // 숙소 정보 저장
-		int res = (int) result.get("res");
-		int sIdx = (int) result.get("sIdx");
-        
-        String[] facilities = multipartRequest.getParameterValues("facility");
-        boolean wifi = false, ac = false, parking = false, pet = false, kitchen = false, washing = false;
-        
-	    if (facilities != null) {
-	        for (String facility : facilities) {
-	            if (facility.equals("Wi-Fi")) wifi = true;
-	            if (facility.equals("에어컨")) ac = true;
-	            if (facility.equals("주차장")) parking = true;
-	            if (facility.equals("반려동물 동반")) pet = true;
-	            if (facility.equals("부엌")) kitchen = true;
-	            if (facility.equals("세탁기")) washing = true;
-	        }
-	    }
-	    	    
-	    FacilityVO fVo = new FacilityVO();
+		if (facilities != null) {
+		    for (String facility : facilities) {
+		        if (facility.equals("wifi")) wifi = "OK";
+		        if (facility.equals("ac")) ac = "OK";
+		        if (facility.equals("parking")) parking = "OK";
+		        if (facility.equals("pet")) pet = "OK";
+		        if (facility.equals("kitchen")) kitchen = "OK";
+		        if (facility.equals("washing")) washing = "OK";
+		    }
+		}
+
+		FacilityVO fVo = new FacilityVO();
 		fVo.setBed(bed);
 		fVo.setToilet(toilet);
 		fVo.setWifi(wifi);
@@ -73,13 +82,14 @@ public class StayInputOkCommand implements StayInterface {
 		fVo.setPet(pet);
 		fVo.setKitchen(kitchen);
 		fVo.setWashing(washing);
-		fVo.setsIdx(sIdx);
-		
-		dao.setStayfacility(fVo);  // 필터 정보 저장
+
+		Map<String, Object> result = dao.setStayInputOk(vo, fVo); // 숙소 정보 저장
+		int res = (int) result.get("res");
+		int sIdx = (int) result.get("sIdx");
 		
 		if(res != 0) {
 	        request.setAttribute("message", "숙소가 등록되었습니다.");
-	        request.setAttribute("url", "StayDetail.st");
+	        request.setAttribute("url", "StayDetail.st&sIdx=sIdx");
 		}
 		else {
 	        request.setAttribute("message", "숙소 등록 실패");

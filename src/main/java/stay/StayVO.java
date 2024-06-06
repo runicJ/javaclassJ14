@@ -14,6 +14,8 @@ public class StayVO {
     private String sDate;
     private String sDel;
     
+    private FacilityVO facility;
+    
 	public int getsIdx() {
 		return sIdx;
 	}
@@ -86,11 +88,17 @@ public class StayVO {
 	public void setsDel(String sDel) {
 		this.sDel = sDel;
 	}
+	public FacilityVO getFacility() {
+		return facility;
+	}
+	public void setFacility(FacilityVO facility) {
+		this.facility = facility;
+	}
 	
 	@Override
 	public String toString() {
 		return "StayVO [sIdx=" + sIdx + ", sort=" + sort + ", sName=" + sName + ", sPhoto=" + sPhoto + ", star=" + star
 				+ ", address=" + address + ", sContent=" + sContent + ", guestMax=" + guestMax + ", price=" + price
-				+ ", residence=" + residence + ", sDate=" + sDate + ", sDel=" + sDel + "]";
+				+ ", residence=" + residence + ", sDate=" + sDate + ", sDel=" + sDel + ", facility=" + facility + "]";
 	}
 }

@@ -15,14 +15,27 @@ public class StayListCommand implements StayInterface {
 		HttpSession session = request.getSession();
 		String sMid = (String) session.getAttribute("sMid");
 		String contentsShow = "";
-		if(sMid.equals("admin")) contentsShow = "adminOK";
-		else contentsShow = (String) session.getAttribute("sMid");
-		
+		if (sMid == null) {
+			contentsShow = "guest";
+		} else if (sMid.equals("admin")) {
+			contentsShow = "adminOK";
+		} else {
+			contentsShow = sMid;
+		}
+
 		StayDAO dao = new StayDAO();
 		
-		ArrayList<StayVO> vos = dao.getStayList(contentsShow);
+		// 페이징처리
+		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
+		int pageSize = request.getParameter("pageSize")==null ? 5 : Integer.parseInt(request.getParameter("pageSize"));
+		int totRecCnt = dao.getTotRecCnt(contentsShow,"","");
+		int startIndexNo = (pag - 1) * pageSize;
+		int curScrStartNo = totRecCnt - startIndexNo;
+		
+		ArrayList<StayVO> vos = dao.getStayList(startIndexNo, pageSize, contentsShow, null, null);
 		
 		request.setAttribute("vos", vos);
+		request.setAttribute("curScrStartNo", curScrStartNo);
 	}
 
 }
