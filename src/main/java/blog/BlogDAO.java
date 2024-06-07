@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import stay.StayVO;
+
 public class BlogDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
@@ -289,4 +291,43 @@ public class BlogDAO {
 			pstmtClose();
 		}
 	}
+
+	public ArrayList<BlogVO> getVestThreeBlog() {
+		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
+		try {
+			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff "
+					+ "from travelog order by viewCnt desc, likedCnt desc, tIdx desc limit 3";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				vo = new BlogVO();
+				vo.settIdx(rs.getInt("tIdx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.settPhoto(rs.getString("tPhoto"));
+				vo.setSort(rs.getString("sort"));
+				vo.setTitle(rs.getString("title"));
+				vo.setResidence(rs.getString("residence"));
+				vo.settDate(rs.getString("tDate"));
+				vo.setViewCnt(rs.getInt("viewCnt"));
+				vo.setLikedCnt(rs.getInt("likedCnt"));
+				vo.setOpenSw(rs.getString("openSw"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.settContent(rs.getString("tContent"));
+				vo.setComplaint(rs.getString("complaint"));
+				
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				vo.setDate_diff(rs.getInt("date_diff"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
+
 }

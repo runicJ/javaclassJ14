@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import admin.AdminDAO;
 import admin.review.ReviewVO;
+import blog.BlogDAO;
+import blog.BlogVO;
 import stay.StayDAO;
 import stay.StayVO;
 
@@ -26,22 +28,26 @@ public class Main extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		StayDAO dao = new StayDAO();
-		ArrayList<StayVO> vestVos = dao.getVestFourStay();
+		ArrayList<StayVO> stayVos = dao.getVestFourStay();
 		
         AdminDAO adminDao = new AdminDAO();
         Map<StayVO, Double> stayReviews = new HashMap<>();
         
-        for (StayVO vestVo : vestVos) {
-            ArrayList<ReviewVO> reviews = adminDao.getReviewSearch(vestVo.getsIdx(), "stay");
+        BlogDAO blogDao = new BlogDAO();
+		ArrayList<BlogVO> blogVos = blogDao.getVestThreeBlog();
+        
+        for (StayVO stayVo : stayVos) {
+            ArrayList<ReviewVO> reviews = adminDao.getReviewSearch(stayVo.getsIdx(), "stay");
             int totalStars = 0;
             for (ReviewVO review : reviews) {
                 totalStars += review.getStar();
             }
            	double reviewAvg = reviews.size() > 0 ? (double) totalStars / reviews.size() : 0.0;
-           	stayReviews.put(vestVo, reviewAvg);
+           	stayReviews.put(stayVo, reviewAvg);
         }
         
-        request.setAttribute("vestVos", vestVos);
+        request.setAttribute("stayVos", stayVos);
+        request.setAttribute("blogVos", blogVos);
         request.setAttribute("stayReviews", stayReviews);
 		
 		String viewPage = "/main/main.jsp";

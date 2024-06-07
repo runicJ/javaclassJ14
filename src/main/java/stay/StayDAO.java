@@ -211,13 +211,13 @@ public class StayDAO {
 		try {
 			if(search == null || search.equals("")) {
 				if(contentsShow.equals("adminOK")) {
-					sql = "SELECT * FROM stay ORDER BY sIdx DESC limit ?,?";
+					sql = "select * FROM stay ORDER BY sIdx DESC limit ?,?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, startIndexNo);
 					pstmt.setInt(2, pageSize);
 				}
 				else {
-					sql = "SELECT * FROM stay WHERE sDel = 'NO' ORDER BY sIdx DESC limit ?,?";
+					sql = "select * FROM stay WHERE sDel = 'NO' ORDER BY sIdx DESC limit ?,?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, startIndexNo);
 					pstmt.setInt(2, pageSize);
@@ -225,14 +225,14 @@ public class StayDAO {
 			}
 			else {
 				if(contentsShow.equals("adminOK")) {
-					sql = "SELECT * FROM stay where "+search+" like ? ORDER BY sIdx DESC limit ?,?";
+					sql = "select * FROM stay where "+search+" like ? ORDER BY sIdx DESC limit ?,?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+searchString+"%");
 					pstmt.setInt(2, startIndexNo);
 					pstmt.setInt(3, pageSize);
 				}
 				else {
-					sql = "SELECT * FROM stay WHERE sDel = 'NO' and "+search+" like ? ORDER BY sIdx DESC limit ?,?";
+					sql = "select * FROM stay WHERE sDel = 'NO' and "+search+" like ? ORDER BY sIdx DESC limit ?,?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+searchString+"%");
 					pstmt.setInt(2, startIndexNo);
@@ -311,7 +311,7 @@ public class StayDAO {
 				  pstmt = conn.prepareStatement(sql);
 				}
 				else {
-					sql = "select sum(a.cnt) as cnt from (select count(*) as cnt from stay where sDel = 'NO') as a";
+					sql = "select count(*) as cnt from stay where sDel = 'NO'";
 					pstmt = conn.prepareStatement(sql);
 				}
 			}

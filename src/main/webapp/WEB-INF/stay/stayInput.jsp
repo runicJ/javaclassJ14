@@ -292,7 +292,7 @@
 	        </div>
 	        <div class="text-center">
                 <input type="button" class="btn btn-primary mr-2" value="등록하기" onclick="fCheck()" />
-                <button type="button" class="btn btn-warning" onclick="stayList.st">돌아가기</button>
+                <button type="button" class="btn btn-warning" onclick="location.href='StayList.st';">돌아가기</button>
 	        </div>
 	        <input type="hidden" name="sort" />
     		<input type="hidden" name="address" />

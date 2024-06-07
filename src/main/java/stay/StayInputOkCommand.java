@@ -89,7 +89,7 @@ public class StayInputOkCommand implements StayInterface {
 		
 		if(res != 0) {
 	        request.setAttribute("message", "숙소가 등록되었습니다.");
-	        request.setAttribute("url", "StayDetail.st&sIdx=sIdx");
+	        request.setAttribute("url", "StayList.st");
 		}
 		else {
 	        request.setAttribute("message", "숙소 등록 실패");

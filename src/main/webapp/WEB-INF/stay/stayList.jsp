@@ -247,7 +247,6 @@
   			type : "post",
   			data : {pag : curPage},
   			success:function(res) {
-  				// $("#list-wrap").html(res);  // 이렇게 하면 덮어쓰는 개념
   				$("#list-wrap").append(res);
   			},
   			error:function() {
@@ -355,10 +354,9 @@
             </ul>
           </div>
         </div>
-
-		<div class="row portfolio-container">
-			<c:forEach var="vo" items="${vos}" varStatus="st">
-		        <c:set var="sPhotos" value="${fn:split(vo.sPhoto, '/')}"/>
+		<div class="row portfolio-container" id="list-wrap">
+			<c:forEach var="vo" items="${vos}" varStatus="st">    
+		    <c:set var="sPhotos" value="${fn:split(vo.sPhoto, '/')}"/>
 		        <div class="col-lg-4 col-md-6 portfolio-item filter-${vo.residence} wow fadeInUp">
 		            <div class="portfolio-wrap">
 		                <figure>
@@ -382,9 +380,9 @@
 						</div>
             		</div>
             	</div>
+            	<c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
 			</c:forEach>
 		</div>
-
         </div>
     </section><!-- End Portfolio Section -->
 </div>

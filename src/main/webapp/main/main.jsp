@@ -105,6 +105,31 @@
 	        dateFormat: 'yy-mm-dd'
 	    });
 	});
+  	
+    $(function() {
+        //input을 datepicker로 선언
+        $("#datepicker").datepicker({
+            dateFormat: 'yy-mm-dd' //달력 날짜 형태
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
+            ,changeYear: true //option값 년 선택 가능
+            ,changeMonth: true //option값  월 선택 가능                
+            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+            ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+            ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+            ,buttonText: "선택" //버튼 호버 텍스트              
+            ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
+            ,monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 텍스트
+            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
+            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
+            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
+            ,minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+            ,maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+        });                    
+        
+        //초기값을 오늘 날짜로 설정해줘야 합니다.
+        $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
+    });
   </script>
 </head>
 <body>
@@ -163,16 +188,16 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
                                 <div class="booking_form">
-                                    <form action="StayList.st">
+                                    <form name="searchForm" method="post" action="StayList.st">
                                         <div class="form-row">
                                             <div class="form_colum">
-												<input class="select" type="text" name="place" placeholder="여행 지역"> 
+												<input class="select" type="text" name="address" placeholder="여행 지역"> 
                                             </div>
                                             <div class="form_colum">
-                                                <input id="datepicker_1" placeholder="Check in">
+                                                <input id="datepicker_1" name="datepicker_1" placeholder="Check in">
                                             </div>
                                             <div class="form_colum">
-                                                <input id="datepicker_2" placeholder="Check out">
+                                                <input id="datepicker_2" name="datepicker_2" placeholder="Check out">
                                             </div>
                                             <div class="form_colum">
                                                 <input class="select" type="number" name="guest" min="1" placeholder="인원 수"> 
@@ -204,18 +229,18 @@
                 </div>
             </div>
             <div class="row">
-    			<c:forEach var="vestVo" items="${vestVos}" varStatus="st">
-    			<c:set var="sPhotos" value="${fn:split(vestVo.sPhoto, '/')}"/>
+    			<c:forEach var="stayVo" items="${stayVos}" varStatus="st">
+    			<c:set var="sPhotos" value="${fn:split(stayVo.sPhoto, '/')}"/>
                 <div class="col-lg-6 col-md-6">
                     <div class="single_place">
-                        <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${vo.sName} thumbnail" style="object-fit:contain;">
+                        <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${stayVo.sName} thumbnail" style="object-fit:contain;">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
-                                <a href="#" class="place_btn">${vestVo.sort}</a>
-                                <h3>${vestVo.sName}</h3>
-                                <p>${vestVo.residence}</p>
+                                <a href="#" class="place_btn">${stayVo.sort}</a>
+                                <h3>${stayVo.sName}</h3>
+                                <p>${stayVo.residence}</p>
                                 <div class="place_review">
-                                    <c:forEach begin="1" end="${stayReviews[stay]}" var="star">
+                                    <c:forEach begin="1" end="${stayReviews[stayVo]}" var="star">
                                     	<a href="#"><i class="fas fa-star"></i></a>
                                 	</c:forEach>
                                 	<b>평점 : <fmt:formatNumber value="${stayReviews[reviewAvg]}" pattern="#,##0.0" /></b>
@@ -247,9 +272,11 @@
                 </div>
             </div>
             <div class="row">
+                <c:forEach var="blogVo" items="${blogVos}">
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_ihotel_list">
-                        <img src="images/ind/industries_1.png" alt="">
+                    <c:set var="tPhotos" value="${fn:split(blogVo.tPhoto, '/')}"/>
+                        <img src="${ctp}/images/blog/${tPhotos[0]}" class="img-fluid" alt="${blogVo.title} thumbnail">
                         <div class="hover_text">
                             <div class="hotel_social_icon">
                                 <ul>
@@ -263,82 +290,17 @@
                             </div>
                         </div>
                         <div class="hotel_text_iner">
-                            <h3> <a href="#"> Hotel Polonia</a></h3>
+                            <h3> <a href="#"> ${blogVo.title}</a></h3>
                             <div class="place_review">
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <span>(210 review)</span>
+                                <a href="#"><i class="fas fa-heart"></i></a>
+                                <span>(좋아요 : ${blogVo.likedCnt})</span>
                             </div>
-                            <p>London, United Kingdom</p>
-                            <h5>From <span>$500</span></h5>
+                            <p>${blogVo.residence}</p>
+                            <h5>By <span>${blogVo.nickName}</span></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_ihotel_list">
-                        <img src="images/ind/industries_2.png" alt="">
-                        <div class="hover_text">
-                            <div class="hotel_social_icon">
-                                <ul>
-                                    <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-                                    <li><a href="#"><i class="ti-linkedin"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="share_icon">
-                                <i class="ti-share"></i>
-                            </div>
-                        </div>
-                        <div class="hotel_text_iner">
-                            <h3> <a href="#"> Hotel Polonia</a></h3>
-                            <div class="place_review">
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <span>(210 review)</span>
-                            </div>
-                            <p>London, United Kingdom</p>
-                            <h5>From <span>$500</span></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_ihotel_list">
-                        <img src="images/ind/industries_3.png" alt="">
-                        <div class="hover_text">
-                            <div class="hover_text">
-                                <div class="hotel_social_icon">
-                                    <ul>
-                                        <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                        <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-                                        <li><a href="#"><i class="ti-linkedin"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="share_icon">
-                                    <i class="ti-share"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hotel_text_iner">
-                            <h3> <a href="#"> Hotel Polonia</a></h3>
-                            <div class="place_review">
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <a href="#"><i class="fas fa-star"></i></a>
-                                <span>(210 review)</span>
-                            </div>
-                            <p>London, United Kingdom</p>
-                            <h5>From <span>$500</span></h5>
-                        </div>
-                    </div>
-                </div>
+			    </c:forEach>
             </div>
         </div>
     </section>

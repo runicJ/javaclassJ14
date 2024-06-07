@@ -69,27 +69,27 @@
                 <div class="col-lg-12">
                     <div class="card-columns">
                         <div class="card">
-                            <a href="images/gallery/gallery_1.png" class="gallery_img">
-                               <img src="images/gallery/gallery_1.png" class="card-img-top" alt="">
+                            <a href="images/view1.png" class="gallery_img">
+                               <img src="images/view1.png" class="card-img-top" alt="">
                             </a>
                         </div>
                         <div class="card">
-                            <a href="images/gallery/gallery_3.png" class="gallery_img">
-                                <img src="images/gallery/gallery_3.png" class="card-img-top" alt="">
+                            <a href="images/view2.png" class="gallery_img">
+                                <img src="images/view2.png" class="card-img-top" alt="">
                             </a>
                         </div>
                         <div class="card">
-                            <a href="images/gallery/gallery_2.png" class="gallery_img">
-                                <img src="images/gallery/gallery_2.png" class="card-img-top" alt="">
+                            <a href="images/view3.jpg" class="gallery_img">
+                                <img src="images/view3.jpg" class="card-img-top" alt="">
                             </a>
                         </div>
                         <div class="card">
-                            <a href="images/gallery/gallery_4.png" class="gallery_img">
-                                <img src="images/gallery/gallery_4.png" class="card-img-top" alt="">
+                            <a href="images/view4.png" class="gallery_img">
+                                <img src="images/gallery/view4.png" class="card-img-top" alt="">
                             </a>
                         </div>
                         <div class="card">
-                            <a href="images/gallery/gallery_5.png" class="gallery_img">
+                            <a href="images/view5.png" class="gallery_img">
                                 <img src="images/gallery/gallery_5.png" class="card-img-top" alt="">
                             </a>
                         </div>

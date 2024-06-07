@@ -35,6 +35,11 @@ public class StayController extends HttpServlet {  // 4
 			command.execute(request, response);
 			viewPage += "/stayList.jsp";
 		}
+		else if(com.equals("ScrollPage")) {
+			command = new StayListCommand();
+			command.execute(request, response);
+			viewPage += "/scrollPage.jsp";
+		}
 		else if(com.equals("/StayDetail")) {
 			command = new StayDetailCommand();
 			command.execute(request, response);
