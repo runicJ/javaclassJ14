@@ -52,10 +52,10 @@
                     	<div class="mb-2" style="display:flex; justify-content:space-between; align-items:center;">
 				  			<form name="partForm">
 				  				<select name="part" id="part" onchange="partCheck()" style="height: 35px; font-size: 16px; padding: 4px 8px;">
-				  					<option ${part=="최신글" ? "selected" : ""}>최신글</option>
-				  					<option ${part=="조회수" ? "selected" : ""}>조회수</option>
-				  					<option ${part=="좋아요" ? "selected" : ""}>좋아요</option>
-				  					<option ${part=="댓글수" ? "selected" : ""}>댓글수</option>
+				  					<option ${part=="tIdx" ? "selected" : ""}>최신글</option>
+				  					<option ${part=="viewCnt" ? "selected" : ""}>조회수</option>
+				  					<option ${part=="likedCnt" ? "selected" : ""}>좋아요</option>
+				  					<option ${part=="commentCnt" ? "selected" : ""}>댓글수</option>
 				  				</select>
 				  			</form>
 			  				<button onclick="location.href='BlogInput.bl';" class="button primary-bg btn_1">새글쓰기</button>
@@ -67,7 +67,7 @@
                             	<c:set var="tPhotos" value="${fn:split(vo.tPhoto, '/')}"/>
                                 <img class="card-img rounded-0" src="${ctp}/images/blog/${tPhotos[0]}" style="height:330px;">
                                 <a href="#" class="blog_item_date">
-                                    <h3>${curScrStartNo}. - (조회수 : ${vo.viewCnt})</h3>
+                                    <h3>(조회수 : ${vo.viewCnt})</h3>
                                     <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,11,19) : fn:substring(vo.tDate,0,16)}</p>
                                 </a>
                             </div>
@@ -77,7 +77,6 @@
 	                                <a class="d-inline-block" href="BlogDetail.bl?tIdx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}">
 	                                    <h2>[${vo.sort}] ${vo.title} <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if></h2>
 	                                </a>
-									<p class="w3-right"><button class="w3-button w3-black" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like </b><span class="w3-tag w3-white">${vo.likedCnt}</span></button></p>
 								</div>
                                 <p>
                                 	<c:if test="${fn:length(vo.tContent) >= 45}">${fn:substring(vo.tContent,0,45)}...</c:if>
@@ -86,7 +85,8 @@
                                 <ul class="blog-info-link">
                                     <li><a href="#"><i class="fa-solid fa-suitcase-rolling"></i>${vo.residence == "" ? "미상" : vo.residence}</a></li>
                                     <li><a href="#"><i class="far fa-comments"></i>${rVo.reviewCnt}</a></li>
-                                    <li><a href="#"><i class="far fa-user"></i>by ${vo.nickName}</a>
+                                    <li><a href="#"><i class="far fa-user"></i>by ${vo.nickName}</a></li>
+									<li style="float:right;"><button class="w3-button w3-black" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like </b><span class="w3-tag w3-white">${vo.likedCnt}</span></button></li>
                                 </ul>
                             </div>
                             <c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
@@ -130,36 +130,14 @@
                         <aside class="single_sidebar_widget post_category_widget">
                             <h4 class="widget_title">Category</h4>
                             <ul class="list cat-list">
+                        	    <c:forEach var="sortCount" items="${sortCounts}">
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>여행기록</p>
-                                        <p>(37)</p>
+                                        <p>${sortCount.sort}</p>
+                                        <p>(${sortCount.sortCnt})</p>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>여행지추천</p>
-                                        <p>(10)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>지역홍보</p>
-                                        <p>(03)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>지역음식소개</p>
-                                        <p>(11)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>공지사항</p>
-                                        <p>(21)</p>
-                                    </a>
-                                </li>
+                                </c:forEach>
                             </ul>
                         </aside>
 

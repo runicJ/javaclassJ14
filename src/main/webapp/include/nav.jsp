@@ -32,15 +32,15 @@
                                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
                                     <a class="dropdown-item" href="BlogList.bl">Travelog</a>
-                                    <a class="dropdown-item" href="BlogJournalList.bl">Journal</a>
+                                    <a class="dropdown-item" href="BlogList.bl">Journal</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="Service.ad" id="navbarDropdown3"
                                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Service</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                                    <a class="dropdown-item" href="BoardList.bo">공지사항</a>
-                                    <a class="dropdown-item" href="BoardList.bo">1:1문의</a>
+                                    <a class="dropdown-item" href="BlogList.bl?sort='공지사항';">공지사항</a>
+                                    <a class="dropdown-item" href="#">1:1문의</a>
                                 </div>
                             </li>
                             <c:if test="${sMid == null}">
@@ -55,11 +55,13 @@
                     <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="AdminMain.ad">관리자메뉴</a></c:if>
                     <c:if test="${sMid != null && sMid != 'admin'}">
 	                    <li class="nav-item dropdown" style="list-style-type:none;">
-	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown">${sNickName} 님</a>
+	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown">
+                            <img src="images/member/${sPhoto}" alt="user" class="rounded-circle" height="30" width="30">
+	                    	${sNickName} 님</a>
 		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" href="MemberMain.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>
-		                        <a class="dropdown-item" href="MemberMessage.mem"><i class="fa-solid fa-message"></i> 메시지 보내기</a>
-		                        <a class="dropdown-item" href="MemberWishList.mem"><i class="fa-solid fa-heart"></i> 위시리스트</a>
+		                        <a class="dropdown-item" href="MemberUpdate.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>
+		                        <a class="dropdown-item" href="MemberUpdate.mem"><i class="fa-solid fa-message"></i> 메시지 보내기</a>
+		                        <a class="dropdown-item" href="MemberUpdate.mem"><i class="fa-solid fa-heart"></i> 위시리스트</a>
 				      		</div>
 	                    </li>
                    	</c:if>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import blog.BlogVO.SortType;
+
 public class BlogInputOkCommand implements BlogInterface {
 
 	@Override
@@ -50,7 +52,7 @@ public class BlogInputOkCommand implements BlogInterface {
 		vo.setMid(mid);
 		vo.setNickName(nickName);
 		vo.settPhoto(oFileName);
-		vo.setSort(sort);
+		vo.setSort(SortType.valueOf(sort));
 		vo.setTitle(title);
 		vo.setResidence(residence);
 		vo.setOpenSw(openSw);

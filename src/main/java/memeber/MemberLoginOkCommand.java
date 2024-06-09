@@ -64,6 +64,7 @@ public class MemberLoginOkCommand implements MemberInterface {
 		HttpSession session = request.getSession();
 		session.setAttribute("sMid", mid);
 		session.setAttribute("sNickName", vo.getNickName());
+		session.setAttribute("sPhoto", vo.getPhoto());
 
 		request.setAttribute("message", mid+"님 로그인 되셨습니다.");
 		request.setAttribute("url", request.getContextPath()+"/Main");

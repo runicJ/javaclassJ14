@@ -6,8 +6,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewpoint" content="width=divice-width, initial-scale=1.0">
-	<title>Insert</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Stay List</title>
   <%@ include file = "../../include/bs4.jsp"%>
   <style>
   	/*--------------------------------------------------------------
@@ -47,6 +47,11 @@
 	--------------------------------------------------------------*/
 	.portfolio {
 	  padding: 60px 0;
+	}
+	
+	.portfolio-container {
+	    height: auto;
+	    overflow-y: auto;
 	}
 	
 	.portfolio #portfolio-flters {
@@ -220,7 +225,7 @@
   <script>
   	'use strict';
   	
-  	let lastScroll = 0;  // 마지막 위치
+   	let lastScroll = 0;  // 마지막 위치
   	let curPage = 1;
   	
   	$(document).scroll(function(){
@@ -240,34 +245,73 @@
   		lastScroll = currentScroll;  // 이렇게 하고 다시 계산
   	});
   	
+ 	// 전역 변수로 Isotope 인스턴스 저장
+  	var iso;
+
+  	$(document).ready(function() {
+  	    // Isotope 인스턴스 생성
+  	    if ($('.portfolio-container').length) {
+  	        iso = new Isotope('.portfolio-container', {
+  	            itemSelector: '.portfolio-item',
+  	            layoutMode: 'fitRows'
+  	        });
+  	    }
+
+  	    // 필터 버튼 이벤트
+  	    $('#portfolio-flters li').on('click', function() {
+  	        var filterValue = $(this).attr('data-filter');
+  	        iso.arrange({ filter: filterValue });  // 필터 적용
+  	        $('#portfolio-flters li').removeClass('filter-active');
+  	        $(this).addClass('filter-active');
+  	    });
+  	});
+
   	// 리스트 불러오기 함수(ajax처리)
-  	function getList(curPage) {
-  		$.ajax({
-  			url : "ScrollPage.st",
-  			type : "post",
-  			data : {pag : curPage},
-  			success:function(res) {
-  				$("#list-wrap").append(res);
-  			},
-  			error:function() {
-  				alert("전송 오류!");
-  			}
-  		});
-  	}
+	function getList(curPage) {
+	    $.ajax({
+	        url: "ScrollPage.st",
+	        type: "post",
+	        data: {pag: curPage},
+	        success: function(res) {
+	            var $items = $(res);
+	            $('#list-wrap').append($items);
+	            iso.appended($items);
+	            iso.arrange();
 	
+	            if (lightbox) {
+	                lightbox.destroy();
+	            }
+	
+	            lightbox = GLightbox({
+	                selector: '.portfolio-lightbox'
+	            });
+	        },
+	        error: function() {
+	            alert("전송 오류!");
+	        }
+	    });
+	}
+
+
   	function wishToggle(sIdx) {
         $.ajax({
             url  : "StayWishToggle.st",
             type : "post",
             data : {sIdx : sIdx},
-            success:function() {                
-              location.reload();
+            success: function(response) {
+                let icon = $(`#wish-icon-${sIdx}`);
+                if (response.trim() == "true") {
+                    icon.removeClass('far').addClass('fas');
+                } else {
+                    icon.removeClass('fas').addClass('far');
+                }
             },
-            error : function() {
-  				alert("전송오류!");
+            error: function() {
+                alert("전송 오류!");
             }
         });    
     }
+  	
   </script>
   
   <!-- Vendor CSS Files -->
@@ -301,34 +345,24 @@
             <div class="col-lg-12">
                 <div class="booking_content">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
+                    	<div class="tab-pane fade show active" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
                             <div class="booking_form">
-                                <form action="#">
+                                <form name="searchForm" method="post" action="StayList.st">
                                     <div class="form-row">
                                         <div class="form_colum">
-                                            <select class="nc_select">
-                                                <option selected>Choosace place </option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
+											<input class="select" type="text" name="address" placeholder="여행 지역"> 
                                         </div>
                                         <div class="form_colum">
-                                            <input id="datepicker_1" placeholder="Check in date">
+                                            <input id="datepicker_1" name="datepicker_1" placeholder="Check in">
                                         </div>
                                         <div class="form_colum">
-                                            <input id="datepicker_2" placeholder="Check in date">
+                                            <input id="datepicker_2" name="datepicker_2" placeholder="Check out">
                                         </div>
                                         <div class="form_colum">
-                                            <select class="nc_select">
-                                                <option selected>Persone </option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
+                                            <input class="select" type="number" name="guest" min="1" placeholder="인원 수"> 
                                         </div>
                                         <div class="form_btn">
-                                            <a href="#" class="btn_1">search</a>
+                                            <input type="submit" class="btn_1" value="search">
                                         </div>
                                     </div>
                                 </form>
@@ -339,8 +373,7 @@
             </div>
         </div>
     </section>
-	<!-- ======= Portfolio Section ======= -->
-    <section id="portfolio list-wrap" class="portfolio">
+    <section id="portfolio" class="portfolio">
       <div class="container">
 
         <div class="row">
@@ -360,11 +393,11 @@
 		        <div class="col-lg-4 col-md-6 portfolio-item filter-${vo.residence} wow fadeInUp">
 		            <div class="portfolio-wrap">
 		                <figure>
-		                    <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${vo.sName}">
+		                    <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${curScrStartNo}.${vo.sName}">
 		                    <c:forEach var="sPhoto" items="${sPhotos}" varStatus="st">
 		                        <a href="${ctp}/images/stay/${sPhoto}" data-gallery="${sPhotos}" class="link-preview portfolio-lightbox" title="사진 보기"><i class="fa-solid fa-plus"></i></a>
 		                    </c:forEach>
-		                    <a onclick="wishToggle(${vo.sIdx})" class="link-wish" title="위시리스트 저장"><i class="fa-solid fa-heart"></i></a>
+		                    <a type="button" onclick="wishToggle(${vo.sIdx})" class="link-wish" title="위시리스트 저장"><i class="fa-solid fa-heart"></i></a>
 		                    <a href="StayDetail.st?sIdx=${vo.sIdx}" class="link-details" title="상세정보 보기"><i class="fa-solid fa-link"></i></a>
 		                </figure>
 						<div class="portfolio-info">
@@ -384,7 +417,7 @@
 			</c:forEach>
 		</div>
         </div>
-    </section><!-- End Portfolio Section -->
+    </section>
 </div>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fa-solid fa-arrow-up"></i></a>
 <p><br/></p>

@@ -17,7 +17,7 @@ public class MemberJoinOkCommand implements MemberInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String realPath = request.getServletContext().getRealPath("/images/member");  // 경로 마지막 / 안붙여도 됨
+		String realPath = request.getServletContext().getRealPath("/images/member");
 		int maxSize = 1024 * 1024 * 10;
 		String encoding = "UTF-8";
 		

@@ -95,16 +95,6 @@ public class MemberController extends HttpServlet {  // 4
 		else if(com.equals("/MemberPwdCheck")) {
 			viewPage += "/memberPwdCheck.jsp";
 		}
-		else if(com.equals("/MemberPwdCheckAjax")) {
-			command = new MemberPwdCheckAjaxCommand();
-			command.execute(request, response);
-			return;
-		}
-		else if(com.equals("/MemberPwdChangeCheck")) {
-			command = new MemberPwdChangeCheckCommand();
-			command.execute(request, response);
-			viewPage = "/include/message.jsp";
-		}
 		else if(com.equals("/MemberPwdCheckOk")) {
 			command = new MemberPwdCheckOkCommand();
 			command.execute(request, response);
@@ -120,13 +110,18 @@ public class MemberController extends HttpServlet {  // 4
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("/MemberCommentList")) {
+			command = new MemberCommentListCommand();
+			command.execute(request, response);
+			viewPage += "/memberCommentList.jsp";
+		}
 		else if(com.equals("/MemberDelete")) {
 			viewPage += "/memberPwdDeleteCheck.jsp";
 		}
 		else if(com.equals("/MemberDeleteCheckOk")) {
 			command = new MemberDeleteCheckOkCommand();
 			command.execute(request, response);
-			viewPage = "/include/message.jsp";  // 메시지로 보내는게 맞겠죠
+			viewPage = "/include/message.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

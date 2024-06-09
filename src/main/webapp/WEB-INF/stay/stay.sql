@@ -39,7 +39,7 @@ drop table facility;
 CREATE TABLE booking (
     bIdx INT AUTO_INCREMENT PRIMARY KEY,
     sIdx INT NOT NULL,
-    mId VARCHAR(20) NOT NULL,
+    mid VARCHAR(20) NOT NULL,
     bDate DATETIME DEFAULT now(),
     checkIn DATETIME NOT NULL,
     checkOut DATETIME NOT NULL,

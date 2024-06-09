@@ -18,7 +18,8 @@ public class ReviewInputOkCommand implements AdminInterface {
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		String nickName = request.getParameter("nickName")==null ? "" : request.getParameter("nickName");
 		int star = request.getParameter("star")==null ? 0 : Integer.parseInt(request.getParameter("star"));
-		String content = request.getParameter("review")==null ? "" : request.getParameter("review");
+		String rContent = request.getParameter("rContent")==null ? "" : request.getParameter("rContent");
+		String purpose = request.getParameter("purpose")==null ? "" : request.getParameter("purpose");
 		
 		AdminDAO dao = new AdminDAO();
 		ReviewVO vo = new ReviewVO();
@@ -28,19 +29,12 @@ public class ReviewInputOkCommand implements AdminInterface {
 		vo.setMid(mid);
 		vo.setNickName(nickName);
 		vo.setStar(star);
-		vo.setContent(content);
+		vo.setContent(rContent);
+		vo.setPurpose(purpose);
 		
-		String str = "";
-		int res = 0;
-		res = dao.getReviewSearch(vo);
-		if(res != 0) str = "현재 게시물에 이미 리뷰작성을 하셨습니다.";
-		else {
-			res = dao.setReviewInputOk(vo);
-			if(res != 0) str = "리뷰 작성 완료";
-			else str = "리뷰 작성 실패~~";
-		}
+		int res = dao.setReviewInputOk(vo);
 		
-		response.getWriter().write(str);
+		response.getWriter().write(res);
 	}
 
 }

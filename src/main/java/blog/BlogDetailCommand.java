@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.AdminDAO;
+import admin.review.ReviewVO;
+import memeber.MemberDAO;
+import memeber.MemberVO;
+
 public class BlogDetailCommand implements BlogInterface {
 
 	@Override
@@ -20,25 +25,34 @@ public class BlogDetailCommand implements BlogInterface {
 		
 		BlogVO vo = dao.getBlogDetail(tIdx);
 		
-//		HttpSession session = request.getSession();
-//		ArrayList<String> contentViewCnt = (ArrayList<String>) session.getAttribute("tContentIdx");
-//		if(contentViewCnt == null) contentViewCnt = new ArrayList<String>();
-//		String imsiContentViewCnt = "blog" + tIdx;
-//		if(!contentViewCnt.contains(imsiContentViewCnt)) {
-//			dao.setBlogViewCnt(tIdx);
-//			contentViewCnt.add(imsiContentViewCnt);
-//		}
-//		session.setAttribute("tContentIdx", contentViewCnt);
-//		
-//		ArrayList<String> contentLiked = (ArrayList<String>) session.getAttribute("tContentLiked");
-//	    if(contentLiked == null) contentLiked = new ArrayList<String>();
-//	    String imsiContentLiked = "blogLiked" + tIdx;
-//	    
-//	    String liked = "1";
-//	    if(!contentLiked.contains(imsiContentLiked)) {
-//	    	liked = "0";
-//	    }
-//	    request.setAttribute("liked", liked);
+		// 이전글/다음글 처리
+		BlogVO preVo = dao.getPreNextSearch(tIdx, "preVo");  // preVo 값을 준 것 얘가 있으면 이전글  // 하나로 dao에서 처리하기 위해
+		BlogVO nextVo = dao.getPreNextSearch(tIdx, "nextVo");  // 같은 메소드 써도 된다는 것
+		request.setAttribute("preVo", preVo);
+		request.setAttribute("nextVo", nextVo);
+		
+		MemberDAO memDao = new MemberDAO();
+		MemberVO memVo = memDao.getMemberIdCheck(vo.getMid());
+		
+		request.setAttribute("memVo", memVo);
+		
+		AdminDAO adDao = new AdminDAO();
+		ArrayList<ReviewVO> rVos = adDao.getReviewSearch(tIdx, "travelog");
+		
+		request.setAttribute("rVos", rVos);
+		
+		HttpSession session = request.getSession();
+		ArrayList<String> contentViewCnt = (ArrayList<String>) session.getAttribute("tContentIdx");
+		if(contentViewCnt == null) contentViewCnt = new ArrayList<String>();
+		String imsiContentViewCnt = "blog" + tIdx;
+		if(!contentViewCnt.contains(imsiContentViewCnt)) {
+			dao.setBlogViewCnt(tIdx);
+			contentViewCnt.add(imsiContentViewCnt);
+		}
+		session.setAttribute("tContentIdx", contentViewCnt);
+		
+        ArrayList<BlogVO> sortCounts = dao.getSortCntAll();
+        request.setAttribute("sortCounts", sortCounts);
 		
 		request.setAttribute("vo", vo);
 		

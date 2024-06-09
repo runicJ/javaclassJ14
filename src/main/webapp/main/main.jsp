@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewpoint" content="width=divice-width, initial-scale=1.0">
+	<meta name="viewport" content="width=divice-width, initial-scale=1.0">
 	<title>Main Page</title>
   <%@ include file = "/include/bs4.jsp"%>
   <style>
@@ -56,48 +56,6 @@
             transform: scaleY(0.9);
         }
     }
-    
-/*    * {
- 	  box-sizing: border-box;
-	}
-	
-	body {
-	  margin: 0;
-	  font-family: Arial;
-	  font-size: 17px;
-	}
-	
-	#myVideo {
-	  position: fixed;
-	  right: 0;
-	  bottom: 0;
-	  min-width: 100%; 
-	  min-height: 100%;
-	}
-	
-	.content {
-	  position: fixed;
-	  bottom: 0;
-	  background: rgba(0, 0, 0, 0.5);
-	  color: #f1f1f1;
-	  width: 100%;
-	  padding: 20px;
-	}
-	
-	#myBtn {
-	  width: 200px;
-	  font-size: 18px;
-	  padding: 10px;
-	  border: none;
-	  background: #000;
-	  color: #fff;
-	  cursor: pointer;
-	}
-	
-	#myBtn:hover {
-	  background: #ddd;
-	  color: black;
-	} */
   </style>
   <script>
   	$(function() {
@@ -105,31 +63,6 @@
 	        dateFormat: 'yy-mm-dd'
 	    });
 	});
-  	
-    $(function() {
-        //input을 datepicker로 선언
-        $("#datepicker").datepicker({
-            dateFormat: 'yy-mm-dd' //달력 날짜 형태
-            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-            ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-            ,changeYear: true //option값 년 선택 가능
-            ,changeMonth: true //option값  월 선택 가능                
-            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-            ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-            ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-            ,buttonText: "선택" //버튼 호버 텍스트              
-            ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
-            ,monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 텍스트
-            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
-            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
-            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
-            ,minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-            ,maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-        });                    
-        
-        //초기값을 오늘 날짜로 설정해줘야 합니다.
-        $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-    });
   </script>
 </head>
 <body>
@@ -153,40 +86,13 @@
         </div>
     </section>
     
-<!-- 	<video autoplay muted loop id="myVideo">
-	  <source src="rain.mp4" type="video/mp4">
-	  Your browser does not support HTML5 video.
-	</video>
-	
-	<div class="content">
-	  <h1>Heading</h1>
-	  <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei. Id qui nemore latine molestiae, ad mutat oblique delicatissimi pro.</p>
-	  <button id="myBtn" onclick="myFunction()">Pause</button>
-	</div>
-	
-	<script>
-	var video = document.getElementById("myVideo");
-	var btn = document.getElementById("myBtn");
-	
-	function myFunction() {
-	  if (video.paused) {
-	    video.play();
-	    btn.innerHTML = "Pause";
-	  } else {
-	    video.pause();
-	    btn.innerHTML = "Play";
-	  }
-	}
-	</script> -->
-    
-    <!-- booking part start-->
     <section class="booking_part">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="booking_content">
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
+                            <div class="tab-pane active">
                                 <div class="booking_form">
                                     <form name="searchForm" method="post" action="StayList.st">
                                         <div class="form-row">
@@ -194,10 +100,10 @@
 												<input class="select" type="text" name="address" placeholder="여행 지역"> 
                                             </div>
                                             <div class="form_colum">
-                                                <input id="datepicker_1" name="datepicker_1" placeholder="Check in">
+                                                <input id="datepicker_1" name="datepicker" placeholder="Check in">
                                             </div>
                                             <div class="form_colum">
-                                                <input id="datepicker_2" name="datepicker_2" placeholder="Check out">
+                                                <input id="datepicker_2" name="datepicker" placeholder="Check out">
                                             </div>
                                             <div class="form_colum">
                                                 <input class="select" type="number" name="guest" min="1" placeholder="인원 수"> 
@@ -215,16 +121,14 @@
             </div>
         </div>
     </section>
-    <!-- Header part end-->
 
-    <!--top place start-->
     <section class="top_place section_padding">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-6">
                     <div class="section_tittle text-center">
                         <h2>Top Stay 4</h2>
-                        <p>가장 인기있는 숙소를 소개합니다.</p>
+                        <p>Serene Nest에서 가장 인기있는 숙소를 소개합니다.</p>
                     </div>
                 </div>
             </div>
@@ -232,41 +136,39 @@
     			<c:forEach var="stayVo" items="${stayVos}" varStatus="st">
     			<c:set var="sPhotos" value="${fn:split(stayVo.sPhoto, '/')}"/>
                 <div class="col-lg-6 col-md-6">
-                    <div class="single_place">
-                        <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${stayVo.sName} thumbnail" style="object-fit:contain;">
+                    <div class="single_place" style="height:600px;overflow:hidden">
+                        <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${stayVo.sName} thumbnail">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
-                                <a href="#" class="place_btn">${stayVo.sort}</a>
-                                <h3>${stayVo.sName}</h3>
-                                <p>${stayVo.residence}</p>
+                                <a class="place_btn">${stayVo.sort}</a>
+                                <h3><a href="StayDetail.st?sIdx=${stayVo.sIdx}">${stayVo.sName}</a></h3>
+                                <p>${stayVo.residence == 'Chung' ? '충청도' : stayVo.residence == 'Gang' ? '강원도' : stayVo.residence == 'Jeol' ? '전라도' : '경상도'}</p>
                                 <div class="place_review">
                                     <c:forEach begin="1" end="${stayReviews[stayVo]}" var="star">
-                                    	<a href="#"><i class="fas fa-star"></i></a>
+                                    	<i class="fas fa-star"></i>
                                 	</c:forEach>
                                 	<b>평점 : <fmt:formatNumber value="${stayReviews[reviewAvg]}" pattern="#,##0.0" /></b>
                                 <span>( review)</span>
                                 </div>
                             </div>
                             <div class="details_icon text-right">
-                                <i class="ti-share"></i>
+                                <i class="ti-heart"></i>
                             </div>
                         </div>
                     </div>
                 </div>
                 </c:forEach>
-                <a href="StayList.st" class="btn_1 text-cnter">Stay more</a>
             </div>
+        <a href="StayList.st" class="btn_1 text-center">Stay more</a>
         </div>
     </section>
-    <!--top place end-->
 
-    <!--::industries start::-->
     <section class="hotel_list section_padding">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-6">
                     <div class="section_tittle text-center">
-                        <h2>Vest Travelog</h2>
+                        <h2>Best Travelog</h2>
                         <p>현재 가장 관심이 뜨거운 여행블로그를 추천합니다.</p>
                     </div>
                 </div>
@@ -276,12 +178,11 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_ihotel_list">
                     <c:set var="tPhotos" value="${fn:split(blogVo.tPhoto, '/')}"/>
-                        <img src="${ctp}/images/blog/${tPhotos[0]}" class="img-fluid" alt="${blogVo.title} thumbnail">
+                        <img src="${ctp}/images/blog/${tPhotos[0]}" class="img-fluid" alt="${blogVo.title} thumbnail" style="height:250px;overflow:hidden;">
                         <div class="hover_text">
                             <div class="hotel_social_icon">
                                 <ul>
-                                    <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+                                    <li><a href="https://pf.kakao.com/_iExmG"><i class="fa-solid fa-comment"></i></a></li>
                                     <li><a href="#"><i class="ti-linkedin"></i></a></li>
                                 </ul>
                             </div>
@@ -290,23 +191,24 @@
                             </div>
                         </div>
                         <div class="hotel_text_iner">
-                            <h3> <a href="#"> ${blogVo.title}</a></h3>
+                            <h3><a href="BlogDetail.bl?tIdx=${blogVo.tIdx}">
+                            	<c:if test="${fn:length(blogVo.title) > 20}">${fn:substring(blogVo.title,0,20)}...</c:if>
+                            	<c:if test="${fn:length(blogVo.title) <= 20}">${blogVo.title}</c:if>
+                            </a></h3>
                             <div class="place_review">
-                                <a href="#"><i class="fas fa-heart"></i></a>
-                                <span>(좋아요 : ${blogVo.likedCnt})</span>
+                                <i class="fa-solid fa-eye"></i><span> (조회수 : ${blogVo.viewCnt})</span>
                             </div>
-                            <p>${blogVo.residence}</p>
+                            <p>${blogVo.residence=="" ? "미상" : blogVo.residence}</p>
                             <h5>By <span>${blogVo.nickName}</span></h5>
                         </div>
                     </div>
                 </div>
 			    </c:forEach>
             </div>
+		    <a href="BlogList.bl" class="btn_1 text-center">Travelog more</a>
         </div>
     </section>
-    <!--::industries end::-->
 
-    <!--top place start-->
     <section class="client_review section_padding">
         <div class="container">
             <div class="row ">
@@ -379,7 +281,6 @@
             </div>
         </div>
     </section>
-    <!--top place end-->
 </div>
 <p><br/></p>
 <%@ include file = "../../include/footer.jsp"%>

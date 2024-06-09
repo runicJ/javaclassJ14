@@ -5,7 +5,7 @@ create table travelog(
 	mid  varchar(20) not null,
 	nickName  varchar(20) not null,
 	tPhoto  varchar(200) not null,
-	sort  varchar(10) not null,
+	sort enum('여행기록', '여행지추천', '지역홍보', '지역음식소개', '공지사항'),
 	title  varchar(100) not null,
 	residence  varchar(20),
 	tDate  datetime default now(),

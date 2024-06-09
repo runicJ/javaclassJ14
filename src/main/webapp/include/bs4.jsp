@@ -21,8 +21,6 @@
 <link rel="stylesheet" href="setting/css/owl.carousel.min.css">
 <!-- themify CSS -->
 <link rel="stylesheet" href="setting/css/themify-icons.css">
-<!-- flaticon CSS -->
-<link rel="stylesheet" href="setting/css/flaticon.css">
 <!-- magnific CSS -->
 <link rel="stylesheet" href="setting/css/magnific-popup.css">
 <link rel="stylesheet" href="setting/css/gijgo.min.css">

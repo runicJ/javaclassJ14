@@ -240,11 +240,11 @@ public class AdminDAO {
 		return res;
 	}
 
-	//리뷰작성 처리하기
+	// 리뷰작성 처리하기
 	public int setReviewInputOk(ReviewVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into review values (default,?,?,?,?,?,?,default)";
+			sql = "insert into review values (default,?,?,?,?,?,?,default,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getPart());
 			pstmt.setInt(2, vo.getPartIdx());
@@ -252,7 +252,8 @@ public class AdminDAO {
 			pstmt.setString(4, vo.getNickName());
 			pstmt.setInt(5, vo.getStar());
 			pstmt.setString(6, vo.getContent());
-			res = pstmt.executeUpdate();  // 한건 처리되면 1 아니면 0
+			pstmt.setString(7, vo.getPurpose());
+			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {

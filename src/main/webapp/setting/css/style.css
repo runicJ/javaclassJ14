@@ -1758,7 +1758,7 @@ ul {
 
 /* line 1234, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_blog.scss */
 .single-post-area .navigation-area h4 {
-  font-size: 18px;
+  font-size: 15px;
   line-height: 25px;
 }
 
@@ -3041,7 +3041,7 @@ ul {
 
 /* line 15, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_hotel&rasturant.scss */
 .hotel_list .single_ihotel_list .hotel_text_iner h3 {
-  font-size: 24px;
+  font-size: 18px;
   margin-bottom: 21px;
 }
 
@@ -3324,7 +3324,7 @@ ul {
 
 /* line 15, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_best_services.scss */
 .best_services .single_ihotel_list h3 a {
-  font-size: 24px;
+  font-size: 20px;
   color: #0c3e72;
   margin-bottom: 20px;
 }
@@ -3483,7 +3483,7 @@ ul {
 
 /* line 26, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_team.scss */
 .single_team_member .blog_item_date h3 {
-  font-size: 24px;
+  font-size: 20px;
   font-family: 'Electrical Safety Bold', "Open Sans", sans-serif;
   color: #fff;
   font-weight: 700;
@@ -3688,7 +3688,7 @@ ul {
 
 /* line 1, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_breadcrumb.scss */
 .breadcrumb_bg {
-  background-image: url("../../images/breadcrumb.png");
+  background-image: url("../../images/forest.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -53,6 +53,16 @@ public class BlogController extends HttpServlet {  // 4
 			command.execute(request, response);
 			viewPage += "/blogDetail.jsp";
 		}
+		else if(com.equals("/BlogDeleteCheck")) {
+			command = new BlogDeleteCheckCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/BlogLikedToggle")) {
+			command = new BlogLikedToggleCommand();
+			command.execute(request, response);
+			return;
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

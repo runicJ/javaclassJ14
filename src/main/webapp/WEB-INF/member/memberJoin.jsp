@@ -122,8 +122,8 @@
   <script>
     'use strict';
     
-    let idCheckSw = 0;  // 버튼 활성화 => 1로 바꾸고 아이디 고쳐도 0으로
-    let nickCheckSw = 0;  // 둘다 1이 되어 있어야 submit 되도록
+    let idCheckSw = 0;
+    let nickCheckSw = 0;
     let telCheckSw = 0;
     
     function fCheck() {
@@ -145,7 +145,6 @@
     	let tel3 = myform.tel3.value.trim();
     	let tel = tel1 + "-" + tel2 + "-" + tel3;
     	
-    	// 정규식을 이용한 유효성검사처리.....
 		let regMid = /^[a-zA-Z0-9_]{4,20}$/;
         let regPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^])[A-Za-z\d@$!%*#?&^]{4,30}$/;
 		let regName = /^[가-힣a-zA-Z]+$/;
@@ -220,7 +219,6 @@
 	        return false;
 	    }
 		  		
-  		// 전송 전에 파일에 관련된 사항들을 체크해준다.=> 프론트체크
   		let fName = document.getElementById("file").value;
   		
   		if(fName.trim() != "") {
@@ -238,7 +236,6 @@
 	  		}	  			
   		}
   		
-    	// 아이디/닉네임 중복체크
     	if(idCheckSw == 0) {
     		alert("아이디 중복체크 버튼을 눌러주세요");
     		document.getElementById("midBtn").focus();
@@ -261,7 +258,6 @@
 		myform.submit();
     }
 		
-    // 아이디 중복체크
     function idCheck() {
     	let mid = myform.mid.value.trim();
     	
@@ -295,7 +291,6 @@
     	}
     }
     
-    // 닉네임 중복체크
     function nickCheck() {
     	let nickName = myform.nickName.value.trim();
     	
@@ -327,7 +322,6 @@
     	}
     }
     
- 	// 전화번호 중복 체크 함수
     function telCheck() {
 		let tel1 = myform.tel1.value;
 		let tel2 = myform.tel2.value.trim();
@@ -359,7 +353,6 @@
       }
     }
     
-    // 입력창 누르면 스위치 리셋...?
     window.onload = function(){
     	document.getElementById('mid').addEventListener('click',function(){
     		idCheckSw = 0;
@@ -379,25 +372,13 @@
     	});
     }
     
-    // 선택된 사진 미리보기
-/* 	function imgCheck(e) {
-	    if(e.files && e.files[0]) {
-	        let reader = new FileReader();
-	        reader.onload = function(e) {
-	            document.getElementById("photoDemo").src = e.target.result;
-	            document.getElementById("photoDemo").style.display = 'block';
-	        }
-	        reader.readAsDataURL(e.files[0]);
-	    }
-	} */
-    
     function previewImage() {
-        var file = document.getElementById("file").files[0];
-        var preview = document.getElementById("photoDemo"); // 미리보기 이미지
-        var modalImage = document.getElementById("modalImage"); // 모달 이미지
+        let file = document.getElementById("file").files[0];
+        let preview = document.getElementById("photoDemo");
+        let modalImage = document.getElementById("modalImage");
 
         if (file) {
-            var imageURL = URL.createObjectURL(file);
+            let imageURL = URL.createObjectURL(file);
             preview.src = imageURL;
             modalImage.src = imageURL;
             preview.style.display = 'block';
@@ -432,7 +413,7 @@
     </div>
     <div class="form-group">
       <label for="pwdCheck">비밀번호 확인 : </label>
-      <input type="password" class="form-control mb-0" id="pwdCheck" name="pwdCheck" required />
+      <input type="password" class="form-control mb-0" id="pwdCheck" name="pwdCheck" placeholder="위의 비밀번호와 동일하게 입력하세요." required />
     </div>
     <div class="form-group">
       <label for="name">이름 : </label>
@@ -508,7 +489,6 @@
 	    </div>
 	    <div>
 	        <label for="fName">프로필 사진(파일용량:10MByte이내) : </label>
-	        <!-- <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border"/> -->
 			<input type="file" name="fName" id="file" onchange="previewImage();" class="form-control-file">
 	    </div>
 	</div>

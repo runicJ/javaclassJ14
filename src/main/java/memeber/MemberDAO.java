@@ -53,7 +53,7 @@ public class MemberDAO {  // 3
 				vo.setNickName(rs.getString("nickName"));
 				vo.setTel(rs.getString("tel"));
 				vo.setEmail(rs.getString("email"));
-				vo.setEmail(rs.getString("residence"));
+				vo.setResidence(rs.getString("residence"));
 				vo.setPhoto(rs.getString("photo"));
 				vo.setContent(rs.getString("content"));
 				vo.setStartDate(rs.getString("startDate"));
@@ -177,19 +177,21 @@ public class MemberDAO {  // 3
 		return res;
 	}
 
-  // 회원 정보 수정처리
+	// 회원 정보 수정처리
 	public int setMemberUpdateOk(MemberVO vo) {
 		int res = 0;
 		try {
-			sql = "update member2 set nickName=?, name=?, tel=?, email=?, photo=?, content=?, userInfo=? where mid=?";
+			sql = "update member2 set pwd=?, name=?, nickName=?, tel=?, email=?, photo=?, content=?, userInfo=? where mid=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getNickName());
+			pstmt.setString(1, vo.getPwd());
 			pstmt.setString(2, vo.getName());
-			pstmt.setString(3, vo.getTel());
-			pstmt.setString(4, vo.getEmail());
-			pstmt.setString(5, vo.getPhoto());
-			pstmt.setString(6, vo.getContent());
-			pstmt.setString(7, vo.getMid());
+			pstmt.setString(3, vo.getNickName());
+			pstmt.setString(4, vo.getTel());
+			pstmt.setString(5, vo.getEmail());
+			pstmt.setString(6, vo.getPhoto());
+			pstmt.setString(7, vo.getContent());
+			pstmt.setString(8, vo.getUserInfo());
+			pstmt.setString(9, vo.getMid());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());

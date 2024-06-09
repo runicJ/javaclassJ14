@@ -98,7 +98,7 @@
 <div class="container">
   <form name="myform" method="post" class="needs-validation" action="MemberLoginOk.mem" novalidate>  <!-- 확장자 .mem(controller) -->
 	  <div class="box border border-info rounded p-5">
-	  <img src="${ctp}/images/member/loginLogo.png" alt="로그인" style="cursor:pointer;" class="mx-auto d-block" />
+	  <img src="${ctp}/images/loginLogo.png" alt="로그인" style="cursor:pointer;" class="mx-auto d-block" />
 	  <br><br><br>
 		  <div class="input-container">
 		    <i class="fa fa-user icon"></i>

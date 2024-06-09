@@ -9,13 +9,13 @@ import blog.BlogVO;
 
 public class Pagination {
 
-	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {  // 관리자는 adminOK 아니면 일반사용자(contentShow) // 항상 쓰는 것이니까 static 붙여줌  // part는 자료실에서 쓰일 것
+	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {
 		BlogDAO blogDao = new BlogDAO();
 		
 		int totRecCnt = 0;
 
 		if(section.equals("blog")) {
-			totRecCnt = blogDao.getTotRecCnt();  // 자료실의 전체 레코드 수 구하기
+			totRecCnt = blogDao.getTotRecCnt(contentsShow, part);
 		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;
@@ -32,6 +32,9 @@ public class Pagination {
 		if(section.equals("blog")) {
 			bVos = blogDao.getBlogList(startIndexNo, pageSize, part);
 			request.setAttribute("vos", bVos);
+			
+            ArrayList<BlogVO> sortCounts = blogDao.getSortCntAll();
+            request.setAttribute("sortCounts", sortCounts);
 		}
 				
 		request.setAttribute("pag", pag);

@@ -1,11 +1,15 @@
 package blog;
 
 public class BlogVO {
+    public enum SortType {
+        여행기록, 여행지추천, 지역홍보, 맛집소개, 공지사항
+    }
+	
 	private int tIdx;
 	private String mid;
 	private String nickName;
 	private String tPhoto;
-	private String sort;
+	private SortType sort;
 	private String title;
 	private String residence;
 	private String tDate;
@@ -18,6 +22,8 @@ public class BlogVO {
 	
 	private int hour_diff;
 	private int date_diff;
+	
+	private int sortCnt;
 	
 	public int gettIdx() {
 		return tIdx;
@@ -43,10 +49,10 @@ public class BlogVO {
 	public void settPhoto(String tPhoto) {
 		this.tPhoto = tPhoto;
 	}
-	public String getSort() {
+	public SortType getSort() {
 		return sort;
 	}
-	public void setSort(String sort) {
+	public void setSort(SortType sort) {
 		this.sort = sort;
 	}
 	public String getTitle() {
@@ -115,13 +121,19 @@ public class BlogVO {
 	public void setDate_diff(int date_diff) {
 		this.date_diff = date_diff;
 	}
-	
+	public int getSortCnt() {
+		return sortCnt;
+	}
+	public void setSortCnt(int sortCnt) {
+		this.sortCnt = sortCnt;
+	}
 	@Override
 	public String toString() {
 		return "BlogVO [tIdx=" + tIdx + ", mid=" + mid + ", nickName=" + nickName + ", tPhoto=" + tPhoto + ", sort="
 				+ sort + ", title=" + title + ", residence=" + residence + ", tDate=" + tDate + ", viewCnt=" + viewCnt
 				+ ", likedCnt=" + likedCnt + ", openSw=" + openSw + ", hostIp=" + hostIp + ", tContent=" + tContent
-				+ ", complaint=" + complaint + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + "]";
+				+ ", complaint=" + complaint + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + ", sortCnt="
+				+ sortCnt + "]";
 	}
 
 }

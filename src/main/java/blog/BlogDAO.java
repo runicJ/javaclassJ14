@@ -6,7 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import blog.BlogVO.SortType;
+import memeber.MemberVO;
 import stay.StayVO;
 
 public class BlogDAO {
@@ -65,7 +71,7 @@ public class BlogDAO {
 		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
 		try {
 			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff "
-					+ "from travelog order by tIdx desc limit ?,?";
+					+ "from travelog order by "+part+" desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -77,7 +83,7 @@ public class BlogDAO {
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.settPhoto(rs.getString("tPhoto"));
-				vo.setSort(rs.getString("sort"));
+				vo.setSort(SortType.valueOf(rs.getString("sort")));
 				vo.setTitle(rs.getString("title"));
 				vo.setResidence(rs.getString("residence"));
 				vo.settDate(rs.getString("tDate"));
@@ -100,32 +106,22 @@ public class BlogDAO {
 		}
 		return vos;
 	}
-
-
-//	// 방명록 글 삭제하기
-//	public int setGuestDelete(int idx) {
-//		int res = 0;
-//		try {
-//			sql = "delete from guest where idx=?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, idx);
-//			res = pstmt.executeUpdate();
-//		} catch (SQLException e) {
-//			System.out.println("SQL 오류 : " + e.getMessage());
-//		} finally {
-//			pstmtClose();
-//		}
-//		return res;
-//	}
 	
 	// 여행블로그 글 총 갯수
-	public int getTotRecCnt() {
+	public int getTotRecCnt(String contentsShow, String part) {
 		int totRecCnt = 0;
 		try {
-			sql = "select count(*) as cnt from travelog";
-			pstmt = conn.prepareStatement(sql);
+			if(contentsShow.equals("adminOK")) {
+			  sql = "select count(*) as cnt from travelog";
+			  pstmt = conn.prepareStatement(sql);
+			}
+			else {
+				sql = "select sum(a.cnt) as cnt from (select count(*) as cnt from travelog where openSW = 'OK' and complaint = 'NO' union select count(*) as cnt from travelog where mid = ? and (openSW = 'NO' or complaint = 'OK')) as a";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, contentsShow);
+			}
 			rs = pstmt.executeQuery();
-			rs.next();  // 값이 무조건 있음(null이어도 값이 0으로 옴)
+			rs.next();
 			totRecCnt = rs.getInt("cnt");
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -148,7 +144,7 @@ public class BlogDAO {
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.settPhoto(rs.getString("tPhoto"));
-				vo.setSort(rs.getString("sort"));
+				vo.setSort(SortType.valueOf(rs.getString("sort")));
 				vo.setTitle(rs.getString("title"));
 				vo.setResidence(rs.getString("residence"));
 				vo.settDate(rs.getString("tDate"));
@@ -179,7 +175,7 @@ public class BlogDAO {
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getNickName());
 			pstmt.setString(3, vo.gettPhoto());
-			pstmt.setString(4, vo.getSort());
+			pstmt.setString(4, vo.getSort().name());
 			pstmt.setString(5, vo.getTitle());
 			pstmt.setString(6, vo.getResidence());
 			pstmt.setString(7, vo.getOpenSw());
@@ -193,59 +189,6 @@ public class BlogDAO {
 		}
 		return res;
 	}
-
-//	// 로그인한 회원이 방명록에 올린글 리스트 가져오기
-//	public ArrayList<BlogVO> getMemberGuestSearch(String mid, String name, String nickName) {
-//		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
-//		try {
-//			sql = "select * from guest where name=? or name=? or name=? order by idx desc";  // 게시글의 name이 mid일지도, name일지도, 닉네임일지도  // 자료도 가져옴 // 건수만 하려면 count 하면 됨
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, mid);
-//			pstmt.setString(2, name);
-//			pstmt.setString(3, nickName);
-//			rs = pstmt.executeQuery();
-//			
-//			while(rs.next()) {
-//				vo = new BlogVO();
-//				vo.setIdx(rs.getInt("idx"));
-//				vo.setName(rs.getString("name"));
-//				vo.setContent(rs.getString("content"));
-//				vo.setEmail(rs.getString("email"));
-//				vo.setHomePage(rs.getString("homePage"));
-//				vo.setVisitDate(rs.getString("visitDate"));
-//				vo.setHostIp(rs.getString("hostIp"));
-//				vos.add(vo);
-//			}
-//		} catch (SQLException e) {
-//			System.out.println("SQL 오류 : " + e.getMessage());
-//		} finally {
-//			rsClose();
-//		}
-//		return vos;
-//	}
-//	
-//	// 방명록 글 갯수
-//	public int getMemberGuestCount(String mid, String name, String nickName) {
-//		int guestCnt = 0;
-//		try {
-//			sql = "select count(df) as cnt from (select date_format(visitDate, '%Y%m%d') as df from guest where name=? or name=? or name=? group by df) as groupBy";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, mid);
-//			pstmt.setString(2, name);
-//			pstmt.setString(3, nickName);
-//			rs = pstmt.executeQuery();
-////			rs.next();
-////			guestCnt = rs.getInt("cnt");
-//	        if (rs.next()) {
-//	        	guestCnt = rs.getInt("cnt");
-//	        }
-//		} catch (SQLException e) {
-//			System.out.println("SQL 오류 : " + e.getMessage());
-//		} finally {
-//			rsClose();
-//		}
-//		return guestCnt;
-//	}
 	
 	// 블로그 글 조회수 증가
 	public void setBlogViewCnt(int tIdx) {
@@ -253,7 +196,7 @@ public class BlogDAO {
 			sql = "update travelog set viewCnt = viewCnt + 1 where tIdx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, tIdx);
-			pstmt.executeUpdate();  // 넘기는거 없음
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
@@ -306,7 +249,7 @@ public class BlogDAO {
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.settPhoto(rs.getString("tPhoto"));
-				vo.setSort(rs.getString("sort"));
+				vo.setSort(SortType.valueOf(rs.getString("sort")));
 				vo.setTitle(rs.getString("title"));
 				vo.setResidence(rs.getString("residence"));
 				vo.settDate(rs.getString("tDate"));
@@ -329,5 +272,114 @@ public class BlogDAO {
 		}
 		return vos;
 	}
+	
+	// 이전글/다음글 idx,title 가져오기
+	public BlogVO getPreNextSearch(int tIdx, String str) {
+		BlogVO vo = new BlogVO();
+		try {
+			if(str.equals("preVo")) sql = "select tIdx, title, tPhoto from travelog where tIdx < ? order by tIdx desc limit 1";
+			else sql = "select tIdx, title, tPhoto from travelog where tIdx > ? order by tIdx limit 1";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tIdx);
+			rs = pstmt.executeQuery();
+	
+			if(rs.next()) {
+				vo.settIdx(rs.getInt("tIdx"));
+				vo.setTitle(rs.getString("title"));
+				vo.settPhoto(rs.getString("tPhoto"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
+	}
 
+//	public ArrayList<BlogVO> getSortCntAll() {
+//        Map<SortType, Integer> counts = new EnumMap<>(SortType.class);
+//        Arrays.stream(SortType.values()).forEach(sort -> counts.put(sort, 0));
+//
+//        try {        	
+//        	sql = "SELECT sort, COUNT(*) as cnt FROM travelog GROUP BY sort";
+//        	pstmt = conn.prepareStatement(sql);
+//            rs = pstmt.executeQuery();
+//
+//            while (rs.next()) {
+//                SortType sort = SortType.valueOf(rs.getString("sort"));
+//                counts.put(sort, rs.getInt("cnt"));
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("SQL 오류 : " + e.getMessage());
+//        } finally {
+//            rsClose();
+//        }
+//
+//        // 스트림을 사용하여 객체 생성
+//        return counts.entrySet().stream()
+//                .map(entry -> {
+//                    BlogVO vo = new BlogVO();
+//                    vo.setSort(entry.getKey());
+//                    vo.setSortCnt(entry.getValue());
+//                    return vo;
+//                })
+//                .collect(Collectors.toCollection(ArrayList::new));
+//    }
+	
+	public ArrayList<BlogVO> getSortCntAll() {
+	    String sql = "SELECT s.sort, COUNT(t.sort) AS cnt FROM sortType s LEFT JOIN travelog t ON s.sort = t.sort GROUP BY s.sort";
+	    ArrayList<BlogVO> result = new ArrayList<>();
+
+	    try {
+	    	pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            BlogVO vo = new BlogVO();
+	            vo.setSort(SortType.valueOf(rs.getString("sort")));
+	            vo.setSortCnt(rs.getInt("cnt"));
+	            result.add(vo);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류 : " + e.getMessage());
+	    }
+
+	    return result;
+	}
+
+	public boolean checkMemberLiked(String sMid, int tIdx) {
+	    boolean result = false;
+	    try {
+	        sql = "select count(*) as count from blogLiked where mid=? and tIdx=?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, sMid);
+	        pstmt.setInt(2, tIdx);
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            result = rs.getInt("count") > 0;
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류 : " + e.getMessage());
+	    } finally {
+	        rsClose();
+	    }
+	    return result;
+	}
+
+    // 좋아요 상태를 토글
+    public void toggleLiked(String sMid, int tIdx, boolean like) {
+        try {
+        	sql = like ? "INSERT INTO blogLiked VALUES (default, ?, ?)" :
+                "DELETE FROM blogLiked WHERE mid = ? AND tIdx = ?";
+        	pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, sMid);
+            pstmt.setInt(2, tIdx);
+            pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+    }
 }

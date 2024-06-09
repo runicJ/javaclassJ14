@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12 col-md-6">
                 <div class="sub_menu_right_content">
-                    <span>홈페이지 소개</span>
+                    <span onclick="Introduce.st">홈페이지 소개</span>
                     <a href="https://www.law.go.kr/lsInfoP.do?lsiSeq=251633&efYd=20230710#0000" target="_blank">관련법령</a>
                     <a href="https://www.mois.go.kr/frt/sub/a06/b06/populationDecline/screen.do" target="_blank">자료소개</a>
                     <a href="https://www.kostat.go.kr/board.es?mid=a10301010000&bid=246&act=view&list_no=429114" target="_blank">데이터</a>

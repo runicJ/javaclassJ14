@@ -145,7 +145,6 @@
   	});
   	
   	$('#idFindModal').on('hidden.bs.modal', function () {
-  	  // 모달이 닫힐 때 입력 필드 초기화
   	  $('#findIdForm #name').val('');
   	  $('#findIdForm #tel').val('');
   	});

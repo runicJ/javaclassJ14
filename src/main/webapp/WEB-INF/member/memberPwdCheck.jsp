@@ -24,7 +24,7 @@
   		}
   		
   		$.ajax({
-  			url : "MemberPwdCheckAjax.mem",  /* 확장자 패턴하면 ${ctp} 노필요 */
+  			url : "MemberPwdCheckAjax.mem",
   			type : "post",
   			data : {pwd : pwd},
   			success:function(res) {
@@ -76,8 +76,8 @@
   		</tr>
   		<tr>
   			<td colspan="2" class="text-center">
-  				<input type="button" value="비밀번호변경" onclick="pwdReCheck()" class="btn btn-success mr-2" />  <!-- ajax 부르는 거고 -->  <!-- 비밀번호와 회원정보를 같이 하지 않는 이유는 비밀번호는 암호화해서 저장하기 때문에 보여주는 것이 의미가 없다. -->
-  				<input type="submit" value="회원정보변경" class="btn btn-primary mr-2" />  <!-- MemberPwdCheckOk.mem로 보내는 것 -->  <!-- submit 하면 action 보면됨. 뭔가 제어 하려면 button -->
+  				<input type="button" value="비밀번호변경" onclick="pwdReCheck()" class="btn btn-success mr-2" />
+  				<input type="submit" value="회원정보변경" class="btn btn-primary mr-2" />
   				<input type="reset" value="다시입력" class="btn btn-info mr-2" />
   				<input type="button" value="돌아가기" onclick="location.href='MemberMain.mem';" class="btn btn-warning mr-2" />
   			</td>
@@ -98,7 +98,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="text-center">
-						<input type="button" value="비밀번호변경하기" onclick="pwdChangeCheck()" class="btn btn-secondary"/>  <!-- 비밀번호 확인할때 체크하고 바뀌지 않게 하려면 submit으로 바로 넘기면 안됨, button으로 해서 제어함 --> <!-- submit 하면 PwdChangeCheck.mem로 감 -->
+						<input type="button" value="비밀번호변경하기" onclick="pwdChangeCheck()" class="btn btn-secondary"/>
 					</td>
 				</tr>
 			</table>
