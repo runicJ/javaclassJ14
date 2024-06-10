@@ -52,7 +52,7 @@
                         </ul>
                     </div>
                     <c:if test="${sMid == null}"><a href="MemberLogin.mem" class="btn_1 d-none d-lg-block"><i class="fa-solid fa-door-open"></i> LOGIN</a></c:if>
-                    <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="AdminMain.ad">관리자메뉴</a></c:if>
+                    <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="MemberUpdate.mem">관리자메뉴</a></c:if>
                     <c:if test="${sMid != null && sMid != 'admin'}">
 	                    <li class="nav-item dropdown" style="list-style-type:none;">
 	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown">

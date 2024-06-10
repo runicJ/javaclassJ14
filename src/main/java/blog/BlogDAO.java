@@ -297,56 +297,56 @@ public class BlogDAO {
 		return vo;
 	}
 
-//	public ArrayList<BlogVO> getSortCntAll() {
-//        Map<SortType, Integer> counts = new EnumMap<>(SortType.class);
-//        Arrays.stream(SortType.values()).forEach(sort -> counts.put(sort, 0));
-//
-//        try {        	
-//        	sql = "SELECT sort, COUNT(*) as cnt FROM travelog GROUP BY sort";
-//        	pstmt = conn.prepareStatement(sql);
-//            rs = pstmt.executeQuery();
-//
-//            while (rs.next()) {
-//                SortType sort = SortType.valueOf(rs.getString("sort"));
-//                counts.put(sort, rs.getInt("cnt"));
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("SQL 오류 : " + e.getMessage());
-//        } finally {
-//            rsClose();
-//        }
-//
-//        // 스트림을 사용하여 객체 생성
-//        return counts.entrySet().stream()
-//                .map(entry -> {
-//                    BlogVO vo = new BlogVO();
-//                    vo.setSort(entry.getKey());
-//                    vo.setSortCnt(entry.getValue());
-//                    return vo;
-//                })
-//                .collect(Collectors.toCollection(ArrayList::new));
-//    }
-	
 	public ArrayList<BlogVO> getSortCntAll() {
-	    String sql = "SELECT s.sort, COUNT(t.sort) AS cnt FROM sortType s LEFT JOIN travelog t ON s.sort = t.sort GROUP BY s.sort";
-	    ArrayList<BlogVO> result = new ArrayList<>();
+        Map<SortType, Integer> counts = new EnumMap<>(SortType.class);
+        Arrays.stream(SortType.values()).forEach(sort -> counts.put(sort, 0));
 
-	    try {
-	    	pstmt = conn.prepareStatement(sql);
-	        rs = pstmt.executeQuery();
+        try {        	
+        	sql = "SELECT sort, COUNT(*) as cnt FROM travelog GROUP BY sort";
+        	pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
 
-	        while (rs.next()) {
-	            BlogVO vo = new BlogVO();
-	            vo.setSort(SortType.valueOf(rs.getString("sort")));
-	            vo.setSortCnt(rs.getInt("cnt"));
-	            result.add(vo);
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("SQL 오류 : " + e.getMessage());
-	    }
+            while (rs.next()) {
+                SortType sort = SortType.valueOf(rs.getString("sort"));
+                counts.put(sort, rs.getInt("cnt"));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL 오류 : " + e.getMessage());
+        } finally {
+            rsClose();
+        }
 
-	    return result;
-	}
+        // 스트림을 사용하여 객체 생성
+        return counts.entrySet().stream()
+                .map(entry -> {
+                    BlogVO vo = new BlogVO();
+                    vo.setSort(entry.getKey());
+                    vo.setSortCnt(entry.getValue());
+                    return vo;
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+	
+//	public ArrayList<BlogVO> getSortCntAll() {
+//	    String sql = "SELECT s.sort, COUNT(t.sort) AS cnt FROM sortType s LEFT JOIN travelog t ON s.sort = t.sort GROUP BY s.sort";
+//	    ArrayList<BlogVO> result = new ArrayList<>();
+//
+//	    try {
+//	    	pstmt = conn.prepareStatement(sql);
+//	        rs = pstmt.executeQuery();
+//
+//	        while (rs.next()) {
+//	            BlogVO vo = new BlogVO();
+//	            vo.setSort(SortType.valueOf(rs.getString("sort")));
+//	            vo.setSortCnt(rs.getInt("cnt"));
+//	            result.add(vo);
+//	        }
+//	    } catch (SQLException e) {
+//	        System.out.println("SQL 오류 : " + e.getMessage());
+//	    }
+//
+//	    return result;
+//	}
 
 	public boolean checkMemberLiked(String sMid, int tIdx) {
 	    boolean result = false;
