@@ -244,15 +244,14 @@ public class AdminDAO {
 	public int setReviewInputOk(ReviewVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into review values (default,?,?,?,?,?,?,default,?)";
+			sql = "insert into review values (default,?,?,?,?,default,?,default,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getPart());
 			pstmt.setInt(2, vo.getPartIdx());
 			pstmt.setString(3, vo.getMid());
 			pstmt.setString(4, vo.getNickName());
-			pstmt.setInt(5, vo.getStar());
-			pstmt.setString(6, vo.getContent());
-			pstmt.setString(7, vo.getPurpose());
+			pstmt.setString(5, vo.getContent());
+			pstmt.setString(6, vo.getPurpose());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());

@@ -17,8 +17,7 @@ public class ReviewInputOkCommand implements AdminInterface {
 		int partIdx = request.getParameter("partIdx")==null ? 0 : Integer.parseInt(request.getParameter("partIdx"));
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		String nickName = request.getParameter("nickName")==null ? "" : request.getParameter("nickName");
-		int star = request.getParameter("star")==null ? 0 : Integer.parseInt(request.getParameter("star"));
-		String rContent = request.getParameter("rContent")==null ? "" : request.getParameter("rContent");
+		String content = request.getParameter("content")==null ? "" : request.getParameter("content");
 		String purpose = request.getParameter("purpose")==null ? "" : request.getParameter("purpose");
 		
 		AdminDAO dao = new AdminDAO();
@@ -28,8 +27,7 @@ public class ReviewInputOkCommand implements AdminInterface {
 		vo.setPartIdx(partIdx);
 		vo.setMid(mid);
 		vo.setNickName(nickName);
-		vo.setStar(star);
-		vo.setContent(rContent);
+		vo.setContent(content);
 		vo.setPurpose(purpose);
 		
 		int res = dao.setReviewInputOk(vo);

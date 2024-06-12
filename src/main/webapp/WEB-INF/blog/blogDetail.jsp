@@ -13,7 +13,7 @@
 	<link href="${ctp}/setting/css/stay/swiper-bundle.min.css" rel="stylesheet">
   <jsp:include page="/include/bs4.jsp" />
 	<style>
-	/*--------------------------------------------------------------
+		/*--------------------------------------------------------------
 		# Portfolio Details
 		--------------------------------------------------------------*/
 		.portfolio-details .portfolio-details-slider img {
@@ -80,8 +80,8 @@
 		
 	  	// 리뷰평가 등록하기
 	  	function reviewCheck() {
-	  		let rContent = $("#rContent").val();
-	  		if(rContent.trim() == "") {
+	  		let content = $("#content").val();
+	  		if(content.trim() == "") {
 	  			alert("댓글을 입력하세요");
 	  			return false;
 	  		}
@@ -90,7 +90,7 @@
 	  				partIdx : ${vo.tIdx},
 	  				mid : '${sMid}',
 	  				nickName : '${sNickName}',
-	  				rContent : rContent
+	  				content : content
 	  		}
 	  		
 	  		$.ajax({
@@ -319,7 +319,7 @@
 	                    </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <textarea class="form-control w-100" name="rContent" id="rContent" rows="4" placeholder="댓글을 작성해주세요."></textarea>
+                                <textarea class="form-control w-100" name="content" id="content" rows="4" placeholder="댓글을 작성해주세요."></textarea>
                             </div>
                         </div>
                     </div>
