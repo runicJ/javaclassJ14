@@ -165,6 +165,7 @@
                 <ul class="blog-info-link mb-4">
                     <li><a href="#"><i class="fa-solid fa-suitcase-rolling"></i>${vo.residence == "" ? "미상" : vo.residence}</a></li>
                     <li><a href="#">${vo.sort}</a></li><c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+                    <c:if test="${sMid == 'admin' || sMid == vo.mid}"><li class="text-center"><a href="BlogUpdate.bl?tIdx=${vo.tIdx}">수정</a><a href="BlogDelete.bl">삭제</a></li></c:if>
                     <li style="float:right;"><button class="btn btn-dark" onclick="likedToggle(${vo.tIdx})"><b><i id="liked-icon-${vo.tIdx}" class="far fa-thumbs-up"></i>Like </b>${vo.likedCnt}</button></li>
                 </ul>
             </div>

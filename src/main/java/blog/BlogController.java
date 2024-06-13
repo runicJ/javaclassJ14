@@ -48,6 +48,16 @@ public class BlogController extends HttpServlet {  // 4
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("/BlogUpdate")) {
+			command = new BlogUpdateCommand();
+			command.execute(request, response);
+			viewPage += "/blogUpdate.jsp";
+		}
+		else if(com.equals("/BlogUpdateOk")) {
+			command = new BlogUpdateOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		else if(com.equals("/BlogDetail")) {
 			command = new BlogDetailCommand();
 			command.execute(request, response);

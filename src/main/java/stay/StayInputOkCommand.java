@@ -1,5 +1,6 @@
 package stay;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Enumeration;
@@ -17,7 +18,7 @@ public class StayInputOkCommand implements StayInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String realPath = request.getServletContext().getRealPath("/images/stay");  // 경로 마지막 / 안붙여도 됨
+		String realPath = request.getServletContext().getRealPath("/images/stay");
 		int maxSize = 1024 * 1024 * 30;
 		String encoding = "UTF-8";
 		
@@ -27,6 +28,12 @@ public class StayInputOkCommand implements StayInterface {
 		
 		String file = "";
 		String oFileName = "";
+		
+		String[] fSNames = request.getParameter("fSName").split("/");
+		
+		for(String fSName : fSNames) {
+			new File(realPath + fSName).delete();  // 실제 존재하는 파일은 파일(io) 객체를 만들고 지워야 함
+		}
 		
 		while(fileNames.hasMoreElements()) {  // 하나씩 꺼내서 값이 있느냐
 			file = (String) fileNames.nextElement();

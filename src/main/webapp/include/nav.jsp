@@ -52,16 +52,16 @@
                         </ul>
                     </div>
                     <c:if test="${sMid == null}"><a href="MemberLogin.mem" class="btn_1 d-none d-lg-block"><i class="fa-solid fa-door-open"></i> LOGIN</a></c:if>
-                    <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="MemberUpdate.mem">관리자메뉴</a></c:if>
+                    <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="AdminMain.ad">관리자메뉴</a></c:if>
                     <c:if test="${sMid != null && sMid != 'admin'}">
 	                    <li class="nav-item dropdown" style="list-style-type:none;">
 	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown">
                             <img src="images/member/${sPhoto}" alt="user" class="rounded-circle" height="30" width="30">
 	                    	${sNickName} 님</a>
 		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" href="MemberUpdate.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>
-		                        <a class="dropdown-item" href="MemberUpdate.mem"><i class="fa-solid fa-message"></i> 메시지 보내기</a>
-		                        <a class="dropdown-item" href="MemberUpdate.mem"><i class="fa-solid fa-heart"></i> 위시리스트</a>
+		                        <a class="dropdown-item" href="MemberMain.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>
+		                        <a class="dropdown-item" href="MemberMessage.mem"><i class="fa-solid fa-message"></i> 메시지 보내기</a>
+		                        <a class="dropdown-item" href="MemberWish.mem"><i class="fa-solid fa-heart"></i> 위시리스트</a>
 				      		</div>
 	                    </li>
                    	</c:if>

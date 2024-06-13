@@ -78,6 +78,8 @@ public class StayController extends HttpServlet {
 			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/StayUpdate")) {
+			command = new StayUpdateCommand();
+			command.execute(request, response);
 			viewPage += "/stayUpdate.jsp";
 		}
 		else if(com.equals("/StayUpdateOk")) {

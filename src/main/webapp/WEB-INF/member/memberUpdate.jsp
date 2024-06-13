@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% pageContext.setAttribute("newLine", "\n"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -498,7 +499,7 @@
 			    </div>
 			    <div class="form-group">
 			      	<label for="content">자기소개</label>
-			      	<textarea rows="5" class="form-control" id="content" name="content">${vo.content}</textarea>
+			      	<textarea rows="5" class="form-control" id="content" name="content">${fn:replace(vo.content,newLine,'<br>')}</textarea>
 			    </div>
     			<div class="form-group">
       				<div class="form-check-inline">

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% pageContext.setAttribute("newLine", "\n"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -82,17 +84,17 @@
           <div class="row form-group">
             <div class="col-md-6 mb-3 mb-md-0">
               <label class="" for="fname">작성자 아이디</label>
-              <input type="text" name="mid" id="mid" value="${sMid}" class="form-control" readonly>
+              <input type="text" name="mid" id="mid" value="${vo.mid}" class="form-control" readonly>
             </div>
             <div class="col-md-6">
               <label class="" for="residence">지역</label>
-              <input type="text" name="residence" id="residence" class="form-control" placeholder=" ex) 전라남도 해남군 ">
+              <input type="text" name="residence" id="residence" class="form-control" value="${vo.residence}">
             </div>
           </div>
           <div class="row form-group">
             <div class="col-md-12">
               <label class="" for="title">제목</label> 
-              <input type="text" name="title" id="title" class="form-control" required>
+              <input type="text" name="title" id="title" value="${vo.title}" class="form-control" required>
             </div>
           </div>
           <div class="row form-group">
@@ -102,26 +104,26 @@
 	              <input type="button" value="파일박스추가" onclick="fileBoxAppend()" class="btn btn-primary mb-2" style="float:right" />
 			    </div>
 	    		<input type="file" name="fName1" id="fName1" class="form-control-file border mb-2" />
-			    <div id="fileBox"></div>  <!-- 여기에 출력 -->
+			    <div id="fileBox"></div>
             </div>
           </div>
           <div class="row form-group">
             <div class="col-md-12">
               <label class="" for="tContent">내용</label> 
-              <textarea name="tContent" id="tContent" cols="30" rows="7" class="form-control"></textarea>
+              <textarea name="tContent" id="tContent" cols="30" rows="7" class="form-control">${fn:replace(vo.tContent,newLine,'<br>')}</textarea>
             </div>
           </div>
 		    <div class="row form-group">
 		    	<div class="col-md-12">
 			    	<label class="" for="openSw">공개여부</label>
-			    	<input type="radio" name="openSw" value="공개" checked />공개 &nbsp;&nbsp;
-			    	<input type="radio" name="openSw" value="비공개" />비공개
+			    	<input type="radio" name="openSw" value="공개" ${vo.openSw == '공개' ? checked : ""} />공개 &nbsp;&nbsp;
+			    	<input type="radio" name="openSw" value="비공개" ${vo.openSw == '비공개' ? checked : ""} />비공개
 		    	</div>
 		    </div>
           <div class="row form-group text-center">
             <div class="col-md-12">
-              <input type="button" value="새글 등록" onclick="fCheck()" class="btn btn-primary btn-md mr-3">
-              <input type="button" value="취소" onclick="location.href='BlogList.bl';" class="btn btn-secondary btn-md">
+              <input type="button" value="수정하기" onclick="fCheck()" class="btn btn-primary btn-md mr-3">
+              <input type="button" value="취소" onclick="location.href='BlogDetail.bl?tIdx=${vo.tIdx}';" class="btn btn-secondary btn-md">
             </div>
           </div>
 	    <input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}" />
