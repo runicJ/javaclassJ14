@@ -38,8 +38,8 @@ public class MemberDeleteCheckOkCommand implements MemberInterface {
 		
 		if(res != 0) {
 			session.invalidate();  // 세션 끊고 감
-			request.setAttribute("message", "회원 탈퇴 되셨습니다.\\n같은 아이디로 1달간 재가입 불가합니다.");
-			request.setAttribute("url", request.getContextPath() + "/Main");  // main/main.jsp로 보냄
+			request.setAttribute("message", "회원 탈퇴 처리 되었습니다. 감사합니다.");
+			request.setAttribute("url", request.getContextPath() + "/Main");
 		}
 		else {
 			request.setAttribute("message", "회원 탈퇴 실패~~");

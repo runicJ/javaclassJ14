@@ -10,37 +10,23 @@ import java.util.List;
 
 import admin.complaint.ComplaintVO;
 import admin.review.ReviewVO;
+import common.GetConn;
 import memeber.MemberVO;
 
 public class WebMessageDAO {
-	private Connection conn = null;
+	private Connection conn = GetConn.getConn();
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
 	String sql = "";
 	WebMessageVO vo = null;
 	
-	public WebMessageDAO() {
-		String url = "jdbc:mysql://localhost:3306/javaclassJ14";
-		String user = "root";
-		String password = "1234";
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(url, user, password);
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 검색 실패~~" + e.getMessage());
-		} catch (SQLException e) {
-			System.out.println("DB 연동 실패~~" + e.getMessage());
-		}
-	}
-	
 	// conn객체 반납
 	public void connClose() {
 		if(conn != null) {
 			try {
 				conn.close();
-			} catch (Exception e) {}  // 여기서 오류 잘 안남 나면 시스템 문제
+			} catch (Exception e) {}
 		}
 	}
 	

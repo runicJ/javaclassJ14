@@ -8,16 +8,16 @@ import java.util.ArrayList;
 
 import common.GetConn;
 
-public class MemberDAO {  // 3
+public class MemberDAO {
 	
-	private Connection conn = GetConn.getConn();  // 필드 먼저 줌 sql에서 가져옴  // getConn.getConn() 하지말고 바로 클래스명 Getconn. 사용해라
-	private PreparedStatement pstmt = null;  // sql에서
-	private ResultSet rs = null;  // 3개 먼저 선언
+	private Connection conn = GetConn.getConn();
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 	
 	private String sql = "";
-	MemberVO vo = null;  // 여기까지 기본
+	MemberVO vo = null;
 	
-	public void pstmtClose() {  // ConnClose 여기서 하면 싱글톤은 종속적임, 모든 사용자 서버 전부 닫힘
+	public void pstmtClose() {
 		if(pstmt != null) {
 			try {
 				pstmt.close();
@@ -31,7 +31,7 @@ public class MemberDAO {  // 3
 				rs.close();
 			} catch (Exception e) {}
 			finally {			
-				pstmtClose();  // 참, 거짓 다 통과하고 사용하라고 밑에 씀 위에 쓰면 뭐
+				pstmtClose();
 			}
 		}
 	}
@@ -101,9 +101,9 @@ public class MemberDAO {  // 3
 			sql = "select * from member2 where nickName = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, nickName);
-			rs = pstmt.executeQuery();  // 자료가 있으면 넘어옴
+			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {  // 자료가 있는지 없는지 모름
+			if(rs.next()) {
 				vo.setmIdx(rs.getInt("mIdx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setPwd(rs.getString("pwd"));
@@ -125,39 +125,6 @@ public class MemberDAO {  // 3
 			rsClose();
 		}
 		return vo;
-	}
-
-	// 회원 전체 리스트
-	public ArrayList<MemberVO> getMemberList() {
-		ArrayList<MemberVO> vos = new ArrayList<MemberVO>();
-		try {
-			sql = "select * from member2 order by idx";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();  // 자료가 있으면 넘어옴
-			
-			while(rs.next()) {  // 전체 가져와야 하니까 while문
-				vo = new MemberVO();  // 새로 안만들면 객체가 다 덮어씀
-				vo.setmIdx(rs.getInt("mIdx"));
-				vo.setMid(rs.getString("mid"));
-				vo.setPwd(rs.getString("pwd"));
-				vo.setName(rs.getString("name"));
-				vo.setNickName(rs.getString("nickName"));
-				vo.setTel(rs.getString("tel"));
-				vo.setEmail(rs.getString("email"));
-				vo.setPhoto(rs.getString("photo"));
-				vo.setContent(rs.getString("content"));
-				vo.setUserInfo(rs.getString("userInfo"));
-				vo.setUserDel(rs.getString("userDel"));
-				vo.setStartDate(rs.getString("startDate"));
-				vo.setLastDate(rs.getString("lastDate"));
-				vos.add(vo);
-			}
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			rsClose();
-		}
-		return vos;
 	}
 
 	// 비밀번호 변경처리
@@ -208,28 +175,13 @@ public class MemberDAO {  // 3
 			sql = "update member2 set userDel='OK' where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
-			res = pstmt.executeUpdate();  // 완전히 삭제하지 않고 업데이트 시킴
+			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			pstmtClose();
 		}
 		return res;
-	}
-	
-	// 채팅내용 DB에 저장하기
-	public void setMemberChatInputOk(String mid, String chat) {
-		try {
-			sql = "insert into memberChat values(default,?,?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mid);
-			pstmt.setString(2, chat);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			pstmtClose();
-		}
 	}
 
 	// 연락처 중복체크
@@ -299,6 +251,7 @@ public class MemberDAO {  // 3
 		return vo;
 	}
 
+	// 비밀번호 찾기
 	public int getMemberFindPw(String mid, String name, String tel) {
 		int res = 0;
 		try {

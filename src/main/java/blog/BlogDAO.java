@@ -12,31 +12,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blog.BlogVO.SortType;
+import common.GetConn;
 import memeber.MemberVO;
 import stay.StayVO;
 
 public class BlogDAO {
-	private Connection conn = null;
+	private Connection conn = GetConn.getConn();
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
 	String sql = "";
 	BlogVO vo = null;
-	
-	public BlogDAO() {
-		String url = "jdbc:mysql://localhost:3306/javaclass14";
-		String user = "root";
-		String password = "1234";
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(url, user, password);
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 검색 실패~~" + e.getMessage());
-		} catch (SQLException e) {
-			System.out.println("DB 연동 실패~~" + e.getMessage());
-		}
-	}
 	
 	// conn객체 반납
 	public void connClose() {
