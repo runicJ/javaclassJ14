@@ -67,7 +67,6 @@ public class WebMessageVO {
 	public void setReceiveDate(String receiveDate) {
 		this.receiveDate = receiveDate;
 	}
-	
 	public int getHour_diff() {
 		return hour_diff;
 	}

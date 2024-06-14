@@ -40,12 +40,7 @@
   		<td style="height: 160px;">${fn:replace(vo.content, newLine, "<br>")}</td>
   	</tr>
   	<tr>
-<%--   		<td colspan="2" class="text-center">
-  			<input type="button" value="답장쓰기" onclick="location.href='WebMessage.wm?mSw=0&receiveId=${vo.sendId}';" class="btn btn-success mr-2" />
-  			<input type="button" value="휴지통으로" onclick="location.href='WmDeleteCheck.wm?mSw=5&mFlag=${param.mFlag}&idx=${vo.idx}';" class="btn btn-danger mr-2" />
-  			<input type="button" value="돌아가기" onclick="location.href='WebMessage.wm?mSw=1&mFlag=11&pag=${pag}&pageSize=${pageSize}';" class="btn btn-warning" />
-  		</td> --%>
-  		<td colspan="2" class="text-center">
+	<td colspan="2" class="text-center">
         <c:if test="${param.mFlag==11 || param.mFlag==12}">
         	<input type="button" value="답장쓰기" onclick="location.href='WebMessage.wm?mSw=0&receiveId=${vo.sendId}';" class="btn btn-success"/>
         </c:if>

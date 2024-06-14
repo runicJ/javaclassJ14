@@ -44,7 +44,7 @@
 <body>
 <p><br/></p>
 <div class="container">
-  <table class="table table-hover">  <!-- list 형식으로 꺼내므로 hover -->
+  <table class="table table-hover">
   	<tr class="table-dark text-dark">
   		<th>번호</th>
   		<th>제목</th>
@@ -83,19 +83,6 @@
     </tr>
   </table>
 </div>
-<p><br/></p>
-<%-- 	<div class="text-center">
-		<ul class="pagination justify-content-center" style="margin:20px 0">
-			<c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="WebMessage.wm?mSw=${mSw}&mFlag=${mFlag}&pag=${pag}&pageSize=${pageSize}">첫페이지</a></li></c:if>
-			<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="WebMessage.wm?mSw=${mSw}&mFlag=${mFlag}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}">이전블록</a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
-			<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">  <!-- 처음이니까 curBlock => 0블록 -->
-				<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="WebMessage.wm?mSw=${mSw}&mFlag=${mFlag}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-				<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="WebMessage.wm?mSw=${mSw}&mFlag=${mFlag}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-			</c:forEach>
-			<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="WebMessage.wm?mSw=${mSw}&mFlag=${mFlag}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}">다음블록</a></li></c:if>
-			<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="WebMessage.wm?mSw=${mSw}&mFlag=${mFlag}&pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
-		</ul>
-	</div> --%>
 <!-- 페이징처리 시작 -->
 <div class="text-center">
   <ul class="pagination justify-content-center pagination-sm">

@@ -62,7 +62,7 @@ public class AdminDAO {
 	}
 	
 	// 회원 전체/부분 리스트
-	public ArrayList<MemberVO> getMemberList() {
+	public ArrayList<MemberVO> getMemberList(int startIndexNo, int pageSize, String part) {
 		ArrayList<MemberVO> vos = new ArrayList<MemberVO>();
 		try {			
 			sql = "select *, timestampdiff(day, lastDate, now()) as deleteDiff from member2 order by idx desc";

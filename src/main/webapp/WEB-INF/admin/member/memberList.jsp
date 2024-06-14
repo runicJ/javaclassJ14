@@ -16,7 +16,6 @@
   		$("#userDisplay").hide();
   	
   		$("#userInfor").on("click", function(){
-  			//if($("#userInfor").is(':checked')) {
   			if($("input:checkbox[id='userInfor']").is(":checked")) {
   				$("#totalList").hide();
   				$("#userDisplay").show();
@@ -31,27 +30,27 @@
   	// 각 레벨(등급)별 회원 보기...
   	function levelItemCheck() {
   		let level = $("#levelItem").val();
-  		location.href = "MemberList.ad?level="+level;  // ajax 안써도 됨 jquery로 했음 
+  		location.href = "MemberList.ad?level="+level;
   	}
   	
   	// 회원별 각각의 등급 변경처리(ajax처리)
-  	function levelChange(e) {  // 이벤트이므로 e로 받음
+  	function levelChange(e) {
   		let ans = confirm("선택한 회원의 등급을 변경하시겠습니까?");
   		if(!ans) {
-  			location.reload(); // 원위치함(리로드 해야 원래 등급으로 위치가 되어있음)
+  			location.reload();
   			return false;
   		}
 		
-  		let items = e.value.split("/");  // 이벤트에서 넘어온 값
+  		let items = e.value.split("/");
   		let query = {
   				level : items[0],
   				idx : items[1]
-  		}  // 변수를 끄집어냄(백엔드 쪽에서 해도 됨)
+  		}
   		
   		$.ajax({
   			url : "MemberLevelChange.ad",
   			type : "get",
-  			data : query,  // 앞에서 query 변수로 넘김  // 여기까지가 전송
+  			data : query,
   			success:function(res) {
   				if(res != "0") {
   					alert("등급 수정 완료!");
@@ -66,7 +65,7 @@
   	}
   	
   	// 30일 경과회원 삭제처리
-  	function memberDeleteOk(idx) {  // 가입할때 입력한 사진도 지우기(noImage말고)
+  	function memberDeleteOk(idx) {
   		let ans = confirm("선택하신 회원을 영구삭제 하시겠습니까?");
   		if(ans) {
   			$.ajax ({
@@ -86,20 +85,6 @@
   			});
   		}
   	}
-  	
-/*   	$('#all_select').click(function() {
-  	    if ($("input:checkbox[id='all_select']").prop("checked")) {
-  	        $("input[type=checkbox]").prop("checked", true);
-  	    } else {
-  	        $("input[type=checkbox]").prop("checked", false);
-  	    }
-  	}); */
-  	
-/*   	$('#reverse_select').click(function() {
-  	    $("input[type=checkbox]").each(function(){
-  	        $(this).prop("checked", !$(this).prop("checked"));
-  	    });
-  	}); */
   	
   	function allCheck() {
         let isChecked = $("#all_select").prop("checked");

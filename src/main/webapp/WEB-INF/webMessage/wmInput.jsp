@@ -83,14 +83,6 @@
   			<th>받는 사람</th>
   			<td>  <!-- 주소록버튼을 클릭해서 아이디를 선택하면 받는사람 입력란에 표시되도록 작성(아이디가 없는 사람은 보낼 수 없게) -->
 					<c:if test="${empty param.receiveId}">
-<%--             <div class="input-group">
-	            <input type="text" name="receiveId" placeholder="받는사람 아이디" class="form-control"/>
-              <div class="input-group-append"><input type="button" value="주소록" onclick="#" class="btn btn-info"/></div>
-            </div>
-          </c:if>
-  				<c:if test="${!empty param.receiveId}"><input type="text" name="receiveId" id="receiveId" value="${param.receiveId}" readonly class="form-control" /></c:if>
-  			</td>
-  		</tr> --%>
   							<div class="input-group">
 	            <input type="text" name="receiveId" placeholder="받는사람 아이디" class="form-control"/>
               <div class="input-group-append"><a href="#" id="jusorokBtn" class="btn btn-info" data-toggle="modal" data-target="#myModal">주소록</a></div>
@@ -127,7 +119,6 @@
         <!-- <div class="modal-header"> -->
         <div class="m-3">
           <div class="row">
-            <!-- <div class="col"><h3 class="modal-title">회원 주소록</h3></div> -->
             <div class="col"><h4>회원 주소록</h4></div>
             <div class="col text-right"><input type="button" value="아이디검색" onclick="idSearchView()" id="idSearchShowBtn" class="btn btn-success btn-sm text-right"/></div>
           </div>

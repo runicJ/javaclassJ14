@@ -109,7 +109,7 @@ public class StayDAO {
 	    return result;
 	}
 
-
+	// 숙소 상세보기
 	public StayVO getStayIdxDetail(int sIdx) {
 		try {
 			sql="select * from stay where sIdx=?";
@@ -139,6 +139,7 @@ public class StayDAO {
 		return vo;
 	}
 	
+	// 숙소별 시설 정보 가져오기
 	public FacilityVO getStayIdxFacility(int sIdx) {
 	    PreparedStatement pstmtFacility = null;
 	    ResultSet rsFacility = null;
@@ -177,6 +178,7 @@ public class StayDAO {
 		return fVo;
 	}
 	
+	// 숙소 판매 중지 처리
 	public int setStayDiscontinue(int sIdx) {
 		int res = 0;
 		try {
@@ -192,6 +194,7 @@ public class StayDAO {
 		return res;
 	}
 
+	// 숙소리스트 가져오기(시설정보도 같이)
 	public ArrayList<StayVO> getStayList(int startIndexNo, int pageSize, String contentsShow, String search, String searchString) {
 		ArrayList<StayVO> vos = new ArrayList<StayVO>();
 		try {
@@ -256,6 +259,7 @@ public class StayDAO {
 		return vos;
 	}
 
+	// top 4 숙소
 	public ArrayList<StayVO> getVestFourStay() {
 		ArrayList<StayVO> vos = new ArrayList<StayVO>();
 		try {
@@ -288,6 +292,7 @@ public class StayDAO {
 		return vos;
 	}
 
+	// 숙소 개수 구하기
 	public int getTotRecCnt(String contentsShow, String search, String searchString) {
 		int totRecCnt = 0;
 		try {
@@ -324,17 +329,18 @@ public class StayDAO {
 		return totRecCnt;
 	}
 
+	// 숙소 예약 여부 확인
 	public int StayBookingCheck(int sIdx, String checkInStr, String checkOutStr) {
         int res = 0;
         try {
-            String sql = "SELECT COUNT(*) FROM booking WHERE sIdx = ? AND (checkIn < ? AND checkOut > ?)";
+            String sql = "select count(*) FROM booking WHERE sIdx = ? AND (checkIn < ? AND checkOut > ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, sIdx);
             pstmt.setString(2, checkOutStr);
             pstmt.setString(3, checkInStr);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-            	res = rs.getInt(1);
+            	res = rs.getInt(1);  // count(*)의 행의 개수
             }
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -344,6 +350,7 @@ public class StayDAO {
         return res;
     }
 
+	// 숙소 예약하기
 	public int StayBookingOk(BookingVO vo) {
 		int res = 0;
 		try {
@@ -364,6 +371,7 @@ public class StayDAO {
 		return res;
 	}
 
+	// 회원별 숙소 위시 여부 확인
 	public boolean checkMemberWish(String sMid, int sIdx) {
 	    boolean result = false;
 	    try {
@@ -383,7 +391,7 @@ public class StayDAO {
 	    return result;
 	}
 
-    // 좋아요 상태를 토글
+    // 숙소 위시 상태를 토글
     public void toggleWish(String sMid, int sIdx, boolean like) {
         try {
         	sql = like ? "INSERT INTO stayWish VALUES (default, ?, ?)" :
