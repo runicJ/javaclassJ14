@@ -7,21 +7,28 @@ import javax.servlet.http.HttpServletRequest;
 import admin.AdminDAO;
 import blog.BlogDAO;
 import blog.BlogVO;
+import memeber.MemberDAO;
 import memeber.MemberVO;
+import stay.BookingVO;
+import stay.StayDAO;
 
 public class Pagination {
 
 	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {
 		BlogDAO blogDao = new BlogDAO();
 		AdminDAO adminDao = new AdminDAO();
+		MemberDAO memDao = new MemberDAO();
 		
 		int totRecCnt = 0;
 
 		if(section.equals("blog")) {
 			totRecCnt = blogDao.getTotRecCnt(contentsShow, part);
 		}
-		if(section.equals("MemberList")) {
-			totRecCnt = blogDao.getTotRecCnt(contentsShow, part);
+//		if(section.equals("memberList")) {
+//			totRecCnt = adminDao.getTotRecCnt(contentsShow, part);
+//		}
+		if(section.equals("bookingList")) {
+			totRecCnt = memDao.getTotRecCnt(contentsShow, part);
 		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;
@@ -33,22 +40,26 @@ public class Pagination {
 		int curBlock = (pag - 1) / blockSize;
 		int lastBlock = (totPage - 1) / blockSize;
 
-		ArrayList<BlogVO> bVos = null;
-		ArrayList<MemberVO> mVos = null;
+		ArrayList<BlogVO> blogVos = null;
+		ArrayList<BookingVO> bookVos = null;
 
 		if(section.equals("blog")) {
-			bVos = blogDao.getBlogList(startIndexNo, pageSize, part);
-			request.setAttribute("vos", bVos);
+			blogVos = blogDao.getBlogList(startIndexNo, pageSize, part);
+			request.setAttribute("vos", blogVos);
 			
             ArrayList<BlogVO> sortCounts = blogDao.getSortCntAll();
             request.setAttribute("sortCounts", sortCounts);
 		}
-		if(section.equals("MemberList")) {
-			mVos = adminDao.getMemberList(startIndexNo, pageSize, part);
-			request.setAttribute("vos", mVos);
-			
-			ArrayList<BlogVO> sortCounts = blogDao.getSortCntAll();
-			request.setAttribute("sortCounts", sortCounts);
+//		if(section.equals("MemberList")) {
+//			mVos = adminDao.getMemberList(startIndexNo, pageSize, part);
+//			request.setAttribute("vos", mVos);
+//			
+//			ArrayList<BlogVO> sortCounts = blogDao.getSortCntAll();
+//			request.setAttribute("sortCounts", sortCounts);
+//		}
+		if(section.equals("bookingList")) {
+			bookVos = memDao.getMemberBookingList(startIndexNo, pageSize, contentsShow);
+			request.setAttribute("vos", bookVos);
 		}
 				
 		request.setAttribute("pag", pag);
@@ -64,6 +75,9 @@ public class Pagination {
 			request.setAttribute("part", part);
 		}
 		if(section.equals("MemberList")) {
+			request.setAttribute("part", part);
+		}
+		if(section.equals("bookingList")) {
 			request.setAttribute("part", part);
 		}
 	}

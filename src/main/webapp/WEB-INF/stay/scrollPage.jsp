@@ -17,6 +17,7 @@
                 </figure>
 				<div class="portfolio-info">
                 	<h4><a href="StayDetail.st?sIdx=${vo.sIdx}">${vo.sName}</a></h4>
+	                <p><h5>￦${vo.price}/1박 (최대 ${vo.guestMax}명)</h5></p>
 	                <p>
 		                <c:if test="${vo.facility.wifi == 'OK'}"><i class="fa fa-fw fa-wifi"></i></c:if>
 				        <c:if test="${vo.facility.ac == 'OK'}"><i class="material-icons">ac_unit</i></c:if>

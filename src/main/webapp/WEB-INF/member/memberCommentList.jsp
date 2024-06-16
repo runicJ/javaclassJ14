@@ -216,7 +216,7 @@
 </div>
 <p><br/></p>
 <%@ include file = "../../include/footer.jsp"%>
-    <script src="js/admin/jquery-ui.min.js"></script>
+<!-- <script src="js/admin/jquery-ui.min.js"></script> -->
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="js/admin/perfect-scrollbar.jquery.min.js"></script>
     <script src="js/admin/sparkline.js"></script>

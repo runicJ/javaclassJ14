@@ -38,16 +38,16 @@ drop table facility;
 
 CREATE TABLE booking (
     bIdx INT AUTO_INCREMENT PRIMARY KEY,
-    sIdx INT NOT NULL,
-    mid VARCHAR(20) NOT NULL,
+    sIdx INT,
+    mid VARCHAR(20),
     bDate DATETIME DEFAULT now(),
     checkIn DATETIME NOT NULL,
     checkOut DATETIME NOT NULL,
     guestNum INT NOT NULL,
     total INT NOT NULL,
-    status CHAR(2) DEFAULT 'NO',
-    FOREIGN KEY (sIdx) REFERENCES stay(sIdx),
-    FOREIGN KEY (mId) REFERENCES member2(mId)
+    status CHAR(4) DEFAULT 'OK',
+    FOREIGN KEY (sIdx) REFERENCES stay(sIdx) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (mid) REFERENCES member2(mid) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 drop table booking;

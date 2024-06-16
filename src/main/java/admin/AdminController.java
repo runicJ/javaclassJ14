@@ -19,19 +19,18 @@ import admin.review.ReviewReplyInputOkCommand;
 import admin.stay.StayInputOkCommand;
 import admin.stay.StayListCommand;
 
-@SuppressWarnings("serial")  // 필터 통과하고 제일 먼저 들어옴
-@WebServlet("*.ad")  // 확장자 패턴으로
-public class AdminController extends HttpServlet {  // 4
+@SuppressWarnings("serial")
+@WebServlet("*.ad")
+public class AdminController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		AdminInterface command = null;  // command 객체라서 변수명 이렇게 줌, 인터페이스이름 쓰고 마우스 올려서 interface create
+		AdminInterface command = null;
 		String viewPage = "/WEB-INF/admin";
 		
-		String com = request.getRequestURI();  // 식별자(uri), url(도메인까지 나옴) // 잘라내기 위해 com 변수 저장
-		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));  // +1 안하고 24번줄 "/" 넣어둠, +1 하면 ""
+		String com = request.getRequestURI();
+		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));
 		
-		// 인증....처리......
-		HttpSession session = request.getSession();  // 세션을 열음
+		HttpSession session = request.getSession();
 		String mid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
 		
 		if(com.equals("/BlogComplaintAnswer")) {
@@ -49,11 +48,12 @@ public class AdminController extends HttpServlet {  // 4
 			command.execute(request, response);
 			return;
 		}
-//		else if(com.equals("/ReviewReplyInputOk")) {
-//			command = new ReviewReplyInputOkCommand();
-//			command.execute(request, response);
-//			return;
-//		}
+		else if(com.equals("/ActivityBooking")) {
+			viewPage += "/error.jsp";
+		}
+		else if(com.equals("/FAQList")) {
+			viewPage += "/complaint/faqList.jsp";
+		}
 		else if(!mid.equals("admin")) {
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", "MemberLogin.mem");

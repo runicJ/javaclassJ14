@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import admin.AdminDAO;
 import admin.review.ReviewVO;
@@ -26,9 +27,20 @@ import stay.StayVO;
 @WebServlet("/Main")
 public class Main extends HttpServlet {
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String sMid = (String) session.getAttribute("sMid");
+		String contentsShow = "";
+		if (sMid == null) {
+			contentsShow = "guest";
+		} else if (sMid.equals("admin")) {
+			contentsShow = "adminOK";
+		} else {
+			contentsShow = sMid;
+		}
+		
 		StayDAO dao = new StayDAO();
-		ArrayList<StayVO> stayVos = dao.getVestFourStay();
+		ArrayList<StayVO> stayVos = dao.getVestFourStay(contentsShow);
 		
         AdminDAO adminDao = new AdminDAO();
         Map<StayVO, Double> stayReviews = new HashMap<>();

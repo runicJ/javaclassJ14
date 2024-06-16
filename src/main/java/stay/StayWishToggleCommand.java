@@ -12,18 +12,16 @@ public class StayWishToggleCommand implements StayInterface {
 	@Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int sIdx = request.getParameter("sIdx") == null ? 0 : Integer.parseInt(request.getParameter("sIdx"));
-        
-        HttpSession session = request.getSession();
-        String sMid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
+        String mid = (String) request.getSession().getAttribute("sMid");
         
         StayDAO dao = new StayDAO();
         
-        boolean wishExist = dao.checkMemberWish(sMid, sIdx);
+        boolean wishExist = dao.checkMemberWish(mid, sIdx);
         
         if (!wishExist) {
-            dao.toggleWish(sMid, sIdx, true);
+            dao.toggleWish(mid, sIdx, true);
         } else {
-            dao.toggleWish(sMid, sIdx, false);
+            dao.toggleWish(mid, sIdx, false);
         }
         
         response.getWriter().write(wishExist ? "true" : "false");

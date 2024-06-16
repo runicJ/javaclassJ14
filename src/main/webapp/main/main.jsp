@@ -13,7 +13,7 @@
   <style>
   	.blink::after{
 	    content:"";
-	    height:45px;
+	    height:35px;
 	    width:3px;
 	    background-color:#F5f5dc;
 	    display:inline-block;
@@ -44,17 +44,26 @@
     
     @keyframes upDown{
         0%{
-            bottom: 1em;
+            bottom: 0.7em;
             transform: scaleY(0.9);
         }
         50%{
-            bottom: 1.5em;
+            bottom: 1.2em;
             transform: scaleY(1);
         }
         100%{
-            bottom: 1em;
+            bottom: 0.7em;
             transform: scaleY(0.9);
         }
+    }
+    
+    .modal-dialog {
+        max-width: 70%;
+        margin: 1.75rem auto;
+    }
+
+    .modal-body {
+        padding: 0;
     }
   </style>
   <script>
@@ -62,6 +71,38 @@
 	    $("#datepicker_1, #datepicker_2").datepicker({
 	        dateFormat: 'yy-mm-dd'
 	    });
+	});
+  	
+	function wishToggle(sIdx) {
+	    $.ajax({
+	        url: "StayWishToggle.st",
+	        type: "post",
+	        data: { sIdx: sIdx },
+	        success: function(res) {
+	        	let icon = document.getElementById("wish-icon-" + sIdx);
+	            console.log('Response:', res.trim());
+	            console.log('Icon element:', icon);
+	            console.log('Icon before:', icon.className);
+	            if (res.trim() == "true") {
+	                icon.classList.remove('fa-solid', 'fa-heart');
+	                icon.classList.add('fa-regular', 'fa-heart');
+	            } else {
+	                icon.classList.remove('fa-regular', 'fa-heart');
+	                icon.classList.add('fa-solid', 'fa-heart');
+	                icon.style.color = 'red';
+	            }
+	            console.log('Icon after:', icon.className);
+	        },
+	        error: function() {
+	            alert("전송 오류!");
+	        }
+	    });
+	}
+	
+	$(document).ready(function () {
+		$(".smile").hover(function () {
+			$("#videoModal").modal('show');
+		});
 	});
   </script>
 </head>
@@ -76,8 +117,18 @@
                 <div class="col-lg-10">
                     <div class="banner_text text-center">
                         <div class="banner_text_iner">
-                            <h1>Serene Nest</h1>
-                            <p>오직 Serene Nest에서만..<span class="blink">.</span></p>
+                            <h3 style="font-style:oblique;font-weight:bold;opacity:0.8;">If you want to be gifted a..</h3>
+                            <h1 class="wrap" style="font-style:oblique;text-shadow: 2px 2px 1px #ddd;">Serene Nest</h1>
+                                <p>오직 Serene Nest에서만..<span class="blink"> 
+							        <c:choose>
+							            <c:when test="${sMid == null || sMid == '' || sMid == 'admin'}">
+							                '당신' 
+							            </c:when>
+							            <c:otherwise>
+							                <span style="color:orange;">'${sNickName}'</span> 님
+							            </c:otherwise>
+							        </c:choose>을 위한, 
+							    </span></p>
                             <p><a href="#" class="smile"><i class="fa-regular fa-face-smile"></i></a></p>
                         </div>
                     </div>
@@ -136,33 +187,56 @@
     			<c:forEach var="stayVo" items="${stayVos}" varStatus="st">
     			<c:set var="sPhotos" value="${fn:split(stayVo.sPhoto, '/')}"/>
                 <div class="col-lg-6 col-md-6">
-                    <div class="single_place" style="height:600px;overflow:hidden">
-                        <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${stayVo.sName} thumbnail">
+                    <div class="single_place" style="position:relative;height:450px;overflow:hidden">
+                        <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${stayVo.sName} thumbnail" style="height:100%; width:100%; object-fit: cover;">
                         <div class="hover_Text d-flex align-items-end justify-content-between">
                             <div class="hover_text_iner">
                                 <a class="place_btn">${stayVo.sort}</a>
-                                <h3><a href="StayDetail.st?sIdx=${stayVo.sIdx}">${stayVo.sName}</a></h3>
+                                <h3 style="font-weight:bold;"><a href="StayDetail.st?sIdx=${stayVo.sIdx}">${stayVo.sName}</a></h3>
                                 <p>${stayVo.residence == 'Chung' ? '충청도' : stayVo.residence == 'Gang' ? '강원도' : stayVo.residence == 'Jeol' ? '전라도' : '경상도'}</p>
                                 <div class="place_review">
                                     <c:forEach begin="1" end="${stayReviews[stayVo]}" var="star">
                                     	<i class="fas fa-star"></i>
                                 	</c:forEach>
+                                	<div class="place_review">
+                                    <a href="#"><i class="fas fa-star"></i></a>
+                                    <a href="#"><i class="fas fa-star"></i></a>
+                                    <a href="#"><i class="fas fa-star"></i></a>
+                                    <a href="#"><i class="fas fa-star"></i></a>
+                                    <a href="#"><i class="fas fa-star"></i></a>
                                 	<b>평점 : <fmt:formatNumber value="${stayReviews[reviewAvg]}" pattern="#,##0.0" /></b>
+                                    </div>
                                 <span>( review)</span>
                                 </div>
                             </div>
-                            <div class="details_icon text-right">
-                                <i class="ti-heart"></i>
-                            </div>
+							<div class="details_icon" style="position: absolute;  bottom: 30px;right: 20px;">
+							    <c:choose>
+							        <c:when test="${sMid != null && sMid != ''}">
+							            <a type="button" onclick="wishToggle(${stayVo.sIdx})" class="link-wish" title="위시리스트 저장">
+							                <c:if test="${stayVo.isWished == 1}">
+							                    <i id="wish-icon-${stayVo.sIdx}" class="fa-solid fa-heart" style="color:red;"></i>
+							                </c:if>
+							                <c:if test="${stayVo.isWished == 0}">
+							                    <i id="wish-icon-${stayVo.sIdx}" class="fa-regular fa-heart" style="color:white;"></i>
+							                </c:if>
+							            </a>
+							        </c:when>
+							        <c:otherwise>
+							            <button class="btn btn-dark">
+							                <b><i class="fa-regular fa-heart"></i> Wish </b>${stayVo.wishCnt}
+							            </button>
+							        </c:otherwise>
+							    </c:choose>
+							</div>
                         </div>
                     </div>
                 </div>
                 </c:forEach>
             </div>
-        <a href="StayList.st" class="btn_1 text-center">Stay more</a>
+        <p class="text-center"><a href="StayList.st" class="btn_1">Stay more..</a><p>
         </div>
     </section>
-
+    <hr>
     <section class="hotel_list section_padding">
         <div class="container">
             <div class="row justify-content-center">
@@ -182,7 +256,7 @@
                         <div class="hover_text">
                             <div class="hotel_social_icon">
                                 <ul>
-                                    <li><a href="https://pf.kakao.com/_iExmG"><i class="fa-solid fa-comment"></i></a></li>
+                                    <li><a href="https://pf.kakao.com/_iExmtG"><i class="fa-solid fa-comment"></i></a></li>
                                     <li><a href="#"><i class="ti-linkedin"></i></a></li>
                                 </ul>
                             </div>
@@ -205,10 +279,9 @@
                 </div>
 			    </c:forEach>
             </div>
-		    <a href="BlogList.bl" class="btn_1 text-center">Travelog more</a>
+		    <p class="text-center mt-3"><a href="BlogList.bl" class="btn_1 text-center">Travelog more..</a></p>
         </div>
     </section>
-
     <section class="client_review section_padding">
         <div class="container">
             <div class="row ">
@@ -282,7 +355,25 @@
         </div>
     </section>
 </div>
-<p><br/></p>
+<p><br><p>
+<!-- Video Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="videoModalLabel">정부기관 영상 소개</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/EK3XVaq3IO0?autoplay=1&mute=1&controls=0&rel=0&loop=1&playlist=EK3XVaq3IO0,r4XnNNgNBqw,GY3_Y-fR0Ew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <%@ include file = "../../include/footer.jsp"%>
 </body>
 </html>

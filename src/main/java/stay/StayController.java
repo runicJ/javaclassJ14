@@ -44,25 +44,25 @@ public class StayController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/stayDetail.jsp";
 		}
-		else if(sMid == null || sMid.equals("")) {
+		else if(sMid.isEmpty()) {
 			request.setAttribute("message", "로그인 후에 가능하신 메뉴입니다.");
 			request.setAttribute("url", "MemberLogin.mem");
-			viewPage = "/include/message.jsp";
-		}
-		else if(com.equals("/StayBooking")) {
-			command = new StayBookingCommand();
-			command.execute(request, response);
-			viewPage = "/stayDetail.jsp";
-		}
-		else if(com.equals("/StayBookingOk")) {
-			command = new StayBookingOkCommand();
-			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/StayWishToggle")) {
 			command = new StayWishToggleCommand();
 			command.execute(request, response);
 			return;
+		}
+		else if(com.equals("/StayBooking")) {
+			command = new StayBookingCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/StayBookingOk")) {
+			command = new StayBookingOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 		else if(!sMid.equals("admin")) {
 			request.setAttribute("message", "관리자 로그인 후에 가능하신 메뉴입니다.");

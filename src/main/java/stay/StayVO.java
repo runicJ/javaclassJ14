@@ -14,6 +14,9 @@ public class StayVO {
     private String sDate;
     private String sDel;
     
+    private int isWished;
+    private int wishCnt;
+    
     private FacilityVO facility;
     
 	public int getsIdx() {
@@ -94,11 +97,24 @@ public class StayVO {
 	public void setFacility(FacilityVO facility) {
 		this.facility = facility;
 	}
+	public int getIsWished() {
+		return isWished;
+	}
+	public void setIsWished(int isWished) {
+		this.isWished = isWished;
+	}
+	public int getWishCnt() {
+		return wishCnt;
+	}
+	public void setWishCnt(int wishCnt) {
+		this.wishCnt = wishCnt;
+	}
 	
 	@Override
 	public String toString() {
 		return "StayVO [sIdx=" + sIdx + ", sort=" + sort + ", sName=" + sName + ", sPhoto=" + sPhoto + ", star=" + star
 				+ ", address=" + address + ", sContent=" + sContent + ", guestMax=" + guestMax + ", price=" + price
-				+ ", residence=" + residence + ", sDate=" + sDate + ", sDel=" + sDel + ", facility=" + facility + "]";
+				+ ", residence=" + residence + ", sDate=" + sDate + ", sDel=" + sDel + ", isWished=" + isWished
+				+ ", wishCnt=" + wishCnt + ", facility=" + facility + "]";
 	}
 }

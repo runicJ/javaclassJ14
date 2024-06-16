@@ -145,5 +145,4 @@ public class MemberVO {  // 2
 				+ content + ", startDate=" + startDate + ", lastDate=" + lastDate + ", userInfo=" + userInfo
 				+ ", userDel=" + userDel + ", deleteDiff=" + deleteDiff + "]";
 	}
-	
 }

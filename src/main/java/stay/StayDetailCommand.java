@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import admin.AdminDAO;
 import admin.review.ReviewVO;
@@ -16,9 +17,23 @@ public class StayDetailCommand implements StayInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int sIdx = request.getParameter("sIdx")==null ? 0 : Integer.parseInt(request.getParameter("sIdx"));
 		//String part = request.getParameter("part")==null ? "" : request.getParameter("part");
+		
+		HttpSession session = request.getSession();
+		String sMid = (String) session.getAttribute("sMid");
+		String contentsShow = "";
+		if (sMid == null) {
+			contentsShow = "guest";
+		} 
+		else if (sMid.equals("admin")) {
+			contentsShow = "adminOK";
+		} 
+		else {
+			contentsShow = sMid;
+		}
+		
 		StayDAO dao = new StayDAO();
 		
-		StayVO vo = dao.getStayIdxDetail(sIdx);
+		StayVO vo = dao.getStayIdxDetail(sIdx, contentsShow);
 		FacilityVO fVo = dao.getStayIdxFacility(sIdx);
 		
 		// 해당글의 리뷰내용 가져오기

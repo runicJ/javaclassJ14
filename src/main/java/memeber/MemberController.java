@@ -10,20 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@SuppressWarnings("serial")  // 필터 통과하고 제일 먼저 들어옴
-@WebServlet("*.mem")  // 확장자 패턴으로
+@SuppressWarnings("serial")
+@WebServlet("*.mem")
 public class MemberController extends HttpServlet {  // 4
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MemberInterface command = null;  // command 객체라서 변수명 이렇게 줌, 인터페이스이름 쓰고 마우스 올려서 interface create
+		MemberInterface command = null;
 		String viewPage = "/WEB-INF/member";
 		
-		String com = request.getRequestURI();  // 식별자(uri), url(도메인까지 나옴) // 잘라내기 위해 com 변수 저장
-		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));  // +1 안하고 24번줄 "/" 넣어둠, +1 하면 ""
+		String com = request.getRequestURI();
+		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));
 		
-		// 인증....처리......
-		HttpSession session = request.getSession();  // 세션을 열음
-		String sMid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");  // int 담아서 밑에서 크고작고 비교 가능 // level 그릇에 비로그인 시 등급이 없으면 999 부여  // 로그인 안했는데 .mem으로 왔으니 쫓아 버려야
+		HttpSession session = request.getSession();
+		String sMid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
 		
 		if(com.equals("/MemberLogin")) {
 			viewPage += "/memberLogin.jsp";
@@ -82,7 +81,7 @@ public class MemberController extends HttpServlet {  // 4
 			command.execute(request, response);
 			return;
 		}
-		else if(sMid.equals("")) {
+		else if(sMid == null || sMid.equals("")) {
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
 			viewPage = "/include/message.jsp";
@@ -109,6 +108,11 @@ public class MemberController extends HttpServlet {  // 4
 			command = new MemberUpdateOkCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/MemberBookingList")) {
+			command = new MemberBookingListCommand();
+			command.execute(request, response);
+			viewPage += "/memberBookingList.jsp";
 		}
 		else if(com.equals("/MemberCommentList")) {
 			command = new MemberCommentListCommand();

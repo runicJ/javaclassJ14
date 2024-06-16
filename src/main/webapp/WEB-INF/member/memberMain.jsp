@@ -163,7 +163,9 @@
                 </div>
        	 	</div>
 		</div>
-    <script src="js/admin/jquery-ui.min.js"></script>
+</div>
+<p><br/></p>
+	<script src="js/admin/jquery-ui.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="js/admin/perfect-scrollbar.jquery.min.js"></script>
     <script src="js/admin/sparkline.js"></script>
@@ -175,8 +177,6 @@
     <script src="js/admin/custom.min.js"></script>
     <!-- this page js -->
     <script src="js/admin/moment.min.js"></script>
-</div>
-<p><br/></p>
 <jsp:include page="/include/footer.jsp" />
 </body>
 </html>

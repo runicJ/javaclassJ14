@@ -11,6 +11,9 @@ public class BookingVO {
 	private int total;
 	private String status;
 	
+	private String sName;
+	private int date_diff;
+	
 	public int getbIdx() {
 		return bIdx;
 	}
@@ -65,11 +68,23 @@ public class BookingVO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getsName() {
+		return sName;
+	}
+	public void setsName(String sName) {
+		this.sName = sName;
+	}
+	public int getDate_diff() {
+		return date_diff;
+	}
+	public void setDate_diff(int date_diff) {
+		this.date_diff = date_diff;
+	}
 	
 	@Override
 	public String toString() {
 		return "BookingVO [bIdx=" + bIdx + ", sIdx=" + sIdx + ", mid=" + mid + ", bDate=" + bDate + ", checkIn="
 				+ checkIn + ", checkOut=" + checkOut + ", guestNum=" + guestNum + ", total=" + total + ", status="
-				+ status + "]";
+				+ status + ", sName=" + sName + ", date_diff=" + date_diff + "]";
 	}
 }

@@ -202,7 +202,7 @@
                         <!-- <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p> -->
                     </div>
                     <ul class="social-icons">
-                        <li><a href="https://pf.kakao.com/_iExmG" target="_blank"><i class="fa-solid fa-comment"></i></a></li>
+                        <li><a href="https://pf.kakao.com/_iExmtG" target="_blank"><i class="fa-solid fa-comment"></i></a></li>
                         <li><a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="ti-instagram"></i></a></li>
                         <li><a href="https://www.facebook.com" target="_blank"><i class="ti-facebook"></i></a></li>
                         <li><a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a></li>

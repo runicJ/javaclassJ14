@@ -18,11 +18,11 @@ public class StayDiscontinueCommand implements StayInterface {
 		
 		if(res != 0) {
 			request.setAttribute("message", "숙소 게시글이 중지 처리되었습니다.");
-			request.setAttribute("url", "BoardList.bo");
+			request.setAttribute("url", "StayList.st");
 		}
 		else {
 			request.setAttribute("message", "비공개 처리 실패");
-			request.setAttribute("url", "StayContent.st?sIdx=" + sIdx);
+			request.setAttribute("url", "StayDetail.st?sIdx=" + sIdx);
 		}
 
 	}

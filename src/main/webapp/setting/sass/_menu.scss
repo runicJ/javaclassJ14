@@ -34,7 +34,7 @@
 				color: $menu_color;
 				font-size: 16px;
 				padding: 38px 22px;
-				font-family: $font_stack_1;
+				font-family: "Electrical Safety Bold", $font_stack_1;
 				text-transform: capitalize;
 				&:hover{
 					color: $btn_bg;
@@ -43,7 +43,7 @@
 
 				}
 				@media #{$medium_device} {
-					padding: 35px 16px;
+					padding: 35px 10px;
 				}
 			}
 		}

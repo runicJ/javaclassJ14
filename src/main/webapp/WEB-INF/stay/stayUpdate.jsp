@@ -122,7 +122,7 @@
     <div class="card mt-5 p-2">
         <div class="card-body">
 		<form name="stayInputForm" action="StayInputOk.st" method="post" enctype="multipart/form-data">
-			<h2 class="text-center mb-3">새로운 숙소를 등록해주세요</h2>
+			<h2 class="text-center mb-3">정보 수정하기</h2>
 			<div class="card mb-3">
 		        <div class="card-body">
 		            <p class="card-title text-center control-label col-form-label" style="font-size:20px;font-weight:bolder;">- 숙소 정보 -</p>
@@ -292,7 +292,7 @@
 	        </div>
 	        <div class="text-center">
                 <input type="button" class="btn btn-primary mr-2" value="등록하기" onclick="fCheck()" />
-                <button type="button" class="btn btn-warning" onclick="stayList.st">돌아가기</button>
+                <button type="button" class="btn btn-warning" onclick="StayDatail.st?sIdx=${vo.sIdx}">돌아가기</button>
 	        </div>
 	        <input type="hidden" name="sort" />
     		<input type="hidden" name="address" />

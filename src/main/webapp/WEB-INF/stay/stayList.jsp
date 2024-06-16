@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -104,7 +105,7 @@
 	.portfolio .portfolio-item figure {
 	  background: #000;
 	  overflow: hidden;
-	  height: 240px;
+	  height: 220px;
 	  position: relative;
 	  border-radius: 4px 4px 0 0;
 	  margin: 0;
@@ -150,7 +151,7 @@
 	.portfolio .portfolio-item figure .link-preview:hover i,
 	.portfolio .portfolio-item figure .link-details:hover i,
 	.portfolio .portfolio-item figure .link-wish:hover i {
-	  color: #fff;
+	  opacity: 0.6;
 	}
 	
 	.portfolio .portfolio-item figure .link-preview {
@@ -188,15 +189,21 @@
 	  background: #fff;
 	  text-align: center;
 	  padding: 30px;
-	  height: 90px;
+	  height: 100px;
 	  border-radius: 0 0 3px 3px;
 	}
 	
 	.portfolio .portfolio-item .portfolio-info h4 {
 	  font-size: 18px;
 	  line-height: 1px;
-	  font-weight: 700;
-	  margin-bottom: 18px;
+	  font-weight: bold;
+	  padding-bottom: 0;
+	}
+	
+	.portfolio .portfolio-item .portfolio-info p h5 {
+	  font-size: 16px;
+	  line-height: 1px;
+	  font-weight: bold;
 	  padding-bottom: 0;
 	}
 	
@@ -208,17 +215,16 @@
 	  color: #3498db;
 	}
 	
-	.portfolio .portfolio-item .portfolio-info p {
+	.portfolio .portfolio-item .portfolio-info p #facility {
 	  padding: 0;
 	  margin: 0;
 	  color: #b8b8b8;
 	  font-weight: 500;
 	  font-size: 14px;
-	  text-transform: uppercase;
 	}
 	
 	.portfolio-info i {
-	  font-size: 20px;
+	  font-size: 18px;
 	  vertical-align: middle;
 	}
   </style>
@@ -292,26 +298,68 @@
 	    });
 	}
 
-
-  	function wishToggle(sIdx) {
-        $.ajax({
-            url  : "StayWishToggle.st",
+	function wishToggle(sIdx) {
+		if(!sMid) {
+			alert("로그인 후에 가능한 메뉴입니다!");
+			return;
+		}
+		
+	    $.ajax({
+	        url: "StayWishToggle.st",
+	        type: "post",
+	        data: { sIdx: sIdx },
+	        success: function(res) {
+	        	let icon = document.getElementById("wish-icon-" + sIdx);
+	            if (res.trim() == "true") {
+	                icon.classList.remove('fa-solid', 'fa-heart');
+	                icon.classList.add('fa-regular', 'fa-heart');
+	                icon.style.color = 'black';
+	            } else {
+	                icon.classList.remove('fa-regular', 'fa-heart');
+	                icon.classList.add('fa-solid', 'fa-heart');
+	                icon.style.color = 'red';
+	            }
+	        },
+	        error: function() {
+	            alert("전송 오류!");
+	        }
+	    });
+	}
+  	
+  	function fCheck() {
+  		let address = searchForm.address.value.trim();
+  		let checkIn = searchForm.checkIn.value;
+  		let checkOut = searchForm.checkOut.value;
+  		let guestMax = searchForm.guestMax.value.trim();
+  		
+  		if(address == "" || (checkIn == "" && checkOut == "")) {
+  			alert("여행 지역 또는 예약 날짜를 입력하세요!");
+  			return;
+  		}
+  		
+  		$.ajax({
+            url  : "StayList.st",
             type : "post",
-            data : {sIdx : sIdx},
-            success: function(response) {
-                let icon = $(`#wish-icon-${sIdx}`);
-                if (response.trim() == "true") {
-                    icon.removeClass('far').addClass('fas');
-                } else {
-                    icon.removeClass('fas').addClass('far');
-                }
+            data : {
+            	address : address,
+            	checkIn : checkIn,
+            	checkOut : checkOut,
+            	guestMax : guestMax
+            },
+            success: function(res) {
+  				if(res != "0") {
+  					alert("검색 조건에 맞는 숙소를 조회합니다.");
+  					location.reload();
+  				}
+  				else {
+  					alert("검색한 조건에 맞는 숙소가 없습니다.");
+  				}
             },
             error: function() {
                 alert("전송 오류!");
             }
-        });    
-    }
-  	
+  		});
+  	}
   </script>
   
   <!-- Vendor CSS Files -->
@@ -350,19 +398,19 @@
                                 <form name="searchForm" method="post" action="StayList.st">
                                     <div class="form-row">
                                         <div class="form_colum">
-											<input class="select" type="text" name="address" placeholder="여행 지역"> 
+											<input class="select" type="text" name="address" placeholder="여행 지역">
                                         </div>
                                         <div class="form_colum">
-                                            <input id="datepicker_1" name="datepicker_1" placeholder="Check in">
+                                            <input id="datepicker_1" name="checkIn" placeholder="Check in">
                                         </div>
                                         <div class="form_colum">
-                                            <input id="datepicker_2" name="datepicker_2" placeholder="Check out">
+                                            <input id="datepicker_2" name="checkOut" placeholder="Check out">
                                         </div>
                                         <div class="form_colum">
-                                            <input class="select" type="number" name="guest" min="1" placeholder="인원 수"> 
+                                            <input class="select" type="number" name="guestMax" min="1" placeholder="인원 수"> 
                                         </div>
                                         <div class="form_btn">
-                                            <input type="submit" class="btn_1" value="search">
+                                            <input type="button" class="btn_1" onclick="fCheck()" value="search">
                                         </div>
                                     </div>
                                 </form>
@@ -393,16 +441,24 @@
 		        <div class="col-lg-4 col-md-6 portfolio-item filter-${vo.residence} wow fadeInUp">
 		            <div class="portfolio-wrap">
 		                <figure>
-		                    <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${curScrStartNo}.${vo.sName}">
+		                    <img src="${ctp}/images/stay/${sPhotos[0]}" class="img-fluid" alt="${curScrStartNo}.${vo.sName}" style="width:100%;height:300px;overflow:hidden;">
 		                    <c:forEach var="sPhoto" items="${sPhotos}" varStatus="st">
 		                        <a href="${ctp}/images/stay/${sPhoto}" data-gallery="${sPhotos}" class="link-preview portfolio-lightbox" title="사진 보기"><i class="fa-solid fa-plus"></i></a>
 		                    </c:forEach>
-		                    <a type="button" onclick="wishToggle(${vo.sIdx})" class="link-wish" title="위시리스트 저장"><i class="fa-solid fa-heart"></i></a>
+			                <a type="button" onclick="wishToggle(${vo.sIdx})" class="link-wish" title="위시리스트 저장">
+			                    <c:if test="${vo.isWished == 1}">
+			                        <i id="wish-icon-${vo.sIdx}" class="fa-solid fa-heart" style="color:red;"></i>
+			                    </c:if>
+			                    <c:if test="${vo.isWished == 0}">
+			                        <i id="wish-icon-${vo.sIdx}" class="fa-regular fa-heart" style="color:black;"></i>
+			                    </c:if>
+			                </a>
 		                    <a href="StayDetail.st?sIdx=${vo.sIdx}" class="link-details" title="상세정보 보기"><i class="fa-solid fa-link"></i></a>
 		                </figure>
 						<div class="portfolio-info">
-		                	<h4><a href="StayDetail.st?sIdx=${vo.sIdx}">${vo.sName}</a></h4>
-			                <p>
+		                	<h4><a href="StayDetail.st?sIdx=${vo.sIdx}" target="_blank">${vo.sName}</a></h4>
+		                	<p><h5>￦<fmt:formatNumber value="${vo.price}" pattern="#,##0" /><span style="font-size:13px;"> /박 (최대 ${vo.guestMax}명)</span></h5><p>
+			                <p id="facility">
 				                <c:if test="${vo.facility.wifi == 'OK'}"><i class="fa fa-fw fa-wifi"></i></c:if>
 						        <c:if test="${vo.facility.ac == 'OK'}"><i class="material-icons">ac_unit</i></c:if>
 						        <c:if test="${vo.facility.parking == 'OK'}"><i class="material-icons">local_parking</i></c:if>

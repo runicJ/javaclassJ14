@@ -68,7 +68,7 @@
                                 <img class="card-img rounded-0" src="${ctp}/images/blog/${tPhotos[0]}" style="height:330px;">
                                 <a href="#" class="blog_item_date">
                                     <h3>(조회수 : ${vo.viewCnt})</h3>
-                                    <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,11,19) : fn:substring(vo.tDate,0,16)}</p>
+                                    <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,11,10) : fn:substring(vo.tDate,0,16)}</p>
                                 </a>
                             </div>
 
@@ -209,8 +209,7 @@
                                 </li>
                             </ul>
                         </aside>
-
-
+                        
                         <aside class="single_sidebar_widget instagram_feeds">
                             <h4 class="widget_title">Instagram Feeds</h4>
                             <ul class="instagram_row flex-wrap">

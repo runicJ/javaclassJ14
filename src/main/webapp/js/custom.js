@@ -70,30 +70,73 @@
   if(nc_select.length){
     nc_select.niceSelect();
   }
-
-	$("#datepicker_1").datepicker({
-	    dateFormat: 'yy-mm-dd' //달력 날짜 형태
-	    ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-	    ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-	    ,changeYear: true //option값 년 선택 가능
-	    ,changeMonth: true //option값  월 선택 가능                
-	    ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-	    ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-	    ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-	    ,buttonText: "선택" //버튼 호버 텍스트              
-	    ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
-	    ,monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 텍스트
-	    ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
-	    ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
-	    ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
-	    ,minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-	    ,maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+  
+   $('.datepicker').each(function(){
+	  $(this).datepicker({
+	   icons: {
+	              rightIcon: '<i class="material-icons">date_range</i>'
+	         }
+	   ,uiLibrary: "bootstrap4"
+	   ,keyboardNavigation: true
+	   ,locale: 'kr-ko'
+	   ,header: true
+	         ,modal:false
+	         ,footer:false
+	         ,calendarWeeks:false
+	         ,format: "yyyy-mm-dd"
+  		});
 	});
-  $('#datepicker_2').datepicker();  
-  $('#datepicker_3').datepicker();
-  $('#datepicker_4').datepicker();  
-  $('#datepicker_5').datepicker();
-  $('#datepicker_6').datepicker();
+
+  // datepicker 초기화
+  $("#datepicker_1").datepicker({
+      dateFormat: 'yy-mm-dd',
+      showOtherMonths: true,
+      showMonthAfterYear: true,
+      changeYear: true,
+      changeMonth: true,
+      showOn: "both",
+      buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+      buttonImageOnly: true,
+      buttonText: "선택",
+      yearSuffix: "년",
+      monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+      monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+      dayNamesMin: ['일','월','화','수','목','금','토'],
+      dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+      minDate: 0, // 오늘 날짜 이전을 비활성화
+      onSelect: function(dateText, inst) {
+        var date = $(this).datepicker('getDate');
+        date.setDate(date.getDate() + 1);
+        $("#datepicker_2").datepicker("option", "minDate", date);
+      }
+  });
+
+  $("#datepicker_2").datepicker({
+      dateFormat: 'yy-mm-dd',
+      showOtherMonths: true,
+      showMonthAfterYear: true,
+      changeYear: true,
+      changeMonth: true,
+      minDate: 1, // 오늘 날짜 이후만 선택 가능
+      beforeShow: function(input, inst) {
+        var date = $("#datepicker_1").datepicker('getDate');
+        if (date) {
+          date.setDate(date.getDate() + 1);
+          $(this).datepicker('option', 'minDate', date);
+        }
+      }
+  });
+  
+  // 기본 날짜 설정
+  $('#datepicker_1').datepicker('setDate', new Date());
+  $('#datepicker_2').datepicker('setDate', new Date(new Date().setDate(new Date().getDate() + 1)));
+
+  $('.gallery_img').magnificPopup({
+    type: 'image',
+    gallery:{
+      enabled:true
+    }
+  });
 
   $('.gallery_img').magnificPopup({
     type: 'image',

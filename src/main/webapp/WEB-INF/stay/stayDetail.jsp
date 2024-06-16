@@ -15,71 +15,6 @@
     <style>
 		.mySlides {display: none}
 		
-    	/*--------------------------------------------------------------
-		# Portfolio Details
-		--------------------------------------------------------------*/
-		.portfolio-details {
-		  padding-top: 0;
-		}
-		
-		.portfolio-details .portfolio-details-slider img {
-		  width: 100%;
-		}
-		
-		.portfolio-details .portfolio-details-slider .swiper-pagination {
-		  margin-top: 20px;
-		  position: relative;
-		}
-		
-		.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet {
-		  width: 12px;
-		  height: 12px;
-		  background-color: #fff;
-		  opacity: 1;
-		  border: 1px solid #3498db;
-		}
-		
-		.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
-		  background-color: #3498db;
-		}
-		
-		.portfolio-details .portfolio-info {
-		  padding: 30px;
-		  box-shadow: 0px 0 30px rgba(56, 64, 70, 0.08);
-		}
-		
-		.portfolio-details .portfolio-info h3 {
-		  font-size: 22px;
-		  font-weight: 700;
-		  margin-bottom: 20px;
-		  padding-bottom: 20px;
-		  border-bottom: 1px solid #eee;
-		}
-		
-		.portfolio-details .portfolio-info ul {
-		  list-style: none;
-		  padding: 0;
-		  font-size: 15px;
-		}
-		
-		.portfolio-details .portfolio-info ul li+li {
-		  margin-top: 10px;
-		}
-		
-		.portfolio-details .portfolio-description {
-		  padding-top: 30px;
-		}
-		
-		.portfolio-details .portfolio-description h2 {
-		  font-size: 26px;
-		  font-weight: 700;
-		  margin-bottom: 20px;
-		}
-		
-		.portfolio-details .portfolio-description p {
-		  padding: 0;
-		}
-		
 		/*--------------------------------------------------------------
 		# Breadcrumbs
 		--------------------------------------------------------------*/
@@ -126,28 +61,6 @@
 		    display: inline-block;
 		  }
 		}
-		
-	  	/* 별점 스타일 설정하기 */
-	  	#commentForm fieldset {
-	  		direction: rtl;  /* 오른쪽에서 왼쪽으로(아랍권) */
-	  	}
-	  	#commentForm input[type=radio] {
-	  		display: none;  /* 안보이게 숨김 */
-	  	}
-	  	#commentForm label {
-	  		font-size: 1.7em;
-	  		color: transparent;
-	  		text-shadow: 0 0 0 #f0f0f0;  /* 오른쪽 아래쪽 크기 */
-	  	}
-	  	#commentForm label:hover {
-	  		text-shadow: 0 0 0 rgba(250, 200, 0, 0.98);
-	  	}
-	  	#commentForm label:hover ~ label {  /* ~ 흐름 앞의 레이블이 이어지는 곳에 적용하겠다 */
-	  		text-shadow: 0 0 0 rgba(250, 200, 0, 0.98);
-	  	}
-	  	#commentForm input[type=radio]:checked ~ label {  /* 체크가 되어있는 곳에서 라벨까지 */
-	  		text-shadow: 0 0 0 rgba(250, 200, 0, 0.98);
-	  	}
 	    
 	    .portfolio .portfolio-item .portfolio-info {
 		  background: #fff;
@@ -270,7 +183,6 @@
 		  color: grey;
 		}
 		
-		/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
 		@media (max-width: 800px) {
 		  .row {
 		    flex-direction: column-reverse;
@@ -283,74 +195,91 @@
     <script>
     	'use strict';
     	
-    	$(function() {
-			$("#datepicker_1").datepicker({
-			  dateFormat: 'yy-mm-dd',
-			  minDate: 0,
-			  onSelect: function(dateText, inst) {
-			    var date = $(this).datepicker('getDate');
-			    date.setDate(date.getDate() + 1);
-			    $("#datepicker_2").datepicker("option", "minDate", date);
-			  }
-			});
-			
-			$("#datepicker_2").datepicker({
-			  dateFormat: 'yy-mm-dd',
-			  minDate: +1,
-			  beforeShow: function(input, inst) {
-			    var date = $("#datepicker_1").datepicker('getDate');
-			    if (date) {
-			      date.setDate(date.getDate() + 1);
-			      $(this).datepicker('option', 'minDate', date);
-			    }
-			  }
-			});
-		});
-    	  
-        function openPaymentModal() {
-            $('#paymentModal').modal('show');
+    	window.onload = function() {
+    	    if (${sMid == null || sMid == ""}) {
+    	        ['checkInInput', 'checkOutInput', 'guestNumInput'].forEach(id => {
+    	            let e = document.getElementById(id);
+    	            if (e) {
+    	                e.addEventListener('click', function() {
+    	                    alert("로그인 이후에 해당 숙소에 대한 예약이 가능합니다.\n로그인 페이지로 이동합니다!");
+    	                    location.href = "MemberLogin.mem";
+    	                });
+    	            }
+    	        });
+    	    }
+
+            document.getElementById('paymentBtn').addEventListener('click', function() {
+                $('#bookingCheckModal').modal('hide');
+                $('#paymentModal').modal('show');
+            });
         }
-		
-	  	// 별점/리뷰평가 등록하기
- 	  	function reviewCheck() {
-	  		let star = starForm.star.value;
-	  		let review = $("#review").val();
-	  		if(star == "") {
-	  			alert("별점을 부여해 주세요");
-	  			location.reload();
-	  		}
-	  		
-	  		let query = {
-	  				part : 'stay',
-	  				mid : '${sMid}',
-	  				nickName : '${sNickName}',
-	  				star : star,
-	  				review : review
-	  		}
-	  		
-	  		$.ajax({
-	  			url : "ReviewInputOk.ad",
-	  			type : "post",
-	  			data : query,
-	  			success:function(res) {
-	  				alert(res);
-	  				location.reload();
-	  			},
-	  			error : function() {
-	  				alert("전송오류!");
-	  			}
-	  		});
-	  	}
+    	
+        function checkBooking() {
+            let sIdx = ${vo.sIdx};
+            let checkIn = bookingForm.checkIn.value;
+            let checkOut = bookingForm.checkOut.value;
+            let guestNum = bookingForm.guestNum.value.trim();
+            let price = ${vo.price};
+            
+            if (${sMid == null || sMid == ""}) {
+                alert("로그인 이후에 해당 숙소에 대한 예약이 가능합니다.\n로그인 페이지로 이동합니다!");
+                location.href = "MemberLogin.mem";
+                return;
+            }
+            else if(checkIn == "" || checkOut == "") {
+				alert("예약 날짜를 입력하세요!");
+				return;
+			}
+			else if(guestNum > ${vo.guestMax}) {
+				alert("최대 인원 수를 초과하셨습니다!");
+				return;
+			}
+			
+            $.ajax({
+                url: "StayBooking.st",
+                type: "post",
+                data: {
+                    sIdx: sIdx,
+                    checkIn: checkIn,
+                    checkOut: checkOut,
+                    guestNum: guestNum,
+                    price: price
+                },
+                success: function(response) {
+                	let res = response.split(",");
+                	if (res[0] == "GOOD") {
+                		alert('예약 내용을 정확히 입력하셨나요? \n확인 후에 결제창으로 이동합니다.');
+                		let totalPrice = res[1];
+                        $('#totalPriceCheck').text('￦' + totalPrice + ' 원');
+                        $('#checkInCheck').text(checkIn);
+                        $('#checkOutCheck').text(checkOut);
+                        $('#guestNumCheck').text(guestNum);
+                        $('#checkInPayment').val(checkIn);
+                        $('#checkOutPayment').val(checkOut);
+                        $('#guestNumPayment').val(guestNum);
+                        $('#totalPayment').val(totalPrice);
+                        $('#totalStr').text('￦' + totalPrice + ' 원');
+                        $('#bookingCheckModal').modal('show');
+                    } 
+                    else {
+                        alert(res[1]);
+                    }
+                },
+                error: function() {
+                    alert("서버 오류!");
+                }
+            });
+        }
 	  	
 	  	// 리뷰 삭제하기
- 	  	function reviewDelete(idx) {
+ 	  	function reviewDelete(rIdx) {
 	  		let ans = confirm("리뷰를 삭제하시겠습니까?");
 	  		if(!ans) return false;
 	  		
 	  		$.ajax({
 	  			url : "ReviewDelete.ad",
 	  			type : "post",
-	  			data : {idx : idx},
+	  			data : {rIdx : rIdx},
 	  			success:function(res) {
 	  				if(res != "0") {
 		  				alert("리뷰가 삭제되었습니다.");
@@ -369,7 +298,27 @@
 	  		if(ans) location.href = "StayDiscontinue.st?sIdx=${vo.sIdx}";
 	  	}
 	  	
-		
+		function wishToggle(sIdx) {
+		    $.ajax({
+		        url: "StayWishToggle.st",
+		        type: "post",
+		        data: { sIdx: sIdx },
+		        success: function(res) {
+		        	let icon = document.getElementById("wish-icon-" + sIdx);
+		            if (res.trim() == "true") {
+		                icon.classList.remove('fa-solid', 'fa-heart');
+		                icon.classList.add('fa-regular', 'fa-heart');
+		            } else {
+		                icon.classList.remove('fa-regular', 'fa-heart');
+		                icon.classList.add('fa-solid', 'fa-heart');
+		                icon.style.color = 'red';
+		            }
+		        },
+		        error: function() {
+		            alert("전송 오류!");
+		        }
+		    });
+		}	
 	</script>
 </head>
 <body>
@@ -381,35 +330,40 @@
     <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
         <div class="d-flex justify-content-between align-items-center">
-        	<h2 class="w3-text-green">${vo.sName}</h2>
-          <ol>
-            <li><a href="${ctp}/Main">Home</a></li>
-            <li>Stay Details</li>
-          </ol>
+        	<h2 class="w3-text-light-green" style="font-size:30px;font-weight:bolder;">${vo.sName}&nbsp;&nbsp;<c:if test="${sMid == 'admin'}"><a href="'StayUpdate.st';" class="btn btn-outline-warning btn-sm mr-2">수정하기</a><a href="javascript:stayDiscontinue()" class="btn btn-outline-danger btn-sm">판매중지</a></c:if></h2>
+			<ol>
+				<li><a href="${ctp}/Main">Home</a></li>
+				<li><a href="StayList.st">Stay List</a></li>
+				<li>Stay Details</li>
+			</ol>
         </div>
+    	<p class="like-info"><a type="button" onclick="wishToggle(${vo.sIdx})" class="link-wish" title="위시리스트 저장">
+            <c:if test="${vo.isWished == 1}">
+                <i id="wish-icon-${vo.sIdx}" class="fa-solid fa-heart" style="color:red;"></i>
+            </c:if>
+            <c:if test="${vo.isWished == 0}">
+                <i id="wish-icon-${vo.sIdx}" class="fa-regular fa-heart" style="color:black;"></i>
+            </c:if>
+    	</a> [${vo.wishCnt}]명의 사람들이 이 숙소를 위시리스트에 저장했습니다</p>
       </div>
     </section>
 
-	<!-- Overlay effect when opening sidebar on small screens -->
 	<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 	
-	  <!-- Push down content on small screens -->
 	  <div class="w3-hide-large" style="margin-top:80px"></div>
     
 	<div class="w3-container">
-	    <!-- 이미지 리스트 설정 -->
 	    <c:set var="sPhotos" value="${fn:split(vo.sPhoto, '/')}"/>
 	
-	    <!-- 각 이미지를 슬라이드로 표시 -->
 	    <c:forEach var="sPhoto" items="${sPhotos}" varStatus="st">
 	        <div class="w3-display-container mySlides text-center">
-	            <img src="${ctp}/images/stay/${sPhoto}" style="width:90%;margin-bottom:-6px"">
+	            <img src="${ctp}/images/stay/${sPhoto}" style="width:90%;margin-bottom:-6px">
 	            <div class="w3-display-bottomleft w3-container w3-black">
 	                <p>Image ${st.index + 1} of ${fn:length(sPhotos)}</p>
 	            </div>
 	        </div>
 	    </c:forEach>
-	    <!-- 썸네일 표시 -->
+	    
 	    <div class="w3-row-padding w3-section">
 	        <c:forEach var="sPhoto" items="${sPhotos}" varStatus="st">
 	            <div class="w3-col s3">
@@ -419,39 +373,10 @@
 	    </div>
 	</div>
 
+    <hr>
   <div class="w3-container">
   	<div class="w3-row-padding">
-  	<div class="w3-col m5 portfolio-info" style="max-width:400px;">
-	  <h3>예약</h3>
-	  <form name="bookingForm" method="post" action="StayBooking.st?sIdx=${vo.sIdx}">
-	    <div class="form_colum">
-        <label><i class="fa fa-calendar-o"></i> Check In</label>
-        <input class="w3-input w3-border mb-2" id="datepicker_1" placeholder="Check in date" name="CheckIn" required>
-      </div>
-	    <div class="form_colum">
-        <label><i class="fa fa-calendar-o"></i> Check Out</label>
-        <input class="w3-input w3-border mb-2" id="datepicker_2" placeholder="Check out date" name="CheckOut" required>
-      </div>
-	    <div class="form_colum">
-        <label><i class="fa fa-male"></i> Guest</label>
-        <input class="w3-input w3-border mb-2" type="number" value="1" name="guestNum" min="1" max="${vo.guestMax}">
-      </div>
-	    <div class="form_colum">
-        <label style="font-size: 1.3em;font-weight: bold;"><i class="fa fa-money"></i> 가격 : ￦${vo.price} 원 / 1박</label>
-      </div>
-	  <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> 숙소 예약하기</button>
-	  <input type="hidden" name="price" value="${vo.price}">
-    </form>
-	</div>
-	<hr>
-	<div>
-	    <c:if test="${isBookingOk}">
-	        <button onclick="openPaymentModal()" class="btn btn-primary">결제하기</button>
-	    </c:if>
-	    <c:if test="${!isBookingOk}">
-	        <p class="text-danger">${message}</p>
-	    </c:if>
-	</div>
+  	
   	<div class="w3-col m7">
 	    <div class="w3-row">
     	<h4><strong>The space</strong></h4>
@@ -481,33 +406,67 @@
 	      </div>
     </div>
     </div>
-
-    </div>
-  </div>
+	<div class="w3-col m5 portfolio-info" style="max-width:400px;">
+  		<form name="bookingForm" method="post">
+	    	<div class="form_colum">
+	        	<label><i class="fa fa-calendar-o"></i> Check In</label>
+	        	<input class="w3-input w3-border mb-2" id="datepicker_1" placeholder="Check in" id="checkInInput" name="checkIn" required>
+      		</div>
+	    	<div class="form_colum">
+		        <label><i class="fa fa-calendar-o"></i> Check Out</label>
+		        <input class="w3-input w3-border mb-2" id="datepicker_2" placeholder="Check out" id="checkOutInput" name="checkOut" required>
+      		</div>
+	    	<div class="form_colum">
+		        <label><i class="fa fa-male"></i> Guest (미취학 아동 제외)</label>
+		        <input class="w3-input w3-border mb-2" type="number" value="1" id="guestNumInput" name="guestNum" min="1" max="${vo.guestMax}" required>
+        	</div>
+		    <div class="form_colum">
+	        	<label style="font-size: 1.3em;font-weight: bold;"> ￦ <fmt:formatNumber value="${vo.price}" pattern="#,##0" /> 원 <span style="font-size:0.8em;font-weight:500;">/박</span></label>
+	      	</div>
+	  		<button class="w3-button w3-right w3-red mt-2" type="button" id="checkBookingBtn" onclick="checkBooking()"><i class="fa fa-search w3-margin-right"></i> 숙소 예약하기</button>
+    	</form>
+	</div>
+</div>
+</div>
     <hr>
      <div class="w3-container">
-    <h4><strong>숙소 설명</strong></h4><br>
-    <p>${fn:replace(vo.sContent, newLine, "<br/>")}</p><br>
-    <p>결제가능 수단: <i class="fa fa-credit-card w3-large"></i> <i class="fa fa-cc-mastercard w3-large"></i> <i class="fa fa-cc-paypal w3-large"></i> <i class="fa fa-cc-cc-visa w3-large"></i><i class="fa fa-cc-paypal w3-large"></i></p>
+     <div class="w3-row">
+     	<div class="col">
+		    <h4><strong>숙소 설명</strong></h4><br>
+		    <p style="color:#162b45;">${fn:replace(vo.sContent, newLine, "<br/>")}</p><br>
+		    <p><span style="color:#162b45;font-weight:bold;"> - 결제가능 수단</span> : <i class="fa fa-credit-card w3-large"></i> | <i class="fa fa-cc-mastercard w3-large"></i> | <i class="fa fa-cc-paypal w3-large"></i> | <i class="fa fa-cc-visa w3-large"></i></p>
+    	</div>
+    </div>
     <hr>
     <div class="d-sm-flex justify-content-between">
-	    <div class="col-sm-7">
-		    <h4><strong>정책</strong></h4>
-		    <i class="fa fa-map-marker" style="width:30px"></i> ${vo.sort}<br>
+	    <div class="col-sm-5">
+		    <h4><strong>숙소 운영 정책</strong></h4>
+		    <br>
+			<h5><i class="fa fa-map-marker" style="width:30px"></i>대한민국, ${stayVo.residence == 'Chung' ? '충청도' : stayVo.residence == 'Gang' ? '강원도' : stayVo.residence == 'Jeol' ? '전라도' : '경상도'}</h5>
+    		&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check"></i> &nbsp;${vo.sort}
+			<p><br></p>
 		    <p>자세한 주소는 예약 후에 공개됩니다.</p>
 	    </div>
-	    <div class="col-sm-5">
-		    <p class="mb-3" style="font-size: 20px;"><b>리뷰평점 : <fmt:formatNumber value="${reviewAvg}" pattern="#,##0.0" /></b></p>
-		    <p class="like-info"><span class="align-middle"><i class="far fa-heart"></i></span> Lily and 4 people like this</p>
+	    <div class="col-sm-7">
+	    	<p><br><p>
+		    <p style="color:#162b45;"><span style="font-size:1.1em;font-weight:bold;">예약 취소</span>는 체크인 날짜로부터 <span style="font-size:1.1em;font-weight:bold;">'3일 전'</span>까지 가능합니다.<br>
+		    이후에는 취소가 불가능하니, 참조 부탁드립니다.<br>
+		    아울러 숙소에 대해 궁금한 점이 있다면,<br>
+		    저희 카카오톡 채널이나 홈페이지 메시지로 남겨주세요<br>
+		    더 좋은 서비스로 보답하겠습니다.<br>
+		    감사합니다!! <i class="fa-regular fa-face-smile"></i><br>
+		    <br>
+		    <span class="w3-right mr-5">- Serene nest 일동 올림 -</span>
+		    </p>
 	    </div>
     </div>
-  </div>
-  <hr>
-<p><br/></p>
 	<div class="navigation-top">
 		<div class="comments-area">
-            <h4>Review</h4>
-        	<c:if test="${empty rVos}"><p class="text-center">아직 댓글이 없습니다. 숙소에 대한 댓글을 남겨주세요.</p></c:if>
+			<div class="d-flex justify-content-between">
+            	<h3 style="font-weight:bold;">&nbsp;&nbsp;Review</h3>
+            	<p class="mb-3 mr-2" style="font-size: 20px;" style="float:right;"><b>리뷰평점 : <fmt:formatNumber value="${reviewAvg}" pattern="#,##0.0" /></b>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </div>
+        	<c:if test="${empty rVos}"><p class="text-center">아직 숙소에 대한 리뷰가 없습니다.<br>예약 완료 후, 다른 분들을 위해 리뷰를 남겨주세요.</p></c:if>
         	<c:if test="${!empty rVos}">
         	<c:set var="imsiIdx" value="0" />
         	<c:forEach var="rVo" items="${rVos}" varStatus="st">
@@ -542,63 +501,46 @@
             </c:forEach>
             </c:if>
         </div>
-	    <c:if test="${sMid != null}">
-	    <div class="comment-form">
-            <h4>댓글 작성하기</h4>
-            <form class="comment_form" action="#" id="commentForm">
-            	<fieldset style="border:0px;">  <!-- 별점자리 영역으로 지정 // border 0으로 흔적 삭제 -->
-		  			<div class="viewPoint m-0 b-0">  <!-- margin때문에 별이 밀려서 0으로 설정 -->
-		  				<input type="radio" name="star" value="5" id="star1"><label for="star1">★</label>  <!-- 원래 label 먼저 썼는데 right to left를 위해 오른쪽부터니까 5점부터 -->
-		  				<input type="radio" name="star" value="4" id="star2"><label for="star2">★</label>
-		  				<input type="radio" name="star" value="3" id="star3"><label for="star3">★</label>
-		  				<input type="radio" name="star" value="2" id="star4"><label for="star4">★</label>
-		  				<input type="radio" name="star" value="1" id="star5"><label for="star5">★</label>  <!-- rtl로 바꿨기 때문에 반대로 읽는 것 // 맨 앞의 별 -->
-		  				: 별점을 남겨주세요
-		  			</div>
-		  		</fieldset>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-						    <p>작성자 아이디</p>
-                            <input class="form-control" name="mid" type="text" value="${sMid}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-						<div class="form-group">
-						    <p>숙소 예약 목적(지역 경제 지원 예산 편성을 위한 데이터로만 활용됩니다.)</p>
-						    <select class="form-control" id="purpose" name="purpose">
-						        <option value="">선택안함</option>
-						        <option value="parents">부모님 예약</option>
-						        <option value="leisure">레저</option>
-						        <option value="festival">지역축제</option>
-						        <option value="meeting">모임</option>
-						        <option value="soloTravel">홀로여행</option>
-						        <option value="travelWithFriends">지인과 여행</option>
-						    </select>
-						</div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <textarea class="form-control w-100" name="rContent" id="rContent" cols="30" rows="5" placeholder="숙소에 대한 평가를 남겨주세요"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="button" value="입력" onclick="reviewCheck()" class="button button-contactForm btn_1">
-                </div>
-            </form>
-        </div>
-        </c:if>
 	</div>
+	<hr>
+</div>
 </div>
 </div>
 <p><br/></p>
+
+<div id="bookingCheckModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">예약 내용 확인</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            	<ul>
+		      <li><p>숙소정보 : ${vo.sName}</p></li>
+		      <li><p>check In : <span id="checkInCheck"></span></p></li>
+		      <li><p>check Out : <span id="checkOutCheck"></span></p></li>
+		      <li><p>숙박인원 : <span id="guestNumCheck"></span> 인</p></li>
+		      <li><p>1박요금 : ￦ <fmt:formatNumber value="${vo.price}" pattern="#,##0" /> 원</p></li>
+		      <li><p>청소비 : ￦ <fmt:formatNumber value="${vo.price*0.1}" pattern="#,##0" /> 원</p></li>
+		      </ul>
+		      <hr>
+		      <p>총 합계(KRW) : <b><span id="totalPriceCheck"></span></b></p>
+		      <hr>
+		      <div class="text-center">
+                <a type="button" id="paymentBtn" class="btn btn-success mr-2">결제하기</a>
+                <a type="button" data-dismiss="modal" class="btn btn-warning">취소</a>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="paymentModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">결제하기</h4>
+        <h4 class="modal-title">Credit Card</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
@@ -653,45 +595,48 @@
 	            </div>
 	          </div>
         	</div>
-        <label>
-          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-        </label>
-        <input type="submit" value="Continue to checkout" class="btn">
-      </form>
-    </div>
-  </div>
-  <div class="col-25">
-    <div class="container">
-      <h4>Cart
-        <span class="price" style="color:black">
-          <b>요금 세부정보</b>
-        </span>
-      </h4>
-      <p><a href="#">숙소정보</a> <span class="price">${vo.sName}</span></p>
-      <p><a href="#">${vo.star}</a> <span class="price">(후기 개)</span></p>
-      <p><a href="#">${vo.price}*${ckeckout - ckeckin}박</a> <span class="price">${vo.price*(ckeckout-ckeckin)}</span></p>
-      <p><a href="#">청소비</a> <span class="price">${vo.price*(ckeckout-ckeckin)}*0.05</span></p>
-      <hr>
-      <p>총 합계(KRW) <span class="price" style="color:black"><b>${vo.price*(ckeckout-ckeckin)}+${vo.price*(ckeckout-ckeckin)}*0.05</b></span></p>
-    </div>
-  </div>
-</div>
+		        <label>
+		          <input type="checkbox" checked="checked" name="sameadr"> 결제 정보 저장하기
+		        </label>
+				<p><input type="submit" value="숙소 예약하기" class="btn"></p>
+		        <input type="hidden" value="${vo.sIdx}" name="sIdx" />
+		        <input type="hidden" id="checkInPayment" name="checkInPayment" />
+		        <input type="hidden" id="checkOutPayment" name="checkOutPayment" />
+		        <input type="hidden" id="guestNumPayment" name="guestNumPayment" />
+		        <input type="hidden" id="totalPayment" name="totalPayment" />
+      		</form>
+    	</div>
+	</div>
+    	<div class="container">
+			<div class="col-25">
+		      <h4>KRW
+		        <span class="price">
+		          <b>결제 요금(원)</b>
+		        </span>
+		      </h4>
+	    	</div>
+			<div class="col-25">
+		      <h4><span class="badge badge-info">쿠폰 등록하기</span>
+		      	<b><span class="price" id="totalStr"></span></b>
+		      </h4>
+			</div>
+		</div>
+	</div>
 </div>
 </div>
 <jsp:include page="/include/footer.jsp" />
 <script>
-// Script to open and close sidebar when on tablets and phones
-function w3_open() {
-  document.getElementById("mySidebar").style.display = "block";
-  document.getElementById("myOverlay").style.display = "block";
-}
- 
-function w3_close() {
-  document.getElementById("mySidebar").style.display = "none";
-  document.getElementById("myOverlay").style.display = "none";
-}
+	// 이미지 슬라이드
+	function w3_open() {
+	  document.getElementById("mySidebar").style.display = "block";
+	  document.getElementById("myOverlay").style.display = "block";
+	}
+	 
+	function w3_close() {
+	  document.getElementById("mySidebar").style.display = "none";
+	  document.getElementById("myOverlay").style.display = "none";
+	}
 
-// Slideshow Apartment Images
 	var slideIndex = 1;
 	showDivs(slideIndex);
 	

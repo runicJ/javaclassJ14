@@ -16,9 +16,9 @@ public class StayUpdateCommand implements StayInterface {
 		int sIdx = request.getParameter("sIdx")==null ? 0 : Integer.parseInt(request.getParameter("sIdx"));
 		
 		StayDAO dao = new StayDAO();
-		StayVO vo = dao.getStayIdxDetail(sIdx);
+//		StayVO vo = dao.getStayIdxDetail(sIdx);
 		
-		request.setAttribute("vo", vo);
+//		request.setAttribute("vo", vo);
 	}
 
 }

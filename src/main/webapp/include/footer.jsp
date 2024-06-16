@@ -24,9 +24,9 @@
                     <h4>Contact Us</h4>
                     <p>G 그린컴퓨터아트학원 청주<br>
                 	  충청북도 청주시 서원구 사직대로 109 4층 401호</p>
-                    <span onclick="https://cheongju.greenart.co.kr">https://cheongju.greenart.co.kr</span>
+                    <p><span onclick="https://cheongju.greenart.co.kr">https://cheongju.greenart.co.kr</span></p>
                     <div class="social-icons">
-                    	<div id="add-channel-button"></div>
+						<a id="add-channel-button"></a>
                         <a href="https://pf.kakao.com/_iExmtG" target="_blank"><i class="fa-solid fa-comment"></i></a>
                         <a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="ti-instagram"></i></a>
                         <a href="https://www.facebook.com" target="_blank"><i class="ti-facebook"></i></a>
@@ -47,6 +47,18 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </div>
 </footer>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+  integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
+</script>
+<script>
+  Kakao.init('1f0094220b28ee306010e8c6878e94b4');
+</script>
+<script>
+	Kakao.Channel.createAddChannelButton({
+    container: '#add-channel-button',
+    channelPublicId: '_iExmtG'
+  });
+</script>
 <!-- jquery plugins here-->
 <script src="js/jquery-1.12.1.min.js"></script>
 <!-- popper js -->

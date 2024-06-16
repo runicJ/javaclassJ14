@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<% pageContext.setAttribute("newLine", "\n"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -116,6 +115,11 @@
 		
 		#photoDemo:hover {
 		  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+		}
+		
+		#sidebarnav li:last-child {
+		    margin-top: 140%;
+		    font-size: 0.7em;
 		}
 	</style>
   	<script>
@@ -385,7 +389,6 @@
 <body>
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
-<p><br/></p>
 <div class="container">	
     <div class="preloader">
         <div class="lds-ripple">
@@ -403,127 +406,129 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="MemberCommentList.mem" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">작성한 게시글</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="MemberWishList.mem" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">위시리스트</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="MemberComplaint.mem" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">문의/신고 글</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="MemberDelete.mem" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu" style="color:orange;">회원탈퇴</span></a></li>
                     </ul>
                 </nav>
             </div>
         </aside>
 		<div class="page-wrapper">
-    	<div class="page-breadcrumb">
-        	<div class="row">
-            	<div class="col-12 d-flex no-block align-items-center">
-                	<h4 class="page-title">내 정보 수정</h4>
-                	<div class="ml-auto text-right">
-                    	<nav aria-label="breadcrumb">
-	                        <ol class="breadcrumb">
-	                            <li class="breadcrumb-item" style="background-color:white;"><a href="${ctp}/Main">Home</a></li>
-	                            <li class="breadcrumb-item active" aria-current="page" style="background-color:white;"><a href="MemberMain.mem">마이페이지</a></li>
-	                            <li class="breadcrumb-item active" aria-current="page" style="background-color:white;">내 정보 수정</li>
-	                        </ol>
-                    	</nav>
-                	</div>
-            	</div>
-        	</div>
-    	</div>
-  		<form name="myform" method="post" action="MemberUpdateOk.mem" class="was-validated">
-    		<div class="box border border-info rounded p-5">
-			<h2 class="text-center">회 원 정 보 수 정</h2>
-    		<br/>
-				<div  class="form-group">
-					<label for="fName">프로필 사진(파일용량:10MByte이내) : </label><br>
-					<img src="${ctp}/images/member/${vo.photo}" id="photoDemo" width="100px"/>
-					<input type="file" name="fName" id="file" onchange="previewImage();" class="form-control-file border"/>
-    			</div>
-			    <div class="form-group">
-					<label for="mid">아이디 : </label>
-					<input type="text" class="form-control" id="mid" name="mid" value="${vo.mid}" readonly />
-			    </div>
-			    <div class="form-group">
-					<label for="pwd">현재비밀번호 : </label>
-					<input type="password" class="form-control mb-0" id="pwd" placeholder="정보 수정시 비밀번호를 입력하세요" name="pwd" required />
-			    </div>
-				<div class="form-group">
-					<label for="newPwd">새 비밀번호 : </label>
-					<input type="password" class="form-control mb-0" id="newPwd" placeholder="바꾸실 비밀번호를 입력하세요." name="newPwd" />
-					<div class="invalid-feedback">비밀번호는 4~30자로 최소 하나의 대문자,소문자,숫자,특수문자를 넣어서 작성해주세요.</div>
-				</div>
-				<div class="form-group">
-					<label for="newPwdCheck">새 비밀번호 확인 : </label>
-					<input type="password" class="form-control mb-0" id="newPwdCheck" name="newPwdCheck" />
-				</div>
-				<div class="form-group">
-					<label for="name">성명 :</label>
-					<input type="text" class="form-control" id="name" value="${vo.name}" name="name" required />
-				</div>
-				<div class="form-group">
-					<label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" id="nickNameBtn" value="닉네임 중복체크" class="btn btn-info btn-sm" onclick="nickCheck()"/></label>
-					<input type="text" class="form-control" id="nickName" value="${vo.nickName}" name="nickName" required />
-				</div>
-				<div class="form-group">
-					<label for="tel2">전화번호 : &nbsp; &nbsp;</label><input type="button" value="연락처 중복체크" id="telCheckBtn" class="btn btn-info btn-sm" onclick="telCheck()"/>
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-						    <select name="tel1" id="tel1" class="custom-select">
-						      	<option value="010" selected>010</option>
-						    </select>
-						</div>
-						<span class="mt-3">&nbsp;&nbsp; - &nbsp;&nbsp;</span>
-						<input type="text" value="${tel2}" name="tel2" id="tel2" size=4 maxlength=4 class="form-control" required />
-						<span class="mt-3">&nbsp;&nbsp; - &nbsp;&nbsp;</span>
-						<input type="text" value="${tel3}" name="tel3" id="tel3" size=4 maxlength=4 class="form-control" required />
+	    	<div class="page-breadcrumb">
+	        	<div class="row">
+	            	<div class="col-12 d-flex no-block align-items-center">
+	                	<h4 class="page-title">내 정보 수정</h4>
+	                	<div class="ml-auto text-right">
+	                    	<nav aria-label="breadcrumb">
+		                        <ol class="breadcrumb">
+		                            <li class="breadcrumb-item" style="background-color:white;"><a href="${ctp}/Main">Home</a></li>
+		                            <li class="breadcrumb-item active" aria-current="page" style="background-color:white;"><a href="MemberMain.mem">마이페이지</a></li>
+		                            <li class="breadcrumb-item active" aria-current="page" style="background-color:white;">내 정보 수정</li>
+		                        </ol>
+	                    	</nav>
+	                	</div>
+	            	</div>
+	        	</div>
+	    	</div>
+	  		<form name="myform" method="post" action="MemberUpdateOk.mem" class="was-validated">
+	    		<div class="box border border-info rounded p-5">
+					<h2 class="text-center">회 원 정 보 수 정</h2>
+		    		<br/>
+					<div  class="form-group">
+						<label for="fName">프로필 사진(파일용량:10MByte이내) : </label><br>
+						<img src="${ctp}/images/member/${vo.photo}" id="photoDemo" width="100px"/>
+						<input type="file" name="fName" id="file" onchange="previewImage();" class="form-control-file border"/>
+	    			</div>
+				    <div class="form-group">
+						<label for="mid">아이디 : </label>
+						<input type="text" class="form-control" id="mid" name="mid" value="${vo.mid}" readonly />
+				    </div>
+				    <div class="form-group">
+						<label for="pwd">현재비밀번호 : </label>
+						<input type="password" class="form-control mb-0" id="pwd" placeholder="정보 수정시 비밀번호를 입력하세요" name="pwd" required />
+				    </div>
+					<div class="form-group">
+						<label for="newPwd">새 비밀번호 : </label>
+						<input type="password" class="form-control mb-0" id="newPwd" placeholder="바꾸실 비밀번호를 입력하세요." name="newPwd" />
+						<div class="invalid-feedback">비밀번호는 4~30자로 최소 하나의 대문자,소문자,숫자,특수문자를 넣어서 작성해주세요.</div>
 					</div>
-				</div>
-			    <div class="form-group">
-			      	<label for="email1">Email address:</label>
-		        	<div class="input-group mb-3">
-		        	<c:set var="email" value="${fn:split(vo.email,'@')}" />
-			          	<input type="text" class="form-control mr-2" id="email1" name="email1" value="${email[0]}" required />
-			          	<div class="input-group-append ml-2">
-				            <select name="email2" class="custom-select mt-1">
-								<option value="naver.com" ${email[1] == 'naver.com' ? 'selected' : ''}>naver.com</option>
-								<option value="hanmail.net" ${email[1] == 'hanmail.net' ? 'selected' : ''}>hanmail.net</option>
-								<option value="gmail.com" ${email[1] == 'gmail.com' ? 'selected' : ''}>gmail.com</option>
-								<option value="nate.com" ${email[1] == 'nate.com' ? 'selected' : ''}>nate.com</option>
-								<option value="yahoo.com" ${email[1] == 'yahoo.com' ? 'selected' : ''}>yahoo.com</option>
-				            </select>
-			          	</div>
-		        	</div>
-			    </div>
-			    <div class="form-group">
-			      	<label for="sample6_sido">거주지('특별시/광역시/도'만 표시됩니다) : </label>
-			      	<div class="input-group">
-				   		<input type="text" name="residence" id="sample6_sido" value="${vo.residence}" size="40" class="form-control">
-		        	<div class="input-group-append">
-			       		<input type="button" onclick="sample6_execDaumPostcode()" value="지역 찾기" class="btn btn-info mt-1">
-		        	</div>
-			      </div>
-			    </div>
-			    <div class="form-group">
-			      	<label for="content">자기소개</label>
-			      	<textarea rows="5" class="form-control" id="content" name="content">${fn:replace(vo.content,newLine,'<br>')}</textarea>
-			    </div>
-    			<div class="form-group">
-      				<div class="form-check-inline">
-	        			<span class="input-group-text">정보공개 여부</span>  &nbsp; &nbsp;
-				        <label class="form-check-label">
-				          	<input type="radio" class="form-check-input" name="userInfo" ${vo.userInfo == '공개' ? 'checked' : ''} />공개
-				        </label>
-  					</div>
-	      			<div class="form-check-inline">
-						<label class="form-check-label">
-						  	<input type="radio" class="form-check-input" name="userInfo" ${vo.userInfo == '비공개' ? 'checked' : ''} />비공개
-						</label>
-	      			</div>
-    			</div>
-			    <div class="from-group d-flex text-center mb-2">
-				    <button type="button" class="genric-btn success radius mr-2" onclick="fCheck()">회원정보수정</button>
-				    <button type="reset" class="genric-btn radius default mr-2">다시작성</button>
-				    <button type="button" class="genric-btn primary radius" onclick="location.href='MemberMain.mem';">돌아가기</button>
-			    </div>
-			    <input type="hidden" name="email" />
-			    <input type="hidden" name="tel" />
-    		</div>
-		  </form>
+					<div class="form-group">
+						<label for="newPwdCheck">새 비밀번호 확인 : </label>
+						<input type="password" class="form-control mb-0" id="newPwdCheck" name="newPwdCheck" />
+					</div>
+					<div class="form-group">
+						<label for="name">성명 :</label>
+						<input type="text" class="form-control" id="name" value="${vo.name}" name="name" required />
+					</div>
+					<div class="form-group">
+						<label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" id="nickNameBtn" value="닉네임 중복체크" class="btn btn-info btn-sm" onclick="nickCheck()"/></label>
+						<input type="text" class="form-control" id="nickName" value="${vo.nickName}" name="nickName" required />
+					</div>
+					<div class="form-group">
+						<label for="tel2">전화번호 : &nbsp; &nbsp;</label><input type="button" value="연락처 중복체크" id="telCheckBtn" class="btn btn-info btn-sm" onclick="telCheck()"/>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+							    <select name="tel1" id="tel1" class="custom-select">
+							      	<option value="010" selected>010</option>
+							    </select>
+							</div>
+							<span class="mt-3">&nbsp;&nbsp; - &nbsp;&nbsp;</span>
+							<input type="text" value="${tel2}" name="tel2" id="tel2" size=4 maxlength=4 class="form-control" required />
+							<span class="mt-3">&nbsp;&nbsp; - &nbsp;&nbsp;</span>
+							<input type="text" value="${tel3}" name="tel3" id="tel3" size=4 maxlength=4 class="form-control" required />
+						</div>
+					</div>
+				    <div class="form-group">
+				      	<label for="email1">Email address:</label>
+			        	<div class="input-group mb-3">
+			        	<c:set var="email" value="${fn:split(vo.email,'@')}" />
+				          	<input type="text" class="form-control mr-2" id="email1" name="email1" value="${email[0]}" required />
+				          	<div class="input-group-append ml-2">
+					            <select name="email2" class="custom-select mt-1">
+									<option value="naver.com" ${email[1] == 'naver.com' ? 'selected' : ''}>naver.com</option>
+									<option value="hanmail.net" ${email[1] == 'hanmail.net' ? 'selected' : ''}>hanmail.net</option>
+									<option value="gmail.com" ${email[1] == 'gmail.com' ? 'selected' : ''}>gmail.com</option>
+									<option value="nate.com" ${email[1] == 'nate.com' ? 'selected' : ''}>nate.com</option>
+									<option value="yahoo.com" ${email[1] == 'yahoo.com' ? 'selected' : ''}>yahoo.com</option>
+					            </select>
+				          	</div>
+			        	</div>
+				    </div>
+				    <div class="form-group">
+				      	<label for="sample6_sido">거주지('특별시/광역시/도'만 표시됩니다) : </label>
+				      	<div class="input-group">
+					   		<input type="text" name="residence" id="sample6_sido" value="${vo.residence}" size="40" class="form-control">
+			        	<div class="input-group-append">
+				       		<input type="button" onclick="sample6_execDaumPostcode()" value="지역 찾기" class="btn btn-info mt-1">
+			        	</div>
+				      </div>
+				    </div>
+				    <div class="form-group">
+				      	<label for="content">자기소개</label>
+				      	<textarea rows="5" class="form-control" id="content" name="content">${vo.content}</textarea>
+				    </div>
+	    			<div class="form-group">
+	      				<div class="form-check-inline">
+		        			<span class="input-group-text">정보공개 여부</span>  &nbsp; &nbsp;
+					        <label class="form-check-label">
+					          	<input type="radio" class="form-check-input" name="userInfo" ${vo.userInfo == '공개' ? 'checked' : ''} />공개
+					        </label>
+	  					</div>
+		      			<div class="form-check-inline">
+							<label class="form-check-label">
+							  	<input type="radio" class="form-check-input" name="userInfo" ${vo.userInfo == '비공개' ? 'checked' : ''} />비공개
+							</label>
+		      			</div>
+	    			</div>
+				    <div class="from-group d-flex text-center mb-2">
+					    <button type="button" class="genric-btn success radius mr-2" onclick="fCheck()" style="font-size:1em;">회원정보 수정</button>
+					    <button type="reset" class="genric-btn radius default mr-2" style="font-size:1em;">다시작성</button>
+					    <button type="button" class="genric-btn primary radius" onclick="location.href='MemberMain.mem';" style="font-size:1em;">돌아가기</button>
+				    </div>
+				    <input type="hidden" name="email" />
+				    <input type="hidden" name="tel" />
+	    		</div>
+			</form>
 		</div>
+	</div>
 	<p><br/></p>
 	<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -540,10 +545,9 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
+</div>
 <jsp:include page="/include/footer.jsp" />
-    <script src="js/admin/jquery-ui.min.js"></script>
+	<script src="js/admin/jquery-ui.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="js/admin/perfect-scrollbar.jquery.min.js"></script>
     <script src="js/admin/sparkline.js"></script>

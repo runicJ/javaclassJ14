@@ -154,9 +154,9 @@ h6 {
   align-items: center;
   justify-content: space-between;
   padding: 10px 0 10px 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Electrical Safety Bold", "Poppins", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: bold;
   color: #4f5a62;
   white-space: nowrap;
   transition: 0.3s;
@@ -233,7 +233,7 @@ h6 {
 
 @media (max-width: 1366px) {
   .navbar .dropdown .dropdown ul {
-    left: -90%;
+    left: -100%;
   }
 
   .navbar .dropdown .dropdown:hover>ul {

@@ -14,7 +14,7 @@
 <title>Stay balance</title>
 <link rel="icon" href="images/bag_travel_icon.png">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="setting/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="setting/css/bootstrap.min.css"> -->
 <!-- animate CSS -->
 <link rel="stylesheet" href="setting/css/animate.css">
 <!-- owl carousel CSS -->

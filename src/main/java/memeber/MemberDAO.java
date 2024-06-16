@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.GetConn;
+import stay.BookingVO;
 
 public class MemberDAO {
 	
@@ -16,6 +17,7 @@ public class MemberDAO {
 	
 	private String sql = "";
 	MemberVO vo = null;
+	BookingVO bVo = null;
 	
 	public void pstmtClose() {
 		if(pstmt != null) {
@@ -227,7 +229,7 @@ public class MemberDAO {
 			pstmt.setString(2, tel);
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {  // 자료가 있는지 없는지 모름
+			if (rs.next()) {
 				vo.setmIdx(rs.getInt("mIdx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setPwd(rs.getString("pwd"));
@@ -235,7 +237,7 @@ public class MemberDAO {
 				vo.setNickName(rs.getString("nickName"));
 				vo.setTel(rs.getString("tel"));
 				vo.setEmail(rs.getString("email"));
-				vo.setEmail(rs.getString("residence"));
+				vo.setResidence(rs.getString("residence"));
 				vo.setPhoto(rs.getString("photo"));
 				vo.setContent(rs.getString("content"));
 				vo.setStartDate(rs.getString("startDate"));
@@ -269,5 +271,58 @@ public class MemberDAO {
 		}
 		return res;
 	}
-	
+
+	public int getTotRecCnt(String contentsShow, String part) {
+		int totRecCnt = 0;
+		try {
+			sql = "select count(*) as cnt from booking where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, contentsShow);
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return totRecCnt;
+	}
+
+	// 회원별 예약리스트
+	public ArrayList<BookingVO> getMemberBookingList(int startIndexNo, int pageSize, String contentsShow) {
+		ArrayList<BookingVO> vos = new ArrayList<BookingVO>();
+		try {
+			sql = "select *, datediff(now(), b.bDate) as date_diff, s.sName as sName from booking b join stay s on b.sIdx = s.sIdx "
+					+ "where mid = ? order by b.bDate desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, contentsShow);
+			pstmt.setInt(2, startIndexNo);
+			pstmt.setInt(3, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				bVo = new BookingVO();
+				bVo.setbIdx(rs.getInt("bIdx"));
+				bVo.setsIdx(rs.getInt("sIdx"));
+				bVo.setMid(rs.getString("mid"));
+				bVo.setbDate(rs.getString("bDate"));
+				bVo.setCheckIn(rs.getString("checkIn"));
+				bVo.setCheckOut(rs.getString("checkOut"));
+				bVo.setGuestNum(rs.getInt("guestNum"));
+				bVo.setTotal(rs.getInt("total"));
+				bVo.setStatus(rs.getString("status"));
+
+				bVo.setsName(rs.getString("sName"));
+				bVo.setDate_diff(rs.getInt("date_diff"));
+				
+				vos.add(bVo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
 }

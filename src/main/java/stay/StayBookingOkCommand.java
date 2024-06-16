@@ -14,17 +14,17 @@ public class StayBookingOkCommand implements StayInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int sIdx = request.getParameter("sIdx")==null ? 0 : Integer.parseInt(request.getParameter("sIdx"));
 		HttpSession session = request.getSession();
-		String sMid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
-        String checkIn = request.getParameter("checkIn")==null ? "" : request.getParameter("checkIn");
-        String checkOut = request.getParameter("checkIn")==null ? "" : request.getParameter("checkOut");
-        int guestNum = request.getParameter("guestNum")==null ? 0 : Integer.parseInt(request.getParameter("guestNum"));
-        int total = request.getParameter("total")==null ? 0 : Integer.parseInt(request.getParameter("total"));
+		String mid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
+        String checkIn = request.getParameter("checkInPayment")==null ? "" : request.getParameter("checkInPayment");
+        String checkOut = request.getParameter("checkOutPayment")==null ? "" : request.getParameter("checkOutPayment");
+        int guestNum = request.getParameter("guestNumPayment")==null ? 0 : Integer.parseInt(request.getParameter("guestNumPayment"));
+        int total = request.getParameter("totalPayment")==null ? 0 : Integer.parseInt(request.getParameter("totalPayment"));
         
         StayDAO dao = new StayDAO();
-        
+                
         BookingVO vo = new BookingVO();
         vo.setsIdx(sIdx);
-        vo.setMid(sMid);
+        vo.setMid(mid);
         vo.setCheckIn(checkIn);
         vo.setCheckOut(checkOut);
         vo.setGuestNum(guestNum);

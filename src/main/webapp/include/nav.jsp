@@ -21,26 +21,30 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="StayList.st" id="navbarDropdown1" 
-                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stay</a>
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stays</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
                                     <a class="dropdown-item" href="StayList.st">Stay List</a>
                                     <a class="dropdown-item" href="StayList.st">Stay Promotion</a>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="ActivityBooking.ad" id="navbarDropdown2" 
+                                role="button" aria-haspopup="true" aria-expanded="false">Activities</a>
+                            </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="BlogList.bl" id="navbarDropdown2"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                    <a class="dropdown-item" href="BlogList.bl">Travelog</a>
-                                    <a class="dropdown-item" href="BlogList.bl">Journal</a>
+                                <a class="nav-link dropdown-toggle" href="BlogList.bl" id="navbarDropdown3"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Travelog</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                                    <a class="dropdown-item" href="BlogList.bl">Blog List</a>
+                                    <a class="dropdown-item" href="BlogJournal.bl">Travel Journal</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="Service.ad" id="navbarDropdown3"
+                                <a class="nav-link dropdown-toggle" href="Service.ad" id="navbarDropdown4"
                                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Service</a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                                    <a class="dropdown-item" href="BlogList.bl?sort='공지사항';">공지사항</a>
-                                    <a class="dropdown-item" href="#">1:1문의</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
+                                    <a class="dropdown-item" href="FAQList.ad">자주하는 질문</a>
+                                    <a class="dropdown-item" href="Complaint.ad">1:1문의</a>
                                 </div>
                             </li>
                             <c:if test="${sMid == null}">
@@ -55,11 +59,11 @@
                     <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="AdminMain.ad">관리자메뉴</a></c:if>
                     <c:if test="${sMid != null && sMid != 'admin'}">
 	                    <li class="nav-item dropdown" style="list-style-type:none;">
-	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown">
+	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown" style="font-size=14px;">
                             <img src="images/member/${sPhoto}" alt="user" class="rounded-circle" height="30" width="30">
 	                    	${sNickName} 님</a>
 		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" href="MemberMain.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>
+		                        <a class="dropdown-item" href="MemberUpdate.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>
 		                        <a class="dropdown-item" href="MemberMessage.mem"><i class="fa-solid fa-message"></i> 메시지 보내기</a>
 		                        <a class="dropdown-item" href="MemberWish.mem"><i class="fa-solid fa-heart"></i> 위시리스트</a>
 				      		</div>

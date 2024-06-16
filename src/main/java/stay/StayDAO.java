@@ -110,11 +110,22 @@ public class StayDAO {
 	}
 
 	// 숙소 상세보기
-	public StayVO getStayIdxDetail(int sIdx) {
+	public StayVO getStayIdxDetail(int sIdx, String contentsShow) {
 		try {
-			sql="select * from stay where sIdx=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sIdx);
+			if(contentsShow.equals("admin") || contentsShow.equals("guest")) {
+		        sql = "SELECT s.*, " +
+		                "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
+		                "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt " +
+		                "FROM stay s WHERE s.sIdx = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, contentsShow);
+				pstmt.setInt(2, sIdx);
+			}
+			else {
+				sql="select * from stay where sIdx=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, sIdx);				
+			}
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				vo = new StayVO();
@@ -130,6 +141,9 @@ public class StayDAO {
 				vo.setResidence(rs.getString("residence"));
 				vo.setsDate(rs.getString("sDate"));
 				vo.setsDel(rs.getString("sDel"));
+				
+				vo.setIsWished(rs.getInt("isWished"));
+				vo.setWishCnt(rs.getInt("wishCnt"));
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -200,10 +214,20 @@ public class StayDAO {
 		try {
 			if(search == null || search.equals("")) {
 				if(contentsShow.equals("adminOK")) {
-					sql = "select * FROM stay ORDER BY sIdx DESC limit ?,?";
+					sql = "select s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished "
+							+ "FROM stay s ORDER BY s.sIdx DESC limit ?,?";
 					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, startIndexNo);
-					pstmt.setInt(2, pageSize);
+					pstmt.setString(1, contentsShow);
+					pstmt.setInt(2, startIndexNo);
+					pstmt.setInt(3, pageSize);
+				}
+				else if(!contentsShow.equals("guest")) {
+					sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished "
+							+ "FROM stay s WHERE s.sDel = 'NO' ORDER BY s.sIdx DESC LIMIT ?, ?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, contentsShow);
+					pstmt.setInt(2, startIndexNo);
+					pstmt.setInt(3, pageSize);
 				}
 				else {
 					sql = "select * FROM stay WHERE sDel = 'NO' ORDER BY sIdx DESC limit ?,?";
@@ -244,6 +268,10 @@ public class StayDAO {
 	            vo.setResidence(rs.getString("residence"));
 	            vo.setsDate(rs.getString("sDate"));
 	            vo.setsDel(rs.getString("sDel"));
+	            
+	            if(!contentsShow.equals("guest")) {
+	            	vo.setIsWished(rs.getInt("isWished"));
+	            }
 
 	            // 추가할 시설 정보 가져오기
 	            FacilityVO fVo = getStayIdxFacility(rs.getInt("sIdx"));
@@ -260,36 +288,62 @@ public class StayDAO {
 	}
 
 	// top 4 숙소
-	public ArrayList<StayVO> getVestFourStay() {
+	public ArrayList<StayVO> getVestFourStay(String contentsShow) {
 		ArrayList<StayVO> vos = new ArrayList<StayVO>();
-		try {
-			sql = "select * from stay order by star desc, sIdx desc limit 4";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				vo = new StayVO();
-				vo.setsIdx(rs.getInt("sIdx"));
-				vo.setSort(rs.getString("sort"));
-				vo.setsName(rs.getString("sName"));
-				vo.setsPhoto(rs.getString("sPhoto"));
-				vo.setStar(rs.getInt("star"));
-				vo.setAddress(rs.getString("address"));
-				vo.setsContent(rs.getString("sContent"));
-				vo.setGuestMax(rs.getInt("guestMax"));
-				vo.setPrice(rs.getInt("price"));
-				vo.setResidence(rs.getString("residence"));
-				vo.setsDate(rs.getString("sDate"));
-				vo.setsDel(rs.getString("sDel"));
-				
-				vos.add(vo);
-			}
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			rsClose();
-		}
-		return vos;
+	    try {
+	        if (contentsShow.equals("adminOK")) {
+	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
+	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
+	                  "FROM stay s " +
+	                  "ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
+	            pstmt = conn.prepareStatement(sql);
+	        } else if (!contentsShow.equals("guest")) {
+	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
+	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
+	                  "FROM stay s " +
+	                  "WHERE s.sDel = 'NO' " +
+	                  "ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC " +
+	                  "LIMIT 4";
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, contentsShow);
+	        } else {
+	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCount, " +
+	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
+	                  "FROM stay s " +
+	                  "WHERE s.sDel = 'NO' " +
+	                  "ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC " +
+	                  "LIMIT 4";
+	            pstmt = conn.prepareStatement(sql);
+	        }
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            StayVO vo = new StayVO();
+	            vo.setsIdx(rs.getInt("sIdx"));
+	            vo.setSort(rs.getString("sort"));
+	            vo.setsName(rs.getString("sName"));
+	            vo.setsPhoto(rs.getString("sPhoto"));
+	            vo.setStar(rs.getInt("star"));
+	            vo.setAddress(rs.getString("address"));
+	            vo.setsContent(rs.getString("sContent"));
+	            vo.setGuestMax(rs.getInt("guestMax"));
+	            vo.setPrice(rs.getInt("price"));
+	            vo.setResidence(rs.getString("residence"));
+	            vo.setsDate(rs.getString("sDate"));
+	            vo.setsDel(rs.getString("sDel"));
+
+	            if (!contentsShow.equals("guest")) {
+	                vo.setIsWished(rs.getInt("isWished"));
+	            }
+
+	            vos.add(vo);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류 : " + e.getMessage());
+	    } finally {
+	    	rsClose();
+	    }
+	    return vos;
 	}
 
 	// 숙소 개수 구하기
@@ -329,6 +383,51 @@ public class StayDAO {
 		return totRecCnt;
 	}
 
+	// 회원별 숙소 위시 여부 확인
+	public boolean checkMemberWish(String sMid, int sIdx) {
+	    boolean result = false;
+	    try {
+	    	conn.setAutoCommit(false); // 트랜잭션 시작
+	        sql = "select count(*) as count from stayWish where mid=? and sIdx=?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, sMid);
+	        pstmt.setInt(2, sIdx);
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            result = rs.getInt("count") > 0;
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류 : " + e.getMessage());
+	    } finally {
+	        rsClose();
+	    }
+	    return result;
+	}
+
+    // 숙소 위시 상태를 토글
+    public void toggleWish(String sMid, int sIdx, boolean like) {
+        try {
+        	sql = like ? "INSERT INTO stayWish VALUES (default, ?, ?)" :
+                "DELETE FROM stayWish WHERE mid = ? AND sIdx = ?";
+        	pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, sMid);
+            pstmt.setInt(2, sIdx);
+            pstmt.executeUpdate();
+            conn.commit(); // 트랜잭션 커밋
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException e2) {
+                	e2.printStackTrace();
+                }
+            }
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+    }
+    
 	// 숙소 예약 여부 확인
 	public int StayBookingCheck(int sIdx, String checkInStr, String checkOutStr) {
         int res = 0;
@@ -370,40 +469,4 @@ public class StayDAO {
 		}
 		return res;
 	}
-
-	// 회원별 숙소 위시 여부 확인
-	public boolean checkMemberWish(String sMid, int sIdx) {
-	    boolean result = false;
-	    try {
-	        sql = "select count(*) as count from stayWish where mid=? and sIdx=?";
-	        pstmt = conn.prepareStatement(sql);
-	        pstmt.setString(1, sMid);
-	        pstmt.setInt(2, sIdx);
-	        rs = pstmt.executeQuery();
-	        if (rs.next()) {
-	            result = rs.getInt("count") > 0;
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("SQL 오류 : " + e.getMessage());
-	    } finally {
-	        rsClose();
-	    }
-	    return result;
-	}
-
-    // 숙소 위시 상태를 토글
-    public void toggleWish(String sMid, int sIdx, boolean like) {
-        try {
-        	sql = like ? "INSERT INTO stayWish VALUES (default, ?, ?)" :
-                "DELETE FROM stayWish WHERE mid = ? AND sIdx = ?";
-        	pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, sMid);
-            pstmt.setInt(2, sIdx);
-            pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			pstmtClose();
-		}
-    }
 }

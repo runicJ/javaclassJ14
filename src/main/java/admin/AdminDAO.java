@@ -38,7 +38,7 @@ public class AdminDAO {
 		if(conn != null) {
 			try {
 				conn.close();
-			} catch (Exception e) {}  // 여기서 오류 잘 안남 나면 시스템 문제
+			} catch (Exception e) {}
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class AdminDAO {
 				rs.close();
 			} catch (Exception e) {}
 		}
-		pstmtClose();  // 정확히는 if 밖에 써야함
+		pstmtClose();
 	}
 	
 	// 회원 전체/부분 리스트
@@ -311,23 +311,39 @@ public class AdminDAO {
 		return res;
 	}
 
-	//리뷰 댓글 저장하기
-/*	public int setReviewReplyInputOk(ReviewVO vo) {
+	public int setReviewInputOk(ReviewVO vo, String bookingId) {
 		int res = 0;
 		try {
-			sql = "insert into reply values (default,?,?,?,default,?)";
+			sql = "INSERT INTO review VALUES (default,?,?,?,?,?,?,default,?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getIdx());
-			pstmt.setString(2, vo.getReplyMid());
-			pstmt.setString(3, vo.getReplyNickName());
-			pstmt.setString(4, vo.getReplyContent());
+			pstmt.setString(1, vo.getPart());
+			pstmt.setInt(2, vo.getPartIdx());
+			pstmt.setString(3, vo.getMid());
+			pstmt.setString(4, vo.getNickName());
+			pstmt.setInt(5, vo.getStar());
+			pstmt.setString(6, vo.getContent());
+			pstmt.setString(7, vo.getPurpose());
 			res = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			pstmtClose();
-		}
+			
+			if ("stay".equals(vo.getPart())) {
+				String updateBookingSQL = "UPDATE bookings SET status = 'DONE' WHERE id = ?";
+				pstmt = conn.prepareStatement(updateBookingSQL);
+				pstmt.setString(1, bookingId);
+				pstmt.executeUpdate();
+			}
+			
+			conn.commit(); // 트랜잭션 커밋
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류 : " + e.getMessage());
+	        try {
+	            if (conn != null) conn.rollback();  // 오류 발생 시 롤백
+	        } catch (SQLException e2) {
+	            System.out.println("롤백 중 오류 발생: " + e2.getMessage());
+	        }
+	    } finally {
+	        rsClose();
+	    }
 		return res;
-	}*/
+	}
 
 }

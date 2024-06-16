@@ -26,7 +26,7 @@ public class MemberListCommand implements AdminInterface {
 		String part = request.getParameter("part")==null ? "tIdx" : request.getParameter("part");
 		
 		if(mid.equals("admin")) {
-			Pagination.pageChange(request, pag, pageSize, "", "MemberList", part);
+			Pagination.pageChange(request, pag, pageSize, "", "memberList", part);
 		}
 		else {
 			request.setAttribute("message", "관리자 전용 페이지 입니다. 로그인 페이지로 이동합니다.");
