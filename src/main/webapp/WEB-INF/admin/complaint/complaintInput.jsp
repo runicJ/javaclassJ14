@@ -82,52 +82,80 @@
 <body>
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
-<p><br/></p>
-<div class="contact-box-main">
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-sm-12">
-                <div class="contact-form-right">
-                    <h2>GET IN TOUCH</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio justo, ultrices ac nisl sed, lobortis porta elit. Fusce in metus ac ex venenatis ultricies at cursus mauris.</p>
-                    <form id="contactForm">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required data-error="Please enter your name">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" placeholder="Your Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea class="form-control" id="message" placeholder="Your Message" rows="4" data-error="Write your message" required></textarea>
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                                <div class="submit-button text-center">
-                                    <button class="btn hvr-hover" id="submit" type="submit">Send Message</button>
-                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item text-center">
+                        <h2>Service</h2>
+                        <p>Serene Nest는 항상 당신의 목소리에 귀 기울이겠습니다.</p>
+                        <c:if test="${sMid == 'admin'}"><a href="StayInput.st" class="btn_1">숙소 등록하기</a></c:if>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<p><br/></p>
+    <div class="contact-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-sm-12">
+                    <div class="contact-form-right">
+                        <h2>1:1 문의</h2>
+                        <p>Serene Nest에서 불편하거나 궁금한 사항이 있다면 언제든 문의해 주세요.<br>
+                        빠른 시일 내에 성심성의껏 답변드릴 것을 약속드립니다.</p>
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="mid" name="mid" placeholder="비회원 분들은 연락처나 이메일을 적어주세요" required data-error="필수 입력사항입니다!">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="part" name="part" placeholder="문의유형" required data-error="문의 유형을 적어주세요!">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="message" placeholder="문의하실 내용을 적어주세요" rows="5" data-error="필수 입력사항입니다!" required></textarea>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="submit-button text-center">
+                                        <button class="btn hvr-hover" id="submit" type="submit" style="background-color:#ccce7b;">Send Message</button>
+                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+				<div class="col-lg-4 col-sm-12">
+                    <div class="contact-info-left">
+                        <h2 class="mb-5">CONTACT INFO</h2>
+                        <p> 카카오톡 전용 채널을 통해 문의사항을 남겨주셔도 좋습니다. </p>
+                        <ul>
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>Address:<br>그린컴퓨터아트학원<br>충청북도 청주시 서원구<br>사직대로 109 4층 401호 </p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone-square"></i>Phone: +1324</a></p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-envelope"></i>Email: <a href="https://cheongju.greenart.co.kr">https://cheongju.greenart.co.kr</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
   <script src="${ctp}/js/stay/contact-form-script.js"></script>

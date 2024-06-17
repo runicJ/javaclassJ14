@@ -49,7 +49,7 @@
   			<td colspan="2" class="text-center">
   				<input type="button" value="비밀번호확인" onclick="pwdDeleteCheck()" class="btn btn-success mr-2" />
   				<input type="reset" value="다시입력" class="btn btn-info mr-2" />
-  				<input type="button" value="돌아가기" onclick="location.href='MemberMain.mem';" class="btn btn-warning" />
+  				<input type="button" value="돌아가기" onclick="location.href='MemberUpdate.mem';" class="btn btn-warning" />
   			</td>
   		</tr>
   	</table>

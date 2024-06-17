@@ -11,9 +11,7 @@
 	<title>Stay List</title>
   <%@ include file = "../../include/bs4.jsp"%>
   <style>
-  	/*--------------------------------------------------------------
-	# Back to top button
-	--------------------------------------------------------------*/
+  	/* 위로 스르륵 버튼*/
 	.back-to-top {
 	  position: fixed;
 	  visibility: hidden;
@@ -299,7 +297,7 @@
 	}
 
 	function wishToggle(sIdx) {
-		if(!sMid) {
+		if(${sMid==null || sMid == ""}) {
 			alert("로그인 후에 가능한 메뉴입니다!");
 			return;
 		}
@@ -377,7 +375,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
                         <div class="breadcrumb_iner_item text-center">
-                            <h2>Stay List</h2>
+                            <h2>Stay</h2>
                             <p>Serene Nest는 당신에게 필요한 맞춤 보금자리를 제공합니다.</p>
                             <c:if test="${sMid == 'admin'}"><a href="StayInput.st" class="btn_1">숙소 등록하기</a></c:if>
                         </div>

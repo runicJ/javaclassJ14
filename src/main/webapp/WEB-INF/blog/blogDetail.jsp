@@ -86,11 +86,11 @@
 	  			return false;
 	  		}
 	  		let query = {
-	  				part : 'blog',
+	  				part : 'travelog',
 	  				partIdx : ${vo.tIdx},
 	  				mid : '${sMid}',
 	  				nickName : '${sNickName}',
-	  				content : content
+	  				rContent : rContent
 	  		}
 	  		
 	  		$.ajax({
@@ -197,7 +197,6 @@
                 </div>
             <div class="navigation-top mt-5">
                 <div class="d-sm-flex justify-content-between text-center">
-                    <p class="like-info"><span class="align-middle"><i class="far fa-heart"></i></span> Lily and 4 people like this</p>
                     <div class="col-sm-4 text-center my-2 my-sm-0">
                         <!-- <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p> -->
                     </div>
@@ -283,14 +282,13 @@
                             </div>
                             <div class="desc">
                                 <p class="comment">
-                                    ${fn:replace(rVo.content, newLine, '<br/>')}
+                                    ${fn:replace(rVo.rContent, newLine, '<br/>')}
                                 </p>
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-center">
 	                            <h5>
-	                               <a href="#">${rVo.nickName}</a>
+	                               <a href="#">${rVo.nickName} &nbsp;&nbsp;</a>
 	                            </h5>
-                                        <p class="date">${rVo.mid}</p>
                                         <c:if test="${rVo.mid == sMid || sMid == 'admin'}"><p><a href="javascript:reviewDelete(${rVo.rIdx})" title="리뷰삭제" class="badge badge-danger">x</a></p></c:if>
                                     </div>
                                     <div class="reply-btn">
@@ -320,7 +318,7 @@
 	                    </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <textarea class="form-control w-100" name="content" id="content" rows="4" placeholder="댓글을 작성해주세요."></textarea>
+                                <textarea class="form-control w-100" name="rContent" id="rContent" rows="4" placeholder="댓글을 작성해주세요."></textarea>
                             </div>
                         </div>
                     </div>

@@ -21,7 +21,7 @@ public class ReviewInputOkCommand implements AdminInterface {
 		String mid = (String) session.getAttribute("sMid");
 		String nickName = (String) session.getAttribute("sNickName");
 		int star = request.getParameter("star") == null ? 0 : Integer.parseInt(request.getParameter("star"));
-		String content = request.getParameter("content") == null ? "" : request.getParameter("content");
+		String rContent = request.getParameter("rContent") == null ? "" : request.getParameter("rContent");
 		String purpose = request.getParameter("purpose") == null ? "" : request.getParameter("purpose");
 		
 		AdminDAO dao = new AdminDAO();
@@ -32,7 +32,7 @@ public class ReviewInputOkCommand implements AdminInterface {
 		vo.setMid(mid);
 		vo.setNickName(nickName);
 		vo.setStar(star);
-		vo.setContent(content);
+		vo.setrContent(rContent);
 		vo.setPurpose(purpose);
 		
 		int res = dao.setReviewInputOk(vo, bookingId);

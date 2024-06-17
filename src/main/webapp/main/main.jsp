@@ -65,7 +65,37 @@
     .modal-body {
         padding: 0;
     }
-
+    
+	/* 위로 스르륵 버튼*/
+	.back-to-top {
+	  position: fixed;
+	  visibility: hidden;
+	  opacity: 0;
+	  right: 15px;
+	  bottom: 15px;
+	  z-index: 996;
+	  background: #3498db;
+	  width: 40px;
+	  height: 40px;
+	  border-radius: 4px;
+	  transition: all 0.4s;
+	}
+	
+	.back-to-top i {
+	  font-size: 28px;
+	  color: #fff;
+	  line-height: 0;
+	}
+	
+	.back-to-top:hover {
+	  background: #57aae1;
+	  color: #fff;
+	}
+	
+	.back-to-top.active {
+	  visibility: visible;
+	  opacity: 1;
+	}
   </style>
   <script>
   	$(function() {
@@ -154,6 +184,26 @@
             }
   		});
   	}
+  	
+   	let lastScroll = 0;  // 마지막 위치
+  	let curPage = 1;
+  	
+  	$(document).scroll(function(){
+  		let currentScroll = $(this).scrollTop();  // 스크롤바 위쪽 시작 위치, 처음은 0이다. // currentScroll이라는 이름에 저장  // 현재 높이 0
+  		let documentHeight = $(document).height();  // 화면에 표시되는 전체 문서의 높이 // 본문의 크기
+  		let nowHeight = $(this).scrollTop() + $(window).height();  // 현재 화면상단 + 현재 화면높이 // 현재 높이 + 현재 화면의 높이
+  		
+  		// 스크롤이 아래로 내려갔을떄 이벤트 처리..
+  		if(currentScroll > lastScroll) {  // 화면 끝까지 갔는지 체크
+  			if(documentHeight < (nowHeight + (documentHeight*0.1))) {
+  				// 다음페이지 가져오기...
+  				console.log("다음페이지 가져오기");
+  				curPage++;
+  				getList(curPage);
+  			}
+  		}
+  		lastScroll = currentScroll;  // 이렇게 하고 다시 계산
+  	});
   </script>
 </head>
 <body>
@@ -248,12 +298,12 @@
                                     <c:forEach begin="1" end="${stayReviews[stayVo]}" var="star">
                                     	<i class="fas fa-star"></i>
                                 	</c:forEach>
-                                	<div class="place_review">
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
-                                    <a href="#"><i class="fas fa-star"></i></a>
+                                	<div class="place_review" style="color:#ffe500;">
+	                                    <i class="fas fa-star"></i>
+	                                    <i class="fas fa-star"></i>
+	                                    <i class="fas fa-star"></i>
+	                                    <i class="fas fa-star"></i>
+	                                    <i class="fas fa-star"></i>
                                 	<b>평점 : <fmt:formatNumber value="${stayReviews[reviewAvg]}" pattern="#,##0.0" /></b>
                                     </div>
                                 <span>( review)</span>
@@ -273,7 +323,7 @@
 							        </c:when>
 							        <c:otherwise>
 							            <button class="btn btn-dark">
-							                <b><i class="fa-regular fa-heart"></i> Wish </b>${stayVo.wishCnt}
+							                <b><i class="fa-solid fa-heart" style="background-color:#23272b"></i></i> Wish </b>${stayVo.wishCnt}
 							            </button>
 							        </c:otherwise>
 							    </c:choose>
@@ -337,7 +387,7 @@
             <div class="row ">
                 <div class="col-xl-6">
                     <div class="section_tittle">
-                        <h2>여행에 관한 한줄평</h2>
+                        <h2>Inspiring Travel Quotes</h2>
                     </div>
                 </div>
             </div>
@@ -424,6 +474,7 @@
         </div>
     </div>
 </div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fa-solid fa-arrow-up"></i></a>
 <%@ include file = "../../include/footer.jsp"%>
 </body>
 </html>

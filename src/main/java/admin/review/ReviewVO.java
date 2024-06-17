@@ -8,7 +8,7 @@ public class ReviewVO {
 	private String mid;
 	private String nickName;
 	private int star;
-	private String content;
+	private String rContent;
 	private String rDate;
 	private String purpose;
 	
@@ -48,11 +48,11 @@ public class ReviewVO {
 	public void setStar(int star) {
 		this.star = star;
 	}
-	public String getContent() {
-		return content;
+	public String getrContent() {
+		return rContent;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setrContent(String rContent) {
+		this.rContent = rContent;
 	}
 	public String getrDate() {
 		return rDate;
@@ -70,7 +70,7 @@ public class ReviewVO {
 	@Override
 	public String toString() {
 		return "ReviewVO [rIdx=" + rIdx + ", part=" + part + ", partIdx=" + partIdx + ", mid=" + mid + ", nickName="
-				+ nickName + ", star=" + star + ", content=" + content + ", rDate=" + rDate + ", purpose=" + purpose
+				+ nickName + ", star=" + star + ", rContent=" + rContent + ", rDate=" + rDate + ", purpose=" + purpose
 				+ "]";
 	}
 

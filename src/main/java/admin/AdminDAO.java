@@ -240,37 +240,20 @@ public class AdminDAO {
 		return res;
 	}
 
-	// 리뷰작성 처리하기
-	public int setReviewInputOk(ReviewVO vo) {
-		int res = 0;
-		try {
-			sql = "insert into review values (default,?,?,?,?,default,?,default,?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getPart());
-			pstmt.setInt(2, vo.getPartIdx());
-			pstmt.setString(3, vo.getMid());
-			pstmt.setString(4, vo.getNickName());
-			pstmt.setString(5, vo.getContent());
-			pstmt.setString(6, vo.getPurpose());
-			res = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			rsClose();
-		}
-		return res;
-	}
-
 	// 리뷰 내역 전체 리스트 가져오기
-	public ArrayList<ReviewVO> getReviewSearch(int idx, String part) {
+	public ArrayList<ReviewVO> getReviewSearch(int tIdx, String part) {
 		ArrayList<ReviewVO> rVos = new ArrayList<ReviewVO>();
 		try {
-			sql = "select * from review where part = ? and partIdx = ? order by rIdx desc";
+	        sql = "SELECT r.*, m.userInfo, m.photo " +
+	                "FROM review r " +
+	                "JOIN member2 m ON r.mid = m.mid " +
+	                "WHERE r.part = ? AND r.partIdx = ? " +
+	                "ORDER BY r.rIdx DESC";
 //			sql = "select * from (select * from review where part = ? and partIdx = ?) as v left join reply r "  // partIdx는 원본글
 //					+ "on v.idx = r.reviewIdx order by v.idx desc, r.replyIdx desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, part);
-			pstmt.setInt(2, idx);
+			pstmt.setInt(2, tIdx);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -281,9 +264,12 @@ public class AdminDAO {
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.setStar(rs.getInt("star"));
-				vo.setContent(rs.getString("content"));				
+				vo.setrContent(rs.getString("rContent"));				
 				vo.setrDate(rs.getString("rDate"));
 				vo.setPurpose(rs.getString("purpose"));
+				
+	            vo.setUserInfo(rs.getString("userInfo"));
+	            vo.setPhoto(rs.getString("photo"));
 				
 				rVos.add(vo);
 			}
@@ -321,7 +307,7 @@ public class AdminDAO {
 			pstmt.setString(3, vo.getMid());
 			pstmt.setString(4, vo.getNickName());
 			pstmt.setInt(5, vo.getStar());
-			pstmt.setString(6, vo.getContent());
+			pstmt.setString(6, vo.getrContent());
 			pstmt.setString(7, vo.getPurpose());
 			res = pstmt.executeUpdate();
 			

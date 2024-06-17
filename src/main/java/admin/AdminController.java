@@ -16,7 +16,6 @@ import admin.member.MemberDeleteOkCommand;
 import admin.member.MemberListCommand;
 import admin.review.ReviewDeleteCommand;
 import admin.review.ReviewInputOkCommand;
-import admin.review.ReviewReplyInputOkCommand;
 import admin.stay.StayListCommand;
 
 @SuppressWarnings("serial")
@@ -38,7 +37,7 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
-		if(com.equals("/ReviewInputOk")) {
+		else if(com.equals("/ReviewInputOk")) {
 			command = new ReviewInputOkCommand();
 			command.execute(request, response);
 			return;
