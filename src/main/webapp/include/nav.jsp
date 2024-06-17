@@ -44,7 +44,7 @@
                                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Service</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
                                     <a class="dropdown-item" href="FAQList.ad">자주하는 질문</a>
-                                    <a class="dropdown-item" href="Complaint.ad">1:1문의</a>
+                                    <a class="dropdown-item" href="ComplaintInput.ad">1:1문의</a>
                                 </div>
                             </li>
                             <c:if test="${sMid == null}">

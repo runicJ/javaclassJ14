@@ -25,8 +25,22 @@
                     <p>G 그린컴퓨터아트학원 청주<br>
                 	  충청북도 청주시 서원구 사직대로 109 4층 401호</p>
                     <p><span onclick="https://cheongju.greenart.co.kr">https://cheongju.greenart.co.kr</span></p>
-                    <div class="social-icons">
-						<a id="add-channel-button"></a>
+                     <div class="social-icons">
+						<a
+						  id="kakao-talk-channel-add-button"
+						  data-channel-public-id="_iExmtG"
+						  data-size="small"
+						  data-support-multiple-densities="true"
+						></a>
+<!-- 					<div
+					  id="kakao-talk-channel-chat-button"
+					  data-channel-public-id="_iExmtG"
+					  data-title="question"
+					  data-size="small"
+					  data-color="yellow"
+					  data-shape="pc"
+					  data-support-multiple-densities="true"
+					></div> -->
                         <a href="https://pf.kakao.com/_iExmtG" target="_blank"><i class="fa-solid fa-comment"></i></a>
                         <a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="ti-instagram"></i></a>
                         <a href="https://www.facebook.com" target="_blank"><i class="ti-facebook"></i></a>
@@ -47,7 +61,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </div>
 </footer>
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
   integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
 </script>
 <script>
@@ -58,7 +72,41 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     container: '#add-channel-button',
     channelPublicId: '_iExmtG'
   });
+</script> -->
+<script>
+  window.kakaoAsyncInit = function() {
+    Kakao.Channel.createAddChannelButton({
+      container: '#kakao-talk-channel-add-button',
+    });
+  };
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.channel.min.js';
+    js.integrity = 'sha384-PFe+C2S6aXd8v5j//vBqNPP8DMpEqLOw05p9BBajfh7IDWnUTHhNlu+Uxj3wxNej';
+    js.crossOrigin = 'anonymous';
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, 'script', 'kakao-js-sdk');
 </script>
+<!-- <script>
+  window.kakaoAsyncInit = function() {
+    Kakao.Channel.createChatButton({
+      container: '#kakao-talk-channel-chat-button',
+    });
+  };
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.channel.min.js';
+    js.integrity = 'sha384-PFe+C2S6aXd8v5j//vBqNPP8DMpEqLOw05p9BBajfh7IDWnUTHhNlu+Uxj3wxNej';
+    js.crossOrigin = 'anonymous';
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, 'script', 'kakao-js-sdk');
+</script> -->
 <!-- jquery plugins here-->
 <script src="js/jquery-1.12.1.min.js"></script>
 <!-- popper js -->

@@ -65,6 +65,7 @@
     .modal-body {
         padding: 0;
     }
+
   </style>
   <script>
   	$(function() {
@@ -104,6 +105,55 @@
 			$("#videoModal").modal('show');
 		});
 	});
+	
+
+	function clip(){
+
+		var url = '';
+		var textarea = document.createElement("textarea");
+		document.body.appendChild(textarea);
+		url = window.document.location.href;
+		textarea.value = url;
+		textarea.select();
+		document.execCommand("copy");
+		document.body.removeChild(textarea);
+		alert("URL이 복사되었습니다.")
+	}
+	
+  	function fCheck() {
+  		let address = searchForm.address.value.trim();
+  		let checkIn = searchForm.checkIn.value;
+  		let checkOut = searchForm.checkOut.value;
+  		let guestMax = searchForm.guestMax.value.trim();
+  		
+  		if(address == "" || (checkIn == "" && checkOut == "")) {
+  			alert("여행 지역 또는 예약 날짜를 입력하세요!");
+  			return;
+  		}
+  		
+  		$.ajax({
+            url  : "StayList.st",
+            type : "post",
+            data : {
+            	address : address,
+            	checkIn : checkIn,
+            	checkOut : checkOut,
+            	guestMax : guestMax
+            },
+            success: function(res) {
+  				if(res != "0") {
+  					alert("검색 조건에 맞는 숙소를 조회합니다.");
+  					location.reload();
+  				}
+  				else {
+  					alert("검색한 조건에 맞는 숙소가 없습니다.");
+  				}
+            },
+            error: function() {
+                alert("전송 오류!");
+            }
+  		});
+  	}
   </script>
 </head>
 <body>
@@ -151,16 +201,16 @@
 												<input class="select" type="text" name="address" placeholder="여행 지역"> 
                                             </div>
                                             <div class="form_colum">
-                                                <input id="datepicker_1" name="datepicker" placeholder="Check in">
+                                                <input id="datepicker_1" name="checkIn" placeholder="Check in">
                                             </div>
                                             <div class="form_colum">
-                                                <input id="datepicker_2" name="datepicker" placeholder="Check out">
+                                                <input id="datepicker_2" name="checkOut" placeholder="Check out">
                                             </div>
                                             <div class="form_colum">
-                                                <input class="select" type="number" name="guest" min="1" placeholder="인원 수"> 
+                                                <input class="select" type="number" name="guestMax" min="1" placeholder="인원 수"> 
                                             </div>
                                             <div class="form_btn">
-                                                <input type="submit" class="btn_1" value="search">
+                                                <input type="button" class="btn_1" onclick="fCheck()" value="search">
                                             </div>
                                         </div>
                                     </form>
@@ -287,7 +337,7 @@
             <div class="row ">
                 <div class="col-xl-6">
                     <div class="section_tittle">
-                        <h2>가장 도움이 되는 후기 댓글</h2>
+                        <h2>여행에 관한 한줄평</h2>
                     </div>
                 </div>
             </div>
@@ -302,8 +352,8 @@
                                 <a href="#"><i class="fas fa-star"></i></a>
                                 <a href="#"><i class="fas fa-star"></i></a>
                             </div>
-                            <p>Waters make fish every without firmament saw had. Morning air subdue. Our Air very one whales grass is fish whales winged night yielding land creeping that seed </p>
-                            <h5> - Allen Miller</h5>
+                            <p> 단지 도착만을 하기 위한 여행이라면 그 여행은 불쌍한 여행이다 </p>
+                            <h5> - 아서 콜틴</h5>
                         </div>
                         <div class="single_review_slider">
                             <div class="place_review">
@@ -313,8 +363,8 @@
                                 <a href="#"><i class="fas fa-star"></i></a>
                                 <a href="#"><i class="fas fa-star"></i></a>
                             </div>
-                            <p>Waters make fish every without firmament saw had. Morning air subdue. Our Air very one whales grass is fish whales winged night yielding land creeping that seed </p>
-                            <h5> - Allen Miller</h5>
+                            <p> 여행에서 지식을 얻어 돌아오고 싶다면 떠날 때 지식을 몸에 지니고 가야 한다 </p>
+                            <h5> - 사무엘 존슨</h5>
                         </div>
                         <div class="single_review_slider">
                             <div class="place_review">
@@ -324,8 +374,8 @@
                                 <a href="#"><i class="fas fa-star"></i></a>
                                 <a href="#"><i class="fas fa-star"></i></a>
                             </div>
-                            <p>Waters make fish every without firmament saw had. Morning air subdue. Our Air very one whales grass is fish whales winged night yielding land creeping that seed </p>
-                            <h5> - Allen Miller</h5>
+                            <p> 행복하게 여행하려면 가볍게 여행해야 한다. </p>
+                            <h5> - 앙쿠안 드 셍텍쥐베리</h5>
                         </div>
                         <div class="single_review_slider">
                             <div class="place_review">
@@ -335,8 +385,8 @@
                                 <a href="#"><i class="fas fa-star"></i></a>
                                 <a href="#"><i class="fas fa-star"></i></a>
                             </div>
-                            <p>Waters make fish every without firmament saw had. Morning air subdue. Our Air very one whales grass is fish whales winged night yielding land creeping that seed </p>
-                            <h5> - Allen Miller</h5>
+                            <p> 세계는 한 권의 책이다. 여행하지 않는 사람은 단지 그 책의 한 페이지만을 읽는 것이다 </p>
+                            <h5> - 성 아우구스티누스</h5>
                         </div>
                         <div class="single_review_slider">
                             <div class="place_review">
@@ -346,8 +396,8 @@
                                 <a href="#"><i class="fas fa-star"></i></a>
                                 <a href="#"><i class="fas fa-star"></i></a>
                             </div>
-                            <p>Waters make fish every without firmament saw had. Morning air subdue. Our Air very one whales grass is fish whales winged night yielding land creeping that seed </p>
-                            <h5> - Allen Miller</h5>
+                            <p> 여행은 그대에게 적어도 세가지의 유익함을 가져다 줄것이다. 하나는 타향에 대한 지식이고 다른 하나는 고향에 대한 애착이며 마지막 하나는 그대 자신에 대한 발견이다. </p>
+                            <h5> - 브하그완</h5>
                         </div>
                     </div>
                 </div>

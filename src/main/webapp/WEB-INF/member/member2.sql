@@ -45,6 +45,8 @@ create table blogLiked (
     FOREIGN KEY (tIdx) REFERENCES travelog(tIdx) ON DELETE CASCADE
 );
 
+drop table blogLiked;
+
 CREATE TABLE logHistory (
     logIdx INT AUTO_INCREMENT PRIMARY KEY,
     mId VARCHAR(20) NOT NULL,

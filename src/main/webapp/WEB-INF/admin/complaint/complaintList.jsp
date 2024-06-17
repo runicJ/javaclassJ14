@@ -43,6 +43,8 @@
   </script>
 </head>
 <body>
+<%@ include file = "/include/header.jsp"%>
+<%@ include file = "/include/nav.jsp"%>
 <p><br/></p>
 <div class="container">
   <h2 class="text-center">신 고 리 스 트</h2>
@@ -106,5 +108,6 @@
       </div>
     </div>
   </div>
+<%@ include file = "/include/footer.jsp"%>
 </body>
 </html>

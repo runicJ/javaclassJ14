@@ -12,6 +12,7 @@
 	<title>Stay Detail</title>
     <%@ include file = "/include/bs4.jsp" %>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <style>
 		.mySlides {display: none}
 		
@@ -318,7 +319,63 @@
 		            alert("전송 오류!");
 		        }
 		    });
-		}	
+		}
+		
+		export const clip = () => {
+			navigator.clipboard.writeText(window.location.href);
+		}
+		
+		const url = encodeURI(window.location.href);
+
+		// Facebook
+		const shareFacebook = () => {
+		  window.open("http://www.facebook.com/sharer/sharer.php?u=" + url);
+		}
+
+
+		// Twitter
+		const shareTwitter = () => {
+		  const text = '지금 우리 MBTI는?'
+		  window.open("https://twitter.com/intent/tweet?text=" + text + "&url=" +  url)
+		}
+		
+		// App.tsx
+
+		const App = () => {
+		  // ...
+		  if (window.Kakao) {
+		    const kakao = window.Kakao;
+		    if (!kakao.isInitialized()) kakao.init(import.meta.env.VITE_KAKAO_API_KEY)
+		    // 나는 Vite를 써서 import.meta.env이며, React는 process.env로 조회한다.
+		  }
+		}
+		 
+		// LikeButtons.tsx
+
+		//...
+		  const shareKakao = () => {
+		    window.Kakao.Link.sendDefault({
+		      objectType: 'feed',
+		      content: {
+		        title: '지금 우리 MBTI는?',
+		        description: '파릇파릇하기만 했던 나, 입사후에 무슨 일이?',
+		        imageUrl: window.location.href + '/asset/img/basic.jpeg',
+		        link: {
+		          webUrl : url,
+		          mobileWebUrl : url,
+		        },
+		      },
+		      buttons: [
+		        {
+		          title: '웹으로 이동',
+		          link: {
+		            webUrl : url,
+		            mobileWebUrl : url,
+		          },
+		        },
+		      ]
+		    })
+		  }
 	</script>
 </head>
 <body>
