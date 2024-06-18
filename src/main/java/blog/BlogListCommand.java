@@ -14,7 +14,7 @@ public class BlogListCommand implements BlogInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
-		int pageSize = request.getParameter("pageSize")==null ? 5 : Integer.parseInt(request.getParameter("pageSize"));
+		int pageSize = request.getParameter("pageSize")==null ? 3 : Integer.parseInt(request.getParameter("pageSize"));
 		String part = request.getParameter("part")==null ? "tIdx" : request.getParameter("part");
 		
 		Pagination.pageChange(request, pag, pageSize, "", "blog", part);

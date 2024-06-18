@@ -29,12 +29,6 @@ public class StayInputOkCommand implements StayInterface {
 		String file = "";
 		String oFileName = "";
 		
-		String[] fSNames = request.getParameter("fSName").split("/");
-		
-		for(String fSName : fSNames) {
-			new File(realPath + fSName).delete();  // 실제 존재하는 파일은 파일(io) 객체를 만들고 지워야 함
-		}
-		
 		while(fileNames.hasMoreElements()) {  // 하나씩 꺼내서 값이 있느냐
 			file = (String) fileNames.nextElement();
 			
@@ -42,7 +36,7 @@ public class StayInputOkCommand implements StayInterface {
 				oFileName += multipartRequest.getOriginalFileName(file) + "/";
 			}
 		}
-		oFileName = oFileName.substring(0, oFileName.lastIndexOf("/"));
+        oFileName = oFileName.substring(0, oFileName.lastIndexOf("/"));
 		
 		String sort = multipartRequest.getParameter("sort")==null ? "" : multipartRequest.getParameter("sort");
 		String sName = multipartRequest.getParameter("sName")==null ? "" : multipartRequest.getParameter("sName");
@@ -91,16 +85,20 @@ public class StayInputOkCommand implements StayInterface {
 		fVo.setWashing(washing);
 
 		Map<String, Object> result = dao.setStayInputOk(vo, fVo); // 숙소 정보 저장
-		int res = (int) result.get("res");
-		int sIdx = (int) result.get("sIdx");
-		
-		if(res != 0) {
-	        request.setAttribute("message", "숙소가 등록되었습니다.");
-	        request.setAttribute("url", "StayList.st");
-		}
-		else {
-	        request.setAttribute("message", "숙소 등록 실패");
-	        request.setAttribute("url", "StayInput.st");
-		}
+        if (result == null) {
+            request.setAttribute("message", "숙소 등록 실패");
+            request.setAttribute("url", "StayInput.st");
+        } else {
+            int res = (int) result.get("res");
+            int sIdx = (int) result.get("sIdx");
+            
+            if (res != 0) {
+                request.setAttribute("message", "숙소가 등록되었습니다.");
+                request.setAttribute("url", "StayList.st");
+            } else {
+                request.setAttribute("message", "숙소 등록 실패");
+                request.setAttribute("url", "StayInput.st");
+            }
+        }
 	}
 }

@@ -46,7 +46,7 @@
     <!--================Blog Area =================-->
     <section class="blog_area section_padding">
         <div class="container">
-            <div class="row" style="width:500px;">
+            <div class="row">
                 <div class="col-lg-8 mb-5 mb-lg-0">
                     <div class="blog_left_sidebar">
                     	<div class="mb-2" style="display:flex; justify-content:space-between; align-items:center;">
@@ -68,7 +68,7 @@
                                 <img class="card-img rounded-0" src="${ctp}/images/blog/${tPhotos[0]}" style="height:330px;">
                                 <a href="#" class="blog_item_date">
                                     <h3>(조회수 : ${vo.viewCnt})</h3>
-                                    <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,11,10) : fn:substring(vo.tDate,0,16)}</p>
+                                    <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,0,10) : fn:substring(vo.tDate,0,16)}</p>
                                 </a>
                             </div>
 
@@ -146,14 +146,15 @@
                             <c:forEach var="gVo" items="${gVos}" varStatus="st">
                             <div class="media post_item">
                             	<c:set var="tPhotos" value="${fn:split(gVo.tPhoto, '/')}"/>
-                                <img src="${ctp}/images/blog/${tPhotos[0]}" alt="post" style="object-fit:cover;">
+                                <img src="${ctp}/images/blog/${tPhotos[0]}" alt="post" style="width:70px;object-fit:cover;">
                                 <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>${gVo.title}</h3>
+                                    <a href="BlogDetail.bl?tIdx=${gVo.tIdx}">
+                                        <h3 style="font-size:15px;">${gVo.title}</h3>
                                     </a>
-                                    <p>${fn:substring(gVo.tDate,11,10)}</p>
+                                    <p>${fn:substring(gVo.tDate,0,10)}</p>
                                 </div>
                             </div>
+                            <hr>
                             </c:forEach>
                         </aside>
                         <aside class="single_sidebar_widget tag_cloud_widget">

@@ -411,7 +411,7 @@ public class BlogDAO {
 	public ArrayList<BlogVO> getNoticeList() {
 		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
 		try {
-			sql = "select * from travelog where sort='공지사항' order by tIdx desc";
+			sql = "select * from travelog where sort='공지사항' order by tIdx desc limit 3";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -431,10 +431,7 @@ public class BlogDAO {
 				vo.setHostIp(rs.getString("hostIp"));
 				vo.settContent(rs.getString("tContent"));
 				vo.setComplaint(rs.getString("complaint"));
-				
-				vo.setHour_diff(rs.getInt("hour_diff"));
-				vo.setDate_diff(rs.getInt("date_diff"));
-				
+								
 				vos.add(vo);
 			}
 		} catch (SQLException e) {

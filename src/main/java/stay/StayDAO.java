@@ -294,25 +294,21 @@ public class StayDAO {
 	        if (contentsShow.equals("adminOK")) {
 	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
 	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
-	                  "FROM stay s " +
-	                  "ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
-	            pstmt = conn.prepareStatement(sql);
-	        } else if (!contentsShow.equals("guest")) {
-	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
-	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
-	                  "FROM stay s " +
-	                  "WHERE s.sDel = 'NO' " +
-	                  "ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC " +
-	                  "LIMIT 4";
+	                  "FROM stay s ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
 	            pstmt = conn.prepareStatement(sql);
 	            pstmt.setString(1, contentsShow);
-	        } else {
+	        } 
+	        else if (!contentsShow.equals("guest")) {
+	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
+	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
+	                  "FROM stay s WHERE s.sDel = 'NO' ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, contentsShow);
+	        } 
+	        else {
 	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCount, " +
 	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
-	                  "FROM stay s " +
-	                  "WHERE s.sDel = 'NO' " +
-	                  "ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC " +
-	                  "LIMIT 4";
+	                  "FROM stay s WHERE s.sDel = 'NO' ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
 	            pstmt = conn.prepareStatement(sql);
 	        }
 	        rs = pstmt.executeQuery();
