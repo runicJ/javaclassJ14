@@ -100,7 +100,8 @@
   <script>
   	$(function() {
 	    $("#datepicker_1, #datepicker_2").datepicker({
-	        dateFormat: 'yy-mm-dd'
+	        dateFormat: 'yy-mm-dd',
+	        minDate: 0
 	    });
 	});
   	

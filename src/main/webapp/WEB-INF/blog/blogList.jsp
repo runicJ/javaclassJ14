@@ -46,7 +46,7 @@
     <!--================Blog Area =================-->
     <section class="blog_area section_padding">
         <div class="container">
-            <div class="row">
+            <div class="row" style="width:500px;">
                 <div class="col-lg-8 mb-5 mb-lg-0">
                     <div class="blog_left_sidebar">
                     	<div class="mb-2" style="display:flex; justify-content:space-between; align-items:center;">
@@ -97,7 +97,7 @@
                         <nav class="blog-pagination justify-content-center d-flex">
                             <ul class="pagination">
 							<c:if test="${pag > 1}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
-							<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}"><i class="ti-angle-left"></i></a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
+							<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}"><i class="ti-angle-left"></i></a></li></c:if>
 							<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
 								<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
 								<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
@@ -143,42 +143,18 @@
 
                         <aside class="single_sidebar_widget popular_post_widget">
                             <h3 class="widget_title">최근 공지사항</h3>
+                            <c:forEach var="gVo" items="${gVos}" varStatus="st">
                             <div class="media post_item">
-                                <img src="images/post/post_1.png" alt="post">
+                            	<c:set var="tPhotos" value="${fn:split(gVo.tPhoto, '/')}"/>
+                                <img src="${ctp}/images/blog/${tPhotos[0]}" alt="post" style="object-fit:cover;">
                                 <div class="media-body">
                                     <a href="single-blog.html">
-                                        <h3>From life was you fish...</h3>
+                                        <h3>${gVo.title}</h3>
                                     </a>
-                                    <p>January 12, 2019</p>
+                                    <p>${fn:substring(gVo.tDate,11,10)}</p>
                                 </div>
                             </div>
-                            <div class="media post_item">
-                                <img src="images/post/post_2.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>The Amazing Hubble</h3>
-                                    </a>
-                                    <p>02 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="images/post/post_3.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Astronomy Or Astrology</h3>
-                                    </a>
-                                    <p>03 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="images/post/post_4.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Asteroids telescope</h3>
-                                    </a>
-                                    <p>01 Hours ago</p>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </aside>
                         <aside class="single_sidebar_widget tag_cloud_widget">
                             <h4 class="widget_title">#Keyword</h4>

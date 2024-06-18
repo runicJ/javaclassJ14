@@ -127,7 +127,7 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                     <div class="submit-button text-center">
-                                        <button class="btn hvr-hover" id="submit" type="submit" style="background-color:#ccce7b;">Send Message</button>
+                                        <button class="btn hvr-hover" id="submit" type="submit" style="background-color:#ccce7b;">문의사항 입력하기</button>
                                         <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -142,13 +142,13 @@
                         <p> 카카오톡 전용 채널을 통해 문의사항을 남겨주셔도 좋습니다. </p>
                         <ul>
                             <li>
-                                <p><i class="fas fa-map-marker-alt"></i>Address:<br>그린컴퓨터아트학원<br>충청북도 청주시 서원구<br>사직대로 109 4층 401호 </p>
+                                <p><i class="fas fa-map-marker-alt"></i>Address :<br>그린컴퓨터아트학원<br>충청북도 청주시 서원구<br>사직대로 109 4층 401호 </p>
                             </li>
                             <li>
-                                <p><i class="fas fa-phone-square"></i>Phone: +1324</a></p>
+                                <p><i class="fas fa-phone-square"></i>Phone : +1324</p>
                             </li>
                             <li>
-                                <p><i class="fas fa-envelope"></i>Email: <a href="https://cheongju.greenart.co.kr">https://cheongju.greenart.co.kr</a></p>
+                                <p><i class="fas fa-envelope"></i>Email : <a href="https://cheongju.greenart.co.kr">https://cheongju.greenart.co.kr</a></p>
                             </li>
                         </ul>
                     </div>

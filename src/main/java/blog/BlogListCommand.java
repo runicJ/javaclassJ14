@@ -18,5 +18,10 @@ public class BlogListCommand implements BlogInterface {
 		String part = request.getParameter("part")==null ? "tIdx" : request.getParameter("part");
 		
 		Pagination.pageChange(request, pag, pageSize, "", "blog", part);
+		
+		BlogDAO dao = new BlogDAO();
+		
+		ArrayList<BlogVO> gVos = dao.getNoticeList();
+		request.setAttribute("gVos", gVos);
 	}
 }

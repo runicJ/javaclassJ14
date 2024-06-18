@@ -157,7 +157,6 @@
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
 <div class="container">
-    <!--================Blog Area =================-->
     <section class="blog_area single-post-area section_padding">
         <div class="container">
 			<div>
@@ -331,7 +330,7 @@
                             <form action="BlogSearch.bl">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder='Search Keyword'
+                                        <input type="text" class="form-control" name="keyword" placeholder='Search Keyword'
                                             onfocus="this.placeholder = ''"
                                             onblur="this.placeholder = 'Search Keyword'">
                                         <div class="input-group-append">
@@ -340,7 +339,7 @@
                                     </div>
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1"
-                                    type="submit">Search</button>
+                                    type="submit" onclick="BlogSearch.bl">Search</button>
                             </form>
                         </aside>
 

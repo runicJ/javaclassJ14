@@ -71,6 +71,11 @@ public class BlogController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
+		else if(com.equals("/BlogSearch")) {
+			command = new BlogSearchCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

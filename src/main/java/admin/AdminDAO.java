@@ -244,11 +244,8 @@ public class AdminDAO {
 	public ArrayList<ReviewVO> getReviewSearch(int tIdx, String part) {
 		ArrayList<ReviewVO> rVos = new ArrayList<ReviewVO>();
 		try {
-	        sql = "SELECT r.*, m.userInfo, m.photo " +
-	                "FROM review r " +
-	                "JOIN member2 m ON r.mid = m.mid " +
-	                "WHERE r.part = ? AND r.partIdx = ? " +
-	                "ORDER BY r.rIdx DESC";
+	        sql = "SELECT r.*, m.userInfo, m.photo FROM review r JOIN member2 m ON r.mid = m.mid "
+	        	+ "WHERE r.part = ? AND r.partIdx = ? ORDER BY r.rIdx DESC";
 //			sql = "select * from (select * from review where part = ? and partIdx = ?) as v left join reply r "  // partIdx는 원본글
 //					+ "on v.idx = r.reviewIdx order by v.idx desc, r.replyIdx desc";
 			pstmt = conn.prepareStatement(sql);
