@@ -248,7 +248,7 @@
                 },
                 success: function(response) {
                 	let res = response.split(",");
-                	if (res[0] == "GOOD") {
+                	if (res[0] == "OK") {
                 		alert('예약 내용을 정확히 입력하셨나요? \n확인 후에 결제창으로 이동합니다.');
                 		let totalPrice = res[1];
                         $('#totalPriceCheck').text('￦' + totalPrice + ' 원');
@@ -294,88 +294,55 @@
 	  		});
 	  	}
 	  	
-	  	function stayDiscontinue() {
-	  		let ans = confirm("숙소 게시글을 비공개 처리하시겠습니까?");
-	  		if(ans) location.href = "StayDiscontinue.st?sIdx=${vo.sIdx}";
-	  	}
+ 	  	function stayDiscontinue() {
+ 	  	    let ans = confirm("해당 숙소를 비공개 처리하시겠습니까?");
+ 	  	    if(ans) {
+ 	  	        $.ajax({
+ 	  	            url: "StayDiscontinue.st",
+ 	  	            type: "post",
+ 	  	            data: { sIdx: ${vo.sIdx} },
+ 	  	            success: function(res) {
+ 	  	                if (res.trim() == "OK") {
+ 	  	                    alert("숙소를 비공개 처리되었습니다.");
+ 	  	                    document.getElementById("checkBookingBtn").disabled = true;
+ 	  	                    document.getElementById("checkBookingBtn").innerText = "예약 불가";
+ 	  	                } else {
+ 	  	                    alert("숙소 비공개 처리에 실패했습니다.");
+ 	  	                }
+ 	  	            },
+ 	  	            error: function() {
+ 	  	                alert("전송오류");
+ 	  	            }
+ 	  	        });
+ 	  	    }
+ 	  	}
 	  	
-		function wishToggle(sIdx) {
-		    $.ajax({
-		        url: "StayWishToggle.st",
-		        type: "post",
-		        data: { sIdx: sIdx },
-		        success: function(res) {
-		        	let icon = document.getElementById("wish-icon-" + sIdx);
-		            if (res.trim() == "true") {
-		                icon.classList.remove('fa-solid', 'fa-heart');
-		                icon.classList.add('fa-regular', 'fa-heart');
-		            } else {
-		                icon.classList.remove('fa-regular', 'fa-heart');
-		                icon.classList.add('fa-solid', 'fa-heart');
-		                icon.style.color = 'red';
-		            }
-		        },
-		        error: function() {
-		            alert("전송 오류!");
-		        }
-		    });
-		}
-		
-		export const clip = () => {
-			navigator.clipboard.writeText(window.location.href);
-		}
-		
-		const url = encodeURI(window.location.href);
-
-		// Facebook
-		const shareFacebook = () => {
-		  window.open("http://www.facebook.com/sharer/sharer.php?u=" + url);
-		}
-
-
-		// Twitter
-		const shareTwitter = () => {
-		  const text = '지금 우리 MBTI는?'
-		  window.open("https://twitter.com/intent/tweet?text=" + text + "&url=" +  url)
-		}
-		
-		// App.tsx
-
-		const App = () => {
-		  // ...
-		  if (window.Kakao) {
-		    const kakao = window.Kakao;
-		    if (!kakao.isInitialized()) kakao.init(import.meta.env.VITE_KAKAO_API_KEY)
-		    // 나는 Vite를 써서 import.meta.env이며, React는 process.env로 조회한다.
-		  }
-		}
-		 
-		// LikeButtons.tsx
-
-		//...
-		  const shareKakao = () => {
-		    window.Kakao.Link.sendDefault({
-		      objectType: 'feed',
-		      content: {
-		        title: '지금 우리 MBTI는?',
-		        description: '파릇파릇하기만 했던 나, 입사후에 무슨 일이?',
-		        imageUrl: window.location.href + '/asset/img/basic.jpeg',
-		        link: {
-		          webUrl : url,
-		          mobileWebUrl : url,
-		        },
-		      },
-		      buttons: [
-		        {
-		          title: '웹으로 이동',
-		          link: {
-		            webUrl : url,
-		            mobileWebUrl : url,
-		          },
-		        },
-		      ]
-		    })
-		  }
+ 	  	function wishToggle(sIdx) {
+ 	  	    $.ajax({
+ 	  	        url: "StayWishToggle.st",
+ 	  	        type: "post",
+ 	  	        data: { sIdx: sIdx },
+ 	  	        success: function(res) {
+ 	  	            let icon = document.getElementById("wish-icon-" + sIdx);
+ 	  	            let wishCnt = document.getElementById("wishCnt");
+ 	  	            if (res.trim() == "true") {
+ 	  	                alert("해당 숙소를 위시리스트에서 제거하였습니다.");
+ 	  	                icon.classList.remove('fa-solid', 'fa-heart');
+ 	  	                icon.classList.add('fa-regular', 'fa-heart');
+ 	  	             	wishCnt.textContent = parseInt(wishCnt.textContent) - 1;
+ 	  	            } else {
+ 	  	                alert("해당 숙소를 위시리스트에 추가하였습니다.");
+ 	  	                icon.classList.remove('fa-regular', 'fa-heart');
+ 	  	                icon.classList.add('fa-solid', 'fa-heart');
+ 	  	                icon.style.color = 'red';
+ 	  	             	wishCnt.textContent = parseInt(wishCnt.textContent) + 1;
+ 	  	            }
+ 	  	        },
+ 	  	        error: function() {
+ 	  	            alert("전송 오류!");
+ 	  	        }
+ 	  	    });
+ 	  	}
 	</script>
 </head>
 <body>
@@ -387,7 +354,9 @@
     <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
         <div class="d-flex justify-content-between align-items-center">
-        	<h2 class="w3-text-light-green" style="font-size:30px;font-weight:bolder;">${vo.sName}&nbsp;&nbsp;<c:if test="${sMid == 'admin'}"><a href="'StayUpdate.st';" class="btn btn-outline-warning btn-sm mr-2">수정하기</a><a href="javascript:stayDiscontinue()" class="btn btn-outline-danger btn-sm">판매중지</a></c:if></h2>
+        	<h2 class="w3-text-light-green" style="font-size:30px;font-weight:bolder;">${vo.sName}&nbsp;&nbsp;
+        	<c:if test="${sMid == 'admin'}"><!-- <a href="'StayUpdate.st';" class="btn btn-outline-warning btn-sm mr-2">수정하기</a> -->
+        	<a href="javascript:stayDiscontinue()" class="btn btn-outline-danger btn-sm">판매중지</a></c:if></h2>
 			<ol>
 				<li><a href="${ctp}/Main">Home</a></li>
 				<li><a href="StayList.st">Stay List</a></li>
@@ -401,7 +370,7 @@
             <c:if test="${vo.isWished == 0}">
                 <i id="wish-icon-${vo.sIdx}" class="fa-regular fa-heart" style="color:black;"></i>
             </c:if>
-    	</a> [${vo.wishCnt}]명의 사람들이 이 숙소를 위시리스트에 저장했습니다</p>
+    	</a> [<span id="wishCnt">${vo.wishCnt}</span>]명의 사람들이 이 숙소를 위시리스트에 저장했습니다</p>
       </div>
     </section>
 
@@ -480,7 +449,7 @@
 		    <div class="form_colum">
 	        	<label style="font-size: 1.3em;font-weight: bold;"> ￦ <fmt:formatNumber value="${vo.price}" pattern="#,##0" /> 원 <span style="font-size:0.8em;font-weight:500;">/박</span></label>
 	      	</div>
-	  		<button class="w3-button w3-right w3-red mt-2" type="button" id="checkBookingBtn" onclick="checkBooking()"><i class="fa fa-search w3-margin-right"></i> 숙소 예약하기</button>
+	  		<button class="w3-button w3-right w3-red mt-2" id="checkBookingBtn" onclick="checkBooking()"><i class="fa fa-search w3-margin-right"></i> 숙소 예약하기</button>
     	</form>
 	</div>
 </div>
@@ -564,7 +533,6 @@
 </div>
 </div>
 <p><br/></p>
-
 <div id="bookingCheckModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

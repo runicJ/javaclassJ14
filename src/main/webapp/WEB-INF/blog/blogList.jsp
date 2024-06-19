@@ -42,7 +42,6 @@
             </div>
         </div>
     </section>
-    <!-- breadcrumb start-->
     <!--================Blog Area =================-->
     <section class="blog_area section_padding">
         <div class="container">

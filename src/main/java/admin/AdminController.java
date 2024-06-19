@@ -50,6 +50,9 @@ public class AdminController extends HttpServlet {
 		else if(com.equals("/ActivityBooking")) {
 			viewPage += "/error.jsp";
 		}
+		else if(com.equals("/MemberMessage")) {
+			viewPage += "/error.jsp";
+		}
 		else if(com.equals("/FAQList")) {
 			viewPage += "/complaint/faqList.jsp";
 		}

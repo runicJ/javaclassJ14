@@ -80,8 +80,8 @@
 		
 	  	// 리뷰평가 등록하기
 	  	function reviewCheck() {
-	  		let content = $("#content").val();
-	  		if(content.trim() == "") {
+	  		let rContent = $("#rContent").val();
+	  		if(rContent.trim() == "") {
 	  			alert("댓글을 입력하세요");
 	  			return false;
 	  		}
@@ -132,25 +132,35 @@
 	  		});
 	  	}
 	  	
-	  	function likedToggle(tIdx) {
+	    function likedToggle(tIdx) {
 	        $.ajax({
-	            url  : "BlogLikedToggle.bl",
-	            type : "post",
-	            data : {tIdx : tIdx},
-	            success: function(res) {
-	                let icon = $(`#liked-icon-${tIdx}`);
-	                if (res.trim() == "true") {
-	                    icon.removeClass('far').addClass('fas');
-	                } 
-	                else {
-	                    icon.removeClass('fas').addClass('far');
-	                }
-	            },
-	            error: function() {
-	                alert("전송 오류!");
-	            }
-	        });    
-	    }
+	          url: "BlogLikedToggle.bl",
+	          type: "post",
+	          data: { tIdx: tIdx },
+	          success: function(res) {
+	              let icon = document.getElementById("wish-icon-" + tIdx);
+	              let likeCnt = document.getElementById("likeCnt");
+	              let btn = $(`#liked-btn-${tIdx}`);
+	              if (res.trim() == "true") {
+					icon.classList.remove('fa-solid', 'fa-thumbs-up');
+					icon.classList.add('fa-regular', 'fa-thumbs-up');
+	                  likeCnt.text(parseInt(likeCnt.text()) + 1);
+	                  btn.removeClass('btn-dark').addClass('btn-light');
+	                  btn.css('opacity', '1.0');
+	              } else {
+	            	  icon.classList.remove('fa-regular', 'fa-thumbs-up');
+	                icon.classList.add('fa-solid', 'fa-thumbs-up');
+	                  icon.style.color = 'white';
+	                  likeCnt.text(parseInt(likeCnt.text()) - 1);
+	                  btn.removeClass('btn-light').addClass('btn-dark');
+	                  btn.css('opacity', '0.5'); 
+	              }
+	          },
+	          error: function() {
+	            alert("전송 오류!");
+	          }
+	        });
+	      }
 	</script>
 </head>
 <body>
@@ -160,16 +170,17 @@
     <section class="blog_area single-post-area section_padding">
         <div class="container">
 			<div>
-                <h2 class="text-center">${vo.title}</h2>
+                <h2 class="text-center mb-5">${vo.title}</h2>
                 <ul class="blog-info-link mb-4">
                     <li><a href="#"><i class="fa-solid fa-suitcase-rolling"></i>${vo.residence == "" ? "미상" : vo.residence}</a></li>
                     <li><a href="#">${vo.sort}</a></li><c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
                     <c:if test="${sMid == 'admin' || sMid == vo.mid}"><li class="text-center"><a href="BlogUpdate.bl?tIdx=${vo.tIdx}">수정</a><a href="BlogDelete.bl">삭제</a></li></c:if>
-                    <li style="float:right;"><button class="btn btn-dark" onclick="likedToggle(${vo.tIdx})"><b><i id="liked-icon-${vo.tIdx}" class="far fa-thumbs-up"></i>Like </b>${vo.likedCnt}</button></li>
+                    <li style="float:right;"><button class="btn btn-dark" onclick="likedToggle(${vo.tIdx})"><b><i id="liked-icon-${vo.tIdx}" class="fa-regular fa-thumbs-up"></i>Like </b><span id="likeCnt">${vo.likedCnt}</span></button></li>
                 </ul>
             </div>
+            <p><br><p>
 			<div class="row">
-                <div class="col-lg-9 posts-list">
+                <div class="col-lg-8 posts-list">
                     <div class="gy-4">
     					<div class="portfolio-details-slider swiper">
 					      <div class="swiper-wrapper align-items-center">
@@ -178,7 +189,7 @@
 							<c:set var="len" value="${fn:length(tPhoto)}" />
 							<c:set var="ext" value="${fn:substring(tPhoto, len-3, len)}"/>
 						  	<c:set var="extLower" value="${fn:toLowerCase(ext)}"/>
-							<c:if test="${extLower == 'jpg' || extLower == 'jpeg' || extLower == 'gif' || extLower == 'png'}">
+							<c:if test="${extLower == 'jpg' || extLower == 'gif' || extLower == 'png'}">
 					        <div class="swiper-slide text-center">
 					          <img src="${ctp}/images/blog/${tPhoto}" style="width:80%;">
 					        </div>
@@ -277,7 +288,7 @@
                     <div class="single-comment justify-content-between d-flex">
                         <div class="user justify-content-between d-flex">
                             <div class="thumb">
-                                <img src="${ctp}/images/member/${memVo.userInfo == '공개' ? memVo.photo : noImage.jpg}">
+                                <img src="${ctp}/images/member/${rVo.userInfo == '공개' ? rVo.photo : noImage.jpg}">
                             </div>
                             <div class="desc">
                                 <p class="comment">
@@ -324,25 +335,8 @@
                 </form>
 	        </div>
 	        </div>
-                <div class="col-lg-3">
+	        <div class="col-lg-4">
                     <div class="blog_right_sidebar">
-                        <aside class="single_sidebar_widget search_widget">
-                            <form action="BlogSearch.bl">
-                                <div class="form-group">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="keyword" placeholder='Search Keyword'
-                                            onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Search Keyword'">
-                                        <div class="input-group-append">
-                                            <button class="btn" type="button"><i class="ti-search"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="button rounded-0 primary-bg text-white w-100 btn_1"
-                                    type="submit" onclick="BlogSearch.bl">Search</button>
-                            </form>
-                        </aside>
-
                         <aside class="single_sidebar_widget post_category_widget">
                             <h4 class="widget_title">Category</h4>
                             <ul class="list cat-list">
@@ -358,43 +352,23 @@
                         </aside>
 
                         <aside class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">현재 인기글</h3>
+                            <h3 class="widget_title">인기글 현황</h3>
+                            <c:forEach var="bVo" items="${bVos}" varStatus="st">
                             <div class="media post_item">
-                                <img src="images/post/post_1.png" alt="post">
+                            	<c:set var="tPhotos" value="${fn:split(bVo.tPhoto, '/')}"/>
+                                <img src="${ctp}/images/blog/${tPhotos[0]}" alt="post" style="width:70px;object-fit:cover;">
                                 <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>From life was you fish...</h3>
+                                    <a href="BlogDetail.bl?tIdx=${bVo.tIdx}">
+                                        <h3 style="font-size:15px;">
+											<c:if test="${fn:length(bVo.title) > 20}">${fn:substring(bVo.title,0,20)}...</c:if>
+                            				<c:if test="${fn:length(bVo.title) <= 20}">${bVo.title}</c:if>
+                                        </h3>
                                     </a>
-                                    <p>January 12, 2019</p>
+                                    <p>${fn:substring(bVo.tDate,0,10)}</p>
                                 </div>
                             </div>
-                            <div class="media post_item">
-                                <img src="images/post/post_2.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>The Amazing Hubble</h3>
-                                    </a>
-                                    <p>02 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="images/post/post_3.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Astronomy Or Astrology</h3>
-                                    </a>
-                                    <p>03 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="images/post/post_4.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Asteroids telescope</h3>
-                                    </a>
-                                    <p>01 Hours ago</p>
-                                </div>
-                            </div>
+                            <hr>
+                            </c:forEach>
                         </aside>
                         <aside class="single_sidebar_widget tag_cloud_widget">
                             <h4 class="widget_title">#Keyword</h4>
@@ -424,7 +398,43 @@
                                     <a href="#">illustration</a>
                                 </li>
                             </ul>
-                        </aside>       
+                        </aside>
+                        
+                        <aside class="single_sidebar_widget instagram_feeds">
+                            <h4 class="widget_title">Instagram Feeds</h4>
+                            <ul class="instagram_row flex-wrap">
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="images/post/post_5.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="images/post/post_6.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="images/post/post_7.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="images/post/post_8.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="images/post/post_9.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="images/post/post_10.png" alt="">
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
                     </div>
                 </div>
             </div>

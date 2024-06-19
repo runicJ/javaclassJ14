@@ -235,7 +235,7 @@ public class AdminDAO {
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
-			pstmtClose();
+			rsClose();
 		}
 		return res;
 	}
@@ -315,17 +315,11 @@ public class AdminDAO {
 				pstmt.executeUpdate();
 			}
 			
-			conn.commit(); // 트랜잭션 커밋
-	    } catch (SQLException e) {
-	        System.out.println("SQL 오류 : " + e.getMessage());
-	        try {
-	            if (conn != null) conn.rollback();  // 오류 발생 시 롤백
-	        } catch (SQLException e2) {
-	            System.out.println("롤백 중 오류 발생: " + e2.getMessage());
-	        }
-	    } finally {
-	        rsClose();
-	    }
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
 		return res;
 	}
 

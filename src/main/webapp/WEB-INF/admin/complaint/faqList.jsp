@@ -51,6 +51,22 @@
 <body>
 <%@ include file = "/include/header.jsp"%>
 <%@ include file = "/include/nav.jsp"%>
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item text-center">
+                        <h2>Service</h2>
+                        <p>Serene Nest는 항상 당신의 목소리에 귀 기울이겠습니다.</p>
+                        <c:if test="${sMid == 'admin'}"><a href="StayInput.st" class="btn_1">숙소 등록하기</a></c:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <p><br><p>
 <div class="container">
 	<div class="text-center">

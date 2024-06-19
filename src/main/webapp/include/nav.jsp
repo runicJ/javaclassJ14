@@ -24,7 +24,7 @@
                                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stays</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
                                     <a class="dropdown-item" href="StayList.st">Stay List</a>
-                                    <a class="dropdown-item" href="StayList.st">Stay Promotion</a>
+                                    <a class="dropdown-item" href="StayPromotion.st">Stay Promotion</a>
                                 </div>
                             </li>
                             <li class="nav-item">
@@ -63,9 +63,9 @@
                             <img src="images/member/${sPhoto}" alt="user" class="rounded-circle" height="30" width="30">
 	                    	${sNickName} 님</a>
 		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" href="MemberMain.mem"><i class="ti-user m-r-5 m-l-5"></i> 마이페이지</a>
-		                        <a class="dropdown-item" href="MemberMessage.mem"><i class="fa-solid fa-message"></i> 메시지 보내기</a>
-		                        <a class="dropdown-item" href="MemberWish.mem"><i class="fa-solid fa-heart"></i> 위시리스트</a>
+		                        <a class="dropdown-item" href="MemberMain.mem"><i class="fa-solid fa-user"></i></i>&nbsp; 마이페이지</a>
+		                        <a class="dropdown-item" href="MemberWish.mem"><i class="fa-solid fa-heart"></i>&nbsp; 위시리스트</a>
+		                        <a class="dropdown-item" href="MemberMessage.ad"><i class="fa-solid fa-message"></i>&nbsp; 메시지 보내기</a>
 				      		</div>
 	                    </li>
                    	</c:if>

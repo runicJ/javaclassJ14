@@ -323,41 +323,6 @@
 	        }
 	    });
 	}
-  	
-  	function fCheck() {
-  		let address = searchForm.address.value.trim();
-  		let checkIn = searchForm.checkIn.value;
-  		let checkOut = searchForm.checkOut.value;
-  		let guestMax = searchForm.guestMax.value.trim();
-  		
-  		if(address == "" || (checkIn == "" && checkOut == "")) {
-  			alert("여행 지역 또는 예약 날짜를 입력하세요!");
-  			return;
-  		}
-  		
-  		$.ajax({
-            url  : "StayList.st",
-            type : "post",
-            data : {
-            	address : address,
-            	checkIn : checkIn,
-            	checkOut : checkOut,
-            	guestMax : guestMax
-            },
-            success: function(res) {
-  				if(res != "0") {
-  					alert("검색 조건에 맞는 숙소를 조회합니다.");
-  					location.reload();
-  				}
-  				else {
-  					alert("검색한 조건에 맞는 숙소가 없습니다.");
-  				}
-            },
-            error: function() {
-                alert("전송 오류!");
-            }
-  		});
-  	}
   </script>
   
   <!-- Vendor CSS Files -->
@@ -368,7 +333,7 @@
 <body>
 <%@ include file = "../../include/header.jsp"%>
 <%@ include file = "../../include/nav.jsp"%>
-    <!-- breadcrumb start-->
+<!-- breadcrumb start-->
     <section class="breadcrumb breadcrumb_bg">
         <div class="container">
             <div class="row">
@@ -384,44 +349,14 @@
             </div>
         </div>
     </section>
+    <br>
 <div class="container">
-    <!-- booking part start-->
-    <section class="booking_part">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="booking_content">
-                    <div class="tab-content" id="myTabContent">
-                    	<div class="tab-pane fade show active" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
-                            <div class="booking_form">
-                                <form name="searchForm" method="post" action="StayList.st">
-                                    <div class="form-row">
-                                        <div class="form_colum">
-											<input class="select" type="text" name="address" placeholder="여행 지역">
-                                        </div>
-                                        <div class="form_colum">
-                                            <input id="datepicker_1" name="checkIn" placeholder="Check in">
-                                        </div>
-                                        <div class="form_colum">
-                                            <input id="datepicker_2" name="checkOut" placeholder="Check out">
-                                        </div>
-                                        <div class="form_colum">
-                                            <input class="select" type="number" name="guestMax" min="1" placeholder="인원 수"> 
-                                        </div>
-                                        <div class="form_btn">
-                                            <input type="button" class="btn_1" onclick="fCheck()" value="search">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+   	<div class="row">
+   		<div class="col-4"><img src="${ctp}/images/promotion1.png" alt="promotion1" /></div>
+   		<div class="col-4"><img src="${ctp}/images/promotion2.png" alt="promotion2" /></div>
+   		<div class="col-4"><img src="${ctp}/images/promotion3.png" alt="promotion3" /></div>
+   	</div>
     <section id="portfolio" class="portfolio">
-      <div class="container">
-
         <div class="row">
           <div class="col-lg-12">
             <ul id="portfolio-flters">
@@ -454,7 +389,7 @@
 		                    <a href="StayDetail.st?sIdx=${vo.sIdx}" class="link-details" title="상세정보 보기"><i class="fa-solid fa-link"></i></a>
 		                </figure>
 						<div class="portfolio-info">
-		                	<h4><a href="StayDetail.st?sIdx=${vo.sIdx}">${vo.sName}</a></h4>
+		                	<h4><a href="StayDetail.st?sIdx=${vo.sIdx}" target="_blank">${vo.sName}</a></h4>
 		                	<p><h5>￦<fmt:formatNumber value="${vo.price}" pattern="#,##0" /><span style="font-size:13px;"> /박 (최대 ${vo.guestMax}명)</span></h5><p>
 			                <p id="facility">
 				                <c:if test="${vo.facility.wifi == 'OK'}"><i class="fa fa-fw fa-wifi"></i></c:if>
@@ -470,7 +405,6 @@
             	<c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
 			</c:forEach>
 		</div>
-        </div>
     </section>
 </div>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fa-solid fa-arrow-up"></i></a>

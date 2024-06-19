@@ -15,11 +15,11 @@ public class BlogSearchCommand implements BlogInterface {
 		
 		BlogDAO dao = new BlogDAO();
 		
-		ArrayList<BlogVO> sVos = dao.getBlogSearch(keyword);
+		ArrayList<BlogVO> vos = dao.getBlogSearch(keyword);
 		
-		if(sVos.size() != 0) {
+		if(vos.size() != 0) {
 			request.setAttribute("message", "검색어에 맞는 게시글을 조회합니다.");
-			request.setAttribute("url", "BlogList.bl?sVos=" + sVos);
+			request.setAttribute("url", "BlogList.bl?vos=" + vos);
 		}
 		else {
 			request.setAttribute("message", "검색어와 일치하는 게시글이 존재하지 않습니다.");

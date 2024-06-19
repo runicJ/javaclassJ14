@@ -354,28 +354,48 @@ public class BlogDAO {
 	}
 
     // 좋아요 상태를 토글
-    public void toggleLiked(String sMid, int tIdx, boolean like) {
-        try {
-        	sql = like ? "INSERT INTO blogLiked VALUES (default, ?, ?)" :
-                "DELETE FROM blogLiked WHERE mid = ? AND tIdx = ?";
-        	pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, sMid);
-            pstmt.setInt(2, tIdx);
-            pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			pstmtClose();
-		}
-    }
+	public void toggleLiked(String sMid, int tIdx, boolean like) {
+	    try {
+	        if (like) {
+	            sql = "INSERT INTO blogLiked VALUES (default, ?, ?)";
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, sMid);
+	            pstmt.setInt(2, tIdx);
+	            pstmt.executeUpdate();
+
+	            sql = "UPDATE travelog SET likedCnt = likedCnt + 1 WHERE tIdx = ?";
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, tIdx);
+	            pstmt.executeUpdate();
+	        } else {
+	            sql = "DELETE FROM blogLiked WHERE mid = ? AND tIdx = ?";
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, sMid);
+	            pstmt.setInt(2, tIdx);
+	            pstmt.executeUpdate();
+
+	            sql = "UPDATE travelog SET likedCnt = likedCnt - 1 WHERE tIdx = ?";
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, tIdx);
+	            pstmt.executeUpdate();
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류 : " + e.getMessage());
+	    } finally {
+	        pstmtClose();
+	    }
+	}
 
 	public ArrayList<BlogVO> getBlogSearch(String keyword) {
 		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
 		try {
-			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff "
-					+ "from travelog where title like '%'+keyword+'%' or nickName like '%'+keyword+'%' or tContent like '%'+keyword+'%' "
-					+ "order by viewCnt desc, likedCnt desc, tIdx desc";
+	        sql = "SELECT *, DATEDIFF(NOW(), tDate) AS date_diff, TIMESTAMPDIFF(HOUR, tDate, NOW()) AS hour_diff " +
+	                "FROM travelog WHERE title LIKE ? OR nickName LIKE ? OR tContent LIKE ? " +
+	                "ORDER BY tIdx DESC";
 			pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, "%" + keyword + "%");
+	        pstmt.setString(2, "%" + keyword + "%");
+	        pstmt.setString(3, "%" + keyword + "%");
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

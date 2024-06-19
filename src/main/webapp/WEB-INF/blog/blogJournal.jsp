@@ -72,25 +72,40 @@
             }
         }
 	</style>
-	    <script>
-        function filterVideos() {
-            let input = document.getElementById('searchInput').value.toUpperCase();
-            let shorts = document.getElementsByClassName('short');
+    <script>
+       function filterVideos() {
+           let input = document.getElementById('searchInput').value.toUpperCase();
+           let shorts = document.getElementsByClassName('short');
 
-            for (let i = 0; i < shorts.length; i++) {
-                let title = shorts[i].getAttribute('data-title').toUpperCase();
-                if (title.indexOf(input) > -1) {
-                    shorts[i].style.display = "";
-                } else {
-                    shorts[i].style.display = "none";
-                }
-            }
-        }
-    </script>
+           for (let i = 0; i < shorts.length; i++) {
+               let title = shorts[i].getAttribute('data-title').toUpperCase();
+               if (title.indexOf(input) > -1) {
+                   shorts[i].style.display = "";
+               } else {
+                   shorts[i].style.display = "none";
+               }
+           }
+       }
+   </script>
 </head>
 <body>
 <%@ include file = "/include/header.jsp"%>
 <%@ include file = "/include/nav.jsp"%>
+    <!-- breadcrumb start-->
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <div class="breadcrumb_iner_item text-center">
+                            <h2>Travelog</h2>
+                            <p>여러분의 추억을 기록하세요</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <div class="container mt-5">
     <div class="search-bar text-center">
         <div class="single-footer-widget">

@@ -31,6 +31,9 @@ public class BlogDetailCommand implements BlogInterface {
 		request.setAttribute("preVo", preVo);
 		request.setAttribute("nextVo", nextVo);
 		
+		ArrayList<BlogVO> bVos = dao.getVestThreeBlog();
+		request.setAttribute("bVos", bVos);
+		
 		MemberDAO memDao = new MemberDAO();
 		MemberVO memVo = memDao.getMemberIdCheck(vo.getMid());
 		

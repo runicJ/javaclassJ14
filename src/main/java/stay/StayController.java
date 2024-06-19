@@ -64,6 +64,11 @@ public class StayController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("/StayPromotion")) {
+			command = new StayListCommand();
+			command.execute(request, response);
+			viewPage += "/stayPromotion.jsp";
+		}
 		else if(!sMid.equals("admin")) {
 			request.setAttribute("message", "관리자 로그인 후에 가능하신 메뉴입니다.");
 			request.setAttribute("url", "MemberLogin.mem");
@@ -90,7 +95,7 @@ public class StayController extends HttpServlet {
 		else if(com.equals("/StayDiscontinue")) {
 			command = new StayDiscontinueCommand();
 			command.execute(request, response);
-			viewPage = "/include/message.jsp";
+			return;
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

@@ -113,18 +113,16 @@ public class StayDAO {
 	public StayVO getStayIdxDetail(int sIdx, String contentsShow) {
 		try {
 			if(contentsShow.equals("admin") || contentsShow.equals("guest")) {
-		        sql = "SELECT s.*, " +
-		                "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
-		                "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt " +
-		                "FROM stay s WHERE s.sIdx = ?";
+				sql="select * from stay where sIdx=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, sIdx);
+			}
+			else {
+		        sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, "
+		        		+ "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt FROM stay s WHERE s.sIdx = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, contentsShow);
 				pstmt.setInt(2, sIdx);
-			}
-			else {
-				sql="select * from stay where sIdx=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, sIdx);				
 			}
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -142,8 +140,10 @@ public class StayDAO {
 				vo.setsDate(rs.getString("sDate"));
 				vo.setsDel(rs.getString("sDel"));
 				
-				vo.setIsWished(rs.getInt("isWished"));
-				vo.setWishCnt(rs.getInt("wishCnt"));
+	            if(!contentsShow.equals("admin") && !contentsShow.equals("guest")) {
+	                vo.setIsWished(rs.getInt("isWished"));
+	                vo.setWishCnt(rs.getInt("wishCnt"));
+	            }
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -214,16 +214,16 @@ public class StayDAO {
 		try {
 			if(search == null || search.equals("")) {
 				if(contentsShow.equals("adminOK")) {
-					sql = "select s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished "
+					sql = "select s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS isWished "
 							+ "FROM stay s ORDER BY s.sIdx DESC limit ?,?";
 					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, contentsShow);
-					pstmt.setInt(2, startIndexNo);
-					pstmt.setInt(3, pageSize);
+					pstmt.setInt(1, startIndexNo);
+					pstmt.setInt(2, pageSize);
 				}
 				else if(!contentsShow.equals("guest")) {
-					sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished "
-							+ "FROM stay s WHERE s.sDel = 'NO' ORDER BY s.sIdx DESC LIMIT ?, ?";
+					sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, "
+							+ "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt "
+							+ "FROM stay s WHERE s.sDel = 'NO' ORDER BY s.sIdx DESC LIMIT ?,?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, contentsShow);
 					pstmt.setInt(2, startIndexNo);
@@ -238,19 +238,30 @@ public class StayDAO {
 			}
 			else {
 				if(contentsShow.equals("adminOK")) {
-					sql = "select * FROM stay where "+search+" like ? ORDER BY sIdx DESC limit ?,?";
+	                sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt "
+	                		+ "FROM stay WHERE "+search+" LIKE ? ORDER BY sIdx DESC limit ?,?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+searchString+"%");
 					pstmt.setInt(2, startIndexNo);
 					pstmt.setInt(3, pageSize);
 				}
-				else {
+	            else if(!contentsShow.equals("guest")) {
+	                sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, "
+	                	+ "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt " 
+	                	+ "FROM stay WHERE sDel = 'NO' AND " + search + " LIKE ? ORDER BY sIdx DESC limit ?, ?";
+	                  pstmt = conn.prepareStatement(sql);
+	                  pstmt.setString(1, contentsShow);
+	                  pstmt.setString(2, "%" + searchString + "%");
+	                  pstmt.setInt(3, startIndexNo);
+	                  pstmt.setInt(4, pageSize);
+				}
+	            else {
 					sql = "select * FROM stay WHERE sDel = 'NO' and "+search+" like ? ORDER BY sIdx DESC limit ?,?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+searchString+"%");
 					pstmt.setInt(2, startIndexNo);
 					pstmt.setInt(3, pageSize);
-				}
+	            }
 			}
 			rs = pstmt.executeQuery();
 

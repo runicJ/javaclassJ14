@@ -28,7 +28,7 @@ public class BlogLikedToggleCommand implements BlogInterface {
             dao.toggleLiked(sMid, tIdx, false);
         }
         
-        response.getWriter().write(likedExist ? "true" : "false");
+        response.getWriter().write(likedExist ? "false" : "true");
 	}
 
 }

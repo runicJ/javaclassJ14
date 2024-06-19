@@ -16,7 +16,6 @@ public class StayBookingCommand implements StayInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int sIdx = request.getParameter("sIdx")==null ? 0 : Integer.parseInt(request.getParameter("sIdx"));
         String checkInStr = request.getParameter("checkIn") == null ? "" : request.getParameter("checkIn");
-        System.out.println("checkIn : " + checkInStr);
         String checkOutStr = request.getParameter("checkOut") == null ? "" : request.getParameter("checkOut");
         int guestNum = request.getParameter("guestNum") == null ? 0 : Integer.parseInt(request.getParameter("guestNum"));
         int price = request.getParameter("price") == null ? 0 : Integer.parseInt(request.getParameter("price"));
@@ -35,10 +34,10 @@ public class StayBookingCommand implements StayInterface {
 
         if (res == 0) {
             int totalPrice = calcTotalPrice(checkIn, checkOut, price);
-            response.getWriter().write("GOOD," + totalPrice);
+            response.getWriter().write("OK," + totalPrice);
         } 
         else {
-            response.getWriter().write("BAD,해당 날짜는 예약이 불가능합니다.");
+            response.getWriter().write("NO,해당 날짜는 예약이 불가능합니다.");
         }        
     }
 
