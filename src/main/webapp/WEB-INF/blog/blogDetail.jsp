@@ -144,16 +144,17 @@
 	              if (res.trim() == "true") {
 					icon.classList.remove('fa-solid', 'fa-thumbs-up');
 					icon.classList.add('fa-regular', 'fa-thumbs-up');
-	                  likeCnt.text(parseInt(likeCnt.text()) + 1);
-	                  btn.removeClass('btn-dark').addClass('btn-light');
-	                  btn.css('opacity', '1.0');
-	              } else {
-	            	  icon.classList.remove('fa-regular', 'fa-thumbs-up');
-	                icon.classList.add('fa-solid', 'fa-thumbs-up');
-	                  icon.style.color = 'white';
-	                  likeCnt.text(parseInt(likeCnt.text()) - 1);
-	                  btn.removeClass('btn-light').addClass('btn-dark');
-	                  btn.css('opacity', '0.5'); 
+					likeCnt.text(parseInt(likeCnt.text()) + 1);
+					btn.removeClass('btn-dark').addClass('btn-light');
+					btn.css('opacity', '1.0');
+	              } 
+	              else {
+					icon.classList.remove('fa-regular', 'fa-thumbs-up');
+					icon.classList.add('fa-solid', 'fa-thumbs-up');
+					icon.style.color = 'white';
+					likeCnt.text(parseInt(likeCnt.text()) - 1);
+					btn.removeClass('btn-light').addClass('btn-dark');
+					btn.css('opacity', '0.5'); 
 	              }
 	          },
 	          error: function() {

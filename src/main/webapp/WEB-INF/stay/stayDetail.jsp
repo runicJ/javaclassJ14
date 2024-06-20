@@ -343,6 +343,7 @@
  	  	        }
  	  	    });
  	  	}
+ 
 	</script>
 </head>
 <body>
@@ -420,13 +421,13 @@
 	    <div class="w3-row">
     	<h4><strong>Amenities</strong></h4>
 	      <div class="w3-col m6">
-	        <p><c:if test="${fVo.wifi == 'OK'}"><i class="fa fa-fw fa-wifi"></i> WiFi</c:if></p>
+	        <p><c:if test="${fVo.wifi == 'OK'}"><i class="fa fa-fw fa-wifi"></i> Wifi</c:if></p>
 	        <p><c:if test="${fVo.ac == 'OK'}"><i class="material-icons">ac_unit</i> A/C</c:if></p>
 	        <p><c:if test="${fVo.parking == 'OK'}"><i class="material-icons">local_parking</i> Parking</c:if></p>
 	      </div>
 	      <div class="w3-col m5">
 	      	<span class="w3-margin-top"></span>
-	        <p><c:if test="${fVo.pet == 'OK'}"><i class='fas fa-fw fa-dog'></i> Pet</c:if></p>
+	        <p><c:if test="${fVo.pet == 'OK'}"><i class='fas fa-fw fa-dog'></i> With pet</c:if></p>
 	        <p><c:if test="${fVo.kitchen == 'OK'}"><i class="fa fa-fw fa-cutlery"></i> Kitchen</c:if></p>
 	        <p><c:if test="${fVo.washing == 'OK'}"><i class="material-icons">local_laundry_service</i> Washing machine</c:if></p>
 	      </div>
