@@ -412,7 +412,6 @@
 <%@ include file = "../../include/footer.jsp"%>
   <!-- Vendor JS Files -->
   <script src="${ctp}/js/stay/purecounter_vanilla.js"></script>
-  <script src="${ctp}/js/stay/bootstrap.bundle.min.js"></script>
   <script src="${ctp}/js/stay/glightbox.min.js"></script>
   <script src="${ctp}/js/stay/isotope.pkgd.min.js"></script>
   <script src="${ctp}/js/stay/swiper-bundle.min.js"></script>

@@ -9,19 +9,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Travelog Page</title>
-  <jsp:include page="/include/bs4.jsp" />
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <jsp:include page="/include/bs4.jsp" />
   <style>
-  	.pagination a {
-	  border-radius: 5px;
-	}
-	
-	.pagination a.active {
-	  border-radius: 5px;
-	}
-	
-	.pagination a:hover:not(.active) {background-color: #eee;}
-	
+.pagination a {
+  border-radius: 5px;
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
   </style>
 </head>
 <body>
@@ -42,7 +49,6 @@
             </div>
         </div>
     </section>
-    <!--================Blog Area =================-->
     <section class="blog_area section_padding">
         <div class="container">
             <div class="row">
@@ -50,40 +56,48 @@
                     <div class="blog_left_sidebar">
                     	<div class="mb-2" style="display:flex; justify-content:space-between; align-items:center;">
 				  			<form name="partForm">
-				  				<select name="part" id="part" onchange="partCheck()" style="height: 35px; font-size: 16px; padding: 4px 8px;">
-				  					<option ${part=="tIdx" ? "selected" : ""}>최신글</option>
-				  					<option ${part=="viewCnt" ? "selected" : ""}>조회수</option>
-				  					<option ${part=="likedCnt" ? "selected" : ""}>좋아요</option>
-				  					<option ${part=="commentCnt" ? "selected" : ""}>댓글수</option>
-				  				</select>
+								<select name="part" id="part" onchange="location.href = 'BlogList.bl?part=' + this.value;" style="height: 35px; font-size: 16px; padding: 4px 8px;">
+								    <option value="tIdx" ${part == "tIdx" ? "selected" : ""}>최신글</option>
+								    <option value="viewCnt" ${part == "viewCnt" ? "selected" : ""}>조회수</option>
+								    <option value="likedCnt" ${part == "likedCnt" ? "selected" : ""}>좋아요</option>
+								    <option value="reviewCnt" ${part == "reviewCnt" ? "selected" : ""}>댓글수</option>
+								</select>
 				  			</form>
 			  				<button onclick="location.href='BlogInput.bl';" class="button primary-bg btn_1">새글쓰기</button>
 			  			</div>
+			  			
+				    <c:if test="${not empty searchMsg}">
+				        <div class="alert alert-info text-center">
+				            ${searchMsg}
+				        <p class="text-center"><input type="button" value="전체 게시글 보기" onclick="location.href='BlogList.bl';" class="btn btn-info btn-sm" />
+				        </div>
+				    </c:if>
+			  			
                     	<c:set var="curScrStartNo" value="${curScrStartNo}" />
         				<c:forEach var="vo" items="${vos}" varStatus="st">
                         <article class="blog_item">
                             <div class="blog_item_img">
                             	<c:set var="tPhotos" value="${fn:split(vo.tPhoto, '/')}"/>
-                                <img class="card-img rounded-0" src="${ctp}/images/blog/${tPhotos[0]}" style="height:330px;">
+                                <img class="card-img rounded-0" src="${ctp}/images/blog/${tPhotos[0]}" style="height:300px;">
                                 <a href="#" class="blog_item_date">
                                     <h3>(조회수 : ${vo.viewCnt})</h3>
-                                    <p>${vo.date_diff == 0 ? fn:substring(vo.tDate,0,10) : fn:substring(vo.tDate,0,16)}</p>
+                                    <p>${vo.date_diff >= 0 ? fn:substring(vo.tDate,0,10) : fn:substring(vo.tDate,0,16)}</p>
                                 </a>
                             </div>
 
-                            <div class="blog_details">
+                            <div class="blog_details" style="height:200px;padding:40px 20px 30px 30px;">
                             	<div>
 	                                <a class="d-inline-block" href="BlogDetail.bl?tIdx=${vo.tIdx}&pag=${pag}&pageSize=${pageSize}">
 	                                    <h2>[${vo.sort}] ${vo.title} <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if></h2>
 	                                </a>
 								</div>
                                 <p>
-                                	<c:if test="${fn:length(vo.tContent) >= 45}">${fn:substring(vo.tContent,0,45)}...</c:if>
-                                	<c:if test="${fn:length(vo.tContent) < 45}">${vo.tContent}</c:if>
+                                	<c:if test="${fn:length(vo.tContent) >= 40}">${fn:substring(vo.tContent,0,40)}...</c:if>
+                                	<c:if test="${fn:length(vo.tContent) < 40}">${vo.tContent}</c:if>
                                 </p>
                                 <ul class="blog-info-link">
                                     <li><a href="#"><i class="fa-solid fa-suitcase-rolling"></i>${vo.residence == "" ? "미상" : vo.residence}</a></li>
-                                    <li><a href="#"><i class="far fa-comments"></i>${rVo.reviewCnt}</a></li>
+                                    <li><a href="#"><i class="far fa-comments"></i>${vo.reviewCnt} reviews</a></li>
                                     <li><a href="#"><i class="far fa-user"></i>by ${vo.nickName}</a></li>
 									<li style="float:right;"><button class="w3-button w3-black" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like </b><span class="w3-tag w3-white">${vo.likedCnt}</span></button></li>
                                 </ul>
@@ -91,18 +105,45 @@
                             <c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
                         </article>
                         </c:forEach>
-
-						<!-- 페이징 처리 -->
-                        <nav class="blog-pagination justify-content-center d-flex">
+                        
+                        <nav class="">
                             <ul class="pagination">
-							<c:if test="${pag > 1}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
-							<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}"><i class="ti-angle-left"></i></a></li></c:if>
-							<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
-								<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-								<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-							</c:forEach>
-							<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="ti-angle-right"></i></a></li></c:if>
-							<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
+                                <c:if test="${pag > 1}">
+                                    <li class="item">
+                                        <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}">첫페이지</a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${curBlock > 0}">
+                                    <li class="item">
+                                        <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
+                                    <c:if test="${i <= totPage && i == pag}">
+                                        <li class="item active">
+                                            <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a>
+                                        </li>
+                                    </c:if>
+                                    <c:if test="${i <= totPage && i != pag}">
+                                        <li class="item">
+                                            <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a>
+                                        </li>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${curBlock < lastBlock}">
+                                    <li class="item">
+                                        <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${pag < totPage}">
+                                    <li class="item">
+                                        <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${totPage}&pageSize=${pageSize}">마지막페이지</a>
+                                    </li>
+                                </c:if>
                             </ul>
                         </nav>
                     </div>
@@ -113,7 +154,7 @@
                             <form action="BlogSearch.bl">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder='Search Keyword'
+                                        <input type="text" class="form-control" name="keyword" placeholder='검색어를 입력하세요'
                                             onfocus="this.placeholder = ''"
                                             onblur="this.placeholder = 'Search Keyword'">
                                         <div class="input-group-append">
@@ -227,7 +268,6 @@
             </div>
         </div>
     </section>
-    <!--================Blog Area =================-->
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
 </body>

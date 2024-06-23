@@ -14,7 +14,10 @@ public class ReviewInputOkCommand implements AdminInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String bookingId = request.getParameter("bookingId");
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		
+		int bIdx = request.getParameter("bookingId")== null ? 0 : Integer.parseInt(request.getParameter("bookingId"));
 		String part = request.getParameter("part") == null ? "" : request.getParameter("part");
 		int partIdx = request.getParameter("partIdx") == null ? 0 : Integer.parseInt(request.getParameter("partIdx"));
 		HttpSession session = request.getSession();
@@ -34,8 +37,9 @@ public class ReviewInputOkCommand implements AdminInterface {
 		vo.setStar(star);
 		vo.setrContent(rContent);
 		vo.setPurpose(purpose);
+		vo.setbIdx(bIdx);
 		
-		int res = dao.setReviewInputOk(vo, bookingId);
+		int res = dao.setReviewInputOk(vo);
 		
 		response.getWriter().write(res);
 	}

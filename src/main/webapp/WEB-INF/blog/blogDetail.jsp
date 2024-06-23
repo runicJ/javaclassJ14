@@ -74,6 +74,22 @@
 		.portfolio-details .portfolio-description p {
 		  padding: 0;
 		}
+		
+		@keyframes likeAnimation {
+		  0% {
+		    transform: scale(1);
+		  }
+		  50% {
+		    transform: scale(1.2);
+		  }
+		  100% {
+		    transform: scale(1);
+		  }
+		}
+		
+		.liked-animation {
+		  animation: likeAnimation 0.3s ease-in-out;
+		}
 	</style>
 	<script>
 		'use strict';
@@ -132,36 +148,36 @@
 	  		});
 	  	}
 	  	
-	    function likedToggle(tIdx) {
-	        $.ajax({
-	          url: "BlogLikedToggle.bl",
-	          type: "post",
-	          data: { tIdx: tIdx },
-	          success: function(res) {
-	              let icon = document.getElementById("wish-icon-" + tIdx);
-	              let likeCnt = document.getElementById("likeCnt");
-	              let btn = $(`#liked-btn-${tIdx}`);
-	              if (res.trim() == "true") {
-					icon.classList.remove('fa-solid', 'fa-thumbs-up');
-					icon.classList.add('fa-regular', 'fa-thumbs-up');
-					likeCnt.text(parseInt(likeCnt.text()) + 1);
-					btn.removeClass('btn-dark').addClass('btn-light');
-					btn.css('opacity', '1.0');
-	              } 
-	              else {
-					icon.classList.remove('fa-regular', 'fa-thumbs-up');
-					icon.classList.add('fa-solid', 'fa-thumbs-up');
-					icon.style.color = 'white';
-					likeCnt.text(parseInt(likeCnt.text()) - 1);
-					btn.removeClass('btn-light').addClass('btn-dark');
-					btn.css('opacity', '0.5'); 
-	              }
-	          },
-	          error: function() {
-	            alert("전송 오류!");
-	          }
-	        });
-	      }
+	  	function likedToggle(tIdx) {
+	  	    $.ajax({
+	  	        url: "BlogLikedToggle.bl",
+	  	        type: "post",
+	  	        data: { tIdx: tIdx },
+	  	        success: function(res) {
+	  	            let $icon = $("#liked-icon-" + tIdx);
+	  	            let $likeCnt = $("#likeCnt");
+	  	            let $btn = $("#liked-btn-" + tIdx);
+	  	            let currentCnt = parseInt($likeCnt.text());
+
+	  	            if (res.trim() == "true") {
+	  	                $icon.removeClass('fa-regular fa-thumbs-up').addClass('fa-solid fa-thumbs-up').css('color', 'white');
+	  	                $likeCnt.text(currentCnt + 1);
+	  	                $btn.removeClass('btn-light').addClass('btn-dark').css('opacity', '0.5');
+	  	            } else {
+	  	                $icon.removeClass('fa-solid fa-thumbs-up').addClass('fa-regular fa-thumbs-up');
+	  	                $likeCnt.text(currentCnt - 1);
+	  	                $btn.removeClass('btn-dark').addClass('btn-light').css('opacity', '1.0');
+	  	            }
+	  	            $icon.addClass('liked-animation');
+	  	            setTimeout(function() {
+	  	                $icon.removeClass('liked-animation');
+	  	            }, 300);
+	  	        },
+	  	        error: function() {
+	  	            alert("전송 오류!");
+	  	        }
+	  	    });
+	  	}
 	</script>
 </head>
 <body>
@@ -175,8 +191,13 @@
                 <ul class="blog-info-link mb-4">
                     <li><a href="#"><i class="fa-solid fa-suitcase-rolling"></i>${vo.residence == "" ? "미상" : vo.residence}</a></li>
                     <li><a href="#">${vo.sort}</a></li><c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
-                    <c:if test="${sMid == 'admin' || sMid == vo.mid}"><li class="text-center"><a href="BlogUpdate.bl?tIdx=${vo.tIdx}">수정</a><a href="BlogDelete.bl">삭제</a></li></c:if>
-                    <li style="float:right;"><button class="btn btn-dark" onclick="likedToggle(${vo.tIdx})"><b><i id="liked-icon-${vo.tIdx}" class="fa-regular fa-thumbs-up"></i>Like </b><span id="likeCnt">${vo.likedCnt}</span></button></li>
+                    <c:if test="${sMid == 'admin' || sMid == vo.mid}"><li class="text-center"><%-- <a href="BlogUpdate.bl?tIdx=${vo.tIdx}">수정</a> --%><a href="BlogDelete.bl">삭제</a></li></c:if>
+					<li style="float:right;">
+					    <button id="liked-btn-${vo.tIdx}" class="btn ${!likedExist ? 'btn-dark' : 'btn-light'}" onclick="likedToggle(${vo.tIdx})" style="opacity: ${likedExist ? '0.5' : '1.0'};">
+					        <b><i id="liked-icon-${vo.tIdx}" class="${likedExist ? 'fa-solid fa-thumbs-up' : 'fa-regular fa-thumbs-up'}"></i> Like</b>
+					        <span id="likeCnt">${vo.likedCnt}</span>
+					    </button>
+					</li>
                 </ul>
             </div>
             <p><br><p>
@@ -208,9 +229,6 @@
                 </div>
             <div class="navigation-top mt-5">
                 <div class="d-sm-flex justify-content-between text-center">
-                    <div class="col-sm-4 text-center my-2 my-sm-0">
-                        <!-- <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p> -->
-                    </div>
                     <ul class="social-icons">
                         <li><a href="https://pf.kakao.com/_iExmtG" target="_blank"><i class="fa-solid fa-comment"></i></a></li>
                         <li><a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="ti-instagram"></i></a></li>
@@ -267,12 +285,12 @@
             </div>
             <div class="blog-author">
                 <div class="media align-items-center">
-                    <img src="images/member/${memVo.userInfo == '공개' ? memVo.photo : noImage.jpg}" alt="memPhoto">
+                    <img src="images/member/${memVo.userInfo == '공개' ? memVo.photo : 'noImage.jpg'}" alt="memPhoto">
                     <div class="media-body">
-                	<c:if test="${memVo.userInfo == '공개'}">
                         <a href="#">
                             <h4>${memVo.nickName}</h4>
                         </a>
+                	<c:if test="${memVo.userInfo == '공개'}">
                         <p>${memVo.content}</p>
                     </c:if>
                     <c:if test="${memVo.userInfo != '공개'}"><h4>비공개 회원입니다.</h4></c:if>
@@ -280,7 +298,7 @@
                 </div>
             </div>
             <div class="comments-area">
-                <h4>Review</h4>
+                <h4>Review<p class="comment-count" style="float:right;"><span class="align-middle"><i class="far fa-comment"></i></span> ${vo.reviewCnt} Comments</p></h4>
             	<c:if test="${empty rVos}"><p class="text-center">아직 댓글이 없습니다. 게시글이 유용하셨다면 댓글을 달아주세요.</p></c:if>
             	<c:if test="${!empty rVos}">
             	<c:set var="imsiIdx" value="0" />
@@ -441,7 +459,6 @@
             </div>
         </div>
     </section>
-    <!--================ Blog Area end =================-->
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />

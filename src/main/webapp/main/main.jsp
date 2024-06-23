@@ -98,32 +98,43 @@
 	}
   </style>
   <script>
-  	$(function() {
-	    $("#datepicker_1, #datepicker_2").datepicker({
-	        dateFormat: 'yy-mm-dd',
-	        minDate: 0
-	    });
-	});
+  'use strict';
+  
+  $(document).ready(function() {
+      let today = new Date();
+      $("#datepicker_1, #datepicker_2").datepicker({
+          dateFormat: 'yy-mm-dd',
+          minDate: today,
+          onSelect: function(dateText, inst) {
+              $(this).val(dateText);
+          }
+      });
+
+      $("#datepicker_1").val('').attr("placeholder", "Check in");
+      $("#datepicker_2").val('').attr("placeholder", "Check out");
+  });
   	
-	function wishToggle(sIdx) {
+  	function wishToggle(sIdx) {
+		if(${sMid==null || sMid == ""}) {
+			alert("로그인 후에 가능한 메뉴입니다!");
+			return;
+		}
+		
 	    $.ajax({
 	        url: "StayWishToggle.st",
 	        type: "post",
 	        data: { sIdx: sIdx },
 	        success: function(res) {
 	        	let icon = document.getElementById("wish-icon-" + sIdx);
-	            console.log('Response:', res.trim());
-	            console.log('Icon element:', icon);
-	            console.log('Icon before:', icon.className);
 	            if (res.trim() == "true") {
 	                icon.classList.remove('fa-solid', 'fa-heart');
 	                icon.classList.add('fa-regular', 'fa-heart');
+	                icon.style.color = 'black';
 	            } else {
 	                icon.classList.remove('fa-regular', 'fa-heart');
 	                icon.classList.add('fa-solid', 'fa-heart');
 	                icon.style.color = 'red';
 	            }
-	            console.log('Icon after:', icon.className);
 	        },
 	        error: function() {
 	            alert("전송 오류!");
@@ -137,11 +148,9 @@
 		});
 	});
 	
-
 	function clip(){
-
-		var url = '';
-		var textarea = document.createElement("textarea");
+		let url = '';
+		let textarea = document.createElement("textarea");
 		document.body.appendChild(textarea);
 		url = window.document.location.href;
 		textarea.value = url;
@@ -155,56 +164,35 @@
   		let address = searchForm.address.value.trim();
   		let checkIn = searchForm.checkIn.value;
   		let checkOut = searchForm.checkOut.value;
-  		let guestMax = searchForm.guestMax.value.trim();
   		
-  		if(address == "" || (checkIn == "" && checkOut == "")) {
+  		if(address == "" && (checkIn == "" && checkOut == "")) {
   			alert("여행 지역 또는 예약 날짜를 입력하세요!");
   			return;
   		}
   		
-  		$.ajax({
-            url  : "StayList.st",
-            type : "post",
-            data : {
-            	address : address,
-            	checkIn : checkIn,
-            	checkOut : checkOut,
-            	guestMax : guestMax
-            },
-            success: function(res) {
-  				if(res != "0") {
-  					alert("검색 조건에 맞는 숙소를 조회합니다.");
-  					location.reload();
-  				}
-  				else {
-  					alert("검색한 조건에 맞는 숙소가 없습니다.");
-  				}
-            },
-            error: function() {
-                alert("전송 오류!");
-            }
-  		});
+  		searchForm.submit();
   	}
   	
-   	let lastScroll = 0;  // 마지막 위치
-  	let curPage = 1;
-  	
-  	$(document).scroll(function(){
-  		let currentScroll = $(this).scrollTop();  // 스크롤바 위쪽 시작 위치, 처음은 0이다. // currentScroll이라는 이름에 저장  // 현재 높이 0
-  		let documentHeight = $(document).height();  // 화면에 표시되는 전체 문서의 높이 // 본문의 크기
-  		let nowHeight = $(this).scrollTop() + $(window).height();  // 현재 화면상단 + 현재 화면높이 // 현재 높이 + 현재 화면의 높이
-  		
-  		// 스크롤이 아래로 내려갔을떄 이벤트 처리..
-  		if(currentScroll > lastScroll) {  // 화면 끝까지 갔는지 체크
-  			if(documentHeight < (nowHeight + (documentHeight*0.1))) {
-  				// 다음페이지 가져오기...
-  				console.log("다음페이지 가져오기");
-  				curPage++;
-  				getList(curPage);
-  			}
-  		}
-  		lastScroll = currentScroll;  // 이렇게 하고 다시 계산
-  	});
+  	let backtotop = document.getElementById('back-to-top');
+  	if (backtotop) {
+  	  const toggleBacktotop = () => {
+  	    if (window.scrollY > 100) {
+  	      backtotop.classList.add('active')
+  	    } else {
+  	      backtotop.classList.remove('active')
+  	    }
+  	  }
+  	  window.addEventListener('load', toggleBacktotop)
+  	  window.addEventListener('scroll', toggleBacktotop)
+
+  	  backtotop.addEventListener('click', (e) => {
+  	    e.preventDefault();
+  	    window.scrollTo({
+  	      top: 0,
+  	      behavior: 'smooth'
+  	    })
+  	  })
+  	}
   </script>
 </head>
 <body>
@@ -247,24 +235,24 @@
                             <div class="tab-pane active">
                                 <div class="booking_form">
                                     <form name="searchForm" method="post" action="StayList.st">
-                                        <div class="form-row">
-                                            <div class="form_colum">
-												<input class="select" type="text" name="address" placeholder="여행 지역"> 
-                                            </div>
-                                            <div class="form_colum">
-                                                <input id="datepicker_1" name="checkIn" placeholder="Check in">
-                                            </div>
-                                            <div class="form_colum">
-                                                <input id="datepicker_2" name="checkOut" placeholder="Check out">
-                                            </div>
-                                            <div class="form_colum">
-                                                <input class="select" type="number" name="guestMax" min="1" placeholder="인원 수"> 
-                                            </div>
-                                            <div class="form_btn">
-                                                <input type="button" class="btn_1" onclick="fCheck()" value="search">
-                                            </div>
-                                        </div>
-                                    </form>
+									    <div class="form-row">
+									        <div class="form_colum">
+									            <input class="select" type="text" name="address" placeholder="여행 지역"> 
+									        </div>
+									        <div class="form_colum">
+									            <input id="datepicker_1" name="checkIn" placeholder="Check in">
+									        </div>
+									        <div class="form_colum">
+									            <input id="datepicker_2" name="checkOut" placeholder="Check out">
+									        </div>
+									        <div class="form_colum">
+									            <input class="select" type="number" name="guestMax" min="1" placeholder="인원 수"> 
+									        </div>
+									        <div class="form_btn">
+									            <input type="button" class="btn_1" onclick="fCheck()" value="search">
+									        </div>
+									    </div>
+									</form>
                                 </div>
                             </div>
                         </div>
@@ -280,7 +268,8 @@
                 <div class="col-xl-6">
                     <div class="section_tittle text-center">
                         <h2>Top Stay 4</h2>
-                        <p>Serene Nest에서 가장 인기있는 숙소를 소개합니다.</p>
+                        <p>현재 Serene Nest에서 가장 인기있는 숙소를 소개합니다.<br>
+                        예약 수, 평점순, 위시순으로 집계됩니다.</p>
                     </div>
                 </div>
             </div>
@@ -296,23 +285,18 @@
                                 <h3 style="font-weight:bold;"><a href="StayDetail.st?sIdx=${stayVo.sIdx}">${stayVo.sName}</a></h3>
                                 <p>${stayVo.residence == 'Chung' ? '충청도' : stayVo.residence == 'Gang' ? '강원도' : stayVo.residence == 'Jeol' ? '전라도' : '경상도'}</p>
                                 <div class="place_review">
+                                	<div class="place_review" style="color:#ffe500;">
                                     <c:forEach begin="1" end="${stayReviews[stayVo]}" var="star">
                                     	<i class="fas fa-star"></i>
                                 	</c:forEach>
-                                	<div class="place_review" style="color:#ffe500;">
-	                                    <i class="fas fa-star"></i>
-	                                    <i class="fas fa-star"></i>
-	                                    <i class="fas fa-star"></i>
-	                                    <i class="fas fa-star"></i>
-	                                    <i class="fas fa-star"></i>
                                 	<b>평점 : <fmt:formatNumber value="${stayReviews[reviewAvg]}" pattern="#,##0.0" /></b>
                                     </div>
-                                <span>( review)</span>
+                                <span>(${stayVo.reviewCnt} review)</span>
                                 </div>
                             </div>
 							<div class="details_icon" style="position: absolute;  bottom: 30px;right: 20px;">
 							    <c:choose>
-							        <c:when test="${sMid != null && sMid != ''}">
+							        <c:when test="${!empty sMid}">
 							            <a type="button" onclick="wishToggle(${stayVo.sIdx})" class="link-wish" title="위시리스트 저장">
 							                <c:if test="${stayVo.isWished == 1}">
 							                    <i id="wish-icon-${stayVo.sIdx}" class="fa-solid fa-heart" style="color:red;"></i>
@@ -324,7 +308,7 @@
 							        </c:when>
 							        <c:otherwise>
 							            <button class="btn btn-dark">
-							                <b><i class="fa-solid fa-heart" style="background-color:#23272b"></i></i> Wish </b>${stayVo.wishCnt}
+							                <b><i class="fa-solid fa-heart" style="background-color:#23272b"></i> Wish </b>${stayVo.wishCnt}
 							            </button>
 							        </c:otherwise>
 							    </c:choose>
@@ -344,7 +328,8 @@
                 <div class="col-xl-6">
                     <div class="section_tittle text-center">
                         <h2>Best Travelog</h2>
-                        <p>현재 가장 관심이 뜨거운 여행블로그를 추천합니다.</p>
+                        <p>현재 가장 관심이 뜨거운 여행블로그를 추천합니다.<br>
+                        조회수, 좋아요수, 댓글순으로 집계됩니다.</p>
                     </div>
                 </div>
             </div>
@@ -374,7 +359,7 @@
                                 <i class="fa-solid fa-eye"></i><span> (조회수 : ${blogVo.viewCnt})</span>
                             </div>
                             <p>${blogVo.residence=="" ? "미상" : blogVo.residence}</p>
-                            <h5>By <span>${blogVo.nickName}</span></h5>
+                            <h5>By <span>${blogVo.nickName}</span><a href="#" style="float:right"><i class="far fa-comments"></i>${blogVo.reviewCnt} reviews</a></li></h5>
                         </div>
                     </div>
                 </div>
@@ -457,6 +442,7 @@
     </section>
 </div>
 <p><br><p>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center" id="back-to-top"><i class="fa-solid fa-arrow-up"></i></a>
 <!-- Video Modal -->
 <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -475,7 +461,6 @@
         </div>
     </div>
 </div>
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fa-solid fa-arrow-up"></i></a>
-<%@ include file = "../../include/footer.jsp"%>
+<%@ include file = "/include/footer.jsp"%>
 </body>
 </html>

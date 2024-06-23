@@ -46,17 +46,20 @@ public class BlogDetailCommand implements BlogInterface {
 		
 		HttpSession session = request.getSession();
 		ArrayList<String> contentViewCnt = (ArrayList<String>) session.getAttribute("tContentIdx");
-		if(contentViewCnt == null) contentViewCnt = new ArrayList<String>();
+		if (contentViewCnt == null) contentViewCnt = new ArrayList<String>();
 		String imsiContentViewCnt = "blog" + tIdx;
-		if(!contentViewCnt.contains(imsiContentViewCnt)) {
-			dao.setBlogViewCnt(tIdx);
-			contentViewCnt.add(imsiContentViewCnt);
+		if (!contentViewCnt.contains(imsiContentViewCnt)) {
+		    dao.setBlogViewCnt(tIdx);
+		    contentViewCnt.add(imsiContentViewCnt);
 		}
 		session.setAttribute("tContentIdx", contentViewCnt);
 		
-        ArrayList<BlogVO> sortCounts = dao.getSortCntAll();
-        request.setAttribute("sortCounts", sortCounts);
+		ArrayList<BlogVO> sortCounts = dao.getSortCntAll();
+		request.setAttribute("sortCounts", sortCounts);
 		
+		boolean likedExist = dao.checkMemberLiked(vo.getMid(), tIdx);
+		request.setAttribute("likedExist", likedExist);
+        
 		request.setAttribute("vo", vo);
 		
 		request.setAttribute("pag", pag);

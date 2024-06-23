@@ -16,6 +16,7 @@ public class StayVO {
     
     private int isWished;
     private int wishCnt;
+    private int reviewCnt;
     
     private FacilityVO facility;
     
@@ -109,12 +110,18 @@ public class StayVO {
 	public void setWishCnt(int wishCnt) {
 		this.wishCnt = wishCnt;
 	}
+	public int getReviewCnt() {
+		return reviewCnt;
+	}
+	public void setReviewCnt(int reviewCnt) {
+		this.reviewCnt = reviewCnt;
+	}
 	
 	@Override
 	public String toString() {
 		return "StayVO [sIdx=" + sIdx + ", sort=" + sort + ", sName=" + sName + ", sPhoto=" + sPhoto + ", star=" + star
 				+ ", address=" + address + ", sContent=" + sContent + ", guestMax=" + guestMax + ", price=" + price
 				+ ", residence=" + residence + ", sDate=" + sDate + ", sDel=" + sDel + ", isWished=" + isWished
-				+ ", wishCnt=" + wishCnt + ", facility=" + facility + "]";
+				+ ", wishCnt=" + wishCnt + ", reviewCnt=" + reviewCnt + ", facility=" + facility + "]";
 	}
 }

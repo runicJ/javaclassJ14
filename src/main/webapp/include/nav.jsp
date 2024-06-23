@@ -59,11 +59,11 @@
                     <c:if test="${sMid == 'admin'}"><a class="btn_1 d-none d-lg-block" href="${ctp}/Main">관리자메뉴</a></c:if>
                     <c:if test="${sMid != null && sMid != 'admin'}">
 	                    <li class="nav-item dropdown" style="list-style-type:none;">
-	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle" data-toggle="dropdown" style="font-size=14px;">
+	                    	<a class="btn_1 d-none d-lg-block dropdown-toggle text-center" data-toggle="dropdown" style="font-size=14px;color:#fff;">
                             <img src="images/member/${sPhoto}" alt="user" class="rounded-circle" height="30" width="30">
 	                    	${sNickName} 님</a>
 		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" href="MemberMain.mem"><i class="fa-solid fa-user"></i></i>&nbsp; 마이페이지</a>
+		                        <a class="dropdown-item" href="MemberMain.mem"><i class="fa-solid fa-user"></i>&nbsp; 마이페이지</a>
 		                        <a class="dropdown-item" href="MemberWish.mem"><i class="fa-solid fa-heart"></i>&nbsp; 위시리스트</a>
 		                        <a class="dropdown-item" href="MemberMessage.ad"><i class="fa-solid fa-message"></i>&nbsp; 메시지 보내기</a>
 				      		</div>

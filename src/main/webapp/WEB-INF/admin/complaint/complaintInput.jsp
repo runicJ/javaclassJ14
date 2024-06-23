@@ -6,16 +6,15 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Insert</title>
+	<title>Complaint Input</title>
 	<%@ include file = "/include/bs4.jsp" %>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<style>
 		 .contact-box-main{
 	     padding: 70px 0px;
 		}
 		 .contact-info-left{
 		     padding: 20px;
-		     background: url(../images/contact-bg.jpg) no-repeat center;
-			 background-size: cover;
 		}
 		 .contact-info-left h2{
 		     font-size: 22px;
@@ -158,6 +157,5 @@
     </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
-  <script src="${ctp}/js/stay/contact-form-script.js"></script>
 </body>
 </html>

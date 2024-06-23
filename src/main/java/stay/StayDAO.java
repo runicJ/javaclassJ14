@@ -209,118 +209,105 @@ public class StayDAO {
 	}
 
 	// 숙소리스트 가져오기(시설정보도 같이)
-	public ArrayList<StayVO> getStayList(int startIndexNo, int pageSize, String contentsShow, String search, String searchString) {
-		ArrayList<StayVO> vos = new ArrayList<StayVO>();
-		try {
-			if(search == null || search.equals("")) {
-				if(contentsShow.equals("adminOK")) {
-					sql = "select s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS isWished "
-							+ "FROM stay s ORDER BY s.sIdx DESC limit ?,?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, startIndexNo);
-					pstmt.setInt(2, pageSize);
-				}
-				else if(!contentsShow.equals("guest")) {
-					sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, "
-							+ "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt "
-							+ "FROM stay s WHERE s.sDel = 'NO' ORDER BY s.sIdx DESC LIMIT ?,?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, contentsShow);
-					pstmt.setInt(2, startIndexNo);
-					pstmt.setInt(3, pageSize);
-				}
-				else {
-					sql = "select * FROM stay WHERE sDel = 'NO' ORDER BY sIdx DESC limit ?,?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, startIndexNo);
-					pstmt.setInt(2, pageSize);
-				}
-			}
-			else {
-				if(contentsShow.equals("adminOK")) {
-	                sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt "
-	                		+ "FROM stay WHERE "+search+" LIKE ? ORDER BY sIdx DESC limit ?,?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, "%"+searchString+"%");
-					pstmt.setInt(2, startIndexNo);
-					pstmt.setInt(3, pageSize);
-				}
-	            else if(!contentsShow.equals("guest")) {
-	                sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, "
-	                	+ "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt " 
-	                	+ "FROM stay WHERE sDel = 'NO' AND " + search + " LIKE ? ORDER BY sIdx DESC limit ?, ?";
-	                  pstmt = conn.prepareStatement(sql);
-	                  pstmt.setString(1, contentsShow);
-	                  pstmt.setString(2, "%" + searchString + "%");
-	                  pstmt.setInt(3, startIndexNo);
-	                  pstmt.setInt(4, pageSize);
-				}
-	            else {
-					sql = "select * FROM stay WHERE sDel = 'NO' and "+search+" like ? ORDER BY sIdx DESC limit ?,?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, "%"+searchString+"%");
-					pstmt.setInt(2, startIndexNo);
-					pstmt.setInt(3, pageSize);
-	            }
-			}
-			rs = pstmt.executeQuery();
+	public ArrayList<StayVO> getStayList(int startIndexNo, int pageSize, String contentsShow, String address, String checkIn, String checkOut, int guestMax) {
+        ArrayList<StayVO> vos = new ArrayList<StayVO>();
+        try {
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT s.*, ");
+            sql.append("(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt ");
+            sql.append("FROM stay s WHERE s.sDel = 'NO' ");
 
-			while(rs.next()) {
-	            vo = new StayVO();
-	            vo.setsIdx(rs.getInt("sIdx"));
-	            vo.setSort(rs.getString("sort"));
-	            vo.setsName(rs.getString("sName"));
-	            vo.setsPhoto(rs.getString("sPhoto"));
-	            vo.setStar(rs.getInt("star"));
-	            vo.setAddress(rs.getString("address"));
-	            vo.setsContent(rs.getString("sContent"));
-	            vo.setGuestMax(rs.getInt("guestMax"));
-	            vo.setPrice(rs.getInt("price"));
-	            vo.setResidence(rs.getString("residence"));
-	            vo.setsDate(rs.getString("sDate"));
-	            vo.setsDel(rs.getString("sDel"));
-	            
-	            if(!contentsShow.equals("guest")) {
-	            	vo.setIsWished(rs.getInt("isWished"));
-	            }
+            if (address != null && !address.isEmpty()) {
+                sql.append("AND s.address LIKE ? ");
+            }
+            if (checkIn != null && !checkIn.isEmpty() && checkOut != null && !checkOut.isEmpty()) {
+                sql.append("AND s.sIdx NOT IN (SELECT b.sIdx FROM booking b WHERE b.checkIn <= ? AND b.checkOut >= ?) ");
+            }
+            if (guestMax > 0) {
+                sql.append("AND s.guestMax >= ? ");
+            }
 
-	            // 추가할 시설 정보 가져오기
-	            FacilityVO fVo = getStayIdxFacility(rs.getInt("sIdx"));
-	            vo.setFacility(fVo);
+            sql.append("ORDER BY s.sIdx DESC LIMIT ?, ?");
 
-	            vos.add(vo);
-	        }
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			rsClose();
-		}
-		return vos;
-	}
+            pstmt = conn.prepareStatement(sql.toString());
+
+            int paramIndex = 1;
+            if (address != null && !address.isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + address + "%");
+            }
+            if (checkIn != null && !checkIn.isEmpty() && checkOut != null && !checkOut.isEmpty()) {
+                pstmt.setString(paramIndex++, checkOut);
+                pstmt.setString(paramIndex++, checkIn);
+            }
+            if (guestMax > 0) {
+                pstmt.setInt(paramIndex++, guestMax);
+            }
+            pstmt.setInt(paramIndex++, startIndexNo);
+            pstmt.setInt(paramIndex++, pageSize);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                StayVO vo = new StayVO();
+                vo.setsIdx(rs.getInt("sIdx"));
+                vo.setSort(rs.getString("sort"));
+                vo.setsName(rs.getString("sName"));
+                vo.setsPhoto(rs.getString("sPhoto"));
+                vo.setStar(rs.getInt("star"));
+                vo.setAddress(rs.getString("address"));
+                vo.setsContent(rs.getString("sContent"));
+                vo.setGuestMax(rs.getInt("guestMax"));
+                vo.setPrice(rs.getInt("price"));
+                vo.setResidence(rs.getString("residence"));
+                vo.setsDate(rs.getString("sDate"));
+                vo.setsDel(rs.getString("sDel"));
+
+                if (!contentsShow.equals("guest")) {
+                    vo.setIsWished(rs.getInt("wishCnt"));
+                }
+
+                // 추가할 시설 정보 가져오기
+                FacilityVO fVo = getStayIdxFacility(rs.getInt("sIdx"));
+                vo.setFacility(fVo);
+
+                vos.add(vo);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL 오류: " + e.getMessage());
+        } finally {
+            rsClose();
+        }
+        return vos;
+    }
 
 	// top 4 숙소
 	public ArrayList<StayVO> getVestFourStay(String contentsShow) {
 		ArrayList<StayVO> vos = new ArrayList<StayVO>();
 	    try {
 	        if (contentsShow.equals("adminOK")) {
-	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
-	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
-	                  "FROM stay s ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
+	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, "+ 
+	            		"(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt, " +
+	            		"(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt, " +
+	            		"(SELECT COUNT(*) FROM review r WHERE r.part = 'stay' and r.partIdx = s.sIdx) AS reviewCnt " +
+	            		"FROM stay s ORDER BY bookingCnt DESC, star DESC, wishCnt desc, s.sIdx DESC LIMIT 4";
 	            pstmt = conn.prepareStatement(sql);
 	            pstmt.setString(1, contentsShow);
 	        } 
-	        else if (!contentsShow.equals("guest")) {
-	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
-	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
-	                  "FROM stay s WHERE s.sDel = 'NO' ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
+	        else if (contentsShow.equals("guest")) {
+	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt, " +
+	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt, " +
+	                  "(SELECT COUNT(*) FROM review r WHERE r.part = 'stay' and r.partIdx = s.sIdx) AS reviewCnt " +
+	                  "FROM stay s WHERE s.sDel = 'NO' ORDER BY bookingCnt DESC, s.star DESC, wishCnt desc, s.sIdx DESC LIMIT 4";
 	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setString(1, contentsShow);
 	        } 
 	        else {
-	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCount, " +
-	                  "(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt " +
-	                  "FROM stay s WHERE s.sDel = 'NO' ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
+	            sql = "SELECT s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, " +
+	            		"(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt, " +
+	            		"(SELECT COUNT(*) FROM booking b WHERE b.sIdx = s.sIdx) AS bookingCnt, " +
+	            		"(SELECT COUNT(*) FROM review r WHERE r.part = 'stay' and r.partIdx = s.sIdx) AS reviewCnt " +
+	            		"FROM stay s WHERE s.sDel = 'NO' ORDER BY bookingCnt DESC, s.star DESC, s.sIdx DESC LIMIT 4";
 	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, contentsShow);
 	        }
 	        rs = pstmt.executeQuery();
 
@@ -339,9 +326,11 @@ public class StayDAO {
 	            vo.setsDate(rs.getString("sDate"));
 	            vo.setsDel(rs.getString("sDel"));
 
-	            if (!contentsShow.equals("guest")) {
-	                vo.setIsWished(rs.getInt("isWished"));
-	            }
+            	vo.setWishCnt(rs.getInt("wishCnt"));
+            	vo.setReviewCnt(rs.getInt("reviewCnt"));
+            	if (!contentsShow.equals("guest")) {
+            		vo.setIsWished(rs.getInt("isWished"));
+            	}
 
 	            vos.add(vo);
 	        }

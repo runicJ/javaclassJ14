@@ -30,7 +30,7 @@ public class StayBookingCommand implements StayInterface {
         LocalDate checkOut = LocalDate.parse(checkOutStr, formatter);
 
         StayDAO dao = new StayDAO();
-        int res = dao.StayBookingCheck(sIdx, checkInStr, checkOutStr);
+        int res = dao.StayBookingCheck(sIdx, checkInStr, checkOut.minusDays(1).toString());
 
         if (res == 0) {
             int totalPrice = calcTotalPrice(checkIn, checkOut, price);

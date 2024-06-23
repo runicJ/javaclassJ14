@@ -1,6 +1,5 @@
 (function ($) {
   "use strict";
-
   var review = $('.client_review_slider');
   if (review.length) {
     review.owlCarousel({
@@ -28,7 +27,6 @@
         768: {
           items: 2,
           nav: false
-
         },
         991: {
           items: 3,
@@ -83,13 +81,14 @@
 	         ,modal:false
 	         ,footer:false
 	         ,calendarWeeks:false
-	         ,format: "yy-mm-dd"
+	         ,format: "yyyy-mm-dd"
   		});
 	});
 
- // datepicker 초기화
+  // datepicker 초기화
+  let today = new Date();
   $("#datepicker_1").datepicker({
-      dateFormat: 'yy-mm-dd',
+      dateFormat: 'yyyy-mm-dd',
       showOtherMonths: true,
       showMonthAfterYear: true,
       changeYear: true,
@@ -103,34 +102,33 @@
       monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
       dayNamesMin: ['일','월','화','수','목','금','토'],
       dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
-      minDate: 0, // 오늘 날짜 이전을 비활성화
-      onSelect: function(dateText, inst) {
+      minDate: today // 오늘 날짜 이전을 비활성화
+/*      onSelect: function(dateText, inst) {
         var date = $(this).datepicker('getDate');
         date.setDate(date.getDate() + 1);
         $("#datepicker_2").datepicker("option", "minDate", date);
-      }
+      }*/
   });
-
   $("#datepicker_2").datepicker({
-      dateFormat: 'yy-mm-dd',
+      dateFormat: 'yyyy-mm-dd',
       showOtherMonths: true,
       showMonthAfterYear: true,
       changeYear: true,
       changeMonth: true,
-      minDate: 1, // 오늘 날짜 이후만 선택 가능
-      beforeShow: function(input, inst) {
+      minDate: today
+/*      beforeShow: function(input, inst) {
         var date = $("#datepicker_1").datepicker('getDate');
         if (date) {
           date.setDate(date.getDate() + 1);
           $(this).datepicker('option', 'minDate', date);
         }
-      }
+      }*/
   });
-    
+
   // 기본 날짜 설정
-  $('#datepicker_1').datepicker('setDate', new Date());
-  $('#datepicker_2').datepicker('setDate', new Date(new Date().setDate(new Date().getDate() + 1)));
-  
+ /* $('#datepicker_1').datepicker("placeholder", "Check in");
+  $('#datepicker_2').datepicker("placeholder", "Check out");*/
+
   $('.gallery_img').magnificPopup({
     type: 'image',
     gallery:{
@@ -164,10 +162,4 @@
     }
   });
 
-  $('.gallery_img').magnificPopup({
-    type: 'image',
-    gallery:{
-      enabled:true
-    }
-  });
 }(jQuery));

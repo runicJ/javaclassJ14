@@ -294,27 +294,31 @@ public class AdminDAO {
 		return res;
 	}
 
-	public int setReviewInputOk(ReviewVO vo, String bookingId) {
+	public int setReviewInputOk(ReviewVO vo) {
 		int res = 0;
 		try {
-			sql = "INSERT INTO review VALUES (default,?,?,?,?,?,?,default,?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getPart());
-			pstmt.setInt(2, vo.getPartIdx());
-			pstmt.setString(3, vo.getMid());
-			pstmt.setString(4, vo.getNickName());
-			pstmt.setInt(5, vo.getStar());
-			pstmt.setString(6, vo.getrContent());
-			pstmt.setString(7, vo.getPurpose());
-			res = pstmt.executeUpdate();
-			
-			if ("stay".equals(vo.getPart())) {
-				String updateBookingSQL = "UPDATE bookings SET status = 'DONE' WHERE id = ?";
-				pstmt = conn.prepareStatement(updateBookingSQL);
-				pstmt.setString(1, bookingId);
-				pstmt.executeUpdate();
-			}
-			
+            String sql = "INSERT INTO review (part, partIdx, mid, nickName, star, rContent, rDate, purpose, bIdx) VALUES (?, ?, ?, ?, ?, ?, default, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vo.getPart());
+            pstmt.setInt(2, vo.getPartIdx());
+            pstmt.setString(3, vo.getMid());
+            pstmt.setString(4, vo.getNickName());
+            pstmt.setInt(5, vo.getStar());
+            pstmt.setString(6, vo.getrContent());
+            pstmt.setString(7, vo.getPurpose());
+            if (vo.getbIdx() == 0) {
+                pstmt.setNull(8, java.sql.Types.INTEGER);
+            } else {
+                pstmt.setInt(8, vo.getbIdx());
+            }
+            res = pstmt.executeUpdate();
+
+            if ("stay".equals(vo.getPart()) && vo.getbIdx() != 0) {
+                String updateBookingSQL = "UPDATE bookings SET status = 'DONE' WHERE id = ?";
+                pstmt = conn.prepareStatement(updateBookingSQL);
+                pstmt.setInt(1, vo.getbIdx());
+                pstmt.executeUpdate();
+            }
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
@@ -322,5 +326,4 @@ public class AdminDAO {
 		}
 		return res;
 	}
-
 }

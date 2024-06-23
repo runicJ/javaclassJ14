@@ -107,12 +107,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     fjs.parentNode.insertBefore(js, fjs);
   })(document, 'script', 'kakao-js-sdk');
 </script> -->
-<!-- jquery plugins here-->
-<script src="js/jquery-1.12.1.min.js"></script>
-<!-- popper js -->
-<script src="js/popper.min.js"></script>
-<!-- bootstrap js -->
-<script src="js/bootstrap.min.js"></script>
 <!-- magnific js -->
 <script src="js/jquery.magnific-popup.js"></script>
 <!-- swiper js -->
@@ -124,6 +118,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="js/gijgo.min.js"></script>
 <!-- contact js -->
 <script src="js/jquery.form.js"></script>
-<script src="js/jquery.validate.min.js"></script>
+<!-- <script src="js/jquery.validate.min.js"></script> -->
 <!-- custom js -->
 <script src="js/custom.js"></script>

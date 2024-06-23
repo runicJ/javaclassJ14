@@ -495,9 +495,6 @@
 	<script src="${ctp}/js/admin/jquery.min.js"></script>
 	<script src="${ctp}/js/admin/jquery.ui.touch-punch-improved.js"></script>
 	<script src="${ctp}/js/admin/jquery-ui.min.js"></script>
-	<!-- Bootstrap tether Core JavaScript -->
-	<script src="${ctp}/js/admin/popper.min.js"></script>
-	<script src="${ctp}/js/admin/bootstrap.min.js"></script>
 	<!-- slimscrollbar scrollbar JavaScript -->
 	<script src="${ctp}/js/admin/perfect-scrollbar.jquery.min.js"></script>
 	<script src="${ctp}/js/admin/sparkline.js"></script>

@@ -500,7 +500,7 @@ ul {
 @media (max-width: 991px) {
   /* line 25, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_button.scss */
   .btn_1, .btn_2 {
-    padding: 14px 30px;
+    padding: 10px 20px;
   }
 }
 

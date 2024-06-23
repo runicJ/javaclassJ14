@@ -229,6 +229,32 @@
   <script>
   	'use strict';
   	
+    document.addEventListener('DOMContentLoaded', function () {
+        let checkInInput = document.getElementById('datepicker_1');
+        let checkOutInput = document.getElementById('datepicker_2');
+
+        if (checkInInput) {
+            checkInInput.value = '';
+        }
+
+        if (checkOutInput) {
+            checkOutInput.value = '';
+        }
+    });
+    
+    $(function() {
+        let today = new Date();
+        $("#datepicker_1, #datepicker_2").datepicker({
+            locale: 'ko-kr',
+            format: 'yyyy-mm-dd',
+            startDate: today,
+            autoclose: true
+        });
+
+        $("#datepicker_1").val('');
+        $("#datepicker_2").val('');
+    });
+  	
    	let lastScroll = 0;  // 마지막 위치
   	let curPage = 1;
   	
@@ -312,10 +338,12 @@
 	                icon.classList.remove('fa-solid', 'fa-heart');
 	                icon.classList.add('fa-regular', 'fa-heart');
 	                icon.style.color = 'black';
+	                alert("해당 숙소가 위시리스트에 등록되었습니다.");
 	            } else {
 	                icon.classList.remove('fa-regular', 'fa-heart');
 	                icon.classList.add('fa-solid', 'fa-heart');
 	                icon.style.color = 'red';
+	                alert("위시리스트 삭제!");
 	            }
 	        },
 	        error: function() {
@@ -323,40 +351,18 @@
 	        }
 	    });
 	}
-  	
-  	function fCheck() {
+	
+	function fCheck() {
   		let address = searchForm.address.value.trim();
   		let checkIn = searchForm.checkIn.value;
   		let checkOut = searchForm.checkOut.value;
-  		let guestMax = searchForm.guestMax.value.trim();
   		
-  		if(address == "" || (checkIn == "" && checkOut == "")) {
+  		if(address == "" && (checkIn == "" && checkOut == "")) {
   			alert("여행 지역 또는 예약 날짜를 입력하세요!");
   			return;
   		}
   		
-  		$.ajax({
-            url  : "StayList.st",
-            type : "post",
-            data : {
-            	address : address,
-            	checkIn : checkIn,
-            	checkOut : checkOut,
-            	guestMax : guestMax
-            },
-            success: function(res) {
-  				if(res != "0") {
-  					alert("검색 조건에 맞는 숙소를 조회합니다.");
-  					location.reload();
-  				}
-  				else {
-  					alert("검색한 조건에 맞는 숙소가 없습니다.");
-  				}
-            },
-            error: function() {
-                alert("전송 오류!");
-            }
-  		});
+  		searchForm.submit();
   	}
   </script>
   
@@ -419,9 +425,16 @@
             </div>
         </div>
     </section>
+    
+    <c:if test="${not empty searchMsg}">
+        <div class="alert alert-info text-center">
+            ${searchMsg}
+        </div>
+        <p class="text-center"><input type="button" value="전체 숙소보기" onclick="location.href='StayList.st';" class="btn_1" />
+    </c:if>
+    
     <section id="portfolio" class="portfolio">
       <div class="container">
-
         <div class="row">
           <div class="col-lg-12">
             <ul id="portfolio-flters">
@@ -478,7 +491,6 @@
 <%@ include file = "../../include/footer.jsp"%>
   <!-- Vendor JS Files -->
   <script src="${ctp}/js/stay/purecounter_vanilla.js"></script>
-  <script src="${ctp}/js/stay/bootstrap.bundle.min.js"></script>
   <script src="${ctp}/js/stay/glightbox.min.js"></script>
   <script src="${ctp}/js/stay/isotope.pkgd.min.js"></script>
   <script src="${ctp}/js/stay/swiper-bundle.min.js"></script>

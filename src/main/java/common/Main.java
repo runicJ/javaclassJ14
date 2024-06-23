@@ -20,9 +20,6 @@ import blog.BlogVO;
 import stay.StayDAO;
 import stay.StayVO;
 
-//import study.database.LoginDAO;
-//import study.database.LoginVO;
-
 @SuppressWarnings("serial")
 @WebServlet("/Main")
 public class Main extends HttpServlet {

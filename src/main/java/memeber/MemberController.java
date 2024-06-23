@@ -119,6 +119,16 @@ public class MemberController extends HttpServlet {  // 4
 			command.execute(request, response);
 			viewPage += "/memberCommentList.jsp";
 		}
+		else if(com.equals("/MemberWish")) {
+			command = new MemberWishCommand();
+			command.execute(request, response);
+			viewPage += "/memberWish.jsp";
+		}
+		else if(com.equals("/MemberComplaint")) {
+			//command = new MemberWishCommand();
+			//command.execute(request, response);
+			viewPage += "/memberComplaint.jsp";
+		}
 		else if(com.equals("/MemberDelete")) {
 			viewPage += "/memberPwdDeleteCheck.jsp";
 		}

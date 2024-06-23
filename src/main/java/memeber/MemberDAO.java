@@ -6,8 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import admin.review.ReviewVO;
+import blog.BlogVO;
+import blog.BlogVO.SortType;
 import common.GetConn;
 import stay.BookingVO;
+import stay.StayVO;
 
 public class MemberDAO {
 	
@@ -293,7 +297,7 @@ public class MemberDAO {
 	public ArrayList<BookingVO> getMemberBookingList(int startIndexNo, int pageSize, String contentsShow) {
 		ArrayList<BookingVO> vos = new ArrayList<BookingVO>();
 		try {
-			sql = "select *, datediff(now(), b.bDate) as date_diff, s.sName as sName from booking b join stay s on b.sIdx = s.sIdx "
+			sql = "select *, datediff(now(), b.checkIn) as date_diff, s.sName as sName from booking b join stay s on b.sIdx = s.sIdx "
 					+ "where mid = ? order by b.bDate desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, contentsShow);
@@ -324,5 +328,113 @@ public class MemberDAO {
 			rsClose();
 		}
 		return vos;
+	}
+	
+	// 회원별 위시리스트
+	public ArrayList<StayVO> getMemberWishList(String mid) {
+		ArrayList<StayVO> wishVos = new ArrayList<StayVO>();
+		try {
+			sql = "select s.*, (SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx AND w.mid = ?) AS isWished, "
+					+ "(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt from stay s "
+					+ "join stayWish w on s.sIdx = w.sIdx where s.sDel = 'NO' and w.mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, mid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				StayVO sVo = new StayVO();
+                sVo.setsIdx(rs.getInt("sIdx"));
+                sVo.setSort(rs.getString("sort"));
+                sVo.setsName(rs.getString("sName"));
+                sVo.setsPhoto(rs.getString("sPhoto"));
+                sVo.setStar(rs.getInt("star"));
+                sVo.setAddress(rs.getString("address"));
+                sVo.setsContent(rs.getString("sContent"));
+                sVo.setGuestMax(rs.getInt("guestMax"));
+                sVo.setPrice(rs.getInt("price"));
+                sVo.setResidence(rs.getString("residence"));
+                sVo.setsDate(rs.getString("sDate"));
+                sVo.setsDel(rs.getString("sDel"));
+                sVo.setIsWished(rs.getInt("isWished"));
+                sVo.setWishCnt(rs.getInt("wishCnt"));
+                
+                wishVos.add(sVo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return wishVos;
+	}
+
+	public ArrayList<BlogVO> getMemberBlogList(String mid) {
+		ArrayList<BlogVO> tVos = new ArrayList<BlogVO>();
+		try {
+			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff from travelog where mid = ? order by tIdx limit 3";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				BlogVO tVo = new BlogVO();
+				
+				tVo.settIdx(rs.getInt("tIdx"));
+				tVo.setMid(rs.getString("mid"));
+				tVo.setNickName(rs.getString("nickName"));
+				tVo.settPhoto(rs.getString("tPhoto"));
+				tVo.setSort(SortType.valueOf(rs.getString("sort")));
+				tVo.setTitle(rs.getString("title"));
+				tVo.setResidence(rs.getString("residence"));
+				tVo.settDate(rs.getString("tDate"));
+				tVo.setViewCnt(rs.getInt("viewCnt"));
+				tVo.setLikedCnt(rs.getInt("likedCnt"));
+				tVo.setOpenSw(rs.getString("openSw"));
+				tVo.setHostIp(rs.getString("hostIp"));
+				tVo.settContent(rs.getString("tContent"));
+				tVo.setComplaint(rs.getString("complaint"));
+				
+				tVo.setHour_diff(rs.getInt("hour_diff"));
+				tVo.setDate_diff(rs.getInt("date_diff"));
+				
+				tVos.add(tVo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return tVos;
+	}
+
+	public ArrayList<ReviewVO> getMemberReviews(String mid) {
+		ArrayList<ReviewVO> rVos = new ArrayList<ReviewVO>();
+		try {
+			sql = "select * from review where mid = ? order by rIdx limit 3";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				ReviewVO rVo = new ReviewVO();
+				rVo.setrIdx(rs.getInt("rIdx"));
+				rVo.setPart(rs.getString("part"));
+				rVo.setPartIdx(rs.getInt("partIdx"));
+				rVo.setMid(rs.getString("mid"));
+				rVo.setNickName(rs.getString("nickName"));
+				rVo.setStar(rs.getInt("star"));
+				rVo.setrContent(rs.getString("rContent"));				
+				rVo.setrDate(rs.getString("rDate"));
+				rVo.setPurpose(rs.getString("purpose"));
+								
+				rVos.add(rVo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return rVos;
 	}
 }

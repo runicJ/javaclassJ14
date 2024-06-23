@@ -194,28 +194,10 @@
 		}
     </style>
     <script>
-    	'use strict';
-    	
-    	window.onload = function() {
-    	    if (${sMid == null || sMid == ""}) {
-    	        ['checkInInput', 'checkOutInput', 'guestNumInput'].forEach(id => {
-    	            let e = document.getElementById(id);
-    	            if (e) {
-    	                e.addEventListener('click', function() {
-    	                    alert("로그인 이후에 해당 숙소에 대한 예약이 가능합니다.\n로그인 페이지로 이동합니다!");
-    	                    location.href = "MemberLogin.mem";
-    	                });
-    	            }
-    	        });
-    	    }
+        'use strict';
 
-            document.getElementById('paymentBtn').addEventListener('click', function() {
-                $('#bookingCheckModal').modal('hide');
-                $('#paymentModal').modal('show');
-            });
-        }
-    	
         function checkBooking() {
+        	
             let sIdx = ${vo.sIdx};
             let checkIn = bookingForm.checkIn.value;
             let checkOut = bookingForm.checkOut.value;
@@ -226,16 +208,16 @@
                 alert("로그인 이후에 해당 숙소에 대한 예약이 가능합니다.\n로그인 페이지로 이동합니다!");
                 location.href = "MemberLogin.mem";
                 return;
+            } else if (checkIn == "" || checkOut == "") {
+                alert("예약 날짜를 입력하세요!");
+                return;
+            } else if (guestNum > ${vo.guestMax}) {
+                alert("최대 인원 수를 초과하셨습니다!");
+                return;
             }
-            else if(checkIn == "" || checkOut == "") {
-				alert("예약 날짜를 입력하세요!");
-				return;
-			}
-			else if(guestNum > ${vo.guestMax}) {
-				alert("최대 인원 수를 초과하셨습니다!");
-				return;
-			}
-			
+
+            //console.log("Ajax 요청 준비?");
+
             $.ajax({
                 url: "StayBooking.st",
                 type: "post",
@@ -247,10 +229,13 @@
                     price: price
                 },
                 success: function(response) {
-                	let res = response.split(",");
-                	if (res[0] == "OK") {
-                		alert('예약 내용을 정확히 입력하셨나요? \n확인 후에 결제창으로 이동합니다.');
-                		let totalPrice = res[1];
+                    //console.log("서버 응답:", response);
+                    let res = response.split(",");
+                    if (res[0] == "OK") {
+                        alert('예약 내용을 정확히 입력하셨나요? \n확인 후에 결제창으로 이동합니다.');
+                        //console.log("예약 확인 모달 창 준비1");
+
+                        let totalPrice = res[1];
                         $('#totalPriceCheck').text('￦' + totalPrice + ' 원');
                         $('#checkInCheck').text(checkIn);
                         $('#checkOutCheck').text(checkOut);
@@ -260,9 +245,12 @@
                         $('#guestNumPayment').val(guestNum);
                         $('#totalPayment').val(totalPrice);
                         $('#totalStr').text('￦' + totalPrice + ' 원');
+                        
+                        //console.log("예약 확인 모달 창 준비2");
+                        //console.log("모달 존재 여부:", $('#bookingCheckModal').length);
                         $('#bookingCheckModal').modal('show');
-                    } 
-                    else {
+                        //console.log("예약 확인 모달 창 완료");
+                    } else {
                         alert(res[1]);
                     }
                 },
@@ -271,7 +259,14 @@
                 }
             });
         }
-	  	
+        
+        $(document).ready(function() {
+            $('#paymentBtn').on('click', function() {
+                $('#bookingCheckModal').modal('hide');
+                $('#paymentModal').modal('show');
+            });
+        });
+        
 	  	// 리뷰 삭제하기
  	  	function reviewDelete(rIdx) {
 	  		let ans = confirm("리뷰를 삭제하시겠습니까?");
@@ -318,6 +313,11 @@
  	  	}
 	  	
  	  	function wishToggle(sIdx) {
+ 	  		if(sMid == null || sMid == "") {
+ 	  			alert("로그인 이후에 가능한 메뉴입니다!");
+ 	  			return false;
+ 	  		}
+ 	  		
  	  	    $.ajax({
  	  	        url: "StayWishToggle.st",
  	  	        type: "post",
@@ -343,7 +343,7 @@
  	  	        }
  	  	    });
  	  	}
- 
+
 	</script>
 </head>
 <body>
@@ -399,7 +399,6 @@
 	        </c:forEach>
 	    </div>
 	</div>
-
     <hr>
   <div class="w3-container">
   	<div class="w3-row-padding">
@@ -450,7 +449,7 @@
 		    <div class="form_colum">
 	        	<label style="font-size: 1.3em;font-weight: bold;"> ￦ <fmt:formatNumber value="${vo.price}" pattern="#,##0" /> 원 <span style="font-size:0.8em;font-weight:500;">/박</span></label>
 	      	</div>
-	  		<button class="w3-button w3-right w3-red mt-2" id="checkBookingBtn" onclick="checkBooking()"><i class="fa fa-search w3-margin-right"></i> 숙소 예약하기</button>
+	  		<button class="w3-button w3-right w3-red mt-2" type="button" id="checkBookingBtn" onclick="checkBooking()"><i class="fa fa-search w3-margin-right"></i> 숙소 예약하기</button>
     	</form>
 	</div>
 </div>
@@ -469,7 +468,7 @@
 	    <div class="col-sm-5">
 		    <h4><strong>숙소 운영 정책</strong></h4>
 		    <br>
-			<h5><i class="fa fa-map-marker" style="width:30px"></i>대한민국, ${stayVo.residence == 'Chung' ? '충청도' : stayVo.residence == 'Gang' ? '강원도' : stayVo.residence == 'Jeol' ? '전라도' : '경상도'}</h5>
+			<h5><i class="fa fa-map-marker" style="width:30px"></i>대한민국, ${vo.residence == 'Chung' ? '충청도' : vo.residence == 'Gang' ? '강원도' : vo.residence == 'Jeol' ? '전라도' : '경상도'}</h5>
     		&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check"></i> &nbsp;${vo.sort}
 			<p><br></p>
 		    <p>자세한 주소는 예약 후에 공개됩니다.</p>
@@ -497,24 +496,28 @@
         	<c:if test="${!empty rVos}">
         	<c:set var="imsiIdx" value="0" />
         	<c:forEach var="rVo" items="${rVos}" varStatus="st">
-        	<c:if test="${imsiIdx != vo.idx}">
+        	<c:if test="${imsiIdx != rVo.rIdx}">
             <div class="comment-list">
                 <div class="single-comment justify-content-between d-flex">
                     <div class="user justify-content-between d-flex">
                         <div class="thumb">
-                            <img src="${ctp}/images/member/${memVo.userInfo == '공개' ? memVo.photo : noImage.jpg}">
+                            <img src="${ctp}/images/member/${rVo.userInfo == '공개' ? rVo.photo : 'noImage.jpg'}">
                         </div>
                         <div class="desc">
                             <p class="comment">
-                                ${fn:replace(rVo.content, newLine, '<br/>')}
+                                ${fn:replace(rVo.rContent, newLine, '<br/>')}
                             </p>
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex align-items-center">
+                            	<div class="place_review" style="color:#ffe500;">
+                                    <c:forEach begin="1" end="${rVo.star}" var="star">
+                                    	<i class="fas fa-star"></i>
+                                	</c:forEach>
+                               	</div>
                             <h5>
-                               <a href="#">${rVo.nickName}</a>
+                               <a href="#"> &nbsp;&nbsp;&nbsp;${rVo.nickName}</a>
                             </h5>
-                                    <p class="date">${rVo.mid}</p>
-                                    <c:if test="${rVo.mid == sMid || sMid == 'admin'}"><p><a href="javascript:reviewDelete(${rVo.rIdx})" title="리뷰삭제" class="badge badge-danger">x</a></p></c:if>
+                                <c:if test="${rVo.mid == sMid || sMid == 'admin'}"><p><a href="javascript:reviewDelete(${rVo.rIdx})" title="리뷰삭제" class="badge badge-danger">x</a></p></c:if>
                                 </div>
                                 <div class="reply-btn">
                                     <a href="#" class="btn-reply text-uppercase">reply</a>
@@ -534,7 +537,7 @@
 </div>
 </div>
 <p><br/></p>
-<div id="bookingCheckModal" class="modal fade" role="dialog">
+<div id="bookingCheckModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -552,17 +555,16 @@
 		      </ul>
 		      <hr>
 		      <p>총 합계(KRW) : <b><span id="totalPriceCheck"></span></b></p>
-		      <hr>
-		      <div class="text-center">
+            </div>
+		      <div class="modal-footer text-center">
                 <a type="button" id="paymentBtn" class="btn btn-success mr-2">결제하기</a>
                 <a type="button" data-dismiss="modal" class="btn btn-warning">취소</a>
               </div>
-            </div>
         </div>
     </div>
 </div>
 
-<div id="paymentModal" class="modal fade" role="dialog">
+<div id="paymentModal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -571,7 +573,7 @@
       </div>
       <div class="modal-body">
         <div class="container">
-          <form action="StayBookingOk.st">
+          <form name="paymentForm" action="StayBookingOk.st">
         	<div class="row">
 	          <div class="col-50">
 	            <h3>결제 정보</h3>
@@ -624,7 +626,7 @@
 		        <label>
 		          <input type="checkbox" checked="checked" name="sameadr"> 결제 정보 저장하기
 		        </label>
-				<p><input type="submit" value="숙소 예약하기" class="btn"></p>
+				<p><input type="submit" value="숙소 예약하기" class="btn_1"></p>
 		        <input type="hidden" value="${vo.sIdx}" name="sIdx" />
 		        <input type="hidden" id="checkInPayment" name="checkInPayment" />
 		        <input type="hidden" id="checkOutPayment" name="checkOutPayment" />

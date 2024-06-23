@@ -11,6 +11,7 @@ public class ReviewVO {
 	private String rContent;
 	private String rDate;
 	private String purpose;
+	private int bIdx;
 
 	private String userInfo;
 	private String photo;
@@ -69,6 +70,12 @@ public class ReviewVO {
 	public void setPurpose(String purpose) {
 		this.purpose = purpose;
 	}
+	public int getbIdx() {
+		return bIdx;
+	}
+	public void setbIdx(int bIdx) {
+		this.bIdx = bIdx;
+	}
 	public String getUserInfo() {
 		return userInfo;
 	}
@@ -81,12 +88,10 @@ public class ReviewVO {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	
 	@Override
 	public String toString() {
 		return "ReviewVO [rIdx=" + rIdx + ", part=" + part + ", partIdx=" + partIdx + ", mid=" + mid + ", nickName="
 				+ nickName + ", star=" + star + ", rContent=" + rContent + ", rDate=" + rDate + ", purpose=" + purpose
-				+ ", userInfo=" + userInfo + ", photo=" + photo + "]";
+				+ ", bIdx=" + bIdx + ", userInfo=" + userInfo + ", photo=" + photo + "]";
 	}
-	
 }

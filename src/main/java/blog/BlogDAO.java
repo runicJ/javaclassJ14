@@ -56,8 +56,9 @@ public class BlogDAO {
 	public ArrayList<BlogVO> getBlogList(int startIndexNo, int pageSize, String part) {
 		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
 		try {
-			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff "
-					+ "from travelog order by "+part+" desc limit ?,?";
+			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff, "
+					+ "(SELECT COUNT(*) FROM review r WHERE r.partIdx = t.tIdx AND r.part = 'travelog') AS reviewCnt "
+					+ "from travelog t order by "+part+" desc, t.tIdx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -83,6 +84,8 @@ public class BlogDAO {
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				vo.setDate_diff(rs.getInt("date_diff"));
 				
+				vo.setReviewCnt(rs.getInt("reviewCnt"));
+				
 				vos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -94,32 +97,46 @@ public class BlogDAO {
 	}
 	
 	// 여행블로그 글 총 갯수
-	public int getTotRecCnt(String contentsShow, String part) {
-		int totRecCnt = 0;
-		try {
-			if(contentsShow.equals("adminOK")) {
-			  sql = "select count(*) as cnt from travelog";
-			  pstmt = conn.prepareStatement(sql);
-			}
-			else {
-				sql = "select sum(a.cnt) as cnt from (select count(*) as cnt from travelog where openSW = 'OK' and complaint = 'NO' union select count(*) as cnt from travelog where mid = ? and (openSW = 'NO' or complaint = 'OK')) as a";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, contentsShow);
-			}
-			rs = pstmt.executeQuery();
-			rs.next();
-			totRecCnt = rs.getInt("cnt");
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			rsClose();
-		}
-		return totRecCnt;
-	}
+	public int getTotRecCnt(String mid, String keyword) {
+        int totRecCnt = 0;
+        try {
+            if (mid.equals("admin")) {
+                if (keyword.equals("")) {
+                    sql = "SELECT COUNT(*) AS cnt FROM travelog";
+                } 
+                else {
+                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE title LIKE ? OR nickName LIKE ? OR tContent LIKE ?";
+                }
+            } else {
+                if (keyword.equals("")) {
+                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE openSw = 'OK' AND complaint = 'NO'";
+                } 
+                else {
+                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE (title LIKE ? OR nickName LIKE ? OR tContent LIKE ?) AND openSw = 'OK' AND complaint = 'NO'";
+                }
+            }
+            pstmt = conn.prepareStatement(sql);
+            if (!keyword.equals("")) {
+                pstmt.setString(1, "%" + keyword + "%");
+                pstmt.setString(2, "%" + keyword + "%");
+                pstmt.setString(3, "%" + keyword + "%");
+            }
+            rs = pstmt.executeQuery();
+            rs.next();
+            totRecCnt = rs.getInt("cnt");
+        } catch (SQLException e) {
+            System.out.println("SQL 오류 : " + e.getMessage());
+        } finally {
+            rsClose();
+        }
+        return totRecCnt;
+    }
 
 	public BlogVO getBlogDetail(int tIdx) {
 		try {
-			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff from travelog where tIdx = ?";
+			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff,"
+					+ "(SELECT COUNT(*) FROM review r WHERE r.partIdx = t.tIdx AND r.part = 'travelog') AS reviewCnt "
+					+ " from travelog t where tIdx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, tIdx);
 			rs = pstmt.executeQuery();
@@ -142,7 +159,8 @@ public class BlogDAO {
 				vo.setComplaint(rs.getString("complaint"));
 				
 				vo.setHour_diff(rs.getInt("hour_diff"));
-				vo.setDate_diff(rs.getInt("date_diff"));				
+				vo.setDate_diff(rs.getInt("date_diff"));
+				vo.setReviewCnt(rs.getInt("reviewCnt"));
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -206,26 +224,12 @@ public class BlogDAO {
 		return res;
 	}
 	
-	// 블로그 글 좋아요 수 증가/감소 처리
-	public void setBlogLikedCnt(int tIdx, int likedCnt) {
-		try {
-			sql = "update travelog set likedCnt = likedCnt + ? where tIdx = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, likedCnt);
-			pstmt.setInt(2, tIdx);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			pstmtClose();
-		}
-	}
-
 	public ArrayList<BlogVO> getVestThreeBlog() {
 		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
 		try {
-			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff "
-					+ "from travelog order by viewCnt desc, likedCnt desc, tIdx desc limit 3";
+			sql = "select *, datediff(now(), tDate) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff, "
+					+ "(SELECT COUNT(*) FROM review r WHERE r.partIdx = t.tIdx AND r.part = 'travelog') AS reviewCnt "
+					+ "from travelog t order by t.viewCnt desc, t.likedCnt desc, reviewCnt desc, tIdx desc limit 3";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -248,6 +252,7 @@ public class BlogDAO {
 				
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				vo.setDate_diff(rs.getInt("date_diff"));
+				vo.setReviewCnt(rs.getInt("reviewCnt"));
 				
 				vos.add(vo);
 			}
@@ -353,7 +358,7 @@ public class BlogDAO {
 	    return result;
 	}
 
-    // 좋아요 상태를 토글
+	// 좋아요 상태를 토글
 	public void toggleLiked(String sMid, int tIdx, boolean like) {
 	    try {
 	        if (like) {
@@ -386,16 +391,19 @@ public class BlogDAO {
 	    }
 	}
 
-	public ArrayList<BlogVO> getBlogSearch(String keyword) {
+	public ArrayList<BlogVO> getBlogSearch(int startIndexNo, int pageSize, String keyword) {
 		ArrayList<BlogVO> vos = new ArrayList<BlogVO>();
 		try {
-	        sql = "SELECT *, DATEDIFF(NOW(), tDate) AS date_diff, TIMESTAMPDIFF(HOUR, tDate, NOW()) AS hour_diff " +
-	                "FROM travelog WHERE title LIKE ? OR nickName LIKE ? OR tContent LIKE ? " +
-	                "ORDER BY tIdx DESC";
+            sql = "SELECT *, DATEDIFF(NOW(), tDate) AS date_diff, TIMESTAMPDIFF(HOUR, tDate, NOW()) AS hour_diff, "
+                    + "(SELECT COUNT(*) FROM review r WHERE r.partIdx = t.tIdx AND r.part = 'travelog') AS reviewCnt "
+                    + "FROM travelog t WHERE title LIKE ? OR nickName LIKE ? OR tContent LIKE ? "
+                    + "ORDER BY t.tIdx DESC LIMIT ?, ?";
 			pstmt = conn.prepareStatement(sql);
 	        pstmt.setString(1, "%" + keyword + "%");
 	        pstmt.setString(2, "%" + keyword + "%");
 	        pstmt.setString(3, "%" + keyword + "%");
+            pstmt.setInt(4, startIndexNo);
+            pstmt.setInt(5, pageSize);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -417,6 +425,7 @@ public class BlogDAO {
 				
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				vo.setDate_diff(rs.getInt("date_diff"));
+	            vo.setReviewCnt(rs.getInt("reviewCnt"));
 				
 				vos.add(vo);
 			}

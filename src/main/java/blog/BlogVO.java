@@ -24,6 +24,7 @@ public class BlogVO {
 	private int date_diff;
 	
 	private int sortCnt;
+	private int reviewCnt;
 
 	public int gettIdx() {
 		return tIdx;
@@ -161,12 +162,20 @@ public class BlogVO {
 		this.tIdx = tIdx;
 	}
 
+	public int getReviewCnt() {
+		return reviewCnt;
+	}
+
+	public void setReviewCnt(int reviewCnt) {
+		this.reviewCnt = reviewCnt;
+	}
+
 	@Override
 	public String toString() {
 		return "BlogVO [tIdx=" + tIdx + ", mid=" + mid + ", nickName=" + nickName + ", tPhoto=" + tPhoto + ", sort="
 				+ sort + ", title=" + title + ", residence=" + residence + ", tDate=" + tDate + ", viewCnt=" + viewCnt
 				+ ", likedCnt=" + likedCnt + ", openSw=" + openSw + ", hostIp=" + hostIp + ", tContent=" + tContent
 				+ ", complaint=" + complaint + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + ", sortCnt="
-				+ sortCnt + "]";
+				+ sortCnt + ", reviewCnt=" + reviewCnt + "]";
 	}
 }

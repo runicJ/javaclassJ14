@@ -7,13 +7,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=divice-width, initial-scale=1.0">
 	<title>Insert</title>
-  <%@ include file = "../../include/bs4.jsp"%>
-  <link href="${ctp}/setting/css/admin/style.min.css" rel="stylesheet">
+  <%@ include file = "/include/bs4.jsp"%>
 </head>
 <body>
-<%@ include file = "../../include/header.jsp"%>
-<%@ include file = "../../include/nav.jsp"%>
-<p><br></p>
+<%@ include file = "/include/header.jsp"%>
+<%@ include file = "/include/nav.jsp"%>
 <div class="container">	
     <div class="preloader">
         <div class="lds-ripple">
@@ -41,7 +39,7 @@
 	    	<div class="page-breadcrumb">
 	        	<div class="row">
 	            	<div class="col-12 d-flex no-block align-items-center">
-	                	<h4 class="page-title">문의/신고 글</h4>
+	                	<h4 class="page-title">위시리스트</h4>
 	                	<div class="ml-auto text-right">
 	                    	<nav aria-label="breadcrumb">
 		                        <ol class="breadcrumb">
@@ -58,12 +56,15 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title m-b-0">나의 위시리스트</h5>
+                            </div>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>
-                                                    <label class="customcheckbox m-b-5">
+                                                    <label class="customcheckbox m-b-20">
                                                         <input type="checkbox" id="mainCheckbox" />
                                                         <span class="checkmark"></span>
                                                     </label>
@@ -158,7 +159,7 @@
         </div>
 </div>
 <p><br/></p>
-<%@ include file = "../../include/footer.jsp"%>
+<%@ include file = "/include/footer.jsp"%>
 	<script src="js/admin/jquery-ui.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="js/admin/perfect-scrollbar.jquery.min.js"></script>
