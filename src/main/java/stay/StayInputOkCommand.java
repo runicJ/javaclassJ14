@@ -29,7 +29,7 @@ public class StayInputOkCommand implements StayInterface {
 		String file = "";
 		String oFileName = "";
 		
-		while(fileNames.hasMoreElements()) {  // 하나씩 꺼내서 값이 있느냐
+		while(fileNames.hasMoreElements()) {
 			file = (String) fileNames.nextElement();
 			
 			if(multipartRequest.getFilesystemName(file) != null) {

@@ -21,7 +21,6 @@ public class BlogController extends HttpServlet {
 		String com = request.getRequestURI();
 		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));
 		
-		// 인증....처리......
 		HttpSession session = request.getSession();
 		String sMid = session.getAttribute("sMid")==null ? "" : (String) session.getAttribute("sMid");
 

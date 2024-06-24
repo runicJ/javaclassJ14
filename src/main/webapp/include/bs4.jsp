@@ -8,12 +8,10 @@
 <script src="https://kit.fontawesome.com/df66332deb.js" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Stay balance</title>
 <link rel="icon" href="images/bag_travel_icon.png">
-<!-- Bootstrap CSS -->
 <!-- animate CSS -->
 <link rel="stylesheet" href="setting/css/animate.css">
 <!-- owl carousel CSS -->

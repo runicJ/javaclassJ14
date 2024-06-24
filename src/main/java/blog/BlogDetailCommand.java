@@ -26,8 +26,8 @@ public class BlogDetailCommand implements BlogInterface {
 		BlogVO vo = dao.getBlogDetail(tIdx);
 		
 		// 이전글/다음글 처리
-		BlogVO preVo = dao.getPreNextSearch(tIdx, "preVo");  // preVo 값을 준 것 얘가 있으면 이전글  // 하나로 dao에서 처리하기 위해
-		BlogVO nextVo = dao.getPreNextSearch(tIdx, "nextVo");  // 같은 메소드 써도 된다는 것
+		BlogVO preVo = dao.getPreNextSearch(tIdx, "preVo");
+		BlogVO nextVo = dao.getPreNextSearch(tIdx, "nextVo");
 		request.setAttribute("preVo", preVo);
 		request.setAttribute("nextVo", nextVo);
 		

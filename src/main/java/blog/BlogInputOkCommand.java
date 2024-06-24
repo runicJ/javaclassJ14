@@ -20,14 +20,14 @@ public class BlogInputOkCommand implements BlogInterface {
 		int maxSize = 1024 * 1024 * 30;
 		String encoding = "UTF-8";
 		
-		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());  // 생성과 동시에 업로드 된다.(알아서 넘긴 데이터가 realPath 자리에 알아서 저장이 됨)
+		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());
 		
 		Enumeration fileNames = multipartRequest.getFileNames();
 		
 		String file = "";
 		String oFileName = "";
 		
-		while(fileNames.hasMoreElements()) {  // 하나씩 꺼내서 값이 있느냐
+		while(fileNames.hasMoreElements()) { 
 			file = (String) fileNames.nextElement();
 			
 			if(multipartRequest.getFilesystemName(file) != null) {
@@ -36,7 +36,6 @@ public class BlogInputOkCommand implements BlogInterface {
 		}
 		oFileName = oFileName.substring(0, oFileName.lastIndexOf("/"));
 		
-		// 업로드시킨 파일을 DB에 저장시키기 위해서 전송된 폼의 내용들을 모두 변수에 담아준다.
 		String mid = multipartRequest.getParameter("mid")==null ? "" : multipartRequest.getParameter("mid");
 		String nickName = multipartRequest.getParameter("nickName")==null ? "" : multipartRequest.getParameter("nickName");
 		String sort = multipartRequest.getParameter("sort")==null ? "" : multipartRequest.getParameter("sort");

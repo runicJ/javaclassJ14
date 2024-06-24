@@ -197,9 +197,9 @@ public class MemberDAO {
 			sql = "select * from member2 where tel = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, tel);
-			rs = pstmt.executeQuery();  // 자료가 있으면 넘어옴
+			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {  // 자료가 있는지 없는지 모름
+			if(rs.next()) {
 				vo.setmIdx(rs.getInt("mIdx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setPwd(rs.getString("pwd"));

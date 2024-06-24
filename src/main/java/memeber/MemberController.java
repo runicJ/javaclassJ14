@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 @SuppressWarnings("serial")
 @WebServlet("*.mem")
-public class MemberController extends HttpServlet {  // 4
+public class MemberController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MemberInterface command = null;

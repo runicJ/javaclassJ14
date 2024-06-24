@@ -22,7 +22,7 @@ public class BlogUpdateOkCommand implements BlogInterface {
 		int maxSize = 1024 * 1024 * 30;
 		String encoding = "UTF-8";
 		
-		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());  // 생성과 동시에 업로드 된다.(알아서 넘긴 데이터가 realPath 자리에 알아서 저장이 됨)
+		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());
 		
 		Enumeration fileNames = multipartRequest.getFileNames();
 		
@@ -32,7 +32,7 @@ public class BlogUpdateOkCommand implements BlogInterface {
 		String[] fSNames = request.getParameter("fSName").split("/");
 		
 		for(String fSName : fSNames) {
-			new File(realPath + fSName).delete();  // 실제 존재하는 파일은 파일(io) 객체를 만들고 지워야 함
+			new File(realPath + fSName).delete();
 		}
 		
 		while(fileNames.hasMoreElements()) {

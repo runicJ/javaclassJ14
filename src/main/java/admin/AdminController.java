@@ -16,7 +16,6 @@ import admin.member.MemberDeleteOkCommand;
 import admin.member.MemberListCommand;
 import admin.review.ReviewDeleteCommand;
 import admin.review.ReviewInputOkCommand;
-import admin.stay.StayListCommand;
 
 @SuppressWarnings("serial")
 @WebServlet("*.ad")
@@ -75,11 +74,6 @@ public class AdminController extends HttpServlet {
 //			command.execute(request, response);
 //			viewPage = "/include/message.jsp";
 //		}
-		else if(com.equals("/StayList")) {
-			command = new StayListCommand();
-			command.execute(request, response);
-			viewPage += "/stay/stayList.jsp";
-		}
 		else if(com.equals("/MemberList")) {
 			command = new MemberListCommand();
 			command.execute(request, response);
@@ -95,16 +89,6 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/complaint/complaintList.jsp";
 		}
-//		else if(com.equals("/BoardList")) {
-//			command = new BoardListCommand();
-//			command.execute(request, response);
-//			viewPage += "/board/boardList.jsp";
-//		}
-//		else if(com.equals("/BoardContent")) {
-//			command = new BoardContentCommand();
-//			command.execute(request, response);
-//			viewPage += "/board/boardContent.jsp";
-//		}
 //		else if(com.equals("/ComplaintCheck")) {
 //			command = new ComplaintCheckCommand();
 //			command.execute(request, response);

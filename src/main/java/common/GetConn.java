@@ -4,17 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class GetConn {  // Singleton(DB를 연결하는 용도로만 쓰는 것 Conn 쓰고 있음) => 아래 것만 사용함(싱글톤으로)
-	private static Connection conn = null;  // java.sql  // 여기는 거의 static
+public class GetConn {
+	private static Connection conn = null;
 	
-	private String driver = "com.mysql.jdbc.Driver";  // Driver class명이니까 대문자
-	private String url = "jdbc:mysql://localhost:3306/javaclass14";  // 밑에서 사용할 것 따로 빼놓은 것
+	private String driver = "com.mysql.jdbc.Driver";
+	private String url = "jdbc:mysql://localhost:3306/javaclass14";
 	private String user = "root";
-	private String password = "1234";  // 밑에 넣어줌
+	private String password = "1234";
 	
-	private static GetConn instance = new GetConn();  // 필드 선언 private static 타입 변수명 = 생성
+	private static GetConn instance = new GetConn();
 	
-	private GetConn() {  // 생성자, 외부에서 생성 못하게 private으로 설정
+	private GetConn() {
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);

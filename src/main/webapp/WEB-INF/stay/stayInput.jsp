@@ -72,15 +72,15 @@
 	    	// 파일 사이즈와 확장자 체크하기
 	    	let fileSize = 0;
 	    	for(let i=1; i<=cnt; i++) {
-	    		let imsiName = 'fName' + i;  // id 첫번째 것
-	    		if(isNaN(document.getElementById(imsiName))) {  // isNaN 숫자가 아니냐? 즉 문자냐? 문자면 값을 가져와서 밑에 누적하고 있음
+	    		let imsiName = 'fName' + i;
+	    		if(isNaN(document.getElementById(imsiName))) {
 	    			let fName = document.getElementById(imsiName).value;
 	    			if(fName != "") {
 	    				fileSize += document.getElementById(imsiName).files[0].size;
 				    	let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
 				    	if(ext != 'jpg' && ext != 'gif' && ext != 'png' && ext != 'zip' && ext != 'hwp' && ext != 'ppt' && ext != 'pptx' && ext != 'doc' && ext != 'pdf' && ext != 'xlsx' && ext != 'txt') {
 				    		alert("업로드 가능한 파일은 'jpg/gif/png/zip/hwp/ppt/pptx/doc/pdf/xlsx/txt'만 가능합니다.");
-				    		return false;  // 확장자가 하나라도 안맞으면 탈주
+				    		return false;
 				    	}
 	    			}
 	    		}

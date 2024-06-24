@@ -16,7 +16,6 @@
                         <li><a href="https://www.jeonbuk.go.kr/index.jeonbuk" target="_blank">전북특별자치도청</a></li>
                         <li><a href="https://www.jeonnam.go.kr/" target="_blank">전라남도청</a></li>
                     </ul>
-
                 </div>
             </div>
             <div class="col-sm-6 col-md-5">
@@ -32,15 +31,6 @@
 						  data-size="small"
 						  data-support-multiple-densities="true"
 						></a>
-<!-- 					<div
-					  id="kakao-talk-channel-chat-button"
-					  data-channel-public-id="_iExmtG"
-					  data-title="question"
-					  data-size="small"
-					  data-color="yellow"
-					  data-shape="pc"
-					  data-support-multiple-densities="true"
-					></div> -->
                         <a href="https://pf.kakao.com/_iExmtG" target="_blank"><i class="fa-solid fa-comment"></i></a>
                         <a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="ti-instagram"></i></a>
                         <a href="https://www.facebook.com" target="_blank"><i class="ti-facebook"></i></a>
@@ -61,18 +51,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </div>
 </footer>
-<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
-  integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
-</script>
-<script>
-  Kakao.init('1f0094220b28ee306010e8c6878e94b4');
-</script>
-<script>
-	Kakao.Channel.createAddChannelButton({
-    container: '#add-channel-button',
-    channelPublicId: '_iExmtG'
-  });
-</script> -->
 <script>
   window.kakaoAsyncInit = function() {
     Kakao.Channel.createAddChannelButton({
@@ -90,23 +68,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     fjs.parentNode.insertBefore(js, fjs);
   })(document, 'script', 'kakao-js-sdk');
 </script>
-<!-- <script>
-  window.kakaoAsyncInit = function() {
-    Kakao.Channel.createChatButton({
-      container: '#kakao-talk-channel-chat-button',
-    });
-  };
-
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.channel.min.js';
-    js.integrity = 'sha384-PFe+C2S6aXd8v5j//vBqNPP8DMpEqLOw05p9BBajfh7IDWnUTHhNlu+Uxj3wxNej';
-    js.crossOrigin = 'anonymous';
-    fjs.parentNode.insertBefore(js, fjs);
-  })(document, 'script', 'kakao-js-sdk');
-</script> -->
 <!-- magnific js -->
 <script src="js/jquery.magnific-popup.js"></script>
 <!-- swiper js -->

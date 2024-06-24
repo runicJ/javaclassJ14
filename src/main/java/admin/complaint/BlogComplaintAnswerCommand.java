@@ -25,10 +25,6 @@ public class BlogComplaintAnswerCommand implements AdminInterface {
 		vo.setPartIdx(partIdx);
 		vo.setCpMid(cpMid);
 		vo.setCpContent(cpContent);
-		
-		//int res = dao.setComplaintInput(vo);
-		
-		//response.getWriter().write(res + "");  // res가 숫자니까 문자로 넘김
 	}
 
 }

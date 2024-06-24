@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Stay List</title>
+	<title>Stay Promotion</title>
   <%@ include file = "../../include/bs4.jsp"%>
   <style>
   	/* 위로 스르륵 버튼*/
@@ -233,27 +233,23 @@
   	let curPage = 1;
   	
   	$(document).scroll(function(){
-  		let currentScroll = $(this).scrollTop();  // 스크롤바 위쪽 시작 위치, 처음은 0이다. // currentScroll이라는 이름에 저장  // 현재 높이 0
-  		let documentHeight = $(document).height();  // 화면에 표시되는 전체 문서의 높이 // 본문의 크기
-  		let nowHeight = $(this).scrollTop() + $(window).height();  // 현재 화면상단 + 현재 화면높이 // 현재 높이 + 현재 화면의 높이
+  		let currentScroll = $(this).scrollTop();
+  		let documentHeight = $(document).height();
+  		let nowHeight = $(this).scrollTop() + $(window).height();
   		
-  		// 스크롤이 아래로 내려갔을떄 이벤트 처리..
-  		if(currentScroll > lastScroll) {  // 화면 끝까지 갔는지 체크
+  		if(currentScroll > lastScroll) {
   			if(documentHeight < (nowHeight + (documentHeight*0.1))) {
-  				// 다음페이지 가져오기...
   				console.log("다음페이지 가져오기");
   				curPage++;
   				getList(curPage);
   			}
   		}
-  		lastScroll = currentScroll;  // 이렇게 하고 다시 계산
+  		lastScroll = currentScroll;
   	});
   	
- 	// 전역 변수로 Isotope 인스턴스 저장
-  	var iso;
+  	let iso;
 
   	$(document).ready(function() {
-  	    // Isotope 인스턴스 생성
   	    if ($('.portfolio-container').length) {
   	        iso = new Isotope('.portfolio-container', {
   	            itemSelector: '.portfolio-item',
@@ -261,16 +257,14 @@
   	        });
   	    }
 
-  	    // 필터 버튼 이벤트
   	    $('#portfolio-flters li').on('click', function() {
   	        var filterValue = $(this).attr('data-filter');
-  	        iso.arrange({ filter: filterValue });  // 필터 적용
+  	        iso.arrange({ filter: filterValue });
   	        $('#portfolio-flters li').removeClass('filter-active');
   	        $(this).addClass('filter-active');
   	    });
   	});
 
-  	// 리스트 불러오기 함수(ajax처리)
 	function getList(curPage) {
 	    $.ajax({
 	        url: "ScrollPage.st",
@@ -325,7 +319,6 @@
 	}
   </script>
   
-  <!-- Vendor CSS Files -->
   <link href="${ctp}/setting/css/stay/boxicons.min.css" rel="stylesheet">
   <link href="${ctp}/setting/css/stay/glightbox.min.css" rel="stylesheet">
   <link href="${ctp}/setting/css/stay/swiper-bundle.min.css" rel="stylesheet">
@@ -333,7 +326,6 @@
 <body>
 <%@ include file = "../../include/header.jsp"%>
 <%@ include file = "../../include/nav.jsp"%>
-<!-- breadcrumb start-->
     <section class="breadcrumb breadcrumb_bg">
         <div class="container">
             <div class="row">

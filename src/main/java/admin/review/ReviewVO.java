@@ -1,7 +1,6 @@
 package admin.review;
 
 public class ReviewVO {
-	// review 테이블의 필드 정의
 	private int rIdx;
 	private String part;
 	private int partIdx;

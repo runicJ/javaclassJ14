@@ -24,16 +24,14 @@ public class BlogDAO {
 	String sql = "";
 	BlogVO vo = null;
 	
-	// conn객체 반납
 	public void connClose() {
 		if(conn != null) {
 			try {
 				conn.close();
-			} catch (Exception e) {}  // 여기서 오류 잘 안남 나면 시스템 문제
+			} catch (Exception e) {} 
 		}
 	}
 	
-	// pstmt 반납
 	public void pstmtClose() {
 		if(pstmt != null) {
 			try {
@@ -42,14 +40,13 @@ public class BlogDAO {
 		}
 	}
 	
-	// rs 반납
 	public void rsClose() {
 		if(rs != null) {
 			try {
 				rs.close();
 			} catch (Exception e) {}
 		}
-		pstmtClose();  // 정확히는 if 밖에 써야함
+		pstmtClose();
 	}
 
 	// 여행블로그 목록

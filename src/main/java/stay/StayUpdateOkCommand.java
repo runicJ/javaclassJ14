@@ -26,7 +26,7 @@ public class StayUpdateOkCommand implements StayInterface {
 		String file = "";
 		String oFileName = "";
 		
-		while(fileNames.hasMoreElements()) {  // 하나씩 꺼내서 값이 있느냐
+		while(fileNames.hasMoreElements()) {
 			file = (String) fileNames.nextElement();
 			
 			if(multipartRequest.getFilesystemName(file) != null) {
@@ -81,7 +81,7 @@ public class StayUpdateOkCommand implements StayInterface {
 		fVo.setKitchen(kitchen);
 		fVo.setWashing(washing);
 
-		Map<String, Object> result = dao.setStayInputOk(vo, fVo); // 숙소 정보 저장
+		Map<String, Object> result = dao.setStayInputOk(vo, fVo);
 		int res = (int) result.get("res");
 		int sIdx = (int) result.get("sIdx");
 		

@@ -21,7 +21,6 @@ public class MemberDeleteCheckOkCommand implements MemberInterface {
 		MemberDAO dao = new MemberDAO();
 		MemberVO vo = dao.getMemberIdCheck(mid);
 		
-		// 저장된 비밀번호에서 salt키를 분리시켜서 다시 암호화 시킨 후 맞는지 비교처리한다.
 		String salt = vo.getPwd().substring(0,8);
 		
 		SecurityUtil security = new SecurityUtil();
@@ -37,7 +36,7 @@ public class MemberDeleteCheckOkCommand implements MemberInterface {
 		int res = dao.setMemberDeleteUpdate(mid);
 		
 		if(res != 0) {
-			session.invalidate();  // 세션 끊고 감
+			session.invalidate();
 			request.setAttribute("message", "회원 탈퇴 처리 되었습니다. 감사합니다.");
 			request.setAttribute("url", request.getContextPath() + "/Main");
 		}

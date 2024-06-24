@@ -23,7 +23,6 @@ public class StayDAO {
 	StayVO vo = null;
 	FacilityVO fVo = null;
 	
-	// conn객체 반납
 	public void connClose() {
 		if(conn != null) {
 			try {
@@ -32,7 +31,6 @@ public class StayDAO {
 		}
 	}
 	
-	// pstmt 반납
 	public void pstmtClose() {
 		if(pstmt != null) {
 			try {
@@ -41,14 +39,13 @@ public class StayDAO {
 		}
 	}
 	
-	// rs 반납
 	public void rsClose() {
 		if(rs != null) {
 			try {
 				rs.close();
 			} catch (Exception e) {}
 		}
-		pstmtClose();  // 정확히는 if 밖에 써야함
+		pstmtClose();
 	}
 	
 	// 숙소 등록하기(일단 관리자만)
@@ -435,7 +432,7 @@ public class StayDAO {
             pstmt.setString(3, checkInStr);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-            	res = rs.getInt(1);  // count(*)의 행의 개수
+            	res = rs.getInt(1);
             }
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());

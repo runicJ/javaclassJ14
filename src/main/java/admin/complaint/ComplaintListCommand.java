@@ -17,9 +17,6 @@ public class ComplaintListCommand implements AdminInterface {
 		AdminDAO dao = new AdminDAO();
 		
 		//ArrayList<ComplaintVO> vos = dao.getComplaintList();
-		
-		//request.setAttribute("vos", vos);
-		//request.setAttribute("complaintCnt", vos.size());  // 갯수 넘김(jsp에서 vos의 length 구해도됨
 	}
 
 }

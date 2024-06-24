@@ -14,11 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 //		
 //		MemberDAO dao = new MemberDAO();
 //		
-//		MemberVO vo = dao.getMemberIdCheck(mid);  // 한 건이면 vo로 한 건 가져오는 것
+//		MemberVO vo = dao.getMemberIdCheck(mid);
 //		
-//		//vo.setAddress("(우) " + vo.getAddress().replace("/", " "));;
+//		//vo.setAddress("(우) " + vo.getAddress().replace("/", " "));
 //		
-//		request.setAttribute("vo", vo);  // 기차(request 저장소)에 실어주기
+//		request.setAttribute("vo", vo);
 //	}
-//
+
 //}

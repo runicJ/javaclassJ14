@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SecurityUtil {
-	public String encryptSHA256(String str){  // 암호화 하겠다 encryptSHA256
+	public String encryptSHA256(String str){
     String sha = "";
     try{
        MessageDigest sh = MessageDigest.getInstance("SHA-256");
