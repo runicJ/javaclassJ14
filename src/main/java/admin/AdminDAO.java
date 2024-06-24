@@ -222,29 +222,29 @@ public class AdminDAO {
 //	}
 	
 	// 리뷰를 작성했는지 여부 체크
-	public int getReviewSearch(ReviewVO vo) {
-		int res = 0;
-		try {
-			sql = "select * from review where part = ? and partIdx = ? and mid = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getPart());
-			pstmt.setInt(2, vo.getPartIdx());
-			pstmt.setString(3, vo.getMid());
-			rs = pstmt.executeQuery();
-			if(rs.next()) res = 1;  // 이미 이 아이디로 리뷰를 작성했다
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			rsClose();
-		}
-		return res;
-	}
+//	public int getReviewSearch(ReviewVO vo) {
+//		int res = 0;
+//		try {
+//			sql = "select * from review where part = ? and partIdx = ? and mid = ?";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, vo.getPart());
+//			pstmt.setInt(2, vo.getPartIdx());
+//			pstmt.setString(3, vo.getMid());
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) res = 1;  // 이미 이 아이디로 리뷰를 작성했다
+//		} catch (SQLException e) {
+//			System.out.println("SQL 오류 : " + e.getMessage());
+//		} finally {
+//			rsClose();
+//		}
+//		return res;
+//	}
 
 	// 리뷰 내역 전체 리스트 가져오기
 	public ArrayList<ReviewVO> getReviewSearch(int tIdx, String part) {
 		ArrayList<ReviewVO> rVos = new ArrayList<ReviewVO>();
 		try {
-	        sql = "SELECT r.*, m.userInfo, m.photo FROM review r JOIN member2 m ON r.mid = m.mid "
+	        sql = "SELECT r.*, m.userInfo as userInfo, m.photo as photo FROM review r JOIN member2 m ON r.mid = m.mid "
 	        	+ "WHERE r.part = ? AND r.partIdx = ? ORDER BY r.rIdx DESC";
 //			sql = "select * from (select * from review where part = ? and partIdx = ?) as v left join reply r "  // partIdx는 원본글
 //					+ "on v.idx = r.reviewIdx order by v.idx desc, r.replyIdx desc";
