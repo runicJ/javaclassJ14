@@ -22,7 +22,7 @@ public class Pagination {
 		int totRecCnt = 0;
 
 		if(section.equals("blog")) {
-			totRecCnt = blogDao.getTotRecCnt(contentsShow, part);
+			totRecCnt = blogDao.getTotRecCnt(contentsShow);
 		}
 //		if(section.equals("memberList")) {
 //			totRecCnt = adminDao.getTotRecCnt(contentsShow, part);

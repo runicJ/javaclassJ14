@@ -24,6 +24,6 @@ public class StayWishToggleCommand implements StayInterface {
             dao.toggleWish(mid, sIdx, false);
         }
         
-        response.getWriter().write(wishExist ? "true" : "false");
+        response.getWriter().write(wishExist ? "false" : "true");
 	}
 }

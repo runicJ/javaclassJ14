@@ -30,8 +30,8 @@
     	// 파일 사이즈와 확장자 체크하기
     	let fileSize = 0;
     	for(let i=1; i<=cnt; i++) {
-    		let imsiName = 'fName' + i;  // id 첫번째 것
-    		if(isNaN(document.getElementById(imsiName))) {  // isNaN 숫자가 아니냐? 즉 문자냐? 문자면 값을 가져와서 밑에 누적하고 있음
+    		let imsiName = 'fName' + i;
+    		if(isNaN(document.getElementById(imsiName))) {
     			let fName = document.getElementById(imsiName).value;
     			if(fName != "") {
     				fileSize += document.getElementById(imsiName).files[0].size;
@@ -61,7 +61,7 @@
     	fileBox += '<input type="file" name="fName'+cnt+'" id="fName'+cnt+'" class="form-control-file border mb-2 mr-2" style="float:left; width:85%;" />';
     	fileBox += '<input type="button" value="삭제" onclick="deleteBox('+cnt+')" class="btn btn-danger btn-sm mb-2 ml-2" style="width:10%;" />';
     	fileBox += '</div>';
-    	$("#fileBox").append(fileBox);		// html(), text(), append()
+    	$("#fileBox").append(fileBox);
     }
     
     // 파일 박스 삭제

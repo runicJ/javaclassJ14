@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TravelogDetail Page</title>
+  <title>Travelog Detail</title>
   	<link href="${ctp}/setting/css/stay/boxicons.min.css" rel="stylesheet">
 	<link href="${ctp}/setting/css/stay/swiper-bundle.min.css" rel="stylesheet">
   <jsp:include page="/include/bs4.jsp" />

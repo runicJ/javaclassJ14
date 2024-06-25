@@ -24,7 +24,7 @@ public class ReviewInputOkCommand implements AdminInterface {
 		String mid = (String) session.getAttribute("sMid");
 		String nickName = (String) session.getAttribute("sNickName");
 		int star = request.getParameter("star") == null ? 0 : Integer.parseInt(request.getParameter("star"));
-		String rContent = request.getParameter("rContent") == null ? "" : request.getParameter("rContent");
+		String rContent = request.getParameter("review") == null ? "" : request.getParameter("review");
 		String purpose = request.getParameter("purpose") == null ? "" : request.getParameter("purpose");
 		
 		AdminDAO dao = new AdminDAO();

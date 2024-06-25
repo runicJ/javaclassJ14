@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>memberLogin.jsp</title>
+  <title>Login Page</title>
   <%@ include file = "/include/bs4.jsp" %>
   <script>
   	'use strict'
@@ -152,14 +152,12 @@
   <style>
 	* {box-sizing: border-box;}
 	
-	/* Style the input container */
 	.input-container {
 	  display: flex;
 	  width: 100%;
 	  margin-bottom: 15px;
 	}
 	
-	/* Style the form icons */
 	.icon {
 	  padding: 10px;
 	  background: dodgerblue;
@@ -168,7 +166,6 @@
 	  text-align: center;
 	}
 	
-	/* Style the input fields */
 	.input-field {
 	  width: 100%;
 	  padding: 10px;

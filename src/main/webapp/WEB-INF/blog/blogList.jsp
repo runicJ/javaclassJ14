@@ -8,33 +8,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Travelog Page</title>
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <title>Travelog List</title>
   <jsp:include page="/include/bs4.jsp" />
-  <style>
-.pagination a {
-  border-radius: 5px;
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color .3s;
-}
-
-.pagination a.active {
-  background-color: dodgerblue;
-  color: white;
-}
-
-.pagination a:hover:not(.active) {
-  background-color: #ddd;
-}
-  </style>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />
 <jsp:include page="/include/nav.jsp" />
-    <!-- breadcrumb start-->
     <section class="breadcrumb breadcrumb_bg">
         <div class="container">
             <div class="row">
@@ -105,47 +85,20 @@
                             <c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
                         </article>
                         </c:forEach>
-                        
-                        <nav class="">
-                            <ul class="pagination">
-                                <c:if test="${pag > 1}">
-                                    <li class="item">
-                                        <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}">첫페이지</a>
-                                    </li>
-                                </c:if>
-                                <c:if test="${curBlock > 0}">
-                                    <li class="item">
-                                        <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}">
-                                            <i class="ti-angle-left"></i>
-                                        </a>
-                                    </li>
-                                </c:if>
-                                <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
-                                    <c:if test="${i <= totPage && i == pag}">
-                                        <li class="item active">
-                                            <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a>
-                                        </li>
-                                    </c:if>
-                                    <c:if test="${i <= totPage && i != pag}">
-                                        <li class="item">
-                                            <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a>
-                                        </li>
-                                    </c:if>
-                                </c:forEach>
-                                <c:if test="${curBlock < lastBlock}">
-                                    <li class="item">
-                                        <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}">
-                                            <i class="ti-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </c:if>
-                                <c:if test="${pag < totPage}">
-                                    <li class="item">
-                                        <a class="link" href="${ctp}/BlogList.bl?part=${part}&pag=${totPage}&pageSize=${pageSize}">마지막페이지</a>
-                                    </li>
-                                </c:if>
-                            </ul>
-                        </nav>
+
+		                <nav class="blog-pagination justify-content-center d-flex">
+		                    <ul class="pagination">
+							<c:if test="${pag > 1}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=1&pageSize=${pageSize}"><i class="fa-solid fa-backward"></i></a></li></c:if>
+							<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}"><i class="ti-angle-left"></i></a></li></c:if>
+							<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
+								<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+								<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+							</c:forEach>
+							<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="ti-angle-right"></i></a></li></c:if>
+							<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link" href="${ctp}/BlogList.bl?part=${part}&pag=${totPage}&pageSize=${pageSize}"><i class="fa-solid fa-forward"></i></a></li></c:if>
+		                    </ul>
+		                </nav>
+		                
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -162,8 +115,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="button rounded-0 primary-bg text-white w-100 btn_1"
-                                    type="submit">Search</button>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1" type="submit">Search</button>
                             </form>
                         </aside>
 

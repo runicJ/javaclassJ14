@@ -64,6 +64,11 @@ public class StayController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("/BookingCancel")) {
+			command = new BookingCancelCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		else if(com.equals("/StayPromotion")) {
 			command = new StayListCommand();
 			command.execute(request, response);

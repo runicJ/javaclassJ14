@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=divice-width, initial-scale=1.0">
-	<title>Insert</title>
+	<title>Blog Journal</title>
   <%@ include file = "/include/bs4.jsp"%>
   	<style>
           .shorts-container {

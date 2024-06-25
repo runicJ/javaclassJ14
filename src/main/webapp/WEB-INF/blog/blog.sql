@@ -25,3 +25,4 @@ select * from travelog;
 
 select *, datediff(tDate, now()) as date_diff, timestampdiff(hour, tDate, now()) as hour_diff from travelog;
 
+SELECT count(*) as cnt FROM travelog;

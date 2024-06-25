@@ -12,9 +12,9 @@
   <script>
   	'use strict';
   	
-  	function pageSizeCheck() {  // 글 상세 보기 하고 '돌아가기'버튼 누르면 해당 페이지로 돌아가지 않음
+  	function pageSizeCheck() {
   		let pageSize = $("#pageSize").val();
-  		location.href = "BoardList.bo?pageSize="+pageSize;  // javaScript 함수니까 +pageSize
+  		location.href = "BoardList.bo?pageSize="+pageSize;
   	}
   </script>
 </head>
@@ -27,7 +27,7 @@
   	</tr>
   	<tr>
   		<td class="text-right">
-  			<select name="pageSize" id="pageSize" onchange="pageSizeCheck()">  <!-- ajax로 할 필요 없음 -->
+  			<select name="pageSize" id="pageSize" onchange="pageSizeCheck()">
   				<option ${pageSize==5 ? "selected" : ""}>5</option>
   				<option ${pageSize==10 ? "selected" : ""}>10</option>
   				<option ${pageSize==15 ? "selected" : ""}>15</option>
@@ -51,7 +51,7 @@
 		    <tr>
 		      <td>${no}</td>
 		      <td class="text-left">
-		        <a href="BoardContent.ad?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>  <!-- 지금까지 idx만 넘겼지만, 페이지 수, 페이지 사이즈, 검색필드, 검색어 같이 넘겨야함 -->
+		        <a href="BoardContent.ad?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>
 		        <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
 		      </td>
 		      <td>${vo.nickName}</td>

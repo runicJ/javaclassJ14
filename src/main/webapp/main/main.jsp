@@ -284,14 +284,19 @@
                                 <a class="place_btn">${stayVo.sort}</a>
                                 <h3 style="font-weight:bold;"><a href="StayDetail.st?sIdx=${stayVo.sIdx}">${stayVo.sName}</a></h3>
                                 <p>${stayVo.residence == 'Chung' ? '충청도' : stayVo.residence == 'Gang' ? '강원도' : stayVo.residence == 'Jeol' ? '전라도' : '경상도'}</p>
+                                <p>(${stayVo.reviewCnt} review)</p>
                                 <div class="place_review">
                                 	<div class="place_review" style="color:#ffe500;">
-                                    <c:forEach begin="1" end="${stayReviews[stayVo]}" var="star">
-                                    	<i class="fas fa-star"></i>
-                                	</c:forEach>
-                                	<b>평점 : <fmt:formatNumber value="${stayReviews[reviewAvg]}" pattern="#,##0.0" /></b>
+										 <c:forEach begin="1" end="${stayReviews[stayVo]}" var="star">
+										    <i class="fas fa-star"></i>
+										</c:forEach>
+										<c:if test="${stayReviews[stayVo]==0}">
+										    <c:forEach begin="1" end="5">
+										        <i class="fa-regular fa-star"></i>
+										    </c:forEach>
+										</c:if>
+										<b>평점 : <fmt:formatNumber value="${stayReviews[stayVo]}" pattern="#,##0.0" /></b>
                                     </div>
-                                <span>(${stayVo.reviewCnt} review)</span>
                                 </div>
                             </div>
 							<div class="details_icon" style="position: absolute;  bottom: 30px;right: 20px;">

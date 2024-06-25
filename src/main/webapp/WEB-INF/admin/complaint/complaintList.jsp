@@ -21,7 +21,7 @@
   				complaint : complaint
   			},
   			success:function() {
-  				location.reload();  // 토글은 무조건 reload, res값 안 받아도 됨
+  				location.reload();
   			},
   			error:function() {
   				alert("전송오류");

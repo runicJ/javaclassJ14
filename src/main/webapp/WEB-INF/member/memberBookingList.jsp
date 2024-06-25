@@ -13,7 +13,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=divice-width, initial-scale=1.0">
-	<title>Insert</title>
+	<title>Member Booking</title>
 	<%@ include file = "../../include/bs4.jsp"%>
   	<link href="${ctp}/setting/css/admin/style.min.css" rel="stylesheet">
 	<style>
@@ -64,6 +64,7 @@
 		    let bIdx = document.getElementById('bIdx').value;
 		    let star = document.querySelector('input[name="star"]:checked').value;
 		    let review = $("#rContent").val();
+		    let purpose = $("#purpose").val();
 		    
 		    if (star == "") {
 		        alert("숙소에 대한 별점을 부여해 주세요");
@@ -81,7 +82,8 @@
 		        mid: '${sMid}',
 		        nickName: '${sNickName}',
 		        star: star,
-		        review: review
+		        review: review,
+		        purpose : purpose
 		    };
 
 		    if (bIdx) {
@@ -201,8 +203,8 @@
 									                        <c:when test="${fn:substring(vo.checkOut,0,10) lt today}">
 									                            <button class="btn btn-success" data-toggle="modal" data-target="#reviewModal" data-id="${vo.bIdx}" onclick="setReviewModal(${vo.sIdx}, ${vo.bIdx})">예약 완료</button>
 									                        </c:when>
-									                        <c:when test="${vo.date_diff >= 3}">
-									                            <a href="BookingCancel.st" class="btn btn-danger">예약 취소</a>
+									                        <c:when test="${vo.date_diff <= -3}">
+									                            <a href="BookingCancel.st?bIdx=${vo.bIdx}" class="btn btn-danger">예약 취소</a>
 									                        </c:when>
 									                        <c:otherwise>
 									                            예약 취소 불가
@@ -253,7 +255,7 @@
                 <ul>
                   <li><p>숙소정보 : <span id="sName"></span></p></li>
                   <li><p>Check In : <span id="checkInCheck"></span> 15:00 PM</p></li>
-                  <li><p>Check Out : <span id="checkOutCheck"></span></p>11:00 AM</li>
+                  <li><p>Check Out : <span id="checkOutCheck"></span>11:00 AM</p></li>
                   <li><p>숙박인원 : <span id="guestNumCheck"></span></p></li>
                 </ul>
                 <hr>
@@ -268,6 +270,8 @@
 </div>
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
+    <%		request.setCharacterEncoding("utf-8");
+	response.setContentType("text/html; charset=utf-8"); %>
         <div class="modal-content">
             <div class="modal-header">
             	<h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>

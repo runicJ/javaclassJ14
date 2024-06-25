@@ -212,7 +212,18 @@ public class StayDAO {
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT s.*, ");
             sql.append("(SELECT COUNT(*) FROM stayWish w WHERE w.sIdx = s.sIdx) AS wishCnt ");
-            sql.append("FROM stay s WHERE s.sDel = 'NO' ");
+
+            if (!contentsShow.equals("guest")) {
+                sql.append(", IF(sw.mid IS NOT NULL, 1, 0) AS isWished ");
+            }
+
+            sql.append("FROM stay s ");
+
+            if (!contentsShow.equals("guest")) {
+                sql.append("LEFT JOIN stayWish sw ON sw.sIdx = s.sIdx AND sw.mid = ? ");
+            }
+
+            sql.append("WHERE s.sDel = 'NO' ");
 
             if (address != null && !address.isEmpty()) {
                 sql.append("AND s.address LIKE ? ");
@@ -229,6 +240,11 @@ public class StayDAO {
             pstmt = conn.prepareStatement(sql.toString());
 
             int paramIndex = 1;
+            
+            if (!contentsShow.equals("guest")) {
+                pstmt.setString(paramIndex++, contentsShow);
+            }
+
             if (address != null && !address.isEmpty()) {
                 pstmt.setString(paramIndex++, "%" + address + "%");
             }
@@ -259,8 +275,10 @@ public class StayDAO {
                 vo.setsDate(rs.getString("sDate"));
                 vo.setsDel(rs.getString("sDel"));
 
+                vo.setWishCnt(rs.getInt("wishCnt"));
+
                 if (!contentsShow.equals("guest")) {
-                    vo.setIsWished(rs.getInt("wishCnt"));
+                    vo.setIsWished(rs.getInt("isWished"));
                 }
 
                 // 추가할 시설 정보 가져오기
@@ -454,6 +472,21 @@ public class StayDAO {
 			pstmt.setString(4, vo.getCheckOut());
 			pstmt.setInt(5, vo.getGuestNum());
 			pstmt.setInt(6, vo.getTotal());
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+
+	public int setBookingCancel(int bIdx) {
+		int res = 0;
+		try {
+			sql = "update booking set status = 'NO' where bIdx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bIdx);
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());

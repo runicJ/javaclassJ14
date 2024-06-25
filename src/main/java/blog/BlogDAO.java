@@ -94,30 +94,16 @@ public class BlogDAO {
 	}
 	
 	// 여행블로그 글 총 갯수
-	public int getTotRecCnt(String mid, String keyword) {
+	public int getTotRecCnt(String mid) {
         int totRecCnt = 0;
         try {
             if (mid.equals("admin")) {
-                if (keyword.equals("")) {
-                    sql = "SELECT COUNT(*) AS cnt FROM travelog";
-                } 
-                else {
-                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE title LIKE ? OR nickName LIKE ? OR tContent LIKE ?";
-                }
-            } else {
-                if (keyword.equals("")) {
-                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE openSw = 'OK' AND complaint = 'NO'";
-                } 
-                else {
-                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE (title LIKE ? OR nickName LIKE ? OR tContent LIKE ?) AND openSw = 'OK' AND complaint = 'NO'";
-                }
+                sql = "SELECT count(*) as cnt FROM travelog";
+            }
+            else if(!mid.equals("admin")) {
+                sql = "SELECT count(*) AS cnt FROM travelog where openSw = '공개' AND complaint = 'NO'";
             }
             pstmt = conn.prepareStatement(sql);
-            if (!keyword.equals("")) {
-                pstmt.setString(1, "%" + keyword + "%");
-                pstmt.setString(2, "%" + keyword + "%");
-                pstmt.setString(3, "%" + keyword + "%");
-            }
             rs = pstmt.executeQuery();
             rs.next();
             totRecCnt = rs.getInt("cnt");
@@ -466,5 +452,40 @@ public class BlogDAO {
 			rsClose();
 		}
 		return vos;
+	}
+
+	public int getTotRecSearchCnt(String mid, String keyword) {
+		int totRecSearchCnt = 0;
+        try {
+            if (mid.equals("admin")) {
+                if (keyword.equals("")) {
+                    sql = "SELECT COUNT(*) AS cnt FROM travelog";
+                } 
+                else {
+                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE title LIKE ? OR nickName LIKE ? OR tContent LIKE ?";
+                }
+            } else {
+                if (keyword.equals("")) {
+                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE openSw = 'OK' AND complaint = 'NO'";
+                } 
+                else {
+                    sql = "SELECT COUNT(*) AS cnt FROM travelog WHERE (title LIKE ? OR nickName LIKE ? OR tContent LIKE ?) AND openSw = 'OK' AND complaint = 'NO'";
+                }
+            }
+            pstmt = conn.prepareStatement(sql);
+            if (!keyword.equals("")) {
+                pstmt.setString(1, "%" + keyword + "%");
+                pstmt.setString(2, "%" + keyword + "%");
+                pstmt.setString(3, "%" + keyword + "%");
+            }
+            rs = pstmt.executeQuery();
+            rs.next();
+            totRecSearchCnt = rs.getInt("cnt");
+        } catch (SQLException e) {
+            System.out.println("SQL 오류 : " + e.getMessage());
+        } finally {
+            rsClose();
+        }
+        return totRecSearchCnt;
 	}
 }

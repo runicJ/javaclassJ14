@@ -337,7 +337,7 @@
 	                icon.classList.remove('fa-regular', 'fa-heart');
 	                icon.classList.add('fa-solid', 'fa-heart');
 	                icon.style.color = 'red';
-	                alert("위시리스트 삭제!");
+	                alert("위시리스트에서 삭제되었습니다.")
 	            }
 	        },
 	        error: function() {

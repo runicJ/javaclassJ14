@@ -20,9 +20,9 @@ public class BlogSearchCommand implements BlogInterface {
 		
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		int pageSize = request.getParameter("pageSize")==null ? 3 : Integer.parseInt(request.getParameter("pageSize"));
-		int totRecCnt = dao.getTotRecCnt(mid, keyword);
+		int totRecSearchCnt = dao.getTotRecSearchCnt(mid, keyword);
 		int startIndexNo = (pag - 1) * pageSize;
-		int curScrStartNo = totRecCnt - startIndexNo;
+		int curScrStartNo = totRecSearchCnt - startIndexNo;
 		
 		
 		ArrayList<BlogVO> vos = dao.getBlogSearch(startIndexNo, pageSize, keyword);
@@ -36,7 +36,7 @@ public class BlogSearchCommand implements BlogInterface {
         request.setAttribute("vos", vos);
         request.setAttribute("pag", pag);
         request.setAttribute("pageSize", pageSize);
-        request.setAttribute("totRecCnt", totRecCnt);
+        request.setAttribute("totRecCnt", totRecSearchCnt);
         request.setAttribute("curScrStartNo", curScrStartNo);
 	}
 }

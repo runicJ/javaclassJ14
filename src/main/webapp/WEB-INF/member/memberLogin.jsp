@@ -2,8 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <%
-	// 로그인창에 아이디 체크 유무에 대한 처리
-	// 쿠키를 검색해서 cMid가 있을때 가져와서 아이디입력창에 뿌릴수 있게 한다.
 	Cookie[] cookies = request.getCookies();
 
 	if(cookies != null) {
@@ -25,14 +23,12 @@
   <style>
 	* {box-sizing: border-box;}
 	
-	/* Style the input container */
 	.input-container {
 	  display: flex;
 	  width: 100%;
 	  margin-bottom: 15px;
 	}
 	
-	/* Style the form icons */
 	.icon {
 	  padding: 10px;
 	  background: dodgerblue;
@@ -41,7 +37,6 @@
 	  text-align: center;
 	}
 	
-	/* Style the input fields */
 	.input-field {
 	  width: 100%;
 	  padding: 10px;
@@ -52,7 +47,6 @@
 	  border: 2px solid dodgerblue;
 	}
 	
-	/* Set a style for the submit button */
 	.btn {
 	  background-color: dodgerblue;
 	  color: white;
@@ -102,11 +96,11 @@
 	  <br><br><br>
 		  <div class="input-container">
 		    <i class="fa fa-user icon"></i>
-		    <input type="text" name="mid" value="admin" placeholder="아이디를 입력하세요" autofocus required class="input-field form-control"/>
+		    <input type="text" name="mid" placeholder="아이디를 입력하세요" autofocus required class="input-field form-control"/>
 		  </div>
 		  <div class="input-container">
 		    <i class="fa fa-key icon"></i>
-		    <input type="password" name="pwd" value="1234" placeholder="비밀번호를 입력하세요" required class="input-field form-control"/>
+		    <input type="password" name="pwd" placeholder="비밀번호를 입력하세요" required class="input-field form-control"/>
 		  </div>
 		  <p class="mb-5">
           	<input type="checkbox" name="idSave" checked /> 아이디 저장

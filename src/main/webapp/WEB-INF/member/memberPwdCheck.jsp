@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>memberPwdCheck.jsp</title>
+  <title>Member PwdCk</title>
   <%@ include file = "/include/bs4.jsp" %>
   <script>
   	'use strict';

@@ -54,31 +54,26 @@
 		  opacity:1;
 		}
 		
-		/* Extra styles for the cancel button */
 		.cancelbtn {
 		  padding: 14px 20px;
 		  background-color: #f44336;
 		}
 		
-		/* Float cancel and signup buttons and add an equal width */
 		.cancelbtn, .signupbtn {
 		  float: left;
 		  width: 50%;
 		}
 		
-		/* Add padding to container elements */
 		.container {
 		  padding: 16px;
 		}
 		
-		/* Clear floats */
 		.clearfix::after {
 		  content: "";
 		  clear: both;
 		  display: table;
 		}
 		
-		/* Change styles for cancel button and signup button on extra small screens */
 		@media screen and (max-width: 300px) {
 		  .cancelbtn, .signupbtn {
 		     width: 100%;
@@ -109,10 +104,10 @@
 	    }
 	    
 	    #photoDemo {
-		  border: 1px solid #ddd; /* Gray border */
-		  border-radius: 4px;  /* Rounded border */
-		  padding: 5px; /* Some padding */
-		  width: 150px; /* Set a small width */
+		  border: 1px solid #ddd;
+		  border-radius: 4px;
+		  padding: 5px;
+		  width: 150px;
 		}
 		
 		#photoDemo:hover {

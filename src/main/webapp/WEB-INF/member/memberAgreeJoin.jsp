@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>회원가입 개인정보 동의</title>
+	<title>Join Agree</title>
 	<%@ include file = "/include/bs4.jsp" %>
 	<script>
 		'use strict';

@@ -68,10 +68,10 @@
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>
-                                                <th scope="col">Rendering engine</th>
-                                                <th scope="col">Browser</th>
-                                                <th scope="col">Platform(s)</th>
-                                                <th scope="col">Engine version</th>
+                                                <th scope="col">문의유형</th>
+                                                <th scope="col">제목</th>
+                                                <th scope="col">내용</th>
+                                                <th scope="col">상태</th>
                                             </tr>
                                         </thead>
                                         <tbody class="customtable">
@@ -82,10 +82,10 @@
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 4.0</td>
-                                                <td>Win 95+</td>
-                                                <td>4</td>
+                                                <td>문의</td>
+                                                <td>연락처 중복</td>
+                                                <td>누군가 제 연락처를 사용하고 있어요.</td>
+                                                <td>답변대기</td>
                                             </tr>
                                             <tr>
                                                 <th>
@@ -94,58 +94,10 @@
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 5.0</td>
-                                                <td>Win 95+</td>
-                                                <td>5</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 4.0</td>
-                                                <td>Win 95+</td>
-                                                <td>4</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 5.0</td>
-                                                <td>Win 95+</td>
-                                                <td>5</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 5.5</td>
-                                                <td>Win 95+</td>
-                                                <td>5.5</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 6</td>
-                                                <td>Win 98+</td>
-                                                <td>6</td>
+                                                <td>신고</td>
+                                                <td>부적절한 광고</td>
+                                                <td>불법 도박성 광고가 성행하고 있습니다. 확인 부탁요.</td>
+                                                <td>답변대기</td>
                                             </tr>
                                         </tbody>
                                     </table>

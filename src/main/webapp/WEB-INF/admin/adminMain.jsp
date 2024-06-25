@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>관리자 페이지</title>
+	<title>Admin Page</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<jsp:include page="/include/bs4.jsp" />
 	<!-- Favicon icon -->

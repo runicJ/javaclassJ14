@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>memberUpdate.jsp</title>
+  <title>Member Update</title>
   <jsp:include page="/include/bs4.jsp" />
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="${ctp}/js/woo1.js"></script>
@@ -224,7 +224,6 @@
 		        return false;
 		    }
 	    
-	  		// 전송 전에 파일에 관련된 사항들을 체크해준다.=> 프론트체크
 	  		let fName = document.getElementById("file").value;
 	  		
 	  		if(fName.trim() != "") {
@@ -350,7 +349,6 @@
 		window.onload = function() {
 		    resetChecks();
 		
-		    // 이벤트 리스너 추가
 		    document.getElementById('nickName').addEventListener('input', function() {
 		        document.getElementById('nickNameBtn').disabled = false;
 		        nickCheckSw = 0;
